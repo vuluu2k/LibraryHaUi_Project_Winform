@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ITpluss\\source\\repos\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {}
+    "D:\\BTL_LapTrinhWD\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ITpluss\\source\\repos\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {
+    "D:\\BTL_LapTrinhWD\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ITpluss\\source\\repos\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+        "projectUniqueName": "D:\\BTL_LapTrinhWD\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
         "projectName": "LuuCongQuangVu_Nhom13",
-        "projectPath": "C:\\Users\\ITpluss\\source\\repos\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
-        "packagesPath": "C:\\Users\\ITpluss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ITpluss\\source\\repos\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13\\obj\\",
+        "projectPath": "D:\\BTL_LapTrinhWD\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\BTL_LapTrinhWD\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ITpluss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
