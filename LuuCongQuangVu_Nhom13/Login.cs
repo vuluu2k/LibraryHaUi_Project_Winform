@@ -20,7 +20,8 @@ namespace LuuCongQuangVu_Nhom13
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
             using var dbcontext = new Models.QLThuVienContext();
-            var acc = dbcontext.Accounts.Where(a => (a.Usename == txtTaikhoan.Text && a.Password == txtMatkhau.Text)).FirstOrDefault();
+            //var acc = dbcontext.Accounts.Where(a => (a.Usename == txtTaikhoan.Text && a.Password == txtMatkhau.Text)).FirstOrDefault();
+            var acc = (from a in dbcontext.Accounts where (a.Usename == txtTaikhoan.Text && a.Password == txtMatkhau.Text) select a).FirstOrDefault();
             if (acc != null)
             {
                 if (acc.Capdo.Equals("Nhân viên"))

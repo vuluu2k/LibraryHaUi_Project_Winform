@@ -102,8 +102,10 @@ namespace LuuCongQuangVu_Nhom13
         private void DelBook()
         {
             using var dbcontext = new Models.QLThuVienContext();
-            Models.Sach id = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
-            var idm = dbcontext.Muontrasaches.Where(m => m.Idsach == txtmasach.Text).ToList();
+            //Models.Sach id = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
+            //var idm = dbcontext.Muontrasaches.Where(m => m.Idsach == txtmasach.Text).ToList();
+            Models.Sach id = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
+            var idm = (from m in dbcontext.Muontrasaches where m.Idsach==txtmasach.Text select m).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -126,7 +128,8 @@ namespace LuuCongQuangVu_Nhom13
         private void UpdateBook()
         {
             using var dbcontext = new Models.QLThuVienContext();
-            Models.Sach sach = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
+            //Models.Sach sach = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
+            Models.Sach sach = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
             if (sach != null)
             {
                 sach.Tensach = txttensach.Text;
@@ -153,7 +156,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (rdmasach.Checked)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_sach = dbcontext.Saches.Where(book=>book.Idsach==txtmasach.Text).ToList();
+                //var list_sach = dbcontext.Saches.Where(book=>book.Idsach==txtmasach.Text).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Idsach == txtmasach.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -182,7 +186,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (rdtensach.Checked)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_sach = dbcontext.Saches.Where(book => book.Tensach == txttensach.Text).ToList();
+                //var list_sach = dbcontext.Saches.Where(book => book.Tensach == txttensach.Text).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Tensach == txttensach.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -211,7 +216,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (rdtacgia.Checked)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_sach = dbcontext.Saches.Where(book => book.Tacgia == txttacgia.Text).ToList();
+                //var list_sach = dbcontext.Saches.Where(book => book.Tacgia == txttacgia.Text).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Tacgia == txttacgia.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -240,7 +246,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (rdtheloai.Checked)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_sach = dbcontext.Saches.Where(book => book.Theloai == txttheloai.Text).ToList();
+                //var list_sach = dbcontext.Saches.Where(book => book.Theloai == txttheloai.Text).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Theloai == txttheloai.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -269,7 +276,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (rdnxb.Checked)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_sach = dbcontext.Saches.Where(book => book.Nhaxuatban == txtnhasx.Text).ToList();
+                //var list_sach = dbcontext.Saches.Where(book => book.Nhaxuatban == txtnhasx.Text).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Nhaxuatban == txtnhasx.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -298,7 +306,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (rdvitri.Checked)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_sach = dbcontext.Saches.Where(book => book.Vitri == cbvitri.Text).ToList();
+                //var list_sach = dbcontext.Saches.Where(book => book.Vitri == cbvitri.Text).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Vitri == cbvitri.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -487,9 +496,12 @@ namespace LuuCongQuangVu_Nhom13
         private void DelAuthor()
         {
             using var dbcontext = new Models.QLThuVienContext();
-            Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
-            var idt = dbcontext.Thethuviens.Where(t => t.Iddocgia == txtMaDocGia.Text).ToList();
-            var idm = dbcontext.Muontrasaches.Where(m => m.Iddocgia == txtMaDocGia.Text).ToList();
+            //Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
+            //var idt = dbcontext.Thethuviens.Where(t => t.Iddocgia == txtMaDocGia.Text).ToList();
+            //var idm = dbcontext.Muontrasaches.Where(m => m.Iddocgia == txtMaDocGia.Text).ToList();
+            Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia==txtMaDocGia.Text select d).FirstOrDefault();
+            var idt = (from t in dbcontext.Thethuviens where t.Iddocgia==txtMaDocGia.Text select t).ToList();
+            var idm = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDocGia.Text select m).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -516,7 +528,8 @@ namespace LuuCongQuangVu_Nhom13
         private void UpdateAuthor()
         {
             using var dbcontext = new Models.QLThuVienContext();
-            Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
+            //Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
+            Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia == txtMaDocGia.Text select d ).FirstOrDefault();
             if (id != null)
             {
                 id.Hoten = txtTenDocGia.Text;
@@ -549,7 +562,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (cbTimKiem.SelectedIndex==0)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_docgia = dbcontext.Docgia.Where(d=>d.Iddocgia==txtMaDocGia.Text).ToList();
+                //var list_docgia = dbcontext.Docgia.Where(d=>d.Iddocgia==txtMaDocGia.Text).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.Iddocgia==txtMaDocGia.Text select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();
@@ -575,7 +589,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (cbTimKiem.SelectedIndex == 1)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_docgia = dbcontext.Docgia.Where(d => d.Hoten == txtTenDocGia.Text).ToList();
+                //var list_docgia = dbcontext.Docgia.Where(d => d.Hoten == txtTenDocGia.Text).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.Hoten == txtTenDocGia.Text select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();
@@ -601,7 +616,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (cbTimKiem.SelectedIndex == 2)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_docgia = dbcontext.Docgia.Where(d =>d.Ngaysinh.Value.Date == dateDocGia.Value.Date).ToList();
+                //var list_docgia = dbcontext.Docgia.Where(d =>d.Ngaysinh.Value.Date == dateDocGia.Value.Date).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.Ngaysinh.Value.Date == dateDocGia.Value.Date select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();
@@ -627,7 +643,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (cbTimKiem.SelectedIndex == 3)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_docgia = dbcontext.Docgia.Where(d => d.Diachi == txtDiaChiDocGia.Text).ToList();
+                //var list_docgia = dbcontext.Docgia.Where(d => d.Diachi == txtDiaChiDocGia.Text).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.Diachi == txtDiaChiDocGia.Text select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();
@@ -653,7 +670,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (cbTimKiem.SelectedIndex == 4)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_docgia = dbcontext.Docgia.Where(d => d.Nghenghiep == txtNgheNhiep.Text).ToList();
+                //var list_docgia = dbcontext.Docgia.Where(d => d.Nghenghiep == txtNgheNhiep.Text).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.Nghenghiep == txtNgheNhiep.Text select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();
@@ -679,7 +697,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (cbTimKiem.SelectedIndex == 5)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_docgia = dbcontext.Docgia.Where(d => d.Sodienthoai == txtSDT_DocGia.Text).ToList();
+                //var list_docgia = dbcontext.Docgia.Where(d => d.Sodienthoai == txtSDT_DocGia.Text).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.Sodienthoai == txtSDT_DocGia.Text select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();

@@ -137,7 +137,8 @@ namespace LuuCongQuangVu_Nhom13
                 {
                     try
                     {
-                        Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                        //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                        Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                         if (acc != null)
                         {
                             acc.Usename = txtTaiKhoan.Text;
@@ -160,7 +161,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (lbThongBao.Text==btnXoa.Text)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                 DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirm==DialogResult.Yes)
                 {
@@ -179,7 +181,8 @@ namespace LuuCongQuangVu_Nhom13
             else if (lbThongBao.Text==btnPhanLoai.Text)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                var list_accout = dbcontext.Accounts.Where(a=>a.Capdo==cbCapDo.Text).ToList();
+                //var list_accout = dbcontext.Accounts.Where(a=>a.Capdo==cbCapDo.Text).ToList();
+                var list_accout = (from a in dbcontext.Accounts where a.Capdo==cbCapDo.Text select a).ToList();
                 if (list_accout != null)
                 {
                     if (list_accout.Count() > 0)
@@ -215,7 +218,8 @@ namespace LuuCongQuangVu_Nhom13
                     else
                     {
                         using var dbcontext = new Models.QLThuVienContext();
-                        var list_accout = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).ToList();
+                        //var list_accout = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).ToList();
+                        var list_accout = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a ).ToList();
                         if (list_accout != null)
                         {
                             if (list_accout.Count() > 0)
@@ -246,7 +250,8 @@ namespace LuuCongQuangVu_Nhom13
                     else
                     {
                         using var dbcontext = new Models.QLThuVienContext();
-                        var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
+                        //var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
+                        var list_accout = (from a in dbcontext.Accounts where a.Password == txtMatKhau.Text select a).ToList();
                         if (list_accout != null)
                         {
                             if (list_accout.Count() > 0)
@@ -354,7 +359,8 @@ namespace LuuCongQuangVu_Nhom13
         private void ReadfilePhanLoai()
         {
             using var dbcontext = new Models.QLThuVienContext();
-            var list_accout = dbcontext.Accounts.Where(a => a.Capdo == cbCapDo.Text).ToList();
+            //var list_accout = dbcontext.Accounts.Where(a => a.Capdo == cbCapDo.Text).ToList();
+            var list_accout = (from a in dbcontext.Accounts where a.Capdo == cbCapDo.Text select a).ToList();
             if (list_accout != null)
             {
                 if (list_accout.Count() > 0)
@@ -380,7 +386,8 @@ namespace LuuCongQuangVu_Nhom13
             if (lbThongBao.Text == btnPhanLoai.Text)
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                 DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirm == DialogResult.Yes)
                 {
@@ -399,7 +406,8 @@ namespace LuuCongQuangVu_Nhom13
             else
             {
                 using var dbcontext = new Models.QLThuVienContext();
-                Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                 DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirm == DialogResult.Yes)
                 {
@@ -426,7 +434,8 @@ namespace LuuCongQuangVu_Nhom13
                 {
                     try
                     {
-                        Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                        //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                        Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                         if (acc != null)
                         {
                             acc.Usename = txtTaiKhoan.Text;
@@ -452,7 +461,8 @@ namespace LuuCongQuangVu_Nhom13
                 {
                     try
                     {
-                        Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                        //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                        Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                         if (acc != null)
                         {
                             acc.Usename = txtTaiKhoan.Text;
