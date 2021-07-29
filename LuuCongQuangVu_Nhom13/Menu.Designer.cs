@@ -102,13 +102,15 @@ namespace LuuCongQuangVu_Nhom13
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabQuanLiTheThuVien = new System.Windows.Forms.TabPage();
+            this.tabQuanLyMuonTraSach = new System.Windows.Forms.TabPage();
             this.tabThongKeSach = new System.Windows.Forms.TabPage();
             this.tabBangLuuThongTin = new System.Windows.Forms.TabPage();
             this.tabThongKeDocGia = new System.Windows.Forms.TabPage();
             this.ImageMenu = new System.Windows.Forms.ImageList(this.components);
             this.btnAdmin = new System.Windows.Forms.Button();
             this.miniToolStrip = new System.Windows.Forms.MenuStrip();
-            this.tabQuanLyMuonTraSach = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabQuanLiSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSach)).BeginInit();
@@ -319,13 +321,15 @@ namespace LuuCongQuangVu_Nhom13
             this.tabControl1.Controls.Add(this.tabThongKeSach);
             this.tabControl1.Controls.Add(this.tabBangLuuThongTin);
             this.tabControl1.Controls.Add(this.tabThongKeDocGia);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.tabControl1.ImageList = this.ImageMenu;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Padding = new System.Drawing.Point(14, 5);
+            this.tabControl1.Padding = new System.Drawing.Point(3, 5);
             this.tabControl1.RightToLeftLayout = true;
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.ShowToolTips = true;
@@ -955,6 +959,16 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiTheThuVien.Text = "Quản lí thẻ thư viện";
             this.tabQuanLiTheThuVien.UseVisualStyleBackColor = true;
             // 
+            // tabQuanLyMuonTraSach
+            // 
+            this.tabQuanLyMuonTraSach.ImageKey = "homework.png";
+            this.tabQuanLyMuonTraSach.Location = new System.Drawing.Point(4, 30);
+            this.tabQuanLyMuonTraSach.Name = "tabQuanLyMuonTraSach";
+            this.tabQuanLyMuonTraSach.Size = new System.Drawing.Size(1284, 618);
+            this.tabQuanLyMuonTraSach.TabIndex = 4;
+            this.tabQuanLyMuonTraSach.Text = "Quản lý mượn trả sách";
+            this.tabQuanLyMuonTraSach.UseVisualStyleBackColor = true;
+            // 
             // tabThongKeSach
             // 
             this.tabThongKeSach.ImageKey = "analytics.png";
@@ -1025,15 +1039,25 @@ namespace LuuCongQuangVu_Nhom13
             this.miniToolStrip.Size = new System.Drawing.Size(1284, 24);
             this.miniToolStrip.TabIndex = 0;
             // 
-            // tabQuanLyMuonTraSach
+            // tabPage1
             // 
-            this.tabQuanLyMuonTraSach.ImageKey = "homework.png";
-            this.tabQuanLyMuonTraSach.Location = new System.Drawing.Point(4, 30);
-            this.tabQuanLyMuonTraSach.Name = "tabQuanLyMuonTraSach";
-            this.tabQuanLyMuonTraSach.Size = new System.Drawing.Size(1284, 618);
-            this.tabQuanLyMuonTraSach.TabIndex = 4;
-            this.tabQuanLyMuonTraSach.Text = "Quản lý mượn trả sách";
-            this.tabQuanLyMuonTraSach.UseVisualStyleBackColor = true;
+            this.tabPage1.Location = new System.Drawing.Point(4, 30);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1284, 618);
+            this.tabPage1.TabIndex = 8;
+            this.tabPage1.Text = "Quản lí phòng đọc";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 30);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1284, 618);
+            this.tabPage2.TabIndex = 9;
+            this.tabPage2.Text = "Tạo hoá đơn";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // QuanLiThuVien
             // 
@@ -1138,6 +1162,8 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.ImageList ImageMenu;
         private System.Windows.Forms.TabPage tabQuanLyMuonTraSach;
         private System.Windows.Forms.MenuStrip miniToolStrip;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 

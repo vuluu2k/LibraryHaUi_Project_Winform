@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9Nr/4653W1/Ar9Ev3neT5DK2GzaM6hFkeNKg6uELId+tMolAOY5S94h0q4iSKPqT9WHngE7ptL0w3GzFKLEl+g==",
+  "dgSpecHash": "YQVphUHC1I3wSYvuEgov4zlSdInvuIt7Sc+34zLnrIPflc8lKEPgAnlf0lizWTTBCI4wKrOWu/P3WpU/XoTMFw==",
   "success": true,
-  "projectFilePath": "D:\\BTL_LapTrinhWD\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+  "projectFilePath": "D:\\BTL_LapTrinhWD\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
