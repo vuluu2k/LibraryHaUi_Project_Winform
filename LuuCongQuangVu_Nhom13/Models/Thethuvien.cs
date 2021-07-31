@@ -24,7 +24,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         public DateTime? Ngayhethan { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
-        [InverseProperty(nameof(Docgium.Thethuviens))]
+        //[InverseProperty(nameof(Docgium.Thethuviens))]
         public virtual Docgium IddocgiaNavigation { get; set; }
     }
 }

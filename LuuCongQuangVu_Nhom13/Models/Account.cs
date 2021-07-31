@@ -8,17 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LuuCongQuangVu_Nhom13.Models
 {
-    [Table("account")]
+    [Table("Account")]
     public partial class Account
     {
         [Key]
-        [Column("usename")]
         [StringLength(50)]
         public string Usename { get; set; }
-        [Column("password")]
         [StringLength(50)]
         public string Password { get; set; }
-        [Column("capdo")]
         [StringLength(50)]
         public string Capdo { get; set; }
     }

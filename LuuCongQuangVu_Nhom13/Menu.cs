@@ -440,7 +440,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -476,7 +476,7 @@ namespace LuuCongQuangVu_Nhom13
                         Models.Docgium docgia = new Models.Docgium();
                         docgia.Iddocgia = txtMaDocGia.Text;
                         docgia.Hoten = txtTenDocGia.Text;
-                        docgia.Ngaysinh =dateDocGia.Value;
+                        docgia.NgaySinh =dateDocGia.Value;
                         docgia.Diachi = txtDiaChiDocGia.Text;
                         docgia.Nghenghiep = txtNgheNhiep.Text;
                         docgia.Sodienthoai = txtSDT_DocGia.Text;
@@ -500,7 +500,7 @@ namespace LuuCongQuangVu_Nhom13
             //var idt = dbcontext.Thethuviens.Where(t => t.Iddocgia == txtMaDocGia.Text).ToList();
             //var idm = dbcontext.Muontrasaches.Where(m => m.Iddocgia == txtMaDocGia.Text).ToList();
             Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia==txtMaDocGia.Text select d).FirstOrDefault();
-            var idt = (from t in dbcontext.Thethuviens where t.Iddocgia==txtMaDocGia.Text select t).ToList();
+            //var idt = (from t in dbcontext.Thethuviens where t.Iddocgia==txtMaDocGia.Text select t).ToList();
             var idm = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDocGia.Text select m).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
@@ -511,10 +511,10 @@ namespace LuuCongQuangVu_Nhom13
                     {
                         dbcontext.Muontrasaches.RemoveRange(idm);
                     }
-                    if (idt != null)
-                    {
-                        dbcontext.Thethuviens.RemoveRange(idt);
-                    }
+                    //if (idt != null)
+                    //{
+                    //    dbcontext.Thethuviens.RemoveRange(idt);
+                    //}
                     dbcontext.Docgia.Remove(id);
                     dbcontext.SaveChanges();
                     ReadFileAuthor();
@@ -533,7 +533,7 @@ namespace LuuCongQuangVu_Nhom13
             if (id != null)
             {
                 id.Hoten = txtTenDocGia.Text;
-                id.Ngaysinh = dateDocGia.Value;
+                id.NgaySinh = dateDocGia.Value;
                 id.Diachi = txtDiaChiDocGia.Text;
                 id.Nghenghiep = txtNgheNhiep.Text;
                 id.Sodienthoai = txtSDT_DocGia.Text;
@@ -574,7 +574,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -601,7 +601,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -617,7 +617,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d =>d.Ngaysinh.Value.Date == dateDocGia.Value.Date).ToList();
-                var list_docgia = (from d in dbcontext.Docgia where d.Ngaysinh.Value.Date == dateDocGia.Value.Date select d).ToList();
+                var list_docgia = (from d in dbcontext.Docgia where d.NgaySinh.Value.Date == dateDocGia.Value.Date select d).ToList();
                 if (list_docgia != null)
                 {
                     dgvDocGia.Rows.Clear();
@@ -628,7 +628,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -655,7 +655,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -682,7 +682,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -709,7 +709,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.Ngaysinh.Value;
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;

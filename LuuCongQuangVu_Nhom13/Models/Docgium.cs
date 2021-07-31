@@ -8,37 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LuuCongQuangVu_Nhom13.Models
 {
-    [Table("docgia")]
     public partial class Docgium
     {
         public Docgium()
         {
+            HoaDons = new HashSet<HoaDon>();
             Muontrasaches = new HashSet<Muontrasach>();
-            Thethuviens = new HashSet<Thethuvien>();
+            QuanLiDocGia = new HashSet<QuanLiDocGium>();
         }
 
         [Key]
-        [Column("iddocgia")]
         [StringLength(4)]
         public string Iddocgia { get; set; }
-        [Column("hoten")]
         [StringLength(50)]
         public string Hoten { get; set; }
-        [Column("ngaysinh", TypeName = "datetime")]
-        public DateTime? Ngaysinh { get; set; }
-        [Column("diachi")]
+        [Column(TypeName = "datetime")]
+        public DateTime? NgaySinh { get; set; }
         [StringLength(100)]
         public string Diachi { get; set; }
-        [Column("nghenghiep")]
         [StringLength(50)]
         public string Nghenghiep { get; set; }
-        [Column("sodienthoai")]
         [StringLength(11)]
         public string Sodienthoai { get; set; }
 
+        [InverseProperty(nameof(HoaDon.IddocgiaNavigation))]
+        public virtual ICollection<HoaDon> HoaDons { get; set; }
         [InverseProperty(nameof(Muontrasach.IddocgiaNavigation))]
         public virtual ICollection<Muontrasach> Muontrasaches { get; set; }
-        [InverseProperty(nameof(Thethuvien.IddocgiaNavigation))]
-        public virtual ICollection<Thethuvien> Thethuviens { get; set; }
+        [InverseProperty(nameof(QuanLiDocGium.IddocgiaNavigation))]
+        public virtual ICollection<QuanLiDocGium> QuanLiDocGia { get; set; }
     }
 }

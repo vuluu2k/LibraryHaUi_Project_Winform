@@ -8,22 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LuuCongQuangVu_Nhom13.Models
 {
-    [Table("muontrasach")]
+    [Table("Muontrasach")]
     public partial class Muontrasach
     {
         [Key]
-        [Column("iddocgia")]
         [StringLength(4)]
         public string Iddocgia { get; set; }
         [Key]
-        [Column("idsach")]
         [StringLength(4)]
         public string Idsach { get; set; }
-        [Column("ngaymuon", TypeName = "datetime")]
+        [Column(TypeName = "datetime")]
         public DateTime? Ngaymuon { get; set; }
-        [Column("ngayhentra", TypeName = "datetime")]
+        [Column(TypeName = "datetime")]
         public DateTime? Ngayhentra { get; set; }
-        [Column("ngaythuctra", TypeName = "datetime")]
+        [Column(TypeName = "datetime")]
         public DateTime? Ngaythuctra { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
