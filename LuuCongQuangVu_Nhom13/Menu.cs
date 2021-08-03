@@ -12,15 +12,58 @@ namespace LuuCongQuangVu_Nhom13
 {
     public partial class QuanLiThuVien : Form
     {
+        #region Common
+        Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
+        int index=0;
+        #endregion
         public QuanLiThuVien()
         {
 
             InitializeComponent();
         }
+        private void QuanLiThuVien_Load(object sender, EventArgs e)
+        {
+            if (this.Text == "Admin") btnAdmin.Visible = true;
+
+            cbMaDG.DataSource = dbcontext.Docgia.ToList();
+            cbMaDG.DisplayMember = "Iddocgia";
+            cbMaDG.ValueMember = "Iddocgia";
+            cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
+            cbMaSach_lhd.DisplayMember = "Tensach";
+            cbMaSach_lhd.ValueMember = "Idsach";
+        }
+        #region Admin, Logout, Exists
+        private void btndangxuat_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show("Bạn muốn đăng xuất ?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                this.Hide();
+                Login login = new Login();
+                login.Show();
+            }
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show("Bạn có muốn thoát không ?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        private void btnAdmin_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Admin().Show();
+        }
+        #endregion
+        #region Quản lí sách
         //----------------------------Quản lý sách-------------------------------------------------------------------------------------------------------------
         private void ReadFile()
         {
-            using var dbcontext = new Models.QLThuVienContext();
+            //using var dbcontext = new Models.QLThuVienContext();
             var list_sach = dbcontext.Saches.ToList();
             if (list_sach != null)
             {
@@ -73,8 +116,8 @@ namespace LuuCongQuangVu_Nhom13
             }
             else
             {
-                using (var dbcontext = new Models.QLThuVienContext())
-                {
+                //using (var dbcontext = new Models.QLThuVienContext())
+                //{
                     try
                     {
                         Models.Sach sach = new Models.Sach();
@@ -96,12 +139,12 @@ namespace LuuCongQuangVu_Nhom13
                         MessageBox.Show("Dữ liệu đầu vào bảng sai");
                     }
 
-                }
+                //}
             }
         }
         private void DelBook()
         {
-            using var dbcontext = new Models.QLThuVienContext();
+            //using var dbcontext = new Models.QLThuVienContext();
             //Models.Sach id = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
             //var idm = dbcontext.Muontrasaches.Where(m => m.Idsach == txtmasach.Text).ToList();
             Models.Sach id = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
@@ -127,7 +170,7 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void UpdateBook()
         {
-            using var dbcontext = new Models.QLThuVienContext();
+            //using var dbcontext = new Models.QLThuVienContext();
             //Models.Sach sach = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
             Models.Sach sach = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
             if (sach != null)
@@ -155,7 +198,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (rdmasach.Checked)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book=>book.Idsach==txtmasach.Text).ToList();
                 var list_sach = (from book in dbcontext.Saches where book.Idsach == txtmasach.Text select book).ToList();
                 if (list_sach != null)
@@ -185,7 +228,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (rdtensach.Checked)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Tensach == txttensach.Text).ToList();
                 var list_sach = (from book in dbcontext.Saches where book.Tensach == txttensach.Text select book).ToList();
                 if (list_sach != null)
@@ -215,7 +258,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (rdtacgia.Checked)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Tacgia == txttacgia.Text).ToList();
                 var list_sach = (from book in dbcontext.Saches where book.Tacgia == txttacgia.Text select book).ToList();
                 if (list_sach != null)
@@ -245,7 +288,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (rdtheloai.Checked)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Theloai == txttheloai.Text).ToList();
                 var list_sach = (from book in dbcontext.Saches where book.Theloai == txttheloai.Text select book).ToList();
                 if (list_sach != null)
@@ -275,7 +318,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (rdnxb.Checked)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Nhaxuatban == txtnhasx.Text).ToList();
                 var list_sach = (from book in dbcontext.Saches where book.Nhaxuatban == txtnhasx.Text select book).ToList();
                 if (list_sach != null)
@@ -305,7 +348,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (rdvitri.Checked)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Vitri == cbvitri.Text).ToList();
                 var list_sach = (from book in dbcontext.Saches where book.Vitri == cbvitri.Text select book).ToList();
                 if (list_sach != null)
@@ -375,27 +418,6 @@ namespace LuuCongQuangVu_Nhom13
         {
             Clear();
         }
-
-        private void btndangxuat_Click(object sender, EventArgs e)
-        {
-            DialogResult confirm = MessageBox.Show("Bạn muốn đăng xuất ?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (confirm == DialogResult.Yes)
-            {
-                this.Hide();
-                Login login = new Login();
-                login.Show();
-            }
-        }
-
-        private void btnThoat_Click(object sender, EventArgs e)
-        {
-            DialogResult confirm = MessageBox.Show("Bạn có muốn thoát không ?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (confirm == DialogResult.Yes)
-            {
-                Environment.Exit(0);
-            }
-        }
-
         private void Cell_Click_QLbook(object sender, DataGridViewCellEventArgs e)
         {
             int index = dgvSach.SelectedCells[0].RowIndex;
@@ -409,26 +431,12 @@ namespace LuuCongQuangVu_Nhom13
             txtnhasx.Text = Convert.ToString(row.Cells[6].Value);
             cbvitri.Text = Convert.ToString(row.Cells[7].Value);
         }
-
-        private void btnAdmin_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            new Admin().Show();
-        }
-
-        private void tabQuanLiSach_Click(object sender, EventArgs e)
-        {
-             
-        }
-
-        private void QuanLiThuVien_Load(object sender, EventArgs e)
-        {
-            if (this.Text == "Admin") btnAdmin.Visible = true;
-        }
+        #endregion
+        #region Quản lí độc giả
         //------------------Quản lí độc giả--------------------------------------------------------------------------------------------------------------------
         private void ReadFileAuthor()
         {
-            using var dbcontext = new Models.QLThuVienContext();
+            //using var dbcontext = new Models.QLThuVienContext();
             var list_docgia = dbcontext.Docgia.ToList();
             if (list_docgia != null)
             {
@@ -469,8 +477,8 @@ namespace LuuCongQuangVu_Nhom13
             }
             else
             {
-                using (var dbcontext = new Models.QLThuVienContext())
-                {
+                //using (var dbcontext = new Models.QLThuVienContext())
+                //{
                     try
                     {
                         Models.Docgium docgia = new Models.Docgium();
@@ -490,12 +498,12 @@ namespace LuuCongQuangVu_Nhom13
                         MessageBox.Show("Dữ liệu đầu vào bảng sai");
                     }
 
-                }
+                //}
             }
         }
         private void DelAuthor()
         {
-            using var dbcontext = new Models.QLThuVienContext();
+            //using var dbcontext = new Models.QLThuVienContext();
             //Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
             //var idt = dbcontext.Thethuviens.Where(t => t.Iddocgia == txtMaDocGia.Text).ToList();
             //var idm = dbcontext.Muontrasaches.Where(m => m.Iddocgia == txtMaDocGia.Text).ToList();
@@ -527,7 +535,7 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void UpdateAuthor()
         {
-            using var dbcontext = new Models.QLThuVienContext();
+            //using var dbcontext = new Models.QLThuVienContext();
             //Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
             Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia == txtMaDocGia.Text select d ).FirstOrDefault();
             if (id != null)
@@ -561,7 +569,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (cbTimKiem.SelectedIndex==0)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d=>d.Iddocgia==txtMaDocGia.Text).ToList();
                 var list_docgia = (from d in dbcontext.Docgia where d.Iddocgia==txtMaDocGia.Text select d).ToList();
                 if (list_docgia != null)
@@ -588,7 +596,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (cbTimKiem.SelectedIndex == 1)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d => d.Hoten == txtTenDocGia.Text).ToList();
                 var list_docgia = (from d in dbcontext.Docgia where d.Hoten == txtTenDocGia.Text select d).ToList();
                 if (list_docgia != null)
@@ -615,7 +623,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (cbTimKiem.SelectedIndex == 2)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d =>d.Ngaysinh.Value.Date == dateDocGia.Value.Date).ToList();
                 var list_docgia = (from d in dbcontext.Docgia where d.NgaySinh.Value.Date == dateDocGia.Value.Date select d).ToList();
                 if (list_docgia != null)
@@ -642,7 +650,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (cbTimKiem.SelectedIndex == 3)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d => d.Diachi == txtDiaChiDocGia.Text).ToList();
                 var list_docgia = (from d in dbcontext.Docgia where d.Diachi == txtDiaChiDocGia.Text select d).ToList();
                 if (list_docgia != null)
@@ -669,7 +677,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (cbTimKiem.SelectedIndex == 4)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d => d.Nghenghiep == txtNgheNhiep.Text).ToList();
                 var list_docgia = (from d in dbcontext.Docgia where d.Nghenghiep == txtNgheNhiep.Text select d).ToList();
                 if (list_docgia != null)
@@ -696,7 +704,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (cbTimKiem.SelectedIndex == 5)
             {
-                using var dbcontext = new Models.QLThuVienContext();
+                //using var dbcontext = new Models.QLThuVienContext();
                 //var list_docgia = dbcontext.Docgia.Where(d => d.Sodienthoai == txtSDT_DocGia.Text).ToList();
                 var list_docgia = (from d in dbcontext.Docgia where d.Sodienthoai == txtSDT_DocGia.Text select d).ToList();
                 if (list_docgia != null)
@@ -763,5 +771,112 @@ namespace LuuCongQuangVu_Nhom13
             txtNgheNhiep.Text = Convert.ToString(row.Cells[4].Value);
             txtSDT_DocGia.Text = Convert.ToString(row.Cells[5].Value);
         }
+        #endregion
+        #region Quản lí bán sách
+        // Lập hoá đơn
+        private void AddBookBuy()
+        {
+            Models.Sach book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.SelectedValue.ToString() select b).FirstOrDefault();
+            if (book != null)
+            {
+                dgvLHD.ColumnCount = 5;
+                dgvLHD.Rows.Add();
+                dgvLHD.Rows[index].Cells[0].Value = book.Idsach;
+                dgvLHD.Rows[index].Cells[1].Value = book.Tensach;
+                dgvLHD.Rows[index].Cells[2].Value = txtsoluongmua_lhd.Text;
+                dgvLHD.Rows[index].Cells[3].Value = book.Giasach;
+                dgvLHD.Rows[index].Cells[4].Value = int.Parse(txtsoluongmua_lhd.Text) * book.Giasach;
+                //MessageBox.Show(Convert.ToString(dgvLHD.Rows[index].Cells[0].Value));
+                index++;
+                cbMaSach_lhd.Text = "";
+                txtsoluongmua_lhd.Clear();
+                cbMaSach_lhd.Focus();
+                //MessageBox.Show(dgvLHD.RowCount.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Không có mã sản sách này", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbMaSach_lhd.Text = "";
+                cbMaSach_lhd.Focus();
+            }
+        }
+        private void dgvLHD_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index_lhd = dgvLHD.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dgvLHD.Rows[index_lhd];
+            cbMaSach_lhd.Text = Convert.ToString(row.Cells[1].Value);
+            txtsoluongmua_lhd.Text = Convert.ToString(row.Cells[2].Value);
+            //Cell_Click_LHD = index_lhd;
+        }
+        private void UpdateBookBuy()
+        {
+            Models.Sach book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.SelectedValue.ToString() select b).FirstOrDefault();
+            if (book != null)
+            {
+                dgvLHD.ColumnCount = 5;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[0].Value = book.Idsach;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[1].Value = book.Tensach;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[2].Value = txtsoluongmua_lhd.Text;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[3].Value = book.Giasach;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[4].Value = int.Parse(txtsoluongmua_lhd.Text) * book.Giasach;
+                //MessageBox.Show(Convert.ToString(dgvLHD.Rows[index].Cells[0].Value));
+                //cbMaSach_lhd.Text = "";
+                //txtsoluongmua_lhd.Clear();
+                //cbMaSach_lhd.Focus();
+                //MessageBox.Show(dgvLHD.RowCount.ToString());
+            }
+            else
+            {
+                MessageBox.Show("Không có mã sản sách này", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbMaSach_lhd.Text = "";
+                cbMaSach_lhd.Focus();
+            }
+        }
+        private void DelBookBuy()
+        {
+            dgvLHD.Rows.RemoveAt(dgvLHD.SelectedCells[0].RowIndex);
+        }
+       
+        private void CreateBill()
+        {
+            Models.HoaDon hd = new Models.HoaDon();
+            hd.MaHd = txtMaHD.Text;
+            hd.Iddocgia = cbMaDG.SelectedValue.ToString();
+            hd.NguoiLap = "Lưu Công Quang Vũ";
+            hd.NgayLap = dtimeNgayLap.Value;
+            dbcontext.HoaDons.Add(hd);
+            for (int i = 0; i < dgvLHD.RowCount-1; i++)
+            {
+                //MessageBox.Show(Convert.ToString(dgvLHD.Rows[i].Cells[0].Value));
+                Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
+                hdct.MaHd = hd.MaHd;
+                hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
+                hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
+                dbcontext.HoaDonChiTiets.Add(hdct);
+            }
+            dbcontext.SaveChanges();
+            MessageBox.Show("Lập hoá đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        private void btnThemSachMua_Click(object sender, EventArgs e)
+        {
+            AddBookBuy();
+        }
+        private void btnSuaSachMua_Click(object sender, EventArgs e)
+        {
+            UpdateBookBuy();
+        }
+        private void btnXoaSachMua_Click(object sender, EventArgs e)
+        {
+            DelBookBuy();
+        }
+        private void btnLapHD_Click(object sender, EventArgs e)
+        {
+            CreateBill();
+        }
+
+        #endregion
+
+       
     }
 }
