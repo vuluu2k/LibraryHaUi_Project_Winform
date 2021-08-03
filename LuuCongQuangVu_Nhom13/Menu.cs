@@ -15,6 +15,13 @@ namespace LuuCongQuangVu_Nhom13
         #region Common
         Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
         int index=0;
+        String laster_hd;
+        private void RefeshInforHD()
+        {
+            cbTimKiemMaHD.DataSource = dbcontext.HoaDons.ToList();
+            cbTimKiemMaHD.DisplayMember = "MaHD";
+            cbTimKiemMaHD.ValueMember = "MaHD";
+        }
         #endregion
         public QuanLiThuVien()
         {
@@ -31,6 +38,7 @@ namespace LuuCongQuangVu_Nhom13
             cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
             cbMaSach_lhd.DisplayMember = "Tensach";
             cbMaSach_lhd.ValueMember = "Idsach";
+            RefeshInforHD();
         }
         #region Admin, Logout, Exists
         private void btndangxuat_Click(object sender, EventArgs e)
@@ -772,7 +780,7 @@ namespace LuuCongQuangVu_Nhom13
             txtSDT_DocGia.Text = Convert.ToString(row.Cells[5].Value);
         }
         #endregion
-        #region Quản lí bán sách
+        #region Quản lí bán sách>Lập hoá đơn
         // Lập hoá đơn
         private void AddBookBuy()
         {
@@ -856,6 +864,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             dbcontext.SaveChanges();
             MessageBox.Show("Lập hoá đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            laster_hd = txtMaHD.Text;
         }
         
         private void btnThemSachMua_Click(object sender, EventArgs e)
@@ -875,8 +884,145 @@ namespace LuuCongQuangVu_Nhom13
             CreateBill();
         }
 
+
+        #endregion
+        #region Quản lí bán sách>Thông tin hoá đơn độc giả
+        private void btnFirstHD_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(laster_hd);
+            Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == laster_hd select h).FirstOrDefault();
+            var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == laster_hd select hct).ToList();
+            Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == hd.Iddocgia select d).FirstOrDefault();
+            lbInforMaHD.Text = hd.MaHd;
+            lbInforMaDG.Text = hd.Iddocgia;
+            lbInforNLap.Text = hd.NguoiLap;
+            lbNgayLap.Text = hd.NgayLap.ToString();
+            lbInforTenDG.Text = dg.Hoten;
+            dgvInforHD.Rows.Clear();
+            dgvInforHD.ColumnCount = 5;
+            int index_inforHD = 0;
+            double SumMoney = 0;
+            foreach(var item in hdct)
+            {
+                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == item.Idsach select b).FirstOrDefault();
+                dgvInforHD.Rows.Add();
+                dgvInforHD.Rows[index_inforHD].Cells[0].Value = item.Idsach;
+                dgvInforHD.Rows[index_inforHD].Cells[1].Value = book.Tensach;
+                dgvInforHD.Rows[index_inforHD].Cells[2].Value = item.SoLuongMua;
+                dgvInforHD.Rows[index_inforHD].Cells[3].Value = book.Giasach;
+                dgvInforHD.Rows[index_inforHD].Cells[4].Value = item.SoLuongMua * book.Giasach;
+                SumMoney += item.SoLuongMua.Value*book.Giasach.Value;
+                index_inforHD++;
+            }
+            lbTongTien.Text = SumMoney.ToString();
+        }
+        private void btnInforXoa_Click(object sender, EventArgs e)
+        {
+            Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == lbInforMaHD.Text select h).FirstOrDefault();
+            var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == lbInforMaHD.Text select hct).ToList();
+            if (hd != null)
+            {
+                if (hdct != null)
+                {
+                    dbcontext.RemoveRange(hdct);
+                }
+                dbcontext.Remove(hd);
+                dbcontext.SaveChanges();
+                lbInforMaHD.Text = "";
+                lbInforMaDG.Text = "";
+                lbInforNLap.Text = "";
+                lbInforTenDG.Text = "";
+                lbNgayLap.Text = "";
+                lbTongTien.Text = "0";
+                dgvInforHD.Rows.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Không có mã hoá đơn này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);//not working because it always get id
+            }
+        }
+        private void btnRefeshInforHD_Click(object sender, EventArgs e)
+        {
+            RefeshInforHD();
+        }
+        private void btnTimKiem_InforHD_Click(object sender, EventArgs e)
+        {
+            Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == cbTimKiemMaHD.Text select h).FirstOrDefault();
+            var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == cbTimKiemMaHD.Text select hct).ToList();
+            Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == hd.Iddocgia select d).FirstOrDefault();
+            lbInforMaHD.Text = hd.MaHd;
+            lbInforMaDG.Text = hd.Iddocgia;
+            lbInforNLap.Text = hd.NguoiLap;
+            lbNgayLap.Text = hd.NgayLap.ToString();
+            lbInforTenDG.Text = dg.Hoten;
+            dgvInforHD.Rows.Clear();
+            dgvInforHD.ColumnCount = 5;
+            int index_inforHD = 0;
+            double SumMoney = 0;
+            foreach (var item in hdct)
+            {
+                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == item.Idsach select b).FirstOrDefault();
+                dgvInforHD.Rows.Add();
+                dgvInforHD.Rows[index_inforHD].Cells[0].Value = item.Idsach;
+                dgvInforHD.Rows[index_inforHD].Cells[1].Value = book.Tensach;
+                dgvInforHD.Rows[index_inforHD].Cells[2].Value = item.SoLuongMua;
+                dgvInforHD.Rows[index_inforHD].Cells[3].Value = book.Giasach;
+                dgvInforHD.Rows[index_inforHD].Cells[4].Value = item.SoLuongMua * book.Giasach;
+                SumMoney += item.SoLuongMua.Value*book.Giasach.Value;
+                index_inforHD++;
+            }
+            lbTongTien.Text = SumMoney.ToString();
+        }
+        #endregion
+        #region Quản lí bán sách>Lịch sử bán sách
+        private void btnDDLhistory_Click(object sender, EventArgs e)
+        {
+            var hds = (from h in dbcontext.HoaDons
+                       join dg in dbcontext.Docgia on h.Iddocgia equals dg.Iddocgia
+                       select new
+                       {
+                           mahd = h.MaHd,
+                           madg = h.Iddocgia,
+                           tendg = dg.Hoten,
+                           nguoilap = h.NguoiLap,
+                           ngaylap = h.NgayLap
+                       }).ToList();
+            dgvHistoryBS.Rows.Clear();
+            dgvHistoryBS.ColumnCount = 7;
+            int index_historybs = 0;
+            foreach (var item in hds)
+            {
+                var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                double SumMoney = 0;
+                foreach (var child_item in hdcts)
+                {
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                    SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                }
+                dgvHistoryBS.Rows.Add();
+                dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.madg;
+                dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.tendg;
+                dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                if (days == 0)
+                {
+                    dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                }
+                else if (0 < days && days < 30)
+                {
+                    dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                }
+                else
+                {
+                    dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                }
+                index_historybs++;
+            }
+        }
         #endregion
 
-       
     }
 }

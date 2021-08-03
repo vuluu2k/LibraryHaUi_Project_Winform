@@ -128,7 +128,45 @@ namespace LuuCongQuangVu_Nhom13
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.lbTongTien = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.btnRefeshInforHD = new System.Windows.Forms.Button();
+            this.cbTimKiemMaHD = new System.Windows.Forms.ComboBox();
+            this.lbNgayLap = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.btnInforXoa = new System.Windows.Forms.Button();
+            this.btnFirstHD = new System.Windows.Forms.Button();
+            this.lbInforTenDG = new System.Windows.Forms.Label();
+            this.lbInforMaDG = new System.Windows.Forms.Label();
+            this.lbInforNLap = new System.Windows.Forms.Label();
+            this.lbInforMaHD = new System.Windows.Forms.Label();
+            this.btnTimKiem_InforHD = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.dgvInforHD = new System.Windows.Forms.DataGridView();
+            this.inforIdSach = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inforTenSach = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inforSoLuongMua = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inforDonGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inforThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.dtimeEnd = new System.Windows.Forms.DateTimePicker();
+            this.label28 = new System.Windows.Forms.Label();
+            this.dtimeStart = new System.Windows.Forms.DateTimePicker();
+            this.label27 = new System.Windows.Forms.Label();
+            this.btnLayDL = new System.Windows.Forms.Button();
+            this.btnDDLhistory = new System.Windows.Forms.Button();
+            this.dgvHistoryBS = new System.Windows.Forms.DataGridView();
+            this.historyMaHD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.historyMaDG = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.historyTenDG = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.historyTienTra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.historyNguoiLap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.historyNgayLap = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.historyTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImageMenu = new System.Windows.Forms.ImageList(this.components);
             this.tabQuanLyMuonTraSach = new System.Windows.Forms.TabPage();
             this.tabThongKeSach = new System.Windows.Forms.TabPage();
@@ -137,7 +175,6 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnAdmin = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.MainTabCT.SuspendLayout();
             this.tabQuanLiSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSach)).BeginInit();
@@ -150,7 +187,9 @@ namespace LuuCongQuangVu_Nhom13
             ((System.ComponentModel.ISupportInitialize)(this.dgvLHD)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInforHD)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoryBS)).BeginInit();
             this.SuspendLayout();
             // 
             // btndangxuat
@@ -998,10 +1037,10 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // ChildTabCT
             // 
+            this.ChildTabCT.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.ChildTabCT.Controls.Add(this.tabPage3);
             this.ChildTabCT.Controls.Add(this.tabPage5);
             this.ChildTabCT.Controls.Add(this.tabPage4);
-            this.ChildTabCT.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ChildTabCT.ImageList = this.ImageMenu;
             this.ChildTabCT.Location = new System.Drawing.Point(3, 3);
             this.ChildTabCT.Multiline = true;
@@ -1021,7 +1060,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage3.Controls.Add(this.groupBox2);
             this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.ImageKey = "homework.png";
-            this.tabPage3.Location = new System.Drawing.Point(4, 32);
+            this.tabPage3.Location = new System.Drawing.Point(4, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(1270, 576);
@@ -1032,7 +1071,7 @@ namespace LuuCongQuangVu_Nhom13
             // btnLapHD
             // 
             this.btnLapHD.BackColor = System.Drawing.Color.Orange;
-            this.btnLapHD.Location = new System.Drawing.Point(588, 491);
+            this.btnLapHD.Location = new System.Drawing.Point(585, 505);
             this.btnLapHD.Name = "btnLapHD";
             this.btnLapHD.Size = new System.Drawing.Size(130, 40);
             this.btnLapHD.TabIndex = 2;
@@ -1110,7 +1149,7 @@ namespace LuuCongQuangVu_Nhom13
             // btnThemSachMua
             // 
             this.btnThemSachMua.BackColor = System.Drawing.Color.Orange;
-            this.btnThemSachMua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Add;
+            this.btnThemSachMua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Create;
             this.btnThemSachMua.Location = new System.Drawing.Point(31, 148);
             this.btnThemSachMua.Name = "btnThemSachMua";
             this.btnThemSachMua.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -1261,8 +1300,26 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.tabPage5.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabPage5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.tabPage5.Controls.Add(this.dataGridView1);
-            this.tabPage5.Location = new System.Drawing.Point(4, 32);
+            this.tabPage5.Controls.Add(this.lbTongTien);
+            this.tabPage5.Controls.Add(this.label26);
+            this.tabPage5.Controls.Add(this.btnRefeshInforHD);
+            this.tabPage5.Controls.Add(this.cbTimKiemMaHD);
+            this.tabPage5.Controls.Add(this.lbNgayLap);
+            this.tabPage5.Controls.Add(this.label25);
+            this.tabPage5.Controls.Add(this.btnInforXoa);
+            this.tabPage5.Controls.Add(this.btnFirstHD);
+            this.tabPage5.Controls.Add(this.lbInforTenDG);
+            this.tabPage5.Controls.Add(this.lbInforMaDG);
+            this.tabPage5.Controls.Add(this.lbInforNLap);
+            this.tabPage5.Controls.Add(this.lbInforMaHD);
+            this.tabPage5.Controls.Add(this.btnTimKiem_InforHD);
+            this.tabPage5.Controls.Add(this.label24);
+            this.tabPage5.Controls.Add(this.label23);
+            this.tabPage5.Controls.Add(this.label22);
+            this.tabPage5.Controls.Add(this.label21);
+            this.tabPage5.Controls.Add(this.label20);
+            this.tabPage5.Controls.Add(this.dgvInforHD);
+            this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(1270, 576);
@@ -1270,18 +1327,352 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage5.Text = "Thông tin hoá đơn độc giả";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // lbTongTien
+            // 
+            this.lbTongTien.AutoSize = true;
+            this.lbTongTien.Location = new System.Drawing.Point(841, 432);
+            this.lbTongTien.Name = "lbTongTien";
+            this.lbTongTien.Size = new System.Drawing.Size(16, 17);
+            this.lbTongTien.TabIndex = 18;
+            this.lbTongTien.Text = "0";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(755, 432);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(80, 17);
+            this.label26.TabIndex = 17;
+            this.label26.Text = "Tổng tiền :";
+            // 
+            // btnRefeshInforHD
+            // 
+            this.btnRefeshInforHD.ForeColor = System.Drawing.Color.Transparent;
+            this.btnRefeshInforHD.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Tick;
+            this.btnRefeshInforHD.Location = new System.Drawing.Point(974, 477);
+            this.btnRefeshInforHD.Name = "btnRefeshInforHD";
+            this.btnRefeshInforHD.Size = new System.Drawing.Size(35, 35);
+            this.btnRefeshInforHD.TabIndex = 16;
+            this.btnRefeshInforHD.UseVisualStyleBackColor = true;
+            this.btnRefeshInforHD.Click += new System.EventHandler(this.btnRefeshInforHD_Click);
+            // 
+            // cbTimKiemMaHD
+            // 
+            this.cbTimKiemMaHD.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.cbTimKiemMaHD.FormattingEnabled = true;
+            this.cbTimKiemMaHD.Location = new System.Drawing.Point(838, 479);
+            this.cbTimKiemMaHD.Name = "cbTimKiemMaHD";
+            this.cbTimKiemMaHD.Size = new System.Drawing.Size(121, 30);
+            this.cbTimKiemMaHD.TabIndex = 15;
+            // 
+            // lbNgayLap
+            // 
+            this.lbNgayLap.AutoSize = true;
+            this.lbNgayLap.Location = new System.Drawing.Point(832, 77);
+            this.lbNgayLap.Name = "lbNgayLap";
+            this.lbNgayLap.Size = new System.Drawing.Size(0, 17);
+            this.lbNgayLap.TabIndex = 14;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(762, 77);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(73, 17);
+            this.label25.TabIndex = 13;
+            this.label25.Text = "Ngày lập :";
+            // 
+            // btnInforXoa
+            // 
+            this.btnInforXoa.BackColor = System.Drawing.Color.Orange;
+            this.btnInforXoa.Location = new System.Drawing.Point(530, 473);
+            this.btnInforXoa.Name = "btnInforXoa";
+            this.btnInforXoa.Size = new System.Drawing.Size(136, 40);
+            this.btnInforXoa.TabIndex = 12;
+            this.btnInforXoa.Text = "Xoá hoá đơn trên";
+            this.btnInforXoa.UseVisualStyleBackColor = false;
+            this.btnInforXoa.Click += new System.EventHandler(this.btnInforXoa_Click);
+            // 
+            // btnFirstHD
+            // 
+            this.btnFirstHD.BackColor = System.Drawing.Color.Orange;
+            this.btnFirstHD.Location = new System.Drawing.Point(243, 473);
+            this.btnFirstHD.Name = "btnFirstHD";
+            this.btnFirstHD.Size = new System.Drawing.Size(136, 40);
+            this.btnFirstHD.TabIndex = 11;
+            this.btnFirstHD.Text = "Hoá đơn vừa lập";
+            this.btnFirstHD.UseVisualStyleBackColor = false;
+            this.btnFirstHD.Click += new System.EventHandler(this.btnFirstHD_Click);
+            // 
+            // lbInforTenDG
+            // 
+            this.lbInforTenDG.AutoSize = true;
+            this.lbInforTenDG.Location = new System.Drawing.Point(579, 77);
+            this.lbInforTenDG.Name = "lbInforTenDG";
+            this.lbInforTenDG.Size = new System.Drawing.Size(0, 17);
+            this.lbInforTenDG.TabIndex = 10;
+            // 
+            // lbInforMaDG
+            // 
+            this.lbInforMaDG.AutoSize = true;
+            this.lbInforMaDG.Location = new System.Drawing.Point(348, 77);
+            this.lbInforMaDG.Name = "lbInforMaDG";
+            this.lbInforMaDG.Size = new System.Drawing.Size(0, 17);
+            this.lbInforMaDG.TabIndex = 9;
+            // 
+            // lbInforNLap
+            // 
+            this.lbInforNLap.AutoSize = true;
+            this.lbInforNLap.Location = new System.Drawing.Point(579, 29);
+            this.lbInforNLap.Name = "lbInforNLap";
+            this.lbInforNLap.Size = new System.Drawing.Size(0, 17);
+            this.lbInforNLap.TabIndex = 8;
+            // 
+            // lbInforMaHD
+            // 
+            this.lbInforMaHD.AutoSize = true;
+            this.lbInforMaHD.Location = new System.Drawing.Point(348, 29);
+            this.lbInforMaHD.Name = "lbInforMaHD";
+            this.lbInforMaHD.Size = new System.Drawing.Size(0, 17);
+            this.lbInforMaHD.TabIndex = 7;
+            // 
+            // btnTimKiem_InforHD
+            // 
+            this.btnTimKiem_InforHD.BackColor = System.Drawing.Color.Orange;
+            this.btnTimKiem_InforHD.Location = new System.Drawing.Point(747, 474);
+            this.btnTimKiem_InforHD.Name = "btnTimKiem_InforHD";
+            this.btnTimKiem_InforHD.Size = new System.Drawing.Size(85, 40);
+            this.btnTimKiem_InforHD.TabIndex = 5;
+            this.btnTimKiem_InforHD.Text = "Tìm kiếm";
+            this.btnTimKiem_InforHD.UseVisualStyleBackColor = false;
+            this.btnTimKiem_InforHD.Click += new System.EventHandler(this.btnTimKiem_InforHD_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(488, 29);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(80, 17);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "Người lập :";
+            // 
+            // label23
+            // 
+            this.label23.Location = new System.Drawing.Point(0, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(100, 23);
+            this.label23.TabIndex = 0;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(488, 77);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(93, 17);
+            this.label22.TabIndex = 3;
+            this.label22.Text = "Tên độc giả :";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(243, 77);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(89, 17);
+            this.label21.TabIndex = 2;
+            this.label21.Text = "Mã độc giả :";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(243, 29);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(94, 17);
+            this.label20.TabIndex = 1;
+            this.label20.Text = "Mã hoá đơn :";
+            // 
+            // dgvInforHD
+            // 
+            this.dgvInforHD.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(142)))), ((int)(((byte)(72)))));
+            this.dgvInforHD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvInforHD.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvInforHD.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.inforIdSach,
+            this.inforTenSach,
+            this.inforSoLuongMua,
+            this.inforDonGia,
+            this.inforThanhTien});
+            this.dgvInforHD.Location = new System.Drawing.Point(243, 127);
+            this.dgvInforHD.Name = "dgvInforHD";
+            this.dgvInforHD.RowTemplate.Height = 25;
+            this.dgvInforHD.Size = new System.Drawing.Size(771, 283);
+            this.dgvInforHD.TabIndex = 0;
+            // 
+            // inforIdSach
+            // 
+            this.inforIdSach.HeaderText = "Mã sách";
+            this.inforIdSach.Name = "inforIdSach";
+            this.inforIdSach.Width = 120;
+            // 
+            // inforTenSach
+            // 
+            this.inforTenSach.HeaderText = "Tên sách";
+            this.inforTenSach.Name = "inforTenSach";
+            this.inforTenSach.Width = 250;
+            // 
+            // inforSoLuongMua
+            // 
+            this.inforSoLuongMua.HeaderText = "Số lượng mua";
+            this.inforSoLuongMua.Name = "inforSoLuongMua";
+            this.inforSoLuongMua.Width = 120;
+            // 
+            // inforDonGia
+            // 
+            this.inforDonGia.HeaderText = "Đơn giá ";
+            this.inforDonGia.Name = "inforDonGia";
+            this.inforDonGia.Width = 120;
+            // 
+            // inforThanhTien
+            // 
+            this.inforThanhTien.HeaderText = "Thành Tiền";
+            this.inforThanhTien.Name = "inforThanhTien";
+            this.inforThanhTien.Width = 120;
+            // 
             // tabPage4
             // 
             this.tabPage4.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabPage4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tabPage4.Controls.Add(this.dtimeEnd);
+            this.tabPage4.Controls.Add(this.label28);
+            this.tabPage4.Controls.Add(this.dtimeStart);
+            this.tabPage4.Controls.Add(this.label27);
+            this.tabPage4.Controls.Add(this.btnLayDL);
+            this.tabPage4.Controls.Add(this.btnDDLhistory);
+            this.tabPage4.Controls.Add(this.dgvHistoryBS);
             this.tabPage4.ImageKey = "statistics.png";
-            this.tabPage4.Location = new System.Drawing.Point(4, 32);
+            this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(1270, 576);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Lịch sử bán sách";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // dtimeEnd
+            // 
+            this.dtimeEnd.CustomFormat = "dd-MM-yyyy";
+            this.dtimeEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtimeEnd.Location = new System.Drawing.Point(918, 459);
+            this.dtimeEnd.Name = "dtimeEnd";
+            this.dtimeEnd.Size = new System.Drawing.Size(200, 25);
+            this.dtimeEnd.TabIndex = 6;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(869, 465);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(32, 17);
+            this.label28.TabIndex = 5;
+            this.label28.Text = "đến";
+            // 
+            // dtimeStart
+            // 
+            this.dtimeStart.CustomFormat = "dd-MM-yyyy";
+            this.dtimeStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtimeStart.Location = new System.Drawing.Point(634, 459);
+            this.dtimeStart.Name = "dtimeStart";
+            this.dtimeStart.Size = new System.Drawing.Size(200, 25);
+            this.dtimeStart.TabIndex = 4;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(564, 465);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(52, 17);
+            this.label27.TabIndex = 3;
+            this.label27.Text = "Bán từ";
+            // 
+            // btnLayDL
+            // 
+            this.btnLayDL.BackColor = System.Drawing.Color.Orange;
+            this.btnLayDL.Location = new System.Drawing.Point(379, 451);
+            this.btnLayDL.Name = "btnLayDL";
+            this.btnLayDL.Size = new System.Drawing.Size(168, 40);
+            this.btnLayDL.TabIndex = 2;
+            this.btnLayDL.Text = "Lấy dữ liệu";
+            this.btnLayDL.UseVisualStyleBackColor = false;
+            // 
+            // btnDDLhistory
+            // 
+            this.btnDDLhistory.BackColor = System.Drawing.Color.Orange;
+            this.btnDDLhistory.Location = new System.Drawing.Point(131, 451);
+            this.btnDDLhistory.Name = "btnDDLhistory";
+            this.btnDDLhistory.Size = new System.Drawing.Size(168, 40);
+            this.btnDDLhistory.TabIndex = 1;
+            this.btnDDLhistory.Text = "Đọc dữ liệu";
+            this.btnDDLhistory.UseVisualStyleBackColor = false;
+            this.btnDDLhistory.Click += new System.EventHandler(this.btnDDLhistory_Click);
+            // 
+            // dgvHistoryBS
+            // 
+            this.dgvHistoryBS.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(142)))), ((int)(((byte)(72)))));
+            this.dgvHistoryBS.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvHistoryBS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHistoryBS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.historyMaHD,
+            this.historyMaDG,
+            this.historyTenDG,
+            this.historyTienTra,
+            this.historyNguoiLap,
+            this.historyNgayLap,
+            this.historyTime});
+            this.dgvHistoryBS.Location = new System.Drawing.Point(113, 17);
+            this.dgvHistoryBS.Name = "dgvHistoryBS";
+            this.dgvHistoryBS.RowTemplate.Height = 25;
+            this.dgvHistoryBS.Size = new System.Drawing.Size(1052, 376);
+            this.dgvHistoryBS.TabIndex = 0;
+            // 
+            // historyMaHD
+            // 
+            this.historyMaHD.HeaderText = "Mã hoá đơn";
+            this.historyMaHD.Name = "historyMaHD";
+            this.historyMaHD.Width = 120;
+            // 
+            // historyMaDG
+            // 
+            this.historyMaDG.HeaderText = "Mã độc giả";
+            this.historyMaDG.Name = "historyMaDG";
+            this.historyMaDG.Width = 120;
+            // 
+            // historyTenDG
+            // 
+            this.historyTenDG.HeaderText = "Tên độc giả";
+            this.historyTenDG.Name = "historyTenDG";
+            this.historyTenDG.Width = 200;
+            // 
+            // historyTienTra
+            // 
+            this.historyTienTra.HeaderText = "Tiền trả";
+            this.historyTienTra.Name = "historyTienTra";
+            // 
+            // historyNguoiLap
+            // 
+            this.historyNguoiLap.HeaderText = "Người lập";
+            this.historyNguoiLap.Name = "historyNguoiLap";
+            this.historyNguoiLap.Width = 200;
+            // 
+            // historyNgayLap
+            // 
+            this.historyNgayLap.HeaderText = "Ngày lập";
+            this.historyNgayLap.Name = "historyNgayLap";
+            this.historyNgayLap.Width = 120;
+            // 
+            // historyTime
+            // 
+            this.historyTime.HeaderText = "Khoảng thời gian";
+            this.historyTime.Name = "historyTime";
+            this.historyTime.Width = 150;
             // 
             // ImageMenu
             // 
@@ -1372,17 +1763,6 @@ namespace LuuCongQuangVu_Nhom13
             this.btnAdmin.Visible = false;
             this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(186)))), ((int)(((byte)(142)))), ((int)(((byte)(72)))));
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(193, 244);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(912, 231);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // QuanLiThuVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1412,7 +1792,11 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInforHD)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoryBS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1520,11 +1904,48 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.DateTimePicker dtimeNgayLap;
         private System.Windows.Forms.ComboBox cbMaSach_lhd;
         private System.Windows.Forms.ComboBox cbMaDG;
-        private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Button btnXoaSachMua;
         private System.Windows.Forms.Button btnSuaSachMua;
         private System.Windows.Forms.Button btnHuySachMua;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button btnInforXoa;
+        private System.Windows.Forms.Button btnFirstHD;
+        private System.Windows.Forms.Label lbInforTenDG;
+        private System.Windows.Forms.Label lbInforMaDG;
+        private System.Windows.Forms.Label lbInforNLap;
+        private System.Windows.Forms.Label lbInforMaHD;
+        private System.Windows.Forms.Button btnTimKiem_InforHD;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.DataGridView dgvInforHD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inforIdSach;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inforTenSach;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inforSoLuongMua;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inforDonGia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inforThanhTien;
+        private System.Windows.Forms.Label lbNgayLap;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ComboBox cbTimKiemMaHD;
+        private System.Windows.Forms.Button btnRefeshInforHD;
+        private System.Windows.Forms.DataGridView dgvHistoryBS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyMaHD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyMaDG;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyTenDG;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyTienTra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyNguoiLap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyNgayLap;
+        private System.Windows.Forms.DataGridViewTextBoxColumn historyTime;
+        private System.Windows.Forms.Label lbTongTien;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.DateTimePicker dtimeEnd;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.DateTimePicker dtimeStart;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Button btnLayDL;
+        private System.Windows.Forms.Button btnDDLhistory;
     }
 }
 
