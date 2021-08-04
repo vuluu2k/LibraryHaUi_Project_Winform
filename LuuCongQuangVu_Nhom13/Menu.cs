@@ -15,7 +15,7 @@ namespace LuuCongQuangVu_Nhom13
         #region Common
         Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
         int index=0;
-        String laster_hd;
+        String laster_hd="";
         private void RefeshInforHD()
         {
             cbTimKiemMaHD.DataSource = dbcontext.HoaDons.ToList();
@@ -165,6 +165,25 @@ namespace LuuCongQuangVu_Nhom13
                 txtmasach.Focus();
                 return false;
             }
+            else
+            {
+                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == txtmasach.Text select b).FirstOrDefault();
+                if (txtmasach.Text.Length>4)
+                {
+                    GetError.SetError(txtmasach, "Mã sách chỉ tối đa 4 kí tự!");
+                    txtmasach.Focus();
+                    txtmasach.SelectAll();
+                    return false;
+                }
+                else if (book != null)
+                {
+                    GetError.SetError(txtmasach, "Trùng mã sách, vui lòng nhập mã sách khác!");
+                    txtmasach.Focus();
+                    txtmasach.SelectAll();
+                    return false;
+                }
+                
+            }
             if (txttensach.Text == "")
             {
                 GetError.SetError(txttensach, "Bạn phải nhập tên sách!");
@@ -298,6 +317,24 @@ namespace LuuCongQuangVu_Nhom13
                 txtMaDocGia.Focus();
                 return false;
             }
+            else
+            {
+                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == txtMaDocGia.Text select d).FirstOrDefault();
+                if (txtMaDocGia.Text.Length > 4)
+                {
+                    GetError.SetError(txtMaDocGia, "Mã độc giả chỉ tối đa 4 kí tự!");
+                    txtMaDocGia.Focus();
+                    txtMaDocGia.SelectAll();
+                    return false;
+                }
+                else if (dg != null)
+                {
+                    GetError.SetError(txtMaDocGia, "Trùng mã độc giả, vui lòng nhập mã độc giả khác!");
+                    txtMaDocGia.Focus();
+                    txtMaDocGia.SelectAll();
+                    return false;
+                }
+            }
             if (txtTenDocGia.Text == "")
             {
                 GetError.SetError(txtTenDocGia, "Bạn phải nhập tên độc giả!");
@@ -358,6 +395,133 @@ namespace LuuCongQuangVu_Nhom13
             {
                 MessageBox.Show("Bạn chưa chọn nút tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
+            }
+            return true;
+        }
+        #endregion
+        #region Xử lý lỗi lập hoá đơn
+        private void txtMaHD_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtMaHD, "");
+        }
+
+        private void cbMaDG_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(cbMaDG, "");
+        }
+
+        private void dtimeNgayLap_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(dtimeNgayLap, "");
+        }
+
+        private void cbMaSach_lhd_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(cbMaSach_lhd, "");
+        }
+
+        private void txtsoluongmua_lhd_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtsoluongmua_lhd, "");
+        }
+        private bool Validate_LHD_InforHD()
+        {
+            if (txtMaHD.Text == "")
+            {
+                GetError.SetError(txtMaHD, "Bạn phải nhập mã hoá đơn!");
+                txtMaHD.Focus();
+                return false;
+            }
+            else
+            {
+                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == txtMaHD.Text select h).FirstOrDefault();
+                if (txtMaHD.Text.Length > 4)
+                {
+                    GetError.SetError(txtMaHD, "Mã hoá đơn chỉ cho phép tối đa 4 kí tự!");
+                    txtMaHD.Focus();
+                    txtMaHD.Select();
+                    return false;
+                }
+                if (hd != null)
+                {
+                    GetError.SetError(txtMaHD, "Trùng mã hoá đơn, vui lòng nhập mã hoá đơn khác!");
+                    txtMaHD.Focus();
+                    txtMaHD.Select();
+                    return false;
+                }
+            }
+            if (cbMaDG.Text == "")
+            {
+                GetError.SetError(cbMaDG, "Bạn phải nhập hoặc chọn mã độc giả!");
+                cbMaDG.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == cbMaDG.Text select d).FirstOrDefault();
+                if (cbMaDG.Text.Length > 4)
+                {
+                    GetError.SetError(cbMaDG, "Mã độc giả chỉ tối đa 4 kí tự!");
+                    cbMaDG.Focus();
+                    cbMaDG.SelectAll();
+                    return false;
+                }
+                else if (dg == null)
+                {
+                    GetError.SetError(cbMaDG, "Mã độc giả không tồn tại");
+                    txtMaDocGia.Focus();
+                    txtMaDocGia.SelectAll();
+                    return false;
+                }
+            }
+            if (dtimeNgayLap.Value > DateTime.Now)
+            {
+                GetError.SetError(dtimeNgayLap, "Thời gian bạn chọn là thời trong tương lai!");
+                dtimeNgayLap.Focus();
+                return false;
+            }
+            if (dgvLHD.RowCount-1 <= 0)
+            {
+                MessageBox.Show("Bạn chưa mua một sách nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbMaSach_lhd.Focus();
+                return false;
+            }
+            return true;
+        }
+        private bool Validate_LHD_InforBuyBook()
+        {
+            if (cbMaSach_lhd.Text == "")
+            {
+                GetError.SetError(cbMaSach_lhd,"Bạn phải nhập hoặc chọn mã sách!");
+                cbMaSach_lhd.Focus();
+                return false;
+            }
+            if (txtsoluongmua_lhd.Text == "")
+            {
+                GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua!");
+                txtsoluongmua_lhd.Focus();
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    int.Parse(txtsoluongmua_lhd.Text);
+                    if (int.Parse(txtsoluongmua_lhd.Text) < 0)
+                    {
+                        GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua >0!");
+                        txtsoluongmua_lhd.Focus();
+                        txtsoluongmua_lhd.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua là số nguyên!");
+                    txtsoluongmua_lhd.Focus();
+                    txtsoluongmua_lhd.SelectAll();
+                    return false;
+                }
             }
             return true;
         }
@@ -1040,108 +1204,6 @@ namespace LuuCongQuangVu_Nhom13
             txtSDT_DocGia.Text = Convert.ToString(row.Cells[5].Value);
         }
         #endregion
-        #region Xử lý lỗi lập hoá đơn
-        private void txtMaHD_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(txtMaHD, "");
-        }
-
-        private void cbMaDG_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(cbMaDG, "");
-        }
-
-        private void dtimeNgayLap_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(dtimeNgayLap, "");
-        }
-
-        private void cbMaSach_lhd_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(cbMaSach_lhd, "");
-        }
-
-        private void txtsoluongmua_lhd_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(txtsoluongmua_lhd, "");
-        }
-        private bool Validate_LHD_InforHD()
-        {
-            if (txtMaHD.Text == "")
-            {
-                GetError.SetError(txtMaHD, "Bạn phải nhập mã hoá đơn!");
-                txtMaHD.Focus();
-                return false;
-            }
-            else
-            {
-                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == txtMaHD.Text select h).FirstOrDefault();
-                if (hd != null)
-                {
-                    GetError.SetError(txtMaHD, "Trùng mã hoá đơn, vui lòng nhập mã hoá đơn khác!");
-                    txtMaHD.Focus();
-                    txtMaHD.Select();
-                    return false;
-                }
-            }
-            if (cbMaDG.Text == "")
-            {
-                GetError.SetError(cbMaDG, "Bạn phải nhập hoặc chọn mã độc giả!");
-                cbMaDG.Focus();
-                return false;
-            }
-            if (dtimeNgayLap.Value > DateTime.Now)
-            {
-                GetError.SetError(dtimeNgayLap, "Thời gian bạn chọn là thời trong tương lai!");
-                dtimeNgayLap.Focus();
-                return false;
-            }
-            if (dgvLHD.RowCount-1 <= 0)
-            {
-                MessageBox.Show("Bạn chưa mua một sách nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                cbMaSach_lhd.Focus();
-                return false;
-            }
-            return true;
-        }
-        private bool Validate_LHD_InforBuyBook()
-        {
-            if (cbMaSach_lhd.Text == "")
-            {
-                GetError.SetError(cbMaSach_lhd,"Bạn phải nhập hoặc chọn mã sách!");
-                cbMaSach_lhd.Focus();
-                return false;
-            }
-            if (txtsoluongmua_lhd.Text == "")
-            {
-                GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua!");
-                txtsoluongmua_lhd.Focus();
-                return false;
-            }
-            else
-            {
-                try
-                {
-                    int.Parse(txtsoluongmua_lhd.Text);
-                    if (int.Parse(txtsoluongmua_lhd.Text) < 0)
-                    {
-                        GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua >0!");
-                        txtsoluongmua_lhd.Focus();
-                        txtsoluongmua_lhd.SelectAll();
-                        return false;
-                    }
-                }
-                catch (Exception)
-                {
-                    GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua là số nguyên!");
-                    txtsoluongmua_lhd.Focus();
-                    txtsoluongmua_lhd.SelectAll();
-                    return false;
-                }
-            }
-            return true;
-        }
-        #endregion
         #region Quản lí bán sách
 
         #region Quản lí bán sách>Lập hoá đơn
@@ -1228,7 +1290,7 @@ namespace LuuCongQuangVu_Nhom13
                 //string username = (string) this.Tag;
                 Models.HoaDon hd = new Models.HoaDon();
                 hd.MaHd = txtMaHD.Text;
-                hd.Iddocgia = cbMaDG.SelectedValue.ToString();
+                hd.Iddocgia = cbMaDG.Text;
                 hd.Usename = acc.Usename;
                 hd.NgayLap = dtimeNgayLap.Value;
                 dbcontext.HoaDons.Add(hd);
@@ -1285,32 +1347,39 @@ namespace LuuCongQuangVu_Nhom13
         private void btnFirstHD_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(laster_hd);
-            Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == laster_hd select h).FirstOrDefault();
-            var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == laster_hd select hct).ToList();
-            Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == hd.Iddocgia select d).FirstOrDefault();
-            Models.Account acc = (from a in dbcontext.Accounts where a.Usename == hd.Usename select a).FirstOrDefault();
-            lbInforMaHD.Text = hd.MaHd;
-            lbInforMaDG.Text = hd.Iddocgia;
-            lbInforNLap.Text = acc.Tenchutaikhoan;
-            lbNgayLap.Text = hd.NgayLap.ToString();
-            lbInforTenDG.Text = dg.Hoten;
-            dgvInforHD.Rows.Clear();
-            dgvInforHD.ColumnCount = 5;
-            int index_inforHD = 0;
-            double SumMoney = 0;
-            foreach(var item in hdct)
+            if (laster_hd != "")
             {
-                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == item.Idsach select b).FirstOrDefault();
-                dgvInforHD.Rows.Add();
-                dgvInforHD.Rows[index_inforHD].Cells[0].Value = item.Idsach;
-                dgvInforHD.Rows[index_inforHD].Cells[1].Value = book.Tensach;
-                dgvInforHD.Rows[index_inforHD].Cells[2].Value = item.SoLuongMua;
-                dgvInforHD.Rows[index_inforHD].Cells[3].Value = book.Giasach;
-                dgvInforHD.Rows[index_inforHD].Cells[4].Value = item.SoLuongMua * book.Giasach;
-                SumMoney += item.SoLuongMua.Value*book.Giasach.Value;
-                index_inforHD++;
+                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == laster_hd select h).FirstOrDefault();
+                var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == laster_hd select hct).ToList();
+                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == hd.Iddocgia select d).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == hd.Usename select a).FirstOrDefault();
+                lbInforMaHD.Text = hd.MaHd;
+                lbInforMaDG.Text = hd.Iddocgia;
+                lbInforNLap.Text = acc.Tenchutaikhoan;
+                lbNgayLap.Text = hd.NgayLap.ToString();
+                lbInforTenDG.Text = dg.Hoten;
+                dgvInforHD.Rows.Clear();
+                dgvInforHD.ColumnCount = 5;
+                int index_inforHD = 0;
+                double SumMoney = 0;
+                foreach(var item in hdct)
+                {
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == item.Idsach select b).FirstOrDefault();
+                    dgvInforHD.Rows.Add();
+                    dgvInforHD.Rows[index_inforHD].Cells[0].Value = item.Idsach;
+                    dgvInforHD.Rows[index_inforHD].Cells[1].Value = book.Tensach;
+                    dgvInforHD.Rows[index_inforHD].Cells[2].Value = item.SoLuongMua;
+                    dgvInforHD.Rows[index_inforHD].Cells[3].Value = book.Giasach;
+                    dgvInforHD.Rows[index_inforHD].Cells[4].Value = item.SoLuongMua * book.Giasach;
+                    SumMoney += item.SoLuongMua.Value*book.Giasach.Value;
+                    index_inforHD++;
+                }
+                lbTongTien.Text = SumMoney.ToString();
             }
-            lbTongTien.Text = SumMoney.ToString();
+            else
+            {
+                MessageBox.Show("Bạn chưa lập bất kì một hoá đơn nào từ kề lần đăng nhập gần nhất", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         private void btnInforXoa_Click(object sender, EventArgs e)
         {
@@ -1489,9 +1558,6 @@ namespace LuuCongQuangVu_Nhom13
                 MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
         #endregion
 
         #endregion

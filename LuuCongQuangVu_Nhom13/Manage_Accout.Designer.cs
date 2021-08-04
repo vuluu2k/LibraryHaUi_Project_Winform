@@ -29,9 +29,11 @@ namespace LuuCongQuangVu_Nhom13
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dgvAccout = new System.Windows.Forms.DataGridView();
             this.taikhoan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matkhau = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tenchutaikhoan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.capdo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbCapDo = new System.Windows.Forms.ComboBox();
             this.lbCapDo = new System.Windows.Forms.Label();
@@ -57,7 +59,11 @@ namespace LuuCongQuangVu_Nhom13
             this.isTaiKhoan = new System.Windows.Forms.CheckBox();
             this.isMatKhau = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lbHoTen = new System.Windows.Forms.Label();
+            this.txtHoTen = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccout)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GetError)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvAccout
@@ -68,11 +74,12 @@ namespace LuuCongQuangVu_Nhom13
             this.dgvAccout.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.taikhoan,
             this.matkhau,
+            this.tenchutaikhoan,
             this.capdo});
-            this.dgvAccout.Location = new System.Drawing.Point(431, 51);
+            this.dgvAccout.Location = new System.Drawing.Point(382, 51);
             this.dgvAccout.Name = "dgvAccout";
             this.dgvAccout.RowTemplate.Height = 25;
-            this.dgvAccout.Size = new System.Drawing.Size(492, 329);
+            this.dgvAccout.Size = new System.Drawing.Size(541, 329);
             this.dgvAccout.TabIndex = 10;
             this.dgvAccout.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cell_click_account);
             // 
@@ -80,19 +87,22 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.taikhoan.HeaderText = "Tài khoản";
             this.taikhoan.Name = "taikhoan";
-            this.taikhoan.Width = 150;
             // 
             // matkhau
             // 
             this.matkhau.HeaderText = "Mật khẩu";
             this.matkhau.Name = "matkhau";
-            this.matkhau.Width = 150;
+            // 
+            // tenchutaikhoan
+            // 
+            this.tenchutaikhoan.HeaderText = "Họ tên";
+            this.tenchutaikhoan.Name = "tenchutaikhoan";
+            this.tenchutaikhoan.Width = 200;
             // 
             // capdo
             // 
             this.capdo.HeaderText = "Cấp độ";
             this.capdo.Name = "capdo";
-            this.capdo.Width = 150;
             // 
             // cbCapDo
             // 
@@ -107,13 +117,14 @@ namespace LuuCongQuangVu_Nhom13
             this.cbCapDo.Size = new System.Drawing.Size(197, 25);
             this.cbCapDo.TabIndex = 19;
             this.cbCapDo.Visible = false;
+            this.cbCapDo.Validated += new System.EventHandler(this.cbCapDo_Validated);
             // 
             // lbCapDo
             // 
             this.lbCapDo.AutoSize = true;
             this.lbCapDo.BackColor = System.Drawing.Color.Transparent;
             this.lbCapDo.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbCapDo.Location = new System.Drawing.Point(56, 212);
+            this.lbCapDo.Location = new System.Drawing.Point(55, 210);
             this.lbCapDo.Name = "lbCapDo";
             this.lbCapDo.Size = new System.Drawing.Size(51, 17);
             this.lbCapDo.TabIndex = 18;
@@ -140,7 +151,7 @@ namespace LuuCongQuangVu_Nhom13
             this.lbMatKhau.AutoSize = true;
             this.lbMatKhau.BackColor = System.Drawing.Color.Transparent;
             this.lbMatKhau.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbMatKhau.Location = new System.Drawing.Point(56, 160);
+            this.lbMatKhau.Location = new System.Drawing.Point(55, 142);
             this.lbMatKhau.Name = "lbMatKhau";
             this.lbMatKhau.Size = new System.Drawing.Size(66, 17);
             this.lbMatKhau.TabIndex = 16;
@@ -152,7 +163,7 @@ namespace LuuCongQuangVu_Nhom13
             this.lbTaiKhoan.AutoSize = true;
             this.lbTaiKhoan.BackColor = System.Drawing.Color.Transparent;
             this.lbTaiKhoan.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbTaiKhoan.Location = new System.Drawing.Point(56, 108);
+            this.lbTaiKhoan.Location = new System.Drawing.Point(55, 108);
             this.lbTaiKhoan.Name = "lbTaiKhoan";
             this.lbTaiKhoan.Size = new System.Drawing.Size(66, 17);
             this.lbTaiKhoan.TabIndex = 15;
@@ -161,11 +172,12 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // txtMatKhau
             // 
-            this.txtMatKhau.Location = new System.Drawing.Point(128, 152);
+            this.txtMatKhau.Location = new System.Drawing.Point(128, 135);
             this.txtMatKhau.Name = "txtMatKhau";
             this.txtMatKhau.Size = new System.Drawing.Size(196, 25);
             this.txtMatKhau.TabIndex = 14;
             this.txtMatKhau.Visible = false;
+            this.txtMatKhau.Validated += new System.EventHandler(this.txtMatKhau_Validated);
             // 
             // txtTaiKhoan
             // 
@@ -174,6 +186,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtTaiKhoan.Size = new System.Drawing.Size(197, 25);
             this.txtTaiKhoan.TabIndex = 13;
             this.txtTaiKhoan.Visible = false;
+            this.txtTaiKhoan.Validated += new System.EventHandler(this.txtTaiKhoan_Validated);
             // 
             // btnThem
             // 
@@ -218,12 +231,12 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSua.BackColor = System.Drawing.Color.Orange;
             this.btnSua.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Edit;
-            this.btnSua.Location = new System.Drawing.Point(43, 120);
+            this.btnSua.Location = new System.Drawing.Point(42, 110);
             this.btnSua.Name = "btnSua";
             this.btnSua.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.btnSua.Size = new System.Drawing.Size(282, 52);
             this.btnSua.TabIndex = 21;
-            this.btnSua.Text = "Đổi mật khẩu, Cấp độ";
+            this.btnSua.Text = "Đổi mật khẩu, Họ tên, Cấp độ";
             this.btnSua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSua.UseVisualStyleBackColor = false;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
@@ -233,7 +246,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnXoa.BackColor = System.Drawing.Color.Orange;
             this.btnXoa.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnXoa.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Trash;
-            this.btnXoa.Location = new System.Drawing.Point(42, 194);
+            this.btnXoa.Location = new System.Drawing.Point(43, 177);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
             this.btnXoa.Size = new System.Drawing.Size(282, 52);
@@ -248,7 +261,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnPhanLoai.BackColor = System.Drawing.Color.Orange;
             this.btnPhanLoai.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnPhanLoai.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Numbered_list;
-            this.btnPhanLoai.Location = new System.Drawing.Point(42, 260);
+            this.btnPhanLoai.Location = new System.Drawing.Point(43, 244);
             this.btnPhanLoai.Name = "btnPhanLoai";
             this.btnPhanLoai.Size = new System.Drawing.Size(282, 51);
             this.btnPhanLoai.TabIndex = 23;
@@ -262,7 +275,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnTimKiem.BackColor = System.Drawing.Color.Orange;
             this.btnTimKiem.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnTimKiem.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Search;
-            this.btnTimKiem.Location = new System.Drawing.Point(42, 329);
+            this.btnTimKiem.Location = new System.Drawing.Point(42, 314);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(282, 51);
             this.btnTimKiem.TabIndex = 24;
@@ -385,7 +398,7 @@ namespace LuuCongQuangVu_Nhom13
             // isMatKhau
             // 
             this.isMatKhau.AutoSize = true;
-            this.isMatKhau.Location = new System.Drawing.Point(331, 158);
+            this.isMatKhau.Location = new System.Drawing.Point(331, 141);
             this.isMatKhau.Name = "isMatKhau";
             this.isMatKhau.Size = new System.Drawing.Size(15, 14);
             this.isMatKhau.TabIndex = 33;
@@ -398,7 +411,7 @@ namespace LuuCongQuangVu_Nhom13
             this.button1.BackColor = System.Drawing.Color.Orange;
             this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.button1.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.List;
-            this.button1.Location = new System.Drawing.Point(431, 386);
+            this.button1.Location = new System.Drawing.Point(382, 386);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 46);
             this.button1.TabIndex = 34;
@@ -406,6 +419,30 @@ namespace LuuCongQuangVu_Nhom13
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // GetError
+            // 
+            this.GetError.ContainerControl = this;
+            // 
+            // lbHoTen
+            // 
+            this.lbHoTen.AutoSize = true;
+            this.lbHoTen.BackColor = System.Drawing.Color.Transparent;
+            this.lbHoTen.Location = new System.Drawing.Point(55, 176);
+            this.lbHoTen.Name = "lbHoTen";
+            this.lbHoTen.Size = new System.Drawing.Size(50, 17);
+            this.lbHoTen.TabIndex = 35;
+            this.lbHoTen.Text = "Họ tên";
+            this.lbHoTen.Visible = false;
+            // 
+            // txtHoTen
+            // 
+            this.txtHoTen.Location = new System.Drawing.Point(128, 168);
+            this.txtHoTen.Name = "txtHoTen";
+            this.txtHoTen.Size = new System.Drawing.Size(196, 25);
+            this.txtHoTen.TabIndex = 36;
+            this.txtHoTen.Visible = false;
+            this.txtHoTen.Validated += new System.EventHandler(this.txtHoTen_Validated);
             // 
             // Manage_Accout
             // 
@@ -415,6 +452,8 @@ namespace LuuCongQuangVu_Nhom13
             this.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_admin;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(952, 584);
+            this.Controls.Add(this.txtHoTen);
+            this.Controls.Add(this.lbHoTen);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.isMatKhau);
             this.Controls.Add(this.isTaiKhoan);
@@ -446,6 +485,7 @@ namespace LuuCongQuangVu_Nhom13
             this.Text = "Manage_Accout";
             this.Load += new System.EventHandler(this.Manage_Accout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccout)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,8 +518,12 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.CheckBox isTaiKhoan;
         private System.Windows.Forms.CheckBox isMatKhau;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ErrorProvider GetError;
+        private System.Windows.Forms.TextBox txtHoTen;
+        private System.Windows.Forms.Label lbHoTen;
         private System.Windows.Forms.DataGridViewTextBoxColumn taikhoan;
         private System.Windows.Forms.DataGridViewTextBoxColumn matkhau;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tenchutaikhoan;
         private System.Windows.Forms.DataGridViewTextBoxColumn capdo;
     }
 }
