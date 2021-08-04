@@ -47,6 +47,8 @@ namespace LuuCongQuangVu_Nhom13
             this.label3 = new System.Windows.Forms.Label();
             this.MainTabCT = new System.Windows.Forms.TabControl();
             this.tabQuanLiSach = new System.Windows.Forms.TabPage();
+            this.cbSeachBook = new System.Windows.Forms.ComboBox();
+            this.txtSearchBook = new System.Windows.Forms.TextBox();
             this.txtSL_Sach = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.rdvitri = new System.Windows.Forms.RadioButton();
@@ -175,6 +177,8 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnAdmin = new System.Windows.Forms.Button();
+            this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.MainTabCT.SuspendLayout();
             this.tabQuanLiSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSach)).BeginInit();
@@ -190,6 +194,7 @@ namespace LuuCongQuangVu_Nhom13
             ((System.ComponentModel.ISupportInitialize)(this.dgvInforHD)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoryBS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GetError)).BeginInit();
             this.SuspendLayout();
             // 
             // btndangxuat
@@ -312,6 +317,7 @@ namespace LuuCongQuangVu_Nhom13
             this.cbvitri.Name = "cbvitri";
             this.cbvitri.Size = new System.Drawing.Size(320, 23);
             this.cbvitri.TabIndex = 15;
+            this.cbvitri.Validated += new System.EventHandler(this.cbvitri_Validated);
             // 
             // label1
             // 
@@ -416,6 +422,8 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiSach.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabQuanLiSach.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tabQuanLiSach.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabQuanLiSach.Controls.Add(this.cbSeachBook);
+            this.tabQuanLiSach.Controls.Add(this.txtSearchBook);
             this.tabQuanLiSach.Controls.Add(this.txtSL_Sach);
             this.tabQuanLiSach.Controls.Add(this.label14);
             this.tabQuanLiSach.Controls.Add(this.rdvitri);
@@ -458,13 +466,34 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiSach.TabIndex = 0;
             this.tabQuanLiSach.Text = "Quản lí sách";
             // 
+            // cbSeachBook
+            // 
+            this.cbSeachBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSeachBook.FormattingEnabled = true;
+            this.cbSeachBook.Items.AddRange(new object[] {
+            "CS1-Nhổn-Bắc Từ Liêm-Hà Nội",
+            "CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội",
+            "CS3-Tp.Phủ Lý-Hà Nam"});
+            this.cbSeachBook.Location = new System.Drawing.Point(895, 201);
+            this.cbSeachBook.Name = "cbSeachBook";
+            this.cbSeachBook.Size = new System.Drawing.Size(294, 23);
+            this.cbSeachBook.TabIndex = 33;
+            this.cbSeachBook.Visible = false;
+            // 
+            // txtSearchBook
+            // 
+            this.txtSearchBook.Location = new System.Drawing.Point(895, 202);
+            this.txtSearchBook.Name = "txtSearchBook";
+            this.txtSearchBook.Size = new System.Drawing.Size(294, 22);
+            this.txtSearchBook.TabIndex = 32;
+            // 
             // txtSL_Sach
             // 
             this.txtSL_Sach.AutoSize = true;
             this.txtSL_Sach.BackColor = System.Drawing.Color.Transparent;
             this.txtSL_Sach.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.txtSL_Sach.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.txtSL_Sach.Location = new System.Drawing.Point(1083, 282);
+            this.txtSL_Sach.Location = new System.Drawing.Point(1083, 303);
             this.txtSL_Sach.Name = "txtSL_Sach";
             this.txtSL_Sach.Size = new System.Drawing.Size(16, 17);
             this.txtSL_Sach.TabIndex = 31;
@@ -476,11 +505,11 @@ namespace LuuCongQuangVu_Nhom13
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label14.Location = new System.Drawing.Point(905, 282);
+            this.label14.Location = new System.Drawing.Point(905, 303);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(154, 17);
+            this.label14.Size = new System.Drawing.Size(181, 17);
             this.label14.TabIndex = 30;
-            this.label14.Text = "Số lượng sách hiện có:";
+            this.label14.Text = "Số lượng đầu sách hiện có:";
             // 
             // rdvitri
             // 
@@ -488,13 +517,14 @@ namespace LuuCongQuangVu_Nhom13
             this.rdvitri.BackColor = System.Drawing.Color.Transparent;
             this.rdvitri.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.rdvitri.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rdvitri.Location = new System.Drawing.Point(1127, 229);
+            this.rdvitri.Location = new System.Drawing.Point(1129, 257);
             this.rdvitri.Name = "rdvitri";
             this.rdvitri.Size = new System.Drawing.Size(55, 19);
             this.rdvitri.TabIndex = 29;
             this.rdvitri.TabStop = true;
             this.rdvitri.Text = "Vị trí";
             this.rdvitri.UseVisualStyleBackColor = false;
+            this.rdvitri.CheckedChanged += new System.EventHandler(this.rdvitri_CheckedChanged);
             // 
             // rdnxb
             // 
@@ -502,13 +532,14 @@ namespace LuuCongQuangVu_Nhom13
             this.rdnxb.BackColor = System.Drawing.Color.Transparent;
             this.rdnxb.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.rdnxb.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rdnxb.Location = new System.Drawing.Point(1010, 232);
+            this.rdnxb.Location = new System.Drawing.Point(1012, 260);
             this.rdnxb.Name = "rdnxb";
             this.rdnxb.Size = new System.Drawing.Size(95, 19);
             this.rdnxb.TabIndex = 28;
             this.rdnxb.TabStop = true;
             this.rdnxb.Text = "Nhà xuất bản";
             this.rdnxb.UseVisualStyleBackColor = false;
+            this.rdnxb.CheckedChanged += new System.EventHandler(this.rdmasach_CheckedChanged);
             // 
             // rdtheloai
             // 
@@ -516,13 +547,14 @@ namespace LuuCongQuangVu_Nhom13
             this.rdtheloai.BackColor = System.Drawing.Color.Transparent;
             this.rdtheloai.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.rdtheloai.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rdtheloai.Location = new System.Drawing.Point(895, 229);
+            this.rdtheloai.Location = new System.Drawing.Point(897, 257);
             this.rdtheloai.Name = "rdtheloai";
             this.rdtheloai.Size = new System.Drawing.Size(69, 19);
             this.rdtheloai.TabIndex = 27;
             this.rdtheloai.TabStop = true;
             this.rdtheloai.Text = "Thể loại";
             this.rdtheloai.UseVisualStyleBackColor = false;
+            this.rdtheloai.CheckedChanged += new System.EventHandler(this.rdmasach_CheckedChanged);
             // 
             // rdtacgia
             // 
@@ -530,13 +562,14 @@ namespace LuuCongQuangVu_Nhom13
             this.rdtacgia.BackColor = System.Drawing.Color.Transparent;
             this.rdtacgia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.rdtacgia.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rdtacgia.Location = new System.Drawing.Point(1127, 202);
+            this.rdtacgia.Location = new System.Drawing.Point(1129, 230);
             this.rdtacgia.Name = "rdtacgia";
             this.rdtacgia.Size = new System.Drawing.Size(65, 19);
             this.rdtacgia.TabIndex = 26;
             this.rdtacgia.TabStop = true;
             this.rdtacgia.Text = "Tác giả";
             this.rdtacgia.UseVisualStyleBackColor = false;
+            this.rdtacgia.CheckedChanged += new System.EventHandler(this.rdmasach_CheckedChanged);
             // 
             // rdtensach
             // 
@@ -544,13 +577,14 @@ namespace LuuCongQuangVu_Nhom13
             this.rdtensach.BackColor = System.Drawing.Color.Transparent;
             this.rdtensach.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.rdtensach.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rdtensach.Location = new System.Drawing.Point(1010, 202);
+            this.rdtensach.Location = new System.Drawing.Point(1012, 230);
             this.rdtensach.Name = "rdtensach";
             this.rdtensach.Size = new System.Drawing.Size(74, 19);
             this.rdtensach.TabIndex = 25;
             this.rdtensach.TabStop = true;
             this.rdtensach.Text = "Tên sách";
             this.rdtensach.UseVisualStyleBackColor = false;
+            this.rdtensach.CheckedChanged += new System.EventHandler(this.rdmasach_CheckedChanged);
             // 
             // rdmasach
             // 
@@ -558,13 +592,14 @@ namespace LuuCongQuangVu_Nhom13
             this.rdmasach.BackColor = System.Drawing.Color.Transparent;
             this.rdmasach.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.rdmasach.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rdmasach.Location = new System.Drawing.Point(895, 202);
+            this.rdmasach.Location = new System.Drawing.Point(897, 230);
             this.rdmasach.Name = "rdmasach";
             this.rdmasach.Size = new System.Drawing.Size(70, 19);
             this.rdmasach.TabIndex = 24;
             this.rdmasach.TabStop = true;
             this.rdmasach.Text = "Mã sách";
             this.rdmasach.UseVisualStyleBackColor = false;
+            this.rdmasach.CheckedChanged += new System.EventHandler(this.rdmasach_CheckedChanged);
             // 
             // btnTimkiem
             // 
@@ -612,6 +647,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtnhasx.Name = "txtnhasx";
             this.txtnhasx.Size = new System.Drawing.Size(320, 22);
             this.txtnhasx.TabIndex = 7;
+            this.txtnhasx.Validated += new System.EventHandler(this.txtnhasx_Validated);
             // 
             // txtgiasach
             // 
@@ -619,6 +655,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtgiasach.Name = "txtgiasach";
             this.txtgiasach.Size = new System.Drawing.Size(320, 22);
             this.txtgiasach.TabIndex = 6;
+            this.txtgiasach.Validated += new System.EventHandler(this.txtgiasach_Validated);
             // 
             // txttheloai
             // 
@@ -626,6 +663,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txttheloai.Name = "txttheloai";
             this.txttheloai.Size = new System.Drawing.Size(320, 22);
             this.txttheloai.TabIndex = 5;
+            this.txttheloai.Validated += new System.EventHandler(this.txttheloai_Validated);
             // 
             // txtsoluong
             // 
@@ -633,6 +671,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtsoluong.Name = "txtsoluong";
             this.txtsoluong.Size = new System.Drawing.Size(320, 22);
             this.txtsoluong.TabIndex = 4;
+            this.txtsoluong.Validated += new System.EventHandler(this.txtsoluong_Validated);
             // 
             // txttacgia
             // 
@@ -640,6 +679,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txttacgia.Name = "txttacgia";
             this.txttacgia.Size = new System.Drawing.Size(320, 22);
             this.txttacgia.TabIndex = 3;
+            this.txttacgia.Validated += new System.EventHandler(this.txttacgia_Validated);
             // 
             // txttensach
             // 
@@ -647,6 +687,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txttensach.Name = "txttensach";
             this.txttensach.Size = new System.Drawing.Size(320, 22);
             this.txttensach.TabIndex = 2;
+            this.txttensach.Validated += new System.EventHandler(this.txttensach_Validated);
             // 
             // txtmasach
             // 
@@ -654,6 +695,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtmasach.Name = "txtmasach";
             this.txtmasach.Size = new System.Drawing.Size(320, 22);
             this.txtmasach.TabIndex = 1;
+            this.txtmasach.Validated += new System.EventHandler(this.txtmasach_Validated);
             // 
             // dgvSach
             // 
@@ -725,6 +767,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiDocGia.BackColor = System.Drawing.Color.Transparent;
             this.tabQuanLiDocGia.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabQuanLiDocGia.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tabQuanLiDocGia.Controls.Add(this.textBox1);
             this.tabQuanLiDocGia.Controls.Add(this.cbTimKiem);
             this.tabQuanLiDocGia.Controls.Add(this.btnTimKiemDocGia);
             this.tabQuanLiDocGia.Controls.Add(this.btnHuyDocGia);
@@ -766,7 +809,7 @@ namespace LuuCongQuangVu_Nhom13
             "Địa chỉ",
             "Nghề nghiệp",
             "Số điện thoại"});
-            this.cbTimKiem.Location = new System.Drawing.Point(919, 243);
+            this.cbTimKiem.Location = new System.Drawing.Point(896, 257);
             this.cbTimKiem.Name = "cbTimKiem";
             this.cbTimKiem.Size = new System.Drawing.Size(132, 23);
             this.cbTimKiem.TabIndex = 22;
@@ -871,6 +914,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dateDocGia.Size = new System.Drawing.Size(274, 22);
             this.dateDocGia.TabIndex = 14;
             this.dateDocGia.Value = new System.DateTime(2021, 6, 21, 9, 56, 0, 0);
+            this.dateDocGia.Validated += new System.EventHandler(this.dateDocGia_Validated);
             // 
             // dgvDocGia
             // 
@@ -933,6 +977,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtSDT_DocGia.Name = "txtSDT_DocGia";
             this.txtSDT_DocGia.Size = new System.Drawing.Size(274, 22);
             this.txtSDT_DocGia.TabIndex = 12;
+            this.txtSDT_DocGia.Validated += new System.EventHandler(this.txtSDT_DocGia_Validated);
             // 
             // txtNgheNhiep
             // 
@@ -940,6 +985,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtNgheNhiep.Name = "txtNgheNhiep";
             this.txtNgheNhiep.Size = new System.Drawing.Size(274, 22);
             this.txtNgheNhiep.TabIndex = 11;
+            this.txtNgheNhiep.Validated += new System.EventHandler(this.txtNgheNhiep_Validated);
             // 
             // txtDiaChiDocGia
             // 
@@ -947,6 +993,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtDiaChiDocGia.Name = "txtDiaChiDocGia";
             this.txtDiaChiDocGia.Size = new System.Drawing.Size(274, 22);
             this.txtDiaChiDocGia.TabIndex = 10;
+            this.txtDiaChiDocGia.Validated += new System.EventHandler(this.txtDiaChiDocGia_Validated);
             // 
             // txtTenDocGia
             // 
@@ -954,6 +1001,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtTenDocGia.Name = "txtTenDocGia";
             this.txtTenDocGia.Size = new System.Drawing.Size(274, 22);
             this.txtTenDocGia.TabIndex = 8;
+            this.txtTenDocGia.Validated += new System.EventHandler(this.txtTenDocGia_Validated);
             // 
             // txtMaDocGia
             // 
@@ -961,6 +1009,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtMaDocGia.Name = "txtMaDocGia";
             this.txtMaDocGia.Size = new System.Drawing.Size(274, 22);
             this.txtMaDocGia.TabIndex = 7;
+            this.txtMaDocGia.Validated += new System.EventHandler(this.txtMaDocGia_Validated);
             // 
             // label13
             // 
@@ -1602,6 +1651,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnLayDL.TabIndex = 2;
             this.btnLayDL.Text = "Lấy dữ liệu";
             this.btnLayDL.UseVisualStyleBackColor = false;
+            this.btnLayDL.Click += new System.EventHandler(this.btnLayDL_Click);
             // 
             // btnDDLhistory
             // 
@@ -1763,6 +1813,17 @@ namespace LuuCongQuangVu_Nhom13
             this.btnAdmin.Visible = false;
             this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
             // 
+            // GetError
+            // 
+            this.GetError.ContainerControl = this;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(896, 233);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(253, 22);
+            this.textBox1.TabIndex = 23;
+            // 
             // QuanLiThuVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1775,6 +1836,7 @@ namespace LuuCongQuangVu_Nhom13
             this.Name = "QuanLiThuVien";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lí thư viện";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.QuanLiThuVien_FormClosing);
             this.Load += new System.EventHandler(this.QuanLiThuVien_Load);
             this.MainTabCT.ResumeLayout(false);
             this.tabQuanLiSach.ResumeLayout(false);
@@ -1797,6 +1859,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoryBS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1946,6 +2009,10 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Button btnLayDL;
         private System.Windows.Forms.Button btnDDLhistory;
+        private System.Windows.Forms.ErrorProvider GetError;
+        private System.Windows.Forms.TextBox txtSearchBook;
+        private System.Windows.Forms.ComboBox cbSeachBook;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

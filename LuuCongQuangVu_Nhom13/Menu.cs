@@ -40,6 +40,21 @@ namespace LuuCongQuangVu_Nhom13
             cbMaSach_lhd.ValueMember = "Idsach";
             RefeshInforHD();
         }
+        private void rdvitri_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSearchBook.Visible = false;
+            cbSeachBook.Visible = true;
+        }
+
+        private void rdmasach_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSearchBook.Visible = true;
+            cbSeachBook.Visible = false;
+        }
+        private void QuanLiThuVien_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = false;
+        }
         #region Admin, Logout, Exists
         private void btndangxuat_Click(object sender, EventArgs e)
         {
@@ -65,6 +80,180 @@ namespace LuuCongQuangVu_Nhom13
         {
             this.Hide();
             new Admin().Show();
+        }
+        #endregion
+        #region Xư lý lỗi quản lí sách
+        private void txtmasach_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtmasach, "");
+        }
+
+        private void txttensach_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txttensach, "");
+        }
+
+        private void txttacgia_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txttacgia, "");
+        }
+
+        private void txtsoluong_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtsoluong, "");
+        }
+
+        private void txttheloai_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txttheloai, "");
+        }
+
+        private void txtgiasach_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtgiasach, "");
+        }
+
+        private void txtnhasx_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtnhasx, "");
+        }
+
+        private void cbvitri_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(cbvitri, "");
+        }
+        private bool Validate_ManageBook()
+        {
+            if (txtmasach.Text == "")
+            {
+                GetError.SetError(txtmasach, "Bạn phải nhập mã sách!");
+                txtmasach.Focus();
+                return false;
+            }
+            if (txttensach.Text == "")
+            {
+                GetError.SetError(txttensach, "Bạn phải nhập tên sách!");
+                txttensach.Focus();
+                return false;
+            }
+            if (txttacgia.Text == "")
+            {
+                GetError.SetError(txttacgia, "Bạn phải nhập tác giả!");
+                txttacgia.Focus();
+                return false;
+            }
+            if (txtsoluong.Text == "")
+            {
+                GetError.SetError(txtsoluong, "Bạn phải nhập số lượng!");
+                txtsoluong.Focus();
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    int.Parse(txtsoluong.Text);
+                    if (int.Parse(txtsoluong.Text) < 0)
+                    {
+                        GetError.SetError(txtsoluong, "Bạn phải nhập số lượng >0!");
+                        txtsoluong.Focus();
+                        txtsoluong.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsoluong, "Bạn phải nhập số lượng là số nguyên!");
+                    txtsoluong.Focus();
+                    txtsoluong.SelectAll();
+                    return false;
+                }
+            }
+            if (txttheloai.Text == "")
+            {
+                GetError.SetError(txttheloai, "Bạn phải nhập thể loại!");
+                txttheloai.Focus();
+                return false;
+            }
+            if (txtgiasach.Text == "")
+            {
+                GetError.SetError(txtgiasach, "Bạn phải nhập giá sách!");
+                txtgiasach.Focus();
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    double.Parse(txtgiasach.Text);
+                    if (double.Parse(txtgiasach.Text) < 0)
+                    {
+                        GetError.SetError(txtgiasach, "Bạn phải nhập giá sách >0!");
+                        txtgiasach.Focus();
+                        txtgiasach.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtgiasach, "Bạn phải nhập giá sách là số thực!");
+                    txtgiasach.Focus();
+                    txtgiasach.SelectAll();
+                    return false;
+                }
+            }
+            if (txtnhasx.Text == "")
+            {
+                GetError.SetError(txtnhasx, "Bạn phải nhập nhà sản xuất!");
+                txtnhasx.Focus();
+                return false;
+            }
+            if (cbvitri.Text == "")
+            {
+                GetError.SetError(cbvitri, "Bạn phải chọn vị trí!");
+                cbvitri.Focus();
+                return false;
+            }
+            return true;
+        }
+        private bool isRadioIsEmpty()
+        {
+            if (rdmasach.Checked == false && rdtensach.Checked == false && rdtacgia.Checked == false && rdtheloai.Checked == false && rdnxb.Checked == false && rdvitri.Checked == false)
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
+        #region Xử lý lỗi quản lí độc giả
+        private void txtMaDocGia_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtMaDocGia, "");
+        }
+
+        private void txtTenDocGia_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtTenDocGia, "");
+        }
+
+        private void dateDocGia_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(dateDocGia, "");
+        }
+
+        private void txtDiaChiDocGia_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtDiaChiDocGia, "");
+        }
+
+        private void txtNgheNhiep_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtNgheNhiep, "");
+        }
+
+        private void txtSDT_DocGia_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtSDT_DocGia, "");
         }
         #endregion
         #region Quản lí sách
@@ -99,55 +288,30 @@ namespace LuuCongQuangVu_Nhom13
                 }
             }
         }
-        private bool isBoxIsEmpty()
-        {
-            if(txtmasach.Text.Equals("")|| txttensach.Text.Equals("") || txttacgia.Text.Equals("") || txtsoluong.Text.Equals("") || txttheloai.Text.Equals("") || txtgiasach.Text.Equals("") || txtnhasx.Text.Equals("")||cbvitri.Text.Equals(""))
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool isRadioIsEmpty()
-        {
-            if(rdmasach.Checked==false&& rdtensach.Checked == false && rdtacgia.Checked == false && rdtheloai.Checked == false && rdnxb.Checked == false && rdvitri.Checked == false)
-            {
-                return true;
-            }
-            return false;
-        }
         private void AddBook()
         {
-            if (isBoxIsEmpty())
+            if (Validate_ManageBook())
             {
-                MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtmasach.Focus();
-            }
-            else
-            {
-                //using (var dbcontext = new Models.QLThuVienContext())
-                //{
-                    try
-                    {
-                        Models.Sach sach = new Models.Sach();
-                        sach.Idsach = txtmasach.Text;
-                        sach.Tensach = txttensach.Text;
-                        sach.Tacgia = txttacgia.Text;
-                        sach.Soluong = int.Parse(txtsoluong.Text);
-                        sach.Theloai = txttheloai.Text;
-                        sach.Giasach = double.Parse(txtgiasach.Text);
-                        sach.Nhaxuatban = txtnhasx.Text;
-                        sach.Vitri = cbvitri.Text;
-                        dbcontext.Saches.Add(sach);
-                        dbcontext.SaveChanges();
-                        ReadFile();
+                try
+                {
+                    Models.Sach sach = new Models.Sach();
+                    sach.Idsach = txtmasach.Text;
+                    sach.Tensach = txttensach.Text;
+                    sach.Tacgia = txttacgia.Text;
+                    sach.Soluong = int.Parse(txtsoluong.Text);
+                    sach.Theloai = txttheloai.Text;
+                    sach.Giasach = double.Parse(txtgiasach.Text);
+                    sach.Nhaxuatban = txtnhasx.Text;
+                    sach.Vitri = cbvitri.Text;
+                    dbcontext.Saches.Add(sach);
+                    dbcontext.SaveChanges();
+                    ReadFile();
 
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Dữ liệu đầu vào bảng sai");
-                    }
-
-                //}
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Dữ liệu đầu vào bảng sai");
+                }
             }
         }
         private void DelBook()
@@ -172,7 +336,7 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    MessageBox.Show("Mã sách không tồn tại", "Thông báo");
+                    MessageBox.Show("Mã sách không tồn tại", "Lỗi",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
             }
         }
@@ -180,22 +344,25 @@ namespace LuuCongQuangVu_Nhom13
         {
             //using var dbcontext = new Models.QLThuVienContext();
             //Models.Sach sach = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
-            Models.Sach sach = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
-            if (sach != null)
+            if (Validate_ManageBook())
             {
-                sach.Tensach = txttensach.Text;
-                sach.Tacgia = txttacgia.Text;
-                sach.Soluong = int.Parse(txtsoluong.Text);
-                sach.Theloai = label.Text;
-                sach.Giasach = double.Parse(txtgiasach.Text);
-                sach.Nhaxuatban = txtnhasx.Text;
-                sach.Vitri = cbvitri.Text;
-                dbcontext.SaveChanges();
-                ReadFile();
-            }
-            else
-            {
-                MessageBox.Show("Mã sách không tồn tại", "Thông báo");
+                Models.Sach sach = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
+                if (sach != null)
+                {
+                    sach.Tensach = txttensach.Text;
+                    sach.Tacgia = txttacgia.Text;
+                    sach.Soluong = int.Parse(txtsoluong.Text);
+                    sach.Theloai = label.Text;
+                    sach.Giasach = double.Parse(txtgiasach.Text);
+                    sach.Nhaxuatban = txtnhasx.Text;
+                    sach.Vitri = cbvitri.Text;
+                    dbcontext.SaveChanges();
+                    ReadFile();
+                }
+                else
+                {
+                    MessageBox.Show("Mã sách không tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         private void SearchBook()
@@ -208,7 +375,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book=>book.Idsach==txtmasach.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Idsach == txtmasach.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Idsach == txtSearchBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -238,7 +405,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Tensach == txttensach.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Tensach == txttensach.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Tensach == txtSearchBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -268,7 +435,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Tacgia == txttacgia.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Tacgia == txttacgia.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Tacgia == txtSearchBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -298,7 +465,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Theloai == txttheloai.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Theloai == txttheloai.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Theloai == txtSearchBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -328,7 +495,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Nhaxuatban == txtnhasx.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Nhaxuatban == txtnhasx.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Nhaxuatban == txtSearchBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -358,7 +525,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Vitri == cbvitri.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Vitri == cbvitri.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Vitri == cbSeachBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -780,6 +947,7 @@ namespace LuuCongQuangVu_Nhom13
             txtSDT_DocGia.Text = Convert.ToString(row.Cells[5].Value);
         }
         #endregion
+        #region Quản lí bán sách
         #region Quản lí bán sách>Lập hoá đơn
         // Lập hoá đơn
         private void AddBookBuy()
@@ -1022,7 +1190,67 @@ namespace LuuCongQuangVu_Nhom13
                 index_historybs++;
             }
         }
+        private void btnLayDL_Click(object sender, EventArgs e)
+        {
+            var hds = (from h in dbcontext.HoaDons
+                       join dg in dbcontext.Docgia on h.Iddocgia equals dg.Iddocgia
+                       select new
+                       {
+                           mahd = h.MaHd,
+                           madg = h.Iddocgia,
+                           tendg = dg.Hoten,
+                           nguoilap = h.NguoiLap,
+                           ngaylap = h.NgayLap
+                       }).ToList();
+            dgvHistoryBS.Rows.Clear();
+            dgvHistoryBS.ColumnCount = 7;
+            int index_historybs = 0;
+            if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
+            {
+                MessageBox.Show("Điểm khởi đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                foreach (var item in hds)
+                {   
+                    if (dtimeStart.Value.Date<=item.ngaylap.Value.Date&&item.ngaylap.Value.Date<=dtimeEnd.Value.Date)
+                    {
+                        var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                        double SumMoney = 0;
+                        foreach (var child_item in hdcts)
+                        {
+                            Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                            SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                        }
+                        dgvHistoryBS.Rows.Add();
+                        dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                        dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.madg;
+                        dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.tendg;
+                        dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                        dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                        dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                        int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                        if (days == 0)
+                        {
+                            dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                        }
+                        else if (0 < days && days < 30)
+                        {
+                            dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                        }
+                        else
+                        {
+                            dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                        }
+                        index_historybs++;
+                    }
+                }
+            }
+        }
+
+
         #endregion
 
+        #endregion
     }
 }
