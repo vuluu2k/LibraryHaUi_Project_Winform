@@ -21,6 +21,7 @@ namespace LuuCongQuangVu_Nhom13
         {
             this.Hide();
             QuanLiThuVien menu = new QuanLiThuVien();
+            menu.Tag = this.Tag;
             menu.Text = this.Text;
             menu.Show();
         }

@@ -23,13 +23,16 @@ namespace LuuCongQuangVu_Nhom13.Models
         [Column(TypeName = "datetime")]
         public DateTime? NgayLap { get; set; }
         [StringLength(50)]
-        public string NguoiLap { get; set; }
+        public string Usename { get; set; }
         [StringLength(4)]
         public string Iddocgia { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
         [InverseProperty(nameof(Docgium.HoaDons))]
         public virtual Docgium IddocgiaNavigation { get; set; }
+        [ForeignKey(nameof(Usename))]
+        [InverseProperty(nameof(Account.HoaDons))]
+        public virtual Account UsenameNavigation { get; set; }
         [InverseProperty(nameof(HoaDonChiTiet.MaHdNavigation))]
         public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
     }

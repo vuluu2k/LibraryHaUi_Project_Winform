@@ -14,7 +14,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         {
             HoaDons = new HashSet<HoaDon>();
             Muontrasaches = new HashSet<Muontrasach>();
-            QuanLiDocGia = new HashSet<QuanLiDocGium>();
+            QuanLiPhongDocs = new HashSet<QuanLiPhongDoc>();
         }
 
         [Key]
@@ -35,7 +35,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         public virtual ICollection<HoaDon> HoaDons { get; set; }
         [InverseProperty(nameof(Muontrasach.IddocgiaNavigation))]
         public virtual ICollection<Muontrasach> Muontrasaches { get; set; }
-        [InverseProperty(nameof(QuanLiDocGium.IddocgiaNavigation))]
-        public virtual ICollection<QuanLiDocGium> QuanLiDocGia { get; set; }
+        [InverseProperty(nameof(QuanLiPhongDoc.IddocgiaNavigation))]
+        public virtual ICollection<QuanLiPhongDoc> QuanLiPhongDocs { get; set; }
     }
 }

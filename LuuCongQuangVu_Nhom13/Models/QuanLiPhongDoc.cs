@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LuuCongQuangVu_Nhom13.Models
 {
-    public partial class QuanLiDocGium
+    [Table("QuanLiPhongDoc")]
+    public partial class QuanLiPhongDoc
     {
         [Key]
         [StringLength(4)]
@@ -22,10 +23,10 @@ namespace LuuCongQuangVu_Nhom13.Models
         public DateTime? Giora { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
-        [InverseProperty(nameof(Docgium.QuanLiDocGia))]
+        [InverseProperty(nameof(Docgium.QuanLiPhongDocs))]
         public virtual Docgium IddocgiaNavigation { get; set; }
         [ForeignKey(nameof(Idphongdoc))]
-        [InverseProperty(nameof(PhongDoc.QuanLiDocGia))]
+        [InverseProperty(nameof(PhongDoc.QuanLiPhongDocs))]
         public virtual PhongDoc IdphongdocNavigation { get; set; }
     }
 }

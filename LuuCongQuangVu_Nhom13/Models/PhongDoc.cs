@@ -13,7 +13,7 @@ namespace LuuCongQuangVu_Nhom13.Models
     {
         public PhongDoc()
         {
-            QuanLiDocGia = new HashSet<QuanLiDocGium>();
+            QuanLiPhongDocs = new HashSet<QuanLiPhongDoc>();
         }
 
         [Key]
@@ -22,7 +22,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         [StringLength(50)]
         public string Tennhanvien { get; set; }
 
-        [InverseProperty(nameof(QuanLiDocGium.IdphongdocNavigation))]
-        public virtual ICollection<QuanLiDocGium> QuanLiDocGia { get; set; }
+        [InverseProperty(nameof(QuanLiPhongDoc.IdphongdocNavigation))]
+        public virtual ICollection<QuanLiPhongDoc> QuanLiPhongDocs { get; set; }
     }
 }

@@ -9,13 +9,14 @@ go
 create table Account(
 	Usename nvarchar(50) primary key,
 	Password nvarchar(50),
-	Capdo nvarchar(50)
+	Capdo nvarchar(50),
+	Tenchutaikhoan nvarchar(50)
 )
 go
-insert into Account values('vuong', '123456', N'Nhân viên')
-insert into Account values('vu', '123456', N'Admin')
-insert into Account values('thanh', '123456', N'Nhân viên')
-insert into Account values('nam', '123456', N'Nhân viên')
+insert into Account values('vuong', '123456', N'Nhân viên',N'pham quoc vuong')
+insert into Account values('vu', '123456', N'Admin', N'luu cong quang vu')
+insert into Account values('thanh', '123456', N'Nhân viên', N'bui trong thanh')
+insert into Account values('nam', '123456', N'Nhân viên', N'do viet nam')
 go
 create table Docgia(
 	Iddocgia char(4) primary key,
@@ -64,14 +65,15 @@ go
 create table HoaDon(
 	MaHD char(4) primary key,
 	NgayLap datetime,
-	NguoiLap nvarchar(50),
+	Usename nvarchar(50),
+	foreign key(Usename) references Account(Usename),
 	Iddocgia char(4),
 	foreign key(Iddocgia) references Docgia(Iddocgia)
 )
 go
-insert into HoaDon values('h001',  '2020/05/20',N'phạm văn x', 'd001')
-insert into HoaDon values('h002',  '2020/05/14',N'phạm văn y', 'd003')
-insert into HoaDon values('h003',  '2020/05/16',N'phạm văn z', 'd002')
+insert into HoaDon values('h001',  '2020/05/20',N'thanh', 'd001')
+insert into HoaDon values('h002',  '2020/05/14',N'vu', 'd003')
+insert into HoaDon values('h003',  '2020/05/16',N'nam', 'd002')
 go
 
 create table HoaDonChiTiet(
@@ -96,7 +98,7 @@ go
 insert into PhongDoc values('p001', N'Phạm Thị Hà')
 insert into PhongDoc values('p002', N'Ngô Thị Trang')
 go
-create table QuanLiDocGia(
+create table QuanLiPhongDoc(
 	Idphongdoc char(4),
 	Iddocgia char(4),
 	primary key(Idphongdoc, Iddocgia),
@@ -106,11 +108,11 @@ create table QuanLiDocGia(
 	Giora datetime
 )
 go
-insert into QuanLiDocGia values('p001', 'd001','2021/1/2 12:00:00', '2021/1/2 15:00:00')
-insert into QuanLiDocGia values('p002', 'd002','2021/1/2 12:00:00', '2021/1/2 14:00:00')
-insert into QuanLiDocGia values('p002', 'd001','2021/1/2 12:00:00', '2021/1/2 13:00:00')
-insert into QuanLiDocGia values('p001', 'd003','2021/1/2 12:00:00', '2021/1/2 12:15:00')
-insert into QuanLiDocGia values('p001', 'd002','2021/1/2 12:00:00', '2021/1/2 12:30:00')
+insert into QuanLiPhongDoc values('p001', 'd001','2021/1/2 12:00:00', '2021/1/2 15:00:00')
+insert into QuanLiPhongDoc values('p002', 'd002','2021/1/2 12:00:00', '2021/1/2 14:00:00')
+insert into QuanLiPhongDoc values('p002', 'd001','2021/1/2 12:00:00', '2021/1/2 13:00:00')
+insert into QuanLiPhongDoc values('p001', 'd003','2021/1/2 12:00:00', '2021/1/2 12:15:00')
+insert into QuanLiPhongDoc values('p001', 'd002','2021/1/2 12:00:00', '2021/1/2 12:30:00')
 go
 
 

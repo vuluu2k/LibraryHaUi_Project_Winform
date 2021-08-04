@@ -77,7 +77,16 @@ namespace LuuCongQuangVu_Nhom13
             this.nxb = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vitri = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabQuanLiDocGia = new System.Windows.Forms.TabPage();
-            this.cbTimKiem = new System.Windows.Forms.ComboBox();
+            this.lbSluongDG = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.dtimeSearchDG = new System.Windows.Forms.DateTimePicker();
+            this.rdSDT_DG = new System.Windows.Forms.RadioButton();
+            this.rdNgheNghiepDG = new System.Windows.Forms.RadioButton();
+            this.rdDiaChiDG = new System.Windows.Forms.RadioButton();
+            this.rdNgaySinhDG = new System.Windows.Forms.RadioButton();
+            this.rdTenDG = new System.Windows.Forms.RadioButton();
+            this.rdMaDG = new System.Windows.Forms.RadioButton();
+            this.txtSearchDG = new System.Windows.Forms.TextBox();
             this.btnTimKiemDocGia = new System.Windows.Forms.Button();
             this.btnHuyDocGia = new System.Windows.Forms.Button();
             this.btnSuaDocGia = new System.Windows.Forms.Button();
@@ -108,6 +117,8 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.btnLapHD = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rdInCbMaSach = new System.Windows.Forms.RadioButton();
+            this.rdInCbTenSach = new System.Windows.Forms.RadioButton();
             this.btnHuySachMua = new System.Windows.Forms.Button();
             this.btnXoaSachMua = new System.Windows.Forms.Button();
             this.btnSuaSachMua = new System.Windows.Forms.Button();
@@ -121,7 +132,7 @@ namespace LuuCongQuangVu_Nhom13
             this.lhddongia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lhdthanhtien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.lbChangeLHD_MaSach = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbMaDG = new System.Windows.Forms.ComboBox();
             this.dtimeNgayLap = new System.Windows.Forms.DateTimePicker();
@@ -178,7 +189,6 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnAdmin = new System.Windows.Forms.Button();
             this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.MainTabCT.SuspendLayout();
             this.tabQuanLiSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSach)).BeginInit();
@@ -767,8 +777,16 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiDocGia.BackColor = System.Drawing.Color.Transparent;
             this.tabQuanLiDocGia.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabQuanLiDocGia.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.tabQuanLiDocGia.Controls.Add(this.textBox1);
-            this.tabQuanLiDocGia.Controls.Add(this.cbTimKiem);
+            this.tabQuanLiDocGia.Controls.Add(this.lbSluongDG);
+            this.tabQuanLiDocGia.Controls.Add(this.label29);
+            this.tabQuanLiDocGia.Controls.Add(this.dtimeSearchDG);
+            this.tabQuanLiDocGia.Controls.Add(this.rdSDT_DG);
+            this.tabQuanLiDocGia.Controls.Add(this.rdNgheNghiepDG);
+            this.tabQuanLiDocGia.Controls.Add(this.rdDiaChiDG);
+            this.tabQuanLiDocGia.Controls.Add(this.rdNgaySinhDG);
+            this.tabQuanLiDocGia.Controls.Add(this.rdTenDG);
+            this.tabQuanLiDocGia.Controls.Add(this.rdMaDG);
+            this.tabQuanLiDocGia.Controls.Add(this.txtSearchDG);
             this.tabQuanLiDocGia.Controls.Add(this.btnTimKiemDocGia);
             this.tabQuanLiDocGia.Controls.Add(this.btnHuyDocGia);
             this.tabQuanLiDocGia.Controls.Add(this.btnSuaDocGia);
@@ -797,29 +815,119 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiDocGia.TabIndex = 1;
             this.tabQuanLiDocGia.Text = "Quản lí độc giả";
             // 
-            // cbTimKiem
+            // lbSluongDG
             // 
-            this.cbTimKiem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTimKiem.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.cbTimKiem.FormattingEnabled = true;
-            this.cbTimKiem.Items.AddRange(new object[] {
-            "Mã độc giả",
-            "Họ tên",
-            "Ngày sinh",
-            "Địa chỉ",
-            "Nghề nghiệp",
-            "Số điện thoại"});
-            this.cbTimKiem.Location = new System.Drawing.Point(896, 257);
-            this.cbTimKiem.Name = "cbTimKiem";
-            this.cbTimKiem.Size = new System.Drawing.Size(132, 23);
-            this.cbTimKiem.TabIndex = 22;
+            this.lbSluongDG.AutoSize = true;
+            this.lbSluongDG.Location = new System.Drawing.Point(281, 320);
+            this.lbSluongDG.Name = "lbSluongDG";
+            this.lbSluongDG.Size = new System.Drawing.Size(14, 15);
+            this.lbSluongDG.TabIndex = 32;
+            this.lbSluongDG.Text = "0";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(130, 321);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(144, 15);
+            this.label29.TabIndex = 31;
+            this.label29.Text = "Số lượng độc giả hiện có:";
+            // 
+            // dtimeSearchDG
+            // 
+            this.dtimeSearchDG.CustomFormat = "dd-MM-yyyy";
+            this.dtimeSearchDG.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtimeSearchDG.Location = new System.Drawing.Point(843, 233);
+            this.dtimeSearchDG.Name = "dtimeSearchDG";
+            this.dtimeSearchDG.Size = new System.Drawing.Size(291, 22);
+            this.dtimeSearchDG.TabIndex = 30;
+            this.dtimeSearchDG.Visible = false;
+            // 
+            // rdSDT_DG
+            // 
+            this.rdSDT_DG.AutoSize = true;
+            this.rdSDT_DG.Location = new System.Drawing.Point(1039, 286);
+            this.rdSDT_DG.Name = "rdSDT_DG";
+            this.rdSDT_DG.Size = new System.Drawing.Size(95, 19);
+            this.rdSDT_DG.TabIndex = 29;
+            this.rdSDT_DG.TabStop = true;
+            this.rdSDT_DG.Text = "Số điện thoại";
+            this.rdSDT_DG.UseVisualStyleBackColor = true;
+            this.rdSDT_DG.CheckedChanged += new System.EventHandler(this.rdMaDG_CheckedChanged);
+            // 
+            // rdNgheNghiepDG
+            // 
+            this.rdNgheNghiepDG.AutoSize = true;
+            this.rdNgheNghiepDG.Location = new System.Drawing.Point(939, 286);
+            this.rdNgheNghiepDG.Name = "rdNgheNghiepDG";
+            this.rdNgheNghiepDG.Size = new System.Drawing.Size(94, 19);
+            this.rdNgheNghiepDG.TabIndex = 28;
+            this.rdNgheNghiepDG.TabStop = true;
+            this.rdNgheNghiepDG.Text = "Nghề nghiệp";
+            this.rdNgheNghiepDG.UseVisualStyleBackColor = true;
+            this.rdNgheNghiepDG.CheckedChanged += new System.EventHandler(this.rdMaDG_CheckedChanged);
+            // 
+            // rdDiaChiDG
+            // 
+            this.rdDiaChiDG.AutoSize = true;
+            this.rdDiaChiDG.Location = new System.Drawing.Point(843, 286);
+            this.rdDiaChiDG.Name = "rdDiaChiDG";
+            this.rdDiaChiDG.Size = new System.Drawing.Size(64, 19);
+            this.rdDiaChiDG.TabIndex = 27;
+            this.rdDiaChiDG.TabStop = true;
+            this.rdDiaChiDG.Text = "Địa chỉ";
+            this.rdDiaChiDG.UseVisualStyleBackColor = true;
+            this.rdDiaChiDG.CheckedChanged += new System.EventHandler(this.rdMaDG_CheckedChanged);
+            // 
+            // rdNgaySinhDG
+            // 
+            this.rdNgaySinhDG.AutoSize = true;
+            this.rdNgaySinhDG.Location = new System.Drawing.Point(1039, 261);
+            this.rdNgaySinhDG.Name = "rdNgaySinhDG";
+            this.rdNgaySinhDG.Size = new System.Drawing.Size(80, 19);
+            this.rdNgaySinhDG.TabIndex = 26;
+            this.rdNgaySinhDG.TabStop = true;
+            this.rdNgaySinhDG.Text = "Ngày sinh";
+            this.rdNgaySinhDG.UseVisualStyleBackColor = true;
+            this.rdNgaySinhDG.CheckedChanged += new System.EventHandler(this.rdNgaySinhDG_CheckedChanged);
+            // 
+            // rdTenDG
+            // 
+            this.rdTenDG.AutoSize = true;
+            this.rdTenDG.Location = new System.Drawing.Point(939, 261);
+            this.rdTenDG.Name = "rdTenDG";
+            this.rdTenDG.Size = new System.Drawing.Size(87, 19);
+            this.rdTenDG.TabIndex = 25;
+            this.rdTenDG.TabStop = true;
+            this.rdTenDG.Text = "Tên độc giả";
+            this.rdTenDG.UseVisualStyleBackColor = true;
+            this.rdTenDG.CheckedChanged += new System.EventHandler(this.rdMaDG_CheckedChanged);
+            // 
+            // rdMaDG
+            // 
+            this.rdMaDG.AutoSize = true;
+            this.rdMaDG.Location = new System.Drawing.Point(843, 261);
+            this.rdMaDG.Name = "rdMaDG";
+            this.rdMaDG.Size = new System.Drawing.Size(83, 19);
+            this.rdMaDG.TabIndex = 24;
+            this.rdMaDG.TabStop = true;
+            this.rdMaDG.Text = "Mã độc giả";
+            this.rdMaDG.UseVisualStyleBackColor = true;
+            this.rdMaDG.CheckedChanged += new System.EventHandler(this.rdMaDG_CheckedChanged);
+            // 
+            // txtSearchDG
+            // 
+            this.txtSearchDG.Location = new System.Drawing.Point(843, 233);
+            this.txtSearchDG.Name = "txtSearchDG";
+            this.txtSearchDG.Size = new System.Drawing.Size(291, 22);
+            this.txtSearchDG.TabIndex = 23;
             // 
             // btnTimKiemDocGia
             // 
             this.btnTimKiemDocGia.BackColor = System.Drawing.Color.Orange;
             this.btnTimKiemDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnTimKiemDocGia.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Search;
-            this.btnTimKiemDocGia.Location = new System.Drawing.Point(775, 233);
+            this.btnTimKiemDocGia.Location = new System.Drawing.Point(722, 233);
             this.btnTimKiemDocGia.Name = "btnTimKiemDocGia";
             this.btnTimKiemDocGia.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.btnTimKiemDocGia.Size = new System.Drawing.Size(115, 40);
@@ -834,7 +942,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnHuyDocGia.BackColor = System.Drawing.Color.Orange;
             this.btnHuyDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnHuyDocGia.Image = ((System.Drawing.Image)(resources.GetObject("btnHuyDocGia.Image")));
-            this.btnHuyDocGia.Location = new System.Drawing.Point(775, 140);
+            this.btnHuyDocGia.Location = new System.Drawing.Point(722, 140);
             this.btnHuyDocGia.Name = "btnHuyDocGia";
             this.btnHuyDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnHuyDocGia.Size = new System.Drawing.Size(115, 40);
@@ -849,7 +957,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSuaDocGia.BackColor = System.Drawing.Color.Orange;
             this.btnSuaDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSuaDocGia.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Edit;
-            this.btnSuaDocGia.Location = new System.Drawing.Point(775, 47);
+            this.btnSuaDocGia.Location = new System.Drawing.Point(722, 47);
             this.btnSuaDocGia.Name = "btnSuaDocGia";
             this.btnSuaDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnSuaDocGia.Size = new System.Drawing.Size(115, 40);
@@ -864,7 +972,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnXoaDocGia.BackColor = System.Drawing.Color.Orange;
             this.btnXoaDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnXoaDocGia.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Trash;
-            this.btnXoaDocGia.Location = new System.Drawing.Point(608, 233);
+            this.btnXoaDocGia.Location = new System.Drawing.Point(580, 233);
             this.btnXoaDocGia.Name = "btnXoaDocGia";
             this.btnXoaDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnXoaDocGia.Size = new System.Drawing.Size(115, 40);
@@ -879,7 +987,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnThemDocGia.BackColor = System.Drawing.Color.Orange;
             this.btnThemDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnThemDocGia.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Create;
-            this.btnThemDocGia.Location = new System.Drawing.Point(608, 140);
+            this.btnThemDocGia.Location = new System.Drawing.Point(580, 140);
             this.btnThemDocGia.Name = "btnThemDocGia";
             this.btnThemDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnThemDocGia.Size = new System.Drawing.Size(115, 40);
@@ -895,7 +1003,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnReadDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnReadDocGia.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnReadDocGia.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.List;
-            this.btnReadDocGia.Location = new System.Drawing.Point(608, 47);
+            this.btnReadDocGia.Location = new System.Drawing.Point(580, 47);
             this.btnReadDocGia.Name = "btnReadDocGia";
             this.btnReadDocGia.Size = new System.Drawing.Size(115, 40);
             this.btnReadDocGia.TabIndex = 15;
@@ -934,7 +1042,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dgvDocGia.RowTemplate.Height = 25;
             this.dgvDocGia.Size = new System.Drawing.Size(1043, 260);
             this.dgvDocGia.TabIndex = 13;
-            this.dgvDocGia.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cell_click_author);
+            this.dgvDocGia.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cell_click_reader);
             // 
             // iddocgia
             // 
@@ -1057,9 +1165,9 @@ namespace LuuCongQuangVu_Nhom13
             this.label9.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label9.Location = new System.Drawing.Point(185, 93);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 15);
+            this.label9.Size = new System.Drawing.Size(69, 15);
             this.label9.TabIndex = 1;
-            this.label9.Text = "Họ tên";
+            this.label9.Text = "Tên độc giả";
             // 
             // label8
             // 
@@ -1130,6 +1238,8 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.rdInCbMaSach);
+            this.groupBox2.Controls.Add(this.rdInCbTenSach);
             this.groupBox2.Controls.Add(this.btnHuySachMua);
             this.groupBox2.Controls.Add(this.btnXoaSachMua);
             this.groupBox2.Controls.Add(this.btnSuaSachMua);
@@ -1138,7 +1248,7 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox2.Controls.Add(this.txtsoluongmua_lhd);
             this.groupBox2.Controls.Add(this.dgvLHD);
             this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.label18);
+            this.groupBox2.Controls.Add(this.lbChangeLHD_MaSach);
             this.groupBox2.Location = new System.Drawing.Point(103, 172);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1078, 295);
@@ -1146,11 +1256,35 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin mua hàng";
             // 
+            // rdInCbMaSach
+            // 
+            this.rdInCbMaSach.AutoSize = true;
+            this.rdInCbMaSach.Location = new System.Drawing.Point(217, 42);
+            this.rdInCbMaSach.Name = "rdInCbMaSach";
+            this.rdInCbMaSach.Size = new System.Drawing.Size(116, 21);
+            this.rdInCbMaSach.TabIndex = 13;
+            this.rdInCbMaSach.TabStop = true;
+            this.rdInCbMaSach.Text = "Nhập theo mã";
+            this.rdInCbMaSach.UseVisualStyleBackColor = true;
+            this.rdInCbMaSach.CheckedChanged += new System.EventHandler(this.rdInCbMaSach_CheckedChanged);
+            // 
+            // rdInCbTenSach
+            // 
+            this.rdInCbTenSach.AutoSize = true;
+            this.rdInCbTenSach.Location = new System.Drawing.Point(31, 42);
+            this.rdInCbTenSach.Name = "rdInCbTenSach";
+            this.rdInCbTenSach.Size = new System.Drawing.Size(118, 21);
+            this.rdInCbTenSach.TabIndex = 12;
+            this.rdInCbTenSach.TabStop = true;
+            this.rdInCbTenSach.Text = "Nhập theo tên";
+            this.rdInCbTenSach.UseVisualStyleBackColor = true;
+            this.rdInCbTenSach.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
             // btnHuySachMua
             // 
             this.btnHuySachMua.BackColor = System.Drawing.Color.Orange;
             this.btnHuySachMua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.eraser;
-            this.btnHuySachMua.Location = new System.Drawing.Point(188, 204);
+            this.btnHuySachMua.Location = new System.Drawing.Point(188, 222);
             this.btnHuySachMua.Name = "btnHuySachMua";
             this.btnHuySachMua.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
             this.btnHuySachMua.Size = new System.Drawing.Size(145, 40);
@@ -1158,12 +1292,13 @@ namespace LuuCongQuangVu_Nhom13
             this.btnHuySachMua.Text = "Huỷ";
             this.btnHuySachMua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnHuySachMua.UseVisualStyleBackColor = false;
+            this.btnHuySachMua.Click += new System.EventHandler(this.btnHuySachMua_Click);
             // 
             // btnXoaSachMua
             // 
             this.btnXoaSachMua.BackColor = System.Drawing.Color.Orange;
             this.btnXoaSachMua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Trash;
-            this.btnXoaSachMua.Location = new System.Drawing.Point(31, 204);
+            this.btnXoaSachMua.Location = new System.Drawing.Point(31, 222);
             this.btnXoaSachMua.Name = "btnXoaSachMua";
             this.btnXoaSachMua.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.btnXoaSachMua.Size = new System.Drawing.Size(151, 40);
@@ -1177,7 +1312,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.btnSuaSachMua.BackColor = System.Drawing.Color.Orange;
             this.btnSuaSachMua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Edit;
-            this.btnSuaSachMua.Location = new System.Drawing.Point(188, 148);
+            this.btnSuaSachMua.Location = new System.Drawing.Point(188, 166);
             this.btnSuaSachMua.Name = "btnSuaSachMua";
             this.btnSuaSachMua.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.btnSuaSachMua.Size = new System.Drawing.Size(145, 40);
@@ -1190,16 +1325,17 @@ namespace LuuCongQuangVu_Nhom13
             // cbMaSach_lhd
             // 
             this.cbMaSach_lhd.FormattingEnabled = true;
-            this.cbMaSach_lhd.Location = new System.Drawing.Point(132, 46);
+            this.cbMaSach_lhd.Location = new System.Drawing.Point(132, 80);
             this.cbMaSach_lhd.Name = "cbMaSach_lhd";
             this.cbMaSach_lhd.Size = new System.Drawing.Size(201, 25);
             this.cbMaSach_lhd.TabIndex = 8;
+            this.cbMaSach_lhd.Validated += new System.EventHandler(this.cbMaSach_lhd_Validated);
             // 
             // btnThemSachMua
             // 
             this.btnThemSachMua.BackColor = System.Drawing.Color.Orange;
             this.btnThemSachMua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Create;
-            this.btnThemSachMua.Location = new System.Drawing.Point(31, 148);
+            this.btnThemSachMua.Location = new System.Drawing.Point(31, 166);
             this.btnThemSachMua.Name = "btnThemSachMua";
             this.btnThemSachMua.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnThemSachMua.Size = new System.Drawing.Size(151, 40);
@@ -1211,10 +1347,11 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // txtsoluongmua_lhd
             // 
-            this.txtsoluongmua_lhd.Location = new System.Drawing.Point(132, 104);
+            this.txtsoluongmua_lhd.Location = new System.Drawing.Point(132, 122);
             this.txtsoluongmua_lhd.Name = "txtsoluongmua_lhd";
             this.txtsoluongmua_lhd.Size = new System.Drawing.Size(201, 25);
             this.txtsoluongmua_lhd.TabIndex = 7;
+            this.txtsoluongmua_lhd.Validated += new System.EventHandler(this.txtsoluongmua_lhd_Validated);
             // 
             // dgvLHD
             // 
@@ -1227,7 +1364,7 @@ namespace LuuCongQuangVu_Nhom13
             this.lhdsoluong,
             this.lhddongia,
             this.lhdthanhtien});
-            this.dgvLHD.Location = new System.Drawing.Point(376, 24);
+            this.dgvLHD.Location = new System.Drawing.Point(376, 42);
             this.dgvLHD.Name = "dgvLHD";
             this.dgvLHD.RowTemplate.Height = 25;
             this.dgvLHD.Size = new System.Drawing.Size(676, 220);
@@ -1264,20 +1401,20 @@ namespace LuuCongQuangVu_Nhom13
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(31, 107);
+            this.label19.Location = new System.Drawing.Point(31, 125);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(96, 17);
             this.label19.TabIndex = 1;
             this.label19.Text = "Số lượng mua";
             // 
-            // label18
+            // lbChangeLHD_MaSach
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(30, 49);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(63, 17);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "Mã sách";
+            this.lbChangeLHD_MaSach.AutoSize = true;
+            this.lbChangeLHD_MaSach.Location = new System.Drawing.Point(30, 83);
+            this.lbChangeLHD_MaSach.Name = "lbChangeLHD_MaSach";
+            this.lbChangeLHD_MaSach.Size = new System.Drawing.Size(67, 17);
+            this.lbChangeLHD_MaSach.TabIndex = 0;
+            this.lbChangeLHD_MaSach.Text = "Tên sách";
             // 
             // groupBox1
             // 
@@ -1301,6 +1438,7 @@ namespace LuuCongQuangVu_Nhom13
             this.cbMaDG.Name = "cbMaDG";
             this.cbMaDG.Size = new System.Drawing.Size(166, 25);
             this.cbMaDG.TabIndex = 7;
+            this.cbMaDG.Validated += new System.EventHandler(this.cbMaDG_Validated);
             // 
             // dtimeNgayLap
             // 
@@ -1310,6 +1448,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dtimeNgayLap.Name = "dtimeNgayLap";
             this.dtimeNgayLap.Size = new System.Drawing.Size(172, 25);
             this.dtimeNgayLap.TabIndex = 6;
+            this.dtimeNgayLap.Validated += new System.EventHandler(this.dtimeNgayLap_Validated);
             // 
             // txtMaHD
             // 
@@ -1317,6 +1456,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtMaHD.Name = "txtMaHD";
             this.txtMaHD.Size = new System.Drawing.Size(163, 25);
             this.txtMaHD.TabIndex = 4;
+            this.txtMaHD.Validated += new System.EventHandler(this.txtMaHD_Validated);
             // 
             // label17
             // 
@@ -1817,13 +1957,6 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.GetError.ContainerControl = this;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(896, 233);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(253, 22);
-            this.textBox1.TabIndex = 23;
-            // 
             // QuanLiThuVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1901,7 +2034,6 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.RadioButton rdtensach;
         private System.Windows.Forms.RadioButton rdmasach;
         private System.Windows.Forms.Button btnAdmin;
-        private System.Windows.Forms.ComboBox cbTimKiem;
         private System.Windows.Forms.Button btnTimKiemDocGia;
         private System.Windows.Forms.Button btnHuyDocGia;
         private System.Windows.Forms.Button btnSuaDocGia;
@@ -1956,7 +2088,7 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.DataGridViewTextBoxColumn lhddongia;
         private System.Windows.Forms.DataGridViewTextBoxColumn lhdthanhtien;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lbChangeLHD_MaSach;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtMaHD;
         private System.Windows.Forms.Label label17;
@@ -2012,7 +2144,18 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.ErrorProvider GetError;
         private System.Windows.Forms.TextBox txtSearchBook;
         private System.Windows.Forms.ComboBox cbSeachBook;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSearchDG;
+        private System.Windows.Forms.RadioButton rdSDT_DG;
+        private System.Windows.Forms.RadioButton rdNgheNghiepDG;
+        private System.Windows.Forms.RadioButton rdDiaChiDG;
+        private System.Windows.Forms.RadioButton rdNgaySinhDG;
+        private System.Windows.Forms.RadioButton rdTenDG;
+        private System.Windows.Forms.RadioButton rdMaDG;
+        private System.Windows.Forms.DateTimePicker dtimeSearchDG;
+        private System.Windows.Forms.Label lbSluongDG;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.RadioButton rdInCbMaSach;
+        private System.Windows.Forms.RadioButton rdInCbTenSach;
     }
 }
 
