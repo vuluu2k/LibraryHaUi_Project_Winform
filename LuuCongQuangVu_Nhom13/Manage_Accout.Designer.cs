@@ -56,12 +56,14 @@ namespace LuuCongQuangVu_Nhom13
             this.btnThoat = new System.Windows.Forms.Button();
             this.btnXoa1 = new System.Windows.Forms.Button();
             this.btnSua1 = new System.Windows.Forms.Button();
-            this.isTaiKhoan = new System.Windows.Forms.CheckBox();
-            this.isMatKhau = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
             this.lbHoTen = new System.Windows.Forms.Label();
             this.txtHoTen = new System.Windows.Forms.TextBox();
+            this.rdMatKhau = new System.Windows.Forms.RadioButton();
+            this.rdTaiKhoan = new System.Windows.Forms.RadioButton();
+            this.rdHoTen = new System.Windows.Forms.RadioButton();
+            this.btnHuy = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).BeginInit();
             this.SuspendLayout();
@@ -233,10 +235,10 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSua.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Edit;
             this.btnSua.Location = new System.Drawing.Point(42, 110);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.btnSua.Padding = new System.Windows.Forms.Padding(35, 0, 0, 0);
             this.btnSua.Size = new System.Drawing.Size(282, 52);
             this.btnSua.TabIndex = 21;
-            this.btnSua.Text = "Đổi mật khẩu, Họ tên, Cấp độ";
+            this.btnSua.Text = "Sửa thông tin tài khoản";
             this.btnSua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSua.UseVisualStyleBackColor = false;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
@@ -261,11 +263,12 @@ namespace LuuCongQuangVu_Nhom13
             this.btnPhanLoai.BackColor = System.Drawing.Color.Orange;
             this.btnPhanLoai.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnPhanLoai.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Numbered_list;
-            this.btnPhanLoai.Location = new System.Drawing.Point(43, 244);
+            this.btnPhanLoai.Location = new System.Drawing.Point(42, 244);
             this.btnPhanLoai.Name = "btnPhanLoai";
+            this.btnPhanLoai.Padding = new System.Windows.Forms.Padding(40, 0, 0, 0);
             this.btnPhanLoai.Size = new System.Drawing.Size(282, 51);
             this.btnPhanLoai.TabIndex = 23;
-            this.btnPhanLoai.Text = "Phân loại, Xoá, Đổi mật khẩu, Cấp độ";
+            this.btnPhanLoai.Text = "Phân loại, Xoá, Sửa";
             this.btnPhanLoai.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPhanLoai.UseVisualStyleBackColor = false;
             this.btnPhanLoai.Click += new System.EventHandler(this.btnPhanLoai_Click);
@@ -277,9 +280,10 @@ namespace LuuCongQuangVu_Nhom13
             this.btnTimKiem.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Search;
             this.btnTimKiem.Location = new System.Drawing.Point(42, 314);
             this.btnTimKiem.Name = "btnTimKiem";
+            this.btnTimKiem.Padding = new System.Windows.Forms.Padding(40, 0, 0, 0);
             this.btnTimKiem.Size = new System.Drawing.Size(282, 51);
             this.btnTimKiem.TabIndex = 24;
-            this.btnTimKiem.Text = "Tìm kiếm, Xoá ,Đổi mật khẩu, Cấp độ";
+            this.btnTimKiem.Text = "Tìm kiếm, Xoá , Sửa";
             this.btnTimKiem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTimKiem.UseVisualStyleBackColor = false;
             this.btnTimKiem.Click += new System.EventHandler(this.btnTimKiem_Click);
@@ -378,33 +382,11 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSua1.Name = "btnSua1";
             this.btnSua1.Size = new System.Drawing.Size(91, 39);
             this.btnSua1.TabIndex = 31;
-            this.btnSua1.Text = "Đổi MK";
+            this.btnSua1.Text = "Sửa";
             this.btnSua1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSua1.UseVisualStyleBackColor = false;
             this.btnSua1.Visible = false;
             this.btnSua1.Click += new System.EventHandler(this.btnSua1_Click);
-            // 
-            // isTaiKhoan
-            // 
-            this.isTaiKhoan.AutoSize = true;
-            this.isTaiKhoan.Location = new System.Drawing.Point(331, 105);
-            this.isTaiKhoan.Name = "isTaiKhoan";
-            this.isTaiKhoan.Size = new System.Drawing.Size(15, 14);
-            this.isTaiKhoan.TabIndex = 32;
-            this.isTaiKhoan.UseVisualStyleBackColor = true;
-            this.isTaiKhoan.Visible = false;
-            this.isTaiKhoan.CheckedChanged += new System.EventHandler(this.isTaiKhoan_CheckedChanged);
-            // 
-            // isMatKhau
-            // 
-            this.isMatKhau.AutoSize = true;
-            this.isMatKhau.Location = new System.Drawing.Point(331, 141);
-            this.isMatKhau.Name = "isMatKhau";
-            this.isMatKhau.Size = new System.Drawing.Size(15, 14);
-            this.isMatKhau.TabIndex = 33;
-            this.isMatKhau.UseVisualStyleBackColor = true;
-            this.isMatKhau.Visible = false;
-            this.isMatKhau.CheckedChanged += new System.EventHandler(this.isMatKhau_CheckedChanged);
             // 
             // button1
             // 
@@ -444,6 +426,57 @@ namespace LuuCongQuangVu_Nhom13
             this.txtHoTen.Visible = false;
             this.txtHoTen.Validated += new System.EventHandler(this.txtHoTen_Validated);
             // 
+            // rdMatKhau
+            // 
+            this.rdMatKhau.AutoSize = true;
+            this.rdMatKhau.BackColor = System.Drawing.Color.Transparent;
+            this.rdMatKhau.Location = new System.Drawing.Point(330, 144);
+            this.rdMatKhau.Name = "rdMatKhau";
+            this.rdMatKhau.Size = new System.Drawing.Size(14, 13);
+            this.rdMatKhau.TabIndex = 37;
+            this.rdMatKhau.TabStop = true;
+            this.rdMatKhau.UseVisualStyleBackColor = false;
+            this.rdMatKhau.Visible = false;
+            // 
+            // rdTaiKhoan
+            // 
+            this.rdTaiKhoan.AutoSize = true;
+            this.rdTaiKhoan.BackColor = System.Drawing.Color.Transparent;
+            this.rdTaiKhoan.Location = new System.Drawing.Point(330, 105);
+            this.rdTaiKhoan.Name = "rdTaiKhoan";
+            this.rdTaiKhoan.Size = new System.Drawing.Size(14, 13);
+            this.rdTaiKhoan.TabIndex = 38;
+            this.rdTaiKhoan.TabStop = true;
+            this.rdTaiKhoan.UseVisualStyleBackColor = false;
+            this.rdTaiKhoan.Visible = false;
+            // 
+            // rdHoTen
+            // 
+            this.rdHoTen.AutoSize = true;
+            this.rdHoTen.BackColor = System.Drawing.Color.Transparent;
+            this.rdHoTen.Location = new System.Drawing.Point(330, 177);
+            this.rdHoTen.Name = "rdHoTen";
+            this.rdHoTen.Size = new System.Drawing.Size(14, 13);
+            this.rdHoTen.TabIndex = 39;
+            this.rdHoTen.TabStop = true;
+            this.rdHoTen.UseVisualStyleBackColor = false;
+            this.rdHoTen.Visible = false;
+            // 
+            // btnHuy
+            // 
+            this.btnHuy.BackColor = System.Drawing.Color.Orange;
+            this.btnHuy.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnHuy.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.eraser;
+            this.btnHuy.Location = new System.Drawing.Point(504, 386);
+            this.btnHuy.Name = "btnHuy";
+            this.btnHuy.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnHuy.Size = new System.Drawing.Size(116, 46);
+            this.btnHuy.TabIndex = 40;
+            this.btnHuy.Text = "Huỷ";
+            this.btnHuy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnHuy.UseVisualStyleBackColor = false;
+            this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
+            // 
             // Manage_Accout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -452,11 +485,13 @@ namespace LuuCongQuangVu_Nhom13
             this.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_admin;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(952, 584);
+            this.Controls.Add(this.btnHuy);
+            this.Controls.Add(this.rdHoTen);
+            this.Controls.Add(this.rdTaiKhoan);
+            this.Controls.Add(this.rdMatKhau);
             this.Controls.Add(this.txtHoTen);
             this.Controls.Add(this.lbHoTen);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.isMatKhau);
-            this.Controls.Add(this.isTaiKhoan);
             this.Controls.Add(this.btnSua1);
             this.Controls.Add(this.btnXoa1);
             this.Controls.Add(this.btnThoat);
@@ -515,8 +550,6 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.Button btnXoa1;
         private System.Windows.Forms.Button btnSua1;
-        private System.Windows.Forms.CheckBox isTaiKhoan;
-        private System.Windows.Forms.CheckBox isMatKhau;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ErrorProvider GetError;
         private System.Windows.Forms.TextBox txtHoTen;
@@ -525,5 +558,9 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.DataGridViewTextBoxColumn matkhau;
         private System.Windows.Forms.DataGridViewTextBoxColumn tenchutaikhoan;
         private System.Windows.Forms.DataGridViewTextBoxColumn capdo;
+        private System.Windows.Forms.RadioButton rdHoTen;
+        private System.Windows.Forms.RadioButton rdTaiKhoan;
+        private System.Windows.Forms.RadioButton rdMatKhau;
+        private System.Windows.Forms.Button btnHuy;
     }
 }

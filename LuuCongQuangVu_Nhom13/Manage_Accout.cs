@@ -16,107 +16,32 @@ namespace LuuCongQuangVu_Nhom13
         {
             InitializeComponent();
         }
-        
-        #region Xử lí main buttons
-        private void btnThem_Click(object sender, EventArgs e)
+        private void clear()
         {
-            lbThongBao.Text = btnThem.Text;
-            btnThem.Visible = false;
-            btnSua.Visible = false;
-            btnXoa.Visible = false;
-            btnPhanLoai.Visible = false;
-            btnTimKiem.Visible = false;
-            lbTaiKhoan.Visible = true;
-            lbMatKhau.Visible = true;
-            lbHoTen.Visible = true;
-            lbCapDo.Visible = true;
-            txtTaiKhoan.Visible = true;
-            txtMatKhau.Visible = true;
-            txtHoTen.Visible = true;
-            cbCapDo.Visible = true;
-            btnOK.Text = "Cấp";
-            btnOK.Visible = true;
-            btnCancel.Visible = true;
+            txtTaiKhoan.Clear();
+            txtMatKhau.Clear();
+            txtHoTen.Clear();
+            cbCapDo.SelectedIndex = -1;
         }
-        private void btnSua_Click(object sender, EventArgs e)
+        #region Xử lí lỗi
+        private void txtTaiKhoan_Validated(object sender, EventArgs e)
         {
-            lbThongBao.Text = btnSua.Text;
-            btnThem.Visible = false;
-            btnSua.Visible = false;
-            btnXoa.Visible = false;
-            btnPhanLoai.Visible = false;
-            btnTimKiem.Visible = false;
-            lbTaiKhoan.Visible = true;
-            lbMatKhau.Visible = true;
-            lbHoTen.Visible = true;
-            lbCapDo.Visible = true;
-            txtTaiKhoan.Visible = true;
-            txtMatKhau.Visible = true;
-            txtHoTen.Visible = true;
-            cbCapDo.Visible = true;
-            btnOK.Text = "Đổi";
-            btnOK.Visible = true;
-            btnCancel.Visible = true;
+            GetError.SetError(txtTaiKhoan, "");
         }
-        private void btnXoa_Click(object sender, EventArgs e)
+
+        private void txtMatKhau_Validated(object sender, EventArgs e)
         {
-            lbThongBao.Text = btnXoa.Text;
-            btnThem.Visible = false;
-            btnSua.Visible = false;
-            btnXoa.Visible = false;
-            btnPhanLoai.Visible = false;
-            btnTimKiem.Visible = false;
-            lbTaiKhoan.Visible = true;
-            txtTaiKhoan.Visible = true;
-            btnOK.Text = "Xoá";
-            btnOK.Visible = true;
-            btnCancel.Visible = true;
+            GetError.SetError(txtMatKhau, "");
         }
-        private void btnTimKiem_Click(object sender, EventArgs e)
+
+        private void txtHoTen_Validated(object sender, EventArgs e)
         {
-            lbThongBao.Text = btnTimKiem.Text;
-            btnThem.Visible = false;
-            btnSua.Visible = false;
-            btnXoa.Visible = false;
-            btnPhanLoai.Visible = false;
-            btnTimKiem.Visible = false;
-            lbTaiKhoan.Visible = true;
-            lbMatKhau.Visible = true;
-            lbHoTen.Visible = true;
-            lbCapDo.Visible = true;
-            txtTaiKhoan.Visible = true;
-            txtMatKhau.Visible = true;
-            txtHoTen.Visible = true;
-            cbCapDo.Visible = true;
-            btnOK.Text = "Tìm";
-            btnOK.Visible = true;
-            btnCancel.Visible = true;
-            btnXoa1.Visible = true;
-            btnSua1.Visible = true;
-            isTaiKhoan.Visible = true;
-            isMatKhau.Visible = true;
+            GetError.SetError(txtHoTen, "");
         }
-        private void btnPhanLoai_Click(object sender, EventArgs e)
+
+        private void cbCapDo_Validated(object sender, EventArgs e)
         {
-            lbThongBao.Text = btnPhanLoai.Text;
-            btnThem.Visible = false;
-            btnSua.Visible = false;
-            btnXoa.Visible = false;
-            btnPhanLoai.Visible = false;
-            btnTimKiem.Visible = false;
-            lbTaiKhoan.Visible = true;
-            lbMatKhau.Visible = true;
-            lbHoTen.Visible = true;
-            lbCapDo.Visible = true;
-            txtTaiKhoan.Visible = true;
-            txtMatKhau.Visible = true;
-            txtHoTen.Visible = true;
-            cbCapDo.Visible = true;
-            btnOK.Text = "Thực thi";
-            btnOK.Visible = true;
-            btnCancel.Visible = true;
-            btnXoa1.Visible = true;
-            btnSua1.Visible = true;
+            GetError.SetError(cbCapDo, "");
         }
         #endregion
         #region Admin, Logout, Exits
@@ -145,6 +70,114 @@ namespace LuuCongQuangVu_Nhom13
             }
         }
         #endregion
+        #region Xử lí main buttons
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnThem.Text;
+            btnThem.Visible = false;
+            btnSua.Visible = false;
+            btnXoa.Visible = false;
+            btnPhanLoai.Visible = false;
+            btnTimKiem.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Cấp";
+            btnOK.Visible = true;
+            btnCancel.Visible = true;
+            clear();
+        }
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnSua.Text;
+            btnThem.Visible = false;
+            btnSua.Visible = false;
+            btnXoa.Visible = false;
+            btnPhanLoai.Visible = false;
+            btnTimKiem.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Đổi";
+            btnOK.Visible = true;
+            btnCancel.Visible = true;
+            clear();
+        }
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnXoa.Text;
+            btnThem.Visible = false;
+            btnSua.Visible = false;
+            btnXoa.Visible = false;
+            btnPhanLoai.Visible = false;
+            btnTimKiem.Visible = false;
+            lbTaiKhoan.Visible = true;
+            txtTaiKhoan.Visible = true;
+            btnOK.Text = "Xoá";
+            btnOK.Visible = true;
+            btnCancel.Visible = true;
+            clear();
+        }
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnTimKiem.Text;
+            btnThem.Visible = false;
+            btnSua.Visible = false;
+            btnXoa.Visible = false;
+            btnPhanLoai.Visible = false;
+            btnTimKiem.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Tìm";
+            btnOK.Visible = true;
+            btnCancel.Visible = true;
+            btnXoa1.Visible = true;
+            btnSua1.Visible = true;
+            rdTaiKhoan.Visible = true;
+            rdMatKhau.Visible = true;
+            rdHoTen.Visible = true;
+            clear();
+        }
+        private void btnPhanLoai_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnPhanLoai.Text;
+            btnThem.Visible = false;
+            btnSua.Visible = false;
+            btnXoa.Visible = false;
+            btnPhanLoai.Visible = false;
+            btnTimKiem.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Thực thi";
+            btnOK.Visible = true;
+            btnCancel.Visible = true;
+            btnXoa1.Visible = true;
+            btnSua1.Visible = true;
+            clear();
+        }
+        #endregion
         #region Xử lí child buttons
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -164,8 +197,9 @@ namespace LuuCongQuangVu_Nhom13
             cbCapDo.Visible = false;
             btnOK.Visible = false;
             btnCancel.Visible = false;
-            isTaiKhoan.Visible = false;
-            isMatKhau.Visible = false;
+            rdTaiKhoan.Visible = false;
+            rdMatKhau.Visible = false;
+            rdHoTen.Visible = false;
             btnXoa1.Visible = false;
             btnSua1.Visible = false;
         }
@@ -256,7 +290,8 @@ namespace LuuCongQuangVu_Nhom13
                             dgvAccout.Rows.Add();
                             dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
                             dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
-                            dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Capdo;
+                            dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                            dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
                         }
                     }
                     else
@@ -267,11 +302,11 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (lbThongBao.Text==btnTimKiem.Text)
             {
-                if (isTaiKhoan.Checked == false && isMatKhau.Checked == false)
+                if (rdTaiKhoan.Checked == false && rdMatKhau.Checked == false && rdHoTen.Checked==false)
                 {
-                    MessageBox.Show("Bạn vui chọn mục tìm kiếm theo Tài khoản / Mật khẩu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Bạn vui chọn mục tìm kiếm theo Tài khoản / Mật khẩu/ Họ tên", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else if (isTaiKhoan.Checked)
+                else if (rdTaiKhoan.Checked)
                 {
                     if (txtTaiKhoan.Text == "")
                     {
@@ -287,7 +322,7 @@ namespace LuuCongQuangVu_Nhom13
                             if (list_accout.Count() > 0)
                             {
                                 dgvAccout.Rows.Clear();
-                                dgvAccout.ColumnCount = 8;
+                                dgvAccout.ColumnCount = 4;
                                 for (int i = 0; i < list_accout.Count(); i++)
                                 {
                                     dgvAccout.Rows.Add();
@@ -304,7 +339,7 @@ namespace LuuCongQuangVu_Nhom13
                         }
                     }
                 }
-                else if (isMatKhau.Checked)
+                else if (rdMatKhau.Checked)
                 {
                     if (txtTaiKhoan.Text == "")
                     {
@@ -320,7 +355,40 @@ namespace LuuCongQuangVu_Nhom13
                             if (list_accout.Count() > 0)
                             {
                                 dgvAccout.Rows.Clear();
-                                dgvAccout.ColumnCount = 8;
+                                dgvAccout.ColumnCount = 4;
+                                for (int i = 0; i < list_accout.Count(); i++)
+                                {
+                                    dgvAccout.Rows.Add();
+                                    dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                                    dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                                    dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                                    dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+                else if (rdHoTen.Checked)
+                {
+                    if (txtTaiKhoan.Text == "")
+                    {
+                        MessageBox.Show("Chưa tên mật khẩu muốn tìm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        using var dbcontext = new Models.QLThuVienContext();
+                        //var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
+                        var list_accout = (from a in dbcontext.Accounts where a.Password == txtMatKhau.Text select a).ToList();
+                        if (list_accout != null)
+                        {
+                            if (list_accout.Count() > 0)
+                            {
+                                dgvAccout.Rows.Clear();
+                                dgvAccout.ColumnCount = 4;
                                 for (int i = 0; i < list_accout.Count(); i++)
                                 {
                                     dgvAccout.Rows.Add();
@@ -444,6 +512,10 @@ namespace LuuCongQuangVu_Nhom13
             }
             
         }
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+            clear();
+        }
         #endregion
 
         private void ReadFile()
@@ -517,36 +589,5 @@ namespace LuuCongQuangVu_Nhom13
             cbCapDo.Text = Convert.ToString(row.Cells[3].Value);
         }
 
-        private void isTaiKhoan_CheckedChanged(object sender, EventArgs e)
-        {
-            //isMatKhau.Checked = false;
-            //isTaiKhoan.Checked = true;
-        }
-
-        private void isMatKhau_CheckedChanged(object sender, EventArgs e)
-        {
-            //isMatKhau.Checked = true;
-            //isTaiKhoan.Checked = false;
-        }
-
-        private void txtTaiKhoan_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(txtTaiKhoan, "");
-        }
-
-        private void txtMatKhau_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(txtMatKhau, "");
-        }
-
-        private void txtHoTen_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(txtHoTen, "");
-        }
-
-        private void cbCapDo_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(cbCapDo, "");
-        }
     }
 }

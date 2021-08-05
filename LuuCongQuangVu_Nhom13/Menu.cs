@@ -175,7 +175,7 @@ namespace LuuCongQuangVu_Nhom13
                     txtmasach.SelectAll();
                     return false;
                 }
-                else if (book != null)
+                else if (book != null )
                 {
                     GetError.SetError(txtmasach, "Trùng mã sách, vui lòng nhập mã sách khác!");
                     txtmasach.Focus();
@@ -183,6 +183,119 @@ namespace LuuCongQuangVu_Nhom13
                     return false;
                 }
                 
+            }
+            if (txttensach.Text == "")
+            {
+                GetError.SetError(txttensach, "Bạn phải nhập tên sách!");
+                txttensach.Focus();
+                return false;
+            }
+            if (txttacgia.Text == "")
+            {
+                GetError.SetError(txttacgia, "Bạn phải nhập tác giả!");
+                txttacgia.Focus();
+                return false;
+            }
+            if (txtsoluong.Text == "")
+            {
+                GetError.SetError(txtsoluong, "Bạn phải nhập số lượng!");
+                txtsoluong.Focus();
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    int.Parse(txtsoluong.Text);
+                    if (int.Parse(txtsoluong.Text) < 0)
+                    {
+                        GetError.SetError(txtsoluong, "Bạn phải nhập số lượng >0!");
+                        txtsoluong.Focus();
+                        txtsoluong.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsoluong, "Bạn phải nhập số lượng là số nguyên!");
+                    txtsoluong.Focus();
+                    txtsoluong.SelectAll();
+                    return false;
+                }
+            }
+            if (txttheloai.Text == "")
+            {
+                GetError.SetError(txttheloai, "Bạn phải nhập thể loại!");
+                txttheloai.Focus();
+                return false;
+            }
+            if (txtgiasach.Text == "")
+            {
+                GetError.SetError(txtgiasach, "Bạn phải nhập giá sách!");
+                txtgiasach.Focus();
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    double.Parse(txtgiasach.Text);
+                    if (double.Parse(txtgiasach.Text) < 0)
+                    {
+                        GetError.SetError(txtgiasach, "Bạn phải nhập giá sách >0!");
+                        txtgiasach.Focus();
+                        txtgiasach.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtgiasach, "Bạn phải nhập giá sách là số thực!");
+                    txtgiasach.Focus();
+                    txtgiasach.SelectAll();
+                    return false;
+                }
+            }
+            if (txtnhasx.Text == "")
+            {
+                GetError.SetError(txtnhasx, "Bạn phải nhập nhà sản xuất!");
+                txtnhasx.Focus();
+                return false;
+            }
+            if (cbvitri.Text == "")
+            {
+                GetError.SetError(cbvitri, "Bạn phải chọn vị trí!");
+                cbvitri.Focus();
+                return false;
+            }
+            return true;
+        }
+        private bool Validate_ManageBook1()
+        {
+            if (txtmasach.Text == "")
+            {
+                GetError.SetError(txtmasach, "Bạn phải nhập mã sách!");
+                txtmasach.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == txtmasach.Text select b).FirstOrDefault();
+                if (txtmasach.Text.Length > 4)
+                {
+                    GetError.SetError(txtmasach, "Mã sách chỉ tối đa 4 kí tự!");
+                    txtmasach.Focus();
+                    txtmasach.SelectAll();
+                    return false;
+                }
+                else if (book == null)
+                {
+                    GetError.SetError(txtmasach, "Mã sách không tồn tại!");
+                    txtmasach.Focus();
+                    txtmasach.SelectAll();
+                    return false;
+                }
+
             }
             if (txttensach.Text == "")
             {
@@ -389,6 +502,87 @@ namespace LuuCongQuangVu_Nhom13
             
             return true;
         }
+        private bool Validate_ManageReader1()
+        {
+            if (txtMaDocGia.Text == "")
+            {
+                GetError.SetError(txtMaDocGia, "Bạn phải nhập mã độc giả!");
+                txtMaDocGia.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == txtMaDocGia.Text select d).FirstOrDefault();
+                if (txtMaDocGia.Text.Length > 4)
+                {
+                    GetError.SetError(txtMaDocGia, "Mã độc giả chỉ tối đa 4 kí tự!");
+                    txtMaDocGia.Focus();
+                    txtMaDocGia.SelectAll();
+                    return false;
+                }
+                else if (dg == null)
+                {
+                    GetError.SetError(txtMaDocGia, "Mã độc giả đã tồn tại");
+                    txtMaDocGia.Focus();
+                    txtMaDocGia.SelectAll();
+                    return false;
+                }
+            }
+            if (txtTenDocGia.Text == "")
+            {
+                GetError.SetError(txtTenDocGia, "Bạn phải nhập tên độc giả!");
+                txtTenDocGia.Focus();
+                return false;
+            }
+            if ((DateTime.Now.Year - dateDocGia.Value.Year) < 18)
+            {
+                GetError.SetError(dateDocGia, "Độc giả phải trên 18 tuổi!");
+                dateDocGia.Focus();
+                return false;
+            }
+            if (txtDiaChiDocGia.Text == "")
+            {
+                GetError.SetError(txtDiaChiDocGia, "Bạn phải nhập địa chỉ độc giả!");
+                txtDiaChiDocGia.Focus();
+                return false;
+            }
+            if (txtNgheNhiep.Text == "")
+            {
+                GetError.SetError(txtNgheNhiep, "Bạn phải nhập nghề nghiệp độc giả!");
+                txtNgheNhiep.Focus();
+                return false;
+            }
+            if (txtSDT_DocGia.Text == "")
+            {
+                GetError.SetError(txtSDT_DocGia, "Bạn phải nhập số điện thoại độc giả!");
+                txtSDT_DocGia.Focus();
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    int.Parse(txtSDT_DocGia.Text);
+                    if (txtSDT_DocGia.Text.Length != 10)
+                    {
+                        GetError.SetError(txtSDT_DocGia, "Số điện thoại có độ dài là 10 kí tự!");
+                        txtSDT_DocGia.Focus();
+                        txtSDT_DocGia.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtSDT_DocGia, "Số điện thoại phải là kí tự số!");
+                    txtSDT_DocGia.Focus();
+                    txtSDT_DocGia.SelectAll();
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
         private bool CheckRadionReader()
         {
             if (rdMaDG.Checked == false && rdTenDG.Checked == false && rdNgaySinhDG.Checked == false && rdDiaChiDG.Checked == false && rdNgheNghiepDG.Checked == false && rdSDT_DG.Checked == false)
@@ -496,6 +690,38 @@ namespace LuuCongQuangVu_Nhom13
                 cbMaSach_lhd.Focus();
                 return false;
             }
+            else
+            {
+                if (rdInCbMaSach.Checked)
+                {
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.Text select b).FirstOrDefault();
+                    if (cbMaSach_lhd.Text.Length > 4)
+                    {
+                        GetError.SetError(cbMaSach_lhd, "Mã sách không được quá 4 kí tự!");
+                        cbMaSach_lhd.Focus();
+                        cbMaSach_lhd.SelectAll();
+                        return false;
+                    }
+                    else if (book == null)
+                    {
+                        GetError.SetError(cbMaSach_lhd, "Mã sách không tồn tại!");
+                        cbMaSach_lhd.Focus();
+                        cbMaSach_lhd.SelectAll();
+                        return false;
+                    }
+                }
+                else
+                {
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.Text select b).FirstOrDefault();
+                    if (book == null)
+                    {
+                        GetError.SetError(cbMaSach_lhd, "Tên sách không tồn tại!");
+                        cbMaSach_lhd.Focus();
+                        cbMaSach_lhd.SelectAll();
+                        return false;
+                    }
+                }
+            }
             if (txtsoluongmua_lhd.Text == "")
             {
                 GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua!");
@@ -506,10 +732,26 @@ namespace LuuCongQuangVu_Nhom13
             {
                 try
                 {
+                    Models.Sach book = new Models.Sach();
+                    if (rdInCbTenSach.Checked)
+                    {
+                        book = (from b in dbcontext.Saches where b.Tensach == cbMaSach_lhd.Text select b).FirstOrDefault();
+                    }
+                    else
+                    {
+                        book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.Text select b).FirstOrDefault();
+                    }
                     int.Parse(txtsoluongmua_lhd.Text);
                     if (int.Parse(txtsoluongmua_lhd.Text) < 0)
                     {
                         GetError.SetError(txtsoluongmua_lhd, "Bạn phải nhập số lượng mua >0!");
+                        txtsoluongmua_lhd.Focus();
+                        txtsoluongmua_lhd.SelectAll();
+                        return false;
+                    }
+                    else if (int.Parse(txtsoluongmua_lhd.Text) > book.Soluong)
+                    {
+                        GetError.SetError(txtsoluongmua_lhd, "Số lượng mua vượt quá số lượng có, hiện tại còn "+book.Soluong+" quyển");
                         txtsoluongmua_lhd.Focus();
                         txtsoluongmua_lhd.SelectAll();
                         return false;
@@ -562,26 +804,18 @@ namespace LuuCongQuangVu_Nhom13
         {
             if (Validate_ManageBook())
             {
-                try
-                {
-                    Models.Sach sach = new Models.Sach();
-                    sach.Idsach = txtmasach.Text;
-                    sach.Tensach = txttensach.Text;
-                    sach.Tacgia = txttacgia.Text;
-                    sach.Soluong = int.Parse(txtsoluong.Text);
-                    sach.Theloai = txttheloai.Text;
-                    sach.Giasach = double.Parse(txtgiasach.Text);
-                    sach.Nhaxuatban = txtnhasx.Text;
-                    sach.Vitri = cbvitri.Text;
-                    dbcontext.Saches.Add(sach);
-                    dbcontext.SaveChanges();
-                    ReadFile();
-
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Dữ liệu đầu vào bảng sai");
-                }
+                Models.Sach sach = new Models.Sach();
+                sach.Idsach = txtmasach.Text;
+                sach.Tensach = txttensach.Text;
+                sach.Tacgia = txttacgia.Text;
+                sach.Soluong = int.Parse(txtsoluong.Text);
+                sach.Theloai = txttheloai.Text;
+                sach.Giasach = double.Parse(txtgiasach.Text);
+                sach.Nhaxuatban = txtnhasx.Text;
+                sach.Vitri = cbvitri.Text;
+                dbcontext.Saches.Add(sach);
+                dbcontext.SaveChanges();
+                ReadFile();
             }
         }
         private void DelBook()
@@ -614,25 +848,18 @@ namespace LuuCongQuangVu_Nhom13
         {
             //using var dbcontext = new Models.QLThuVienContext();
             //Models.Sach sach = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
-            if (Validate_ManageBook())
+            if (Validate_ManageBook1())
             {
                 Models.Sach sach = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
-                if (sach != null)
-                {
-                    sach.Tensach = txttensach.Text;
-                    sach.Tacgia = txttacgia.Text;
-                    sach.Soluong = int.Parse(txtsoluong.Text);
-                    sach.Theloai = label.Text;
-                    sach.Giasach = double.Parse(txtgiasach.Text);
-                    sach.Nhaxuatban = txtnhasx.Text;
-                    sach.Vitri = cbvitri.Text;
-                    dbcontext.SaveChanges();
-                    ReadFile();
-                }
-                else
-                {
-                    MessageBox.Show("Mã sách không tồn tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                sach.Tensach = txttensach.Text;
+                sach.Tacgia = txttacgia.Text;
+                sach.Soluong = int.Parse(txtsoluong.Text);
+                sach.Theloai = label.Text;
+                sach.Giasach = double.Parse(txtgiasach.Text);
+                sach.Nhaxuatban = txtnhasx.Text;
+                sach.Vitri = cbvitri.Text;
+                dbcontext.SaveChanges();
+                ReadFile();
             }
         }
         private void SearchBook()
@@ -910,25 +1137,16 @@ namespace LuuCongQuangVu_Nhom13
         {
             if (Validate_ManageReader())
             {
-                try
-                {
-                    Models.Docgium docgia = new Models.Docgium();
-                    docgia.Iddocgia = txtMaDocGia.Text;
-                    docgia.Hoten = txtTenDocGia.Text;
-                    docgia.NgaySinh = dateDocGia.Value;
-                    docgia.Diachi = txtDiaChiDocGia.Text;
-                    docgia.Nghenghiep = txtNgheNhiep.Text;
-                    docgia.Sodienthoai = txtSDT_DocGia.Text;
-                    dbcontext.Docgia.Add(docgia);
-                    dbcontext.SaveChanges();
-                    ReadFileReader();
-
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Dữ liệu đầu vào bảng sai");
-                }
-
+                Models.Docgium docgia = new Models.Docgium();
+                docgia.Iddocgia = txtMaDocGia.Text;
+                docgia.Hoten = txtTenDocGia.Text;
+                docgia.NgaySinh = dateDocGia.Value;
+                docgia.Diachi = txtDiaChiDocGia.Text;
+                docgia.Nghenghiep = txtNgheNhiep.Text;
+                docgia.Sodienthoai = txtSDT_DocGia.Text;
+                dbcontext.Docgia.Add(docgia);
+                dbcontext.SaveChanges();
+                ReadFileReader();
             }
         }
         private void DelReader()
@@ -965,25 +1183,18 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void UpdateReader()
         {
-            if (Validate_ManageReader())
+            if (Validate_ManageReader1())
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
                 Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia == txtMaDocGia.Text select d ).FirstOrDefault();
-                if (id != null)
-                {
-                    id.Hoten = txtTenDocGia.Text;
-                    id.NgaySinh = dateDocGia.Value;
-                    id.Diachi = txtDiaChiDocGia.Text;
-                    id.Nghenghiep = txtNgheNhiep.Text;
-                    id.Sodienthoai = txtSDT_DocGia.Text;
-                    dbcontext.SaveChanges();
-                    ReadFileReader();
-                }
-                else
-                {
-                    MessageBox.Show("Mã sách không tồn tại", "Thông báo");
-                }
+                id.Hoten = txtTenDocGia.Text;
+                id.NgaySinh = dateDocGia.Value;
+                id.Diachi = txtDiaChiDocGia.Text;
+                id.Nghenghiep = txtNgheNhiep.Text;
+                id.Sodienthoai = txtSDT_DocGia.Text;
+                dbcontext.SaveChanges();
+                ReadFileReader();
             }
         }
         private void ClearReader()
@@ -1244,7 +1455,7 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    GetError.SetError(cbMaSach_lhd, "Mã sách này không tồn tại!");
+                    GetError.SetError(cbMaSach_lhd, "Mã sách/Tên sách này không tồn tại!");
                     cbMaSach_lhd.Focus();
                     cbMaSach_lhd.SelectAll();
                 }
@@ -1305,6 +1516,8 @@ namespace LuuCongQuangVu_Nhom13
                     hdct.MaHd = hd.MaHd;
                     hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
                     hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach==hdct.Idsach select b).FirstOrDefault();
+                    book.Soluong = book.Soluong - hdct.SoLuongMua;
                     dbcontext.HoaDonChiTiets.Add(hdct);
                 }
                 dbcontext.SaveChanges();
