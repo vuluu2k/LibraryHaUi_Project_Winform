@@ -12,10 +12,12 @@ namespace LuuCongQuangVu_Nhom13
 {
     public partial class Manage_Accout : Form
     {
+        Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
         public Manage_Accout()
         {
             InitializeComponent();
         }
+        #region ReadData
         private void clear()
         {
             txtTaiKhoan.Clear();
@@ -23,6 +25,76 @@ namespace LuuCongQuangVu_Nhom13
             txtHoTen.Clear();
             cbCapDo.SelectedIndex = -1;
         }
+
+        private void ReadFile()
+        {
+            var list_accout = dbcontext.Accounts.ToList();
+            if (list_accout != null)
+            {
+                if (list_accout.Count() > 0)
+                {
+                    dgvAccout.Rows.Clear();
+                    dgvAccout.ColumnCount = 4;
+                    for (int i = 0; i < list_accout.Count(); i++)
+                    {
+                        dgvAccout.Rows.Add();
+                        dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                        dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                        dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                        dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void ReadfilePhanLoai()
+        {
+            //var list_accout = dbcontext.Accounts.Where(a => a.Capdo == cbCapDo.Text).ToList();
+            var list_accout = (from a in dbcontext.Accounts where a.Capdo == cbCapDo.Text select a).ToList();
+            if (list_accout != null)
+            {
+                if (list_accout.Count() > 0)
+                {
+                    dgvAccout.Rows.Clear();
+                    dgvAccout.ColumnCount = 4;
+                    for (int i = 0; i < list_accout.Count(); i++)
+                    {
+                        dgvAccout.Rows.Add();
+                        dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                        dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                        dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                        dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void Manage_Accout_Load(object sender, EventArgs e)
+        {
+            ReadFile();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ReadFile();
+        }
+
+        private void cell_click_account(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = dgvAccout.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dgvAccout.Rows[index];
+            txtTaiKhoan.Text = Convert.ToString(row.Cells[0].Value);
+            txtMatKhau.Text = Convert.ToString(row.Cells[1].Value);
+            txtHoTen.Text = Convert.ToString(row.Cells[2].Value);
+            cbCapDo.Text = Convert.ToString(row.Cells[3].Value);
+        }
+        #endregion
         #region Xử lí lỗi
         private void txtTaiKhoan_Validated(object sender, EventArgs e)
         {
@@ -43,6 +115,85 @@ namespace LuuCongQuangVu_Nhom13
         {
             GetError.SetError(cbCapDo, "");
         }
+        private bool Validate_Account_Add()
+        {
+            if (txtTaiKhoan.Text == "")
+            {
+                GetError.SetError(txtTaiKhoan, "Bạn phải nhập tên tài khoản!");
+                txtTaiKhoan.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                if (acc != null)
+                {
+                    GetError.SetError(txtTaiKhoan, "Tài khoản này đã tồn tại!");
+                    txtTaiKhoan.Focus();
+                    txtTaiKhoan.SelectAll();
+                    return false;
+                }
+            }
+            if (txtMatKhau.Text == "")
+            {
+                GetError.SetError(txtMatKhau, "Bạn phải nhập mật khẩu!");
+                txtMatKhau.Focus();
+                return false;
+            } 
+            if (txtHoTen.Text == "")
+            {
+                GetError.SetError(txtHoTen, "Bạn phải nhập họ tên!");
+                txtHoTen.Focus();
+                return false;
+            }
+            if (cbCapDo.Text == "")
+            {
+                GetError.SetError(cbCapDo, "Bạn phải chọn cấp độ!");
+                cbCapDo.Focus();
+                return false;
+            }
+            return true;
+        }
+        private bool Validate_Account_Update()
+        {
+            if (txtTaiKhoan.Text == "")
+            {
+                GetError.SetError(txtTaiKhoan, "Bạn phải nhập tên tài khoản!");
+                txtTaiKhoan.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                if (acc == null)
+                {
+                    GetError.SetError(txtTaiKhoan, "Tài khoản này đã tồn tại!");
+                    txtTaiKhoan.Focus();
+                    txtTaiKhoan.SelectAll();
+                    return false;
+                }
+            }
+            if (txtMatKhau.Text == "")
+            {
+                GetError.SetError(txtMatKhau, "Bạn phải nhập mật khẩu!");
+                txtMatKhau.Focus();
+                return false;
+            }
+            if (txtHoTen.Text == "")
+            {
+                GetError.SetError(txtHoTen, "Bạn phải nhập họ tên!");
+                txtHoTen.Focus();
+                return false;
+            }
+            if (cbCapDo.Text == "")
+            {
+                GetError.SetError(cbCapDo, "Bạn phải chọn cấp độ!");
+                cbCapDo.Focus();
+                return false;
+            }
+            return true;
+        }
+
         #endregion
         #region Admin, Logout, Exits
         private void btnAdmin_Click(object sender, EventArgs e)
@@ -207,56 +358,34 @@ namespace LuuCongQuangVu_Nhom13
         {
             if (lbThongBao.Text == btnThem.Text)
             {
-                using (var dbcontext = new Models.QLThuVienContext())
+                if(Validate_Account_Add())
                 {
-                    try
-                    {
-                        Models.Account acc = new Models.Account();
-                        acc.Usename = txtTaiKhoan.Text;
-                        acc.Password = txtMatKhau.Text;
-                        acc.Tenchutaikhoan = txtHoTen.Text;
-                        acc.Capdo = cbCapDo.Text;
-                        dbcontext.Accounts.Add(acc);
-                        dbcontext.SaveChanges();
-                        ReadFile();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Tên tài khoản đã tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    Models.Account acc = new Models.Account();
+                    acc.Usename = txtTaiKhoan.Text;
+                    acc.Password = txtMatKhau.Text;
+                    acc.Tenchutaikhoan = txtHoTen.Text;
+                    acc.Capdo = cbCapDo.Text;
+                    dbcontext.Accounts.Add(acc);
+                    dbcontext.SaveChanges();
+                    ReadFile();
                 }
             }
             else if (lbThongBao.Text == btnSua.Text)
             {
-                using (var dbcontext = new Models.QLThuVienContext())
+                if (Validate_Account_Update())
                 {
-                    try
-                    {
-                        //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
-                        Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
-                        if (acc != null)
-                        {
-                            acc.Usename = txtTaiKhoan.Text;
-                            acc.Password = txtMatKhau.Text;
-                            acc.Tenchutaikhoan = txtHoTen.Text;
-                            acc.Capdo = cbCapDo.Text;
-                            dbcontext.SaveChanges();
-                            ReadFile();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Không cho phép đổi cả tên tài khoản!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
+                    //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                    Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                    acc.Usename = txtTaiKhoan.Text;
+                    acc.Password = txtMatKhau.Text;
+                    acc.Tenchutaikhoan = txtHoTen.Text;
+                    acc.Capdo = cbCapDo.Text;
+                    dbcontext.SaveChanges();
+                    ReadFile();
+                }   
             }
             else if (lbThongBao.Text==btnXoa.Text)
             {
-                using var dbcontext = new Models.QLThuVienContext();
                 //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
                 Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                 DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -276,7 +405,6 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (lbThongBao.Text==btnPhanLoai.Text)
             {
-                using var dbcontext = new Models.QLThuVienContext();
                 //var list_accout = dbcontext.Accounts.Where(a=>a.Capdo==cbCapDo.Text).ToList();
                 var list_accout = (from a in dbcontext.Accounts where a.Capdo==cbCapDo.Text select a).ToList();
                 if (list_accout != null)
@@ -310,11 +438,11 @@ namespace LuuCongQuangVu_Nhom13
                 {
                     if (txtTaiKhoan.Text == "")
                     {
-                        MessageBox.Show("Chưa tên tài khoản muốn tìm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        GetError.SetError(txtTaiKhoan, "Bạn chưa nhập tên tài khoản cho việc tìm kiếm!");
+                        txtTaiKhoan.Focus();
                     }
                     else
                     {
-                        using var dbcontext = new Models.QLThuVienContext();
                         //var list_accout = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).ToList();
                         var list_accout = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a ).ToList();
                         if (list_accout != null)
@@ -341,13 +469,13 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else if (rdMatKhau.Checked)
                 {
-                    if (txtTaiKhoan.Text == "")
+                    if (txtMatKhau.Text == "")
                     {
-                        MessageBox.Show("Chưa tên mật khẩu muốn tìm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        GetError.SetError(txtMatKhau, "Bạn chưa nhập mật khẩu cho việc tìm kiếm!");
+                        txtMatKhau.Focus();
                     }
                     else
                     {
-                        using var dbcontext = new Models.QLThuVienContext();
                         //var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
                         var list_accout = (from a in dbcontext.Accounts where a.Password == txtMatKhau.Text select a).ToList();
                         if (list_accout != null)
@@ -374,13 +502,13 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else if (rdHoTen.Checked)
                 {
-                    if (txtTaiKhoan.Text == "")
+                    if (txtHoTen.Text == "")
                     {
-                        MessageBox.Show("Chưa tên mật khẩu muốn tìm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        GetError.SetError(txtHoTen, "Bạn chưa nhập họ tên tài khoản cho việc tìm kiếm!");
+                        txtHoTen.Focus();
                     }
                     else
                     {
-                        using var dbcontext = new Models.QLThuVienContext();
                         //var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
                         var list_accout = (from a in dbcontext.Accounts where a.Password == txtMatKhau.Text select a).ToList();
                         if (list_accout != null)
@@ -410,184 +538,58 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void btnXoa1_Click(object sender, EventArgs e)
         {
+            //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+            Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+            DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                if (acc != null)
+                {
+                    dbcontext.Accounts.Remove(acc);
+                    dbcontext.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
             if (lbThongBao.Text == btnPhanLoai.Text)
             {
-                using var dbcontext = new Models.QLThuVienContext();
-                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
-                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
-                DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirm == DialogResult.Yes)
-                {
-                    if (acc != null)
-                    {
-                        dbcontext.Accounts.Remove(acc);
-                        dbcontext.SaveChanges();
-                        ReadfilePhanLoai();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
+                ReadfilePhanLoai();
             }
             else
             {
-                using var dbcontext = new Models.QLThuVienContext();
-                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
-                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
-                DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirm == DialogResult.Yes)
-                {
-                    if (acc != null)
-                    {
-                        dbcontext.Accounts.Remove(acc);
-                        dbcontext.SaveChanges();
-                        ReadFile();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
+                ReadFile();
             }
             
         }
         private void btnSua1_Click(object sender, EventArgs e)
         {
+            if (Validate_Account_Update())
+            {
+                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                acc.Usename = txtTaiKhoan.Text;
+                acc.Password = txtMatKhau.Text;
+                acc.Tenchutaikhoan = txtHoTen.Text;
+                acc.Capdo = cbCapDo.Text;
+                dbcontext.SaveChanges();
+            }
             if (lbThongBao.Text==btnPhanLoai.Text)
             {
-                using (var dbcontext = new Models.QLThuVienContext())
-                {
-                    try
-                    {
-                        //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
-                        Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
-                        if (acc != null)
-                        {
-                            acc.Usename = txtTaiKhoan.Text;
-                            acc.Password = txtMatKhau.Text;
-                            acc.Tenchutaikhoan = txtHoTen.Text;
-                            acc.Capdo = cbCapDo.Text;
-                            dbcontext.SaveChanges();
-                            ReadfilePhanLoai();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Lỗi ngoại lệ!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
+                ReadfilePhanLoai();
             }
             else
             {
-                using (var dbcontext = new Models.QLThuVienContext())
-                {
-                    try
-                    {
-                        //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
-                        Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
-                        if (acc != null)
-                        {
-                            acc.Usename = txtTaiKhoan.Text;
-                            acc.Password = txtMatKhau.Text;
-                            acc.Tenchutaikhoan = txtHoTen.Text;
-                            acc.Capdo = cbCapDo.Text;
-                            dbcontext.SaveChanges();
-                            ReadFile();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Không cho phép đổi tên tài khoản", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
+                ReadFile();
             }
-            
+         
         }
         private void btnHuy_Click(object sender, EventArgs e)
         {
             clear();
         }
         #endregion
-
-        private void ReadFile()
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            var list_accout = dbcontext.Accounts.ToList();
-            if (list_accout != null)
-            {
-                if (list_accout.Count() > 0)
-                {
-                    dgvAccout.Rows.Clear();
-                    dgvAccout.ColumnCount = 4;
-                    for (int i = 0; i < list_accout.Count(); i++)
-                    {
-                        dgvAccout.Rows.Add();
-                        dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
-                        dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
-                        dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
-                        dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-        private void ReadfilePhanLoai()
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            //var list_accout = dbcontext.Accounts.Where(a => a.Capdo == cbCapDo.Text).ToList();
-            var list_accout = (from a in dbcontext.Accounts where a.Capdo == cbCapDo.Text select a).ToList();
-            if (list_accout != null)
-            {
-                if (list_accout.Count() > 0)
-                {
-                    dgvAccout.Rows.Clear();
-                    dgvAccout.ColumnCount = 4;
-                    for (int i = 0; i < list_accout.Count(); i++)
-                    {
-                        dgvAccout.Rows.Add();
-                        dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
-                        dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
-                        dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
-                        dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-        private void Manage_Accout_Load(object sender, EventArgs e)
-        {
-            ReadFile();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ReadFile();
-        }
-
-        private void cell_click_account(object sender, DataGridViewCellEventArgs e)
-        {
-            int index = dgvAccout.SelectedCells[0].RowIndex;
-            DataGridViewRow row = dgvAccout.Rows[index];
-            txtTaiKhoan.Text = Convert.ToString(row.Cells[0].Value);
-            txtMatKhau.Text = Convert.ToString(row.Cells[1].Value);
-            txtHoTen.Text = Convert.ToString(row.Cells[2].Value);
-            cbCapDo.Text = Convert.ToString(row.Cells[3].Value);
-        }
 
     }
 }

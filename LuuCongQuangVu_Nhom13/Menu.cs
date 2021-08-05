@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,12 @@ namespace LuuCongQuangVu_Nhom13
             cbTimKiemMaHD.DisplayMember = "MaHD";
             cbTimKiemMaHD.ValueMember = "MaHD";
         }
+        private void RefeshMaDG()
+        {
+            cbMaDG.DataSource = dbcontext.Docgia.ToList();
+            cbMaDG.DisplayMember = "Iddocgia";
+            cbMaDG.ValueMember = "Iddocgia";
+        }
         private void InCbTenSach()
         {
             cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
@@ -43,12 +50,9 @@ namespace LuuCongQuangVu_Nhom13
         private void QuanLiThuVien_Load(object sender, EventArgs e)
         {
             if (this.Text == "Admin") btnAdmin.Visible = true;
-
-            cbMaDG.DataSource = dbcontext.Docgia.ToList();
-            cbMaDG.DisplayMember = "Iddocgia";
-            cbMaDG.ValueMember = "Iddocgia";
             rdInCbTenSach.Checked = true;
             InCbTenSach();
+            RefeshMaDG();
             RefeshInforHD();
             //Models.Account acc = (Models.Account)this.Tag;
             //MessageBox.Show(acc.Usename);
@@ -83,11 +87,13 @@ namespace LuuCongQuangVu_Nhom13
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             InCbTenSach();
+            lbChangeLHD_MaSach.Text = "Tên sách";
         }
 
         private void rdInCbMaSach_CheckedChanged(object sender, EventArgs e)
         {
             InCbMaSach();
+            lbChangeLHD_MaSach.Text = "Mã sách";
         }
         #endregion
         #region Admin, Logout, Exists
@@ -721,7 +727,7 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.Text select b).FirstOrDefault();
+                    Models.Sach book = (from b in dbcontext.Saches where b.Tensach == cbMaSach_lhd.Text select b).FirstOrDefault();
                     if (book == null)
                     {
                         GetError.SetError(cbMaSach_lhd, "Tên sách không tồn tại!");
@@ -758,6 +764,13 @@ namespace LuuCongQuangVu_Nhom13
                         txtsoluongmua_lhd.SelectAll();
                         return false;
                     }
+                    else if (book.Soluong == 0)
+                    {
+                        GetError.SetError(txtsoluongmua_lhd, "Sách này hiện tại đang hết");
+                        txtsoluongmua_lhd.Focus();
+                        txtsoluongmua_lhd.SelectAll();
+                        return false;
+                    }
                     else if (int.Parse(txtsoluongmua_lhd.Text) > book.Soluong)
                     {
                         GetError.SetError(txtsoluongmua_lhd, "Số lượng mua vượt quá số lượng có, hiện tại còn "+book.Soluong+" quyển");
@@ -765,6 +778,7 @@ namespace LuuCongQuangVu_Nhom13
                         txtsoluongmua_lhd.SelectAll();
                         return false;
                     }
+                    
                 }
                 catch (Exception)
                 {
@@ -834,6 +848,7 @@ namespace LuuCongQuangVu_Nhom13
             //var idm = dbcontext.Muontrasaches.Where(m => m.Idsach == txtmasach.Text).ToList();
             Models.Sach id = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
             var idm = (from m in dbcontext.Muontrasaches where m.Idsach==txtmasach.Text select m).ToList();
+            var hdcts = (from hdct in dbcontext.HoaDonChiTiets where hdct.Idsach == txtmasach.Text select hdct).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -842,6 +857,10 @@ namespace LuuCongQuangVu_Nhom13
                     if (idm != null)
                     {
                         dbcontext.Muontrasaches.RemoveRange(idm);
+                    }
+                    if (hdcts!=null)
+                    {
+                        dbcontext.HoaDonChiTiets.RemoveRange(hdcts);
                     }
                     dbcontext.Saches.Remove(id);
                     dbcontext.SaveChanges();
@@ -1067,7 +1086,7 @@ namespace LuuCongQuangVu_Nhom13
             txttheloai.Clear();
             txtgiasach.Clear();
             txtnhasx.Clear();
-            cbvitri.Text="";
+            cbvitri.SelectedIndex=-1;
             txtmasach.Focus();
         }
         private void btnDocSach_Click(object sender, EventArgs e)
@@ -1164,9 +1183,11 @@ namespace LuuCongQuangVu_Nhom13
             //Models.Docgium id = dbcontext.Docgia.Where(d => d.Iddocgia == txtMaDocGia.Text).FirstOrDefault();
             //var idt = dbcontext.Thethuviens.Where(t => t.Iddocgia == txtMaDocGia.Text).ToList();
             //var idm = dbcontext.Muontrasaches.Where(m => m.Iddocgia == txtMaDocGia.Text).ToList();
+            //var idt = (from t in dbcontext.Thethuviens where t.Iddocgia==txtMaDocGia.Text select t).ToList();cc
             Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia==txtMaDocGia.Text select d).FirstOrDefault();
-            //var idt = (from t in dbcontext.Thethuviens where t.Iddocgia==txtMaDocGia.Text select t).ToList();
             var idm = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDocGia.Text select m).ToList();
+            var qlpds = (from qlpd in dbcontext.QuanLiPhongDocs where qlpd.Iddocgia == txtMaDocGia.Text select qlpd).ToList();
+            var hds = (from hd in dbcontext.HoaDons where hd.Iddocgia == txtMaDocGia.Text select hd).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -1176,10 +1197,22 @@ namespace LuuCongQuangVu_Nhom13
                     {
                         dbcontext.Muontrasaches.RemoveRange(idm);
                     }
-                    //if (idt != null)
-                    //{
-                    //    dbcontext.Thethuviens.RemoveRange(idt);
-                    //}
+                    if (qlpds != null)
+                    {
+                        dbcontext.QuanLiPhongDocs.RemoveRange(qlpds);
+                    }
+                    if (hds != null)
+                    {
+                        foreach(var item in hds)
+                        {
+                            var hdcts = (from hdct in dbcontext.HoaDonChiTiets where hdct.MaHd == item.MaHd select hdct).ToList();
+                            if (hdcts != null)
+                            {
+                                dbcontext.RemoveRange(hdcts);
+                            }
+                        }
+                        dbcontext.RemoveRange(hds);
+                    }
                     dbcontext.Docgia.Remove(id);
                     dbcontext.SaveChanges();
                     ReadFileReader();
@@ -1628,10 +1661,7 @@ namespace LuuCongQuangVu_Nhom13
                 MessageBox.Show("Không có mã hoá đơn này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);//not working because it always get id
             }
         }
-        private void btnRefeshInforHD_Click(object sender, EventArgs e)
-        {
-            RefeshInforHD();
-        }
+        
         private void btnTimKiem_InforHD_Click(object sender, EventArgs e)
         {
             Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == cbTimKiemMaHD.Text select h).FirstOrDefault();
@@ -1780,10 +1810,32 @@ namespace LuuCongQuangVu_Nhom13
                 MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        #endregion
+
 
         #endregion
 
-        
+        #endregion
+        #region Refesh Buttons
+        private void btnRefeshMaDG_Click(object sender, EventArgs e)
+        {
+            RefeshMaDG();
+        }
+        private void btnRefeshMaSach_Click(object sender, EventArgs e)
+        {
+            if (rdInCbTenSach.Checked)
+            {
+                InCbTenSach();
+            }
+            else
+            {
+                InCbMaSach();
+            }
+        }
+        private void btnRefeshSearchInforHD_Click(object sender, EventArgs e)
+        {
+            RefeshInforHD();
+        }
+        #endregion
+
     }
 }

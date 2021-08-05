@@ -117,6 +117,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.btnLapHD = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnRefeshMaSach = new System.Windows.Forms.PictureBox();
             this.rdInCbMaSach = new System.Windows.Forms.RadioButton();
             this.rdInCbTenSach = new System.Windows.Forms.RadioButton();
             this.btnHuySachMua = new System.Windows.Forms.Button();
@@ -134,6 +135,7 @@ namespace LuuCongQuangVu_Nhom13
             this.label19 = new System.Windows.Forms.Label();
             this.lbChangeLHD_MaSach = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRefeshMaDG = new System.Windows.Forms.PictureBox();
             this.cbMaDG = new System.Windows.Forms.ComboBox();
             this.dtimeNgayLap = new System.Windows.Forms.DateTimePicker();
             this.txtMaHD = new System.Windows.Forms.TextBox();
@@ -141,9 +143,9 @@ namespace LuuCongQuangVu_Nhom13
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnRefeshSearchInforHD = new System.Windows.Forms.PictureBox();
             this.lbTongTien = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
-            this.btnRefeshInforHD = new System.Windows.Forms.Button();
             this.cbTimKiemMaHD = new System.Windows.Forms.ComboBox();
             this.lbNgayLap = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -198,9 +200,12 @@ namespace LuuCongQuangVu_Nhom13
             this.ChildTabCT.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRefeshMaSach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLHD)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRefeshMaDG)).BeginInit();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRefeshSearchInforHD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInforHD)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoryBS)).BeginInit();
@@ -246,7 +251,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnHuy.Size = new System.Drawing.Size(116, 38);
-            this.btnHuy.TabIndex = 20;
+            this.btnHuy.TabIndex = 13;
             this.btnHuy.Text = "Huỷ";
             this.btnHuy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnHuy.UseVisualStyleBackColor = false;
@@ -262,7 +267,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSua.Name = "btnSua";
             this.btnSua.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnSua.Size = new System.Drawing.Size(116, 38);
-            this.btnSua.TabIndex = 19;
+            this.btnSua.TabIndex = 12;
             this.btnSua.Text = "Sửa";
             this.btnSua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSua.UseVisualStyleBackColor = false;
@@ -278,7 +283,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnXoa.Size = new System.Drawing.Size(116, 38);
-            this.btnXoa.TabIndex = 18;
+            this.btnXoa.TabIndex = 11;
             this.btnXoa.Text = "Xoá";
             this.btnXoa.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnXoa.UseVisualStyleBackColor = false;
@@ -294,7 +299,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnThemSach.Name = "btnThemSach";
             this.btnThemSach.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnThemSach.Size = new System.Drawing.Size(116, 38);
-            this.btnThemSach.TabIndex = 17;
+            this.btnThemSach.TabIndex = 10;
             this.btnThemSach.Text = "Thêm";
             this.btnThemSach.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnThemSach.UseVisualStyleBackColor = false;
@@ -309,7 +314,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnDocSach.Location = new System.Drawing.Point(107, 202);
             this.btnDocSach.Name = "btnDocSach";
             this.btnDocSach.Size = new System.Drawing.Size(116, 38);
-            this.btnDocSach.TabIndex = 16;
+            this.btnDocSach.TabIndex = 9;
             this.btnDocSach.Text = "Đọc dữ liệu";
             this.btnDocSach.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDocSach.UseVisualStyleBackColor = false;
@@ -326,7 +331,7 @@ namespace LuuCongQuangVu_Nhom13
             this.cbvitri.Location = new System.Drawing.Point(869, 151);
             this.cbvitri.Name = "cbvitri";
             this.cbvitri.Size = new System.Drawing.Size(320, 23);
-            this.cbvitri.TabIndex = 15;
+            this.cbvitri.TabIndex = 8;
             this.cbvitri.Validated += new System.EventHandler(this.cbvitri_Validated);
             // 
             // label1
@@ -419,7 +424,7 @@ namespace LuuCongQuangVu_Nhom13
             this.MainTabCT.Location = new System.Drawing.Point(0, 0);
             this.MainTabCT.Multiline = true;
             this.MainTabCT.Name = "MainTabCT";
-            this.MainTabCT.Padding = new System.Drawing.Point(3, 5);
+            this.MainTabCT.Padding = new System.Drawing.Point(3, 6);
             this.MainTabCT.RightToLeftLayout = true;
             this.MainTabCT.SelectedIndex = 0;
             this.MainTabCT.ShowToolTips = true;
@@ -469,10 +474,10 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiSach.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabQuanLiSach.ImageKey = "book.png";
             this.tabQuanLiSach.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tabQuanLiSach.Location = new System.Drawing.Point(4, 30);
+            this.tabQuanLiSach.Location = new System.Drawing.Point(4, 32);
             this.tabQuanLiSach.Name = "tabQuanLiSach";
             this.tabQuanLiSach.Padding = new System.Windows.Forms.Padding(3);
-            this.tabQuanLiSach.Size = new System.Drawing.Size(1284, 618);
+            this.tabQuanLiSach.Size = new System.Drawing.Size(1284, 616);
             this.tabQuanLiSach.TabIndex = 0;
             this.tabQuanLiSach.Text = "Quản lí sách";
             // 
@@ -621,7 +626,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnTimkiem.Name = "btnTimkiem";
             this.btnTimkiem.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnTimkiem.Size = new System.Drawing.Size(116, 38);
-            this.btnTimkiem.TabIndex = 23;
+            this.btnTimkiem.TabIndex = 14;
             this.btnTimkiem.Text = "Tìm";
             this.btnTimkiem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTimkiem.UseVisualStyleBackColor = false;
@@ -808,10 +813,10 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiDocGia.Controls.Add(this.label8);
             this.tabQuanLiDocGia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.tabQuanLiDocGia.ImageKey = "editor.png";
-            this.tabQuanLiDocGia.Location = new System.Drawing.Point(4, 30);
+            this.tabQuanLiDocGia.Location = new System.Drawing.Point(4, 32);
             this.tabQuanLiDocGia.Name = "tabQuanLiDocGia";
             this.tabQuanLiDocGia.Padding = new System.Windows.Forms.Padding(3);
-            this.tabQuanLiDocGia.Size = new System.Drawing.Size(1284, 618);
+            this.tabQuanLiDocGia.Size = new System.Drawing.Size(1284, 616);
             this.tabQuanLiDocGia.TabIndex = 1;
             this.tabQuanLiDocGia.Text = "Quản lí độc giả";
             // 
@@ -840,7 +845,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dtimeSearchDG.Location = new System.Drawing.Point(843, 233);
             this.dtimeSearchDG.Name = "dtimeSearchDG";
             this.dtimeSearchDG.Size = new System.Drawing.Size(291, 22);
-            this.dtimeSearchDG.TabIndex = 30;
+            this.dtimeSearchDG.TabIndex = 13;
             this.dtimeSearchDG.Visible = false;
             // 
             // rdSDT_DG
@@ -931,7 +936,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnTimKiemDocGia.Name = "btnTimKiemDocGia";
             this.btnTimKiemDocGia.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.btnTimKiemDocGia.Size = new System.Drawing.Size(115, 40);
-            this.btnTimKiemDocGia.TabIndex = 21;
+            this.btnTimKiemDocGia.TabIndex = 12;
             this.btnTimKiemDocGia.Text = "Tìm kiếm";
             this.btnTimKiemDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTimKiemDocGia.UseVisualStyleBackColor = false;
@@ -946,7 +951,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnHuyDocGia.Name = "btnHuyDocGia";
             this.btnHuyDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnHuyDocGia.Size = new System.Drawing.Size(115, 40);
-            this.btnHuyDocGia.TabIndex = 19;
+            this.btnHuyDocGia.TabIndex = 10;
             this.btnHuyDocGia.Text = "Huỷ";
             this.btnHuyDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnHuyDocGia.UseVisualStyleBackColor = false;
@@ -961,7 +966,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSuaDocGia.Name = "btnSuaDocGia";
             this.btnSuaDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnSuaDocGia.Size = new System.Drawing.Size(115, 40);
-            this.btnSuaDocGia.TabIndex = 18;
+            this.btnSuaDocGia.TabIndex = 8;
             this.btnSuaDocGia.Text = "Sửa";
             this.btnSuaDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSuaDocGia.UseVisualStyleBackColor = false;
@@ -976,7 +981,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnXoaDocGia.Name = "btnXoaDocGia";
             this.btnXoaDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnXoaDocGia.Size = new System.Drawing.Size(115, 40);
-            this.btnXoaDocGia.TabIndex = 17;
+            this.btnXoaDocGia.TabIndex = 11;
             this.btnXoaDocGia.Text = "Xoá";
             this.btnXoaDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnXoaDocGia.UseVisualStyleBackColor = false;
@@ -991,7 +996,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnThemDocGia.Name = "btnThemDocGia";
             this.btnThemDocGia.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnThemDocGia.Size = new System.Drawing.Size(115, 40);
-            this.btnThemDocGia.TabIndex = 16;
+            this.btnThemDocGia.TabIndex = 9;
             this.btnThemDocGia.Text = "Thêm";
             this.btnThemDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnThemDocGia.UseVisualStyleBackColor = false;
@@ -1006,7 +1011,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnReadDocGia.Location = new System.Drawing.Point(580, 47);
             this.btnReadDocGia.Name = "btnReadDocGia";
             this.btnReadDocGia.Size = new System.Drawing.Size(115, 40);
-            this.btnReadDocGia.TabIndex = 15;
+            this.btnReadDocGia.TabIndex = 7;
             this.btnReadDocGia.Text = "Đọc dữ liệu";
             this.btnReadDocGia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnReadDocGia.UseVisualStyleBackColor = false;
@@ -1020,7 +1025,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dateDocGia.MinDate = new System.DateTime(1788, 1, 1, 0, 0, 0, 0);
             this.dateDocGia.Name = "dateDocGia";
             this.dateDocGia.Size = new System.Drawing.Size(274, 22);
-            this.dateDocGia.TabIndex = 14;
+            this.dateDocGia.TabIndex = 3;
             this.dateDocGia.Value = new System.DateTime(2021, 6, 21, 9, 56, 0, 0);
             this.dateDocGia.Validated += new System.EventHandler(this.dateDocGia_Validated);
             // 
@@ -1084,7 +1089,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtSDT_DocGia.Location = new System.Drawing.Point(277, 252);
             this.txtSDT_DocGia.Name = "txtSDT_DocGia";
             this.txtSDT_DocGia.Size = new System.Drawing.Size(274, 22);
-            this.txtSDT_DocGia.TabIndex = 12;
+            this.txtSDT_DocGia.TabIndex = 6;
             this.txtSDT_DocGia.Validated += new System.EventHandler(this.txtSDT_DocGia_Validated);
             // 
             // txtNgheNhiep
@@ -1092,7 +1097,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtNgheNhiep.Location = new System.Drawing.Point(277, 211);
             this.txtNgheNhiep.Name = "txtNgheNhiep";
             this.txtNgheNhiep.Size = new System.Drawing.Size(274, 22);
-            this.txtNgheNhiep.TabIndex = 11;
+            this.txtNgheNhiep.TabIndex = 5;
             this.txtNgheNhiep.Validated += new System.EventHandler(this.txtNgheNhiep_Validated);
             // 
             // txtDiaChiDocGia
@@ -1100,7 +1105,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtDiaChiDocGia.Location = new System.Drawing.Point(277, 170);
             this.txtDiaChiDocGia.Name = "txtDiaChiDocGia";
             this.txtDiaChiDocGia.Size = new System.Drawing.Size(274, 22);
-            this.txtDiaChiDocGia.TabIndex = 10;
+            this.txtDiaChiDocGia.TabIndex = 4;
             this.txtDiaChiDocGia.Validated += new System.EventHandler(this.txtDiaChiDocGia_Validated);
             // 
             // txtTenDocGia
@@ -1108,7 +1113,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtTenDocGia.Location = new System.Drawing.Point(277, 88);
             this.txtTenDocGia.Name = "txtTenDocGia";
             this.txtTenDocGia.Size = new System.Drawing.Size(274, 22);
-            this.txtTenDocGia.TabIndex = 8;
+            this.txtTenDocGia.TabIndex = 2;
             this.txtTenDocGia.Validated += new System.EventHandler(this.txtTenDocGia_Validated);
             // 
             // txtMaDocGia
@@ -1116,7 +1121,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtMaDocGia.Location = new System.Drawing.Point(277, 47);
             this.txtMaDocGia.Name = "txtMaDocGia";
             this.txtMaDocGia.Size = new System.Drawing.Size(274, 22);
-            this.txtMaDocGia.TabIndex = 7;
+            this.txtMaDocGia.TabIndex = 1;
             this.txtMaDocGia.Validated += new System.EventHandler(this.txtMaDocGia_Validated);
             // 
             // label13
@@ -1184,10 +1189,10 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiBanSach.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_admin;
             this.tabQuanLiBanSach.Controls.Add(this.ChildTabCT);
             this.tabQuanLiBanSach.ImageKey = "credit-card.png";
-            this.tabQuanLiBanSach.Location = new System.Drawing.Point(4, 30);
+            this.tabQuanLiBanSach.Location = new System.Drawing.Point(4, 32);
             this.tabQuanLiBanSach.Name = "tabQuanLiBanSach";
             this.tabQuanLiBanSach.Padding = new System.Windows.Forms.Padding(3);
-            this.tabQuanLiBanSach.Size = new System.Drawing.Size(1284, 618);
+            this.tabQuanLiBanSach.Size = new System.Drawing.Size(1284, 616);
             this.tabQuanLiBanSach.TabIndex = 2;
             this.tabQuanLiBanSach.Text = "Quản lí bán sách";
             this.tabQuanLiBanSach.UseVisualStyleBackColor = true;
@@ -1216,7 +1221,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage3.Controls.Add(this.btnLapHD);
             this.tabPage3.Controls.Add(this.groupBox2);
             this.tabPage3.Controls.Add(this.groupBox1);
-            this.tabPage3.ImageKey = "homework.png";
+            this.tabPage3.ImageKey = "invoice.png";
             this.tabPage3.Location = new System.Drawing.Point(4, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -1228,16 +1233,20 @@ namespace LuuCongQuangVu_Nhom13
             // btnLapHD
             // 
             this.btnLapHD.BackColor = System.Drawing.Color.Orange;
-            this.btnLapHD.Location = new System.Drawing.Point(585, 505);
+            this.btnLapHD.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Add;
+            this.btnLapHD.Location = new System.Drawing.Point(569, 505);
             this.btnLapHD.Name = "btnLapHD";
-            this.btnLapHD.Size = new System.Drawing.Size(130, 40);
-            this.btnLapHD.TabIndex = 2;
+            this.btnLapHD.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.btnLapHD.Size = new System.Drawing.Size(146, 40);
+            this.btnLapHD.TabIndex = 10;
             this.btnLapHD.Text = "Lập hoá đơn";
+            this.btnLapHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLapHD.UseVisualStyleBackColor = false;
             this.btnLapHD.Click += new System.EventHandler(this.btnLapHD_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnRefeshMaSach);
             this.groupBox2.Controls.Add(this.rdInCbMaSach);
             this.groupBox2.Controls.Add(this.rdInCbTenSach);
             this.groupBox2.Controls.Add(this.btnHuySachMua);
@@ -1255,6 +1264,17 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin mua hàng";
+            // 
+            // btnRefeshMaSach
+            // 
+            this.btnRefeshMaSach.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.refesh_blue;
+            this.btnRefeshMaSach.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnRefeshMaSach.Location = new System.Drawing.Point(339, 80);
+            this.btnRefeshMaSach.Name = "btnRefeshMaSach";
+            this.btnRefeshMaSach.Size = new System.Drawing.Size(25, 25);
+            this.btnRefeshMaSach.TabIndex = 9;
+            this.btnRefeshMaSach.TabStop = false;
+            this.btnRefeshMaSach.Click += new System.EventHandler(this.btnRefeshMaSach_Click);
             // 
             // rdInCbMaSach
             // 
@@ -1288,7 +1308,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnHuySachMua.Name = "btnHuySachMua";
             this.btnHuySachMua.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
             this.btnHuySachMua.Size = new System.Drawing.Size(145, 40);
-            this.btnHuySachMua.TabIndex = 11;
+            this.btnHuySachMua.TabIndex = 9;
             this.btnHuySachMua.Text = "Huỷ";
             this.btnHuySachMua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnHuySachMua.UseVisualStyleBackColor = false;
@@ -1302,7 +1322,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnXoaSachMua.Name = "btnXoaSachMua";
             this.btnXoaSachMua.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.btnXoaSachMua.Size = new System.Drawing.Size(151, 40);
-            this.btnXoaSachMua.TabIndex = 10;
+            this.btnXoaSachMua.TabIndex = 8;
             this.btnXoaSachMua.Text = "Xoá sách mua";
             this.btnXoaSachMua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnXoaSachMua.UseVisualStyleBackColor = false;
@@ -1316,7 +1336,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnSuaSachMua.Name = "btnSuaSachMua";
             this.btnSuaSachMua.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.btnSuaSachMua.Size = new System.Drawing.Size(145, 40);
-            this.btnSuaSachMua.TabIndex = 9;
+            this.btnSuaSachMua.TabIndex = 7;
             this.btnSuaSachMua.Text = "Sửa sách mua";
             this.btnSuaSachMua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSuaSachMua.UseVisualStyleBackColor = false;
@@ -1328,7 +1348,7 @@ namespace LuuCongQuangVu_Nhom13
             this.cbMaSach_lhd.Location = new System.Drawing.Point(132, 80);
             this.cbMaSach_lhd.Name = "cbMaSach_lhd";
             this.cbMaSach_lhd.Size = new System.Drawing.Size(201, 25);
-            this.cbMaSach_lhd.TabIndex = 8;
+            this.cbMaSach_lhd.TabIndex = 4;
             this.cbMaSach_lhd.Validated += new System.EventHandler(this.cbMaSach_lhd_Validated);
             // 
             // btnThemSachMua
@@ -1339,7 +1359,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnThemSachMua.Name = "btnThemSachMua";
             this.btnThemSachMua.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnThemSachMua.Size = new System.Drawing.Size(151, 40);
-            this.btnThemSachMua.TabIndex = 7;
+            this.btnThemSachMua.TabIndex = 6;
             this.btnThemSachMua.Text = "Thêm sách mua";
             this.btnThemSachMua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnThemSachMua.UseVisualStyleBackColor = false;
@@ -1350,7 +1370,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtsoluongmua_lhd.Location = new System.Drawing.Point(132, 122);
             this.txtsoluongmua_lhd.Name = "txtsoluongmua_lhd";
             this.txtsoluongmua_lhd.Size = new System.Drawing.Size(201, 25);
-            this.txtsoluongmua_lhd.TabIndex = 7;
+            this.txtsoluongmua_lhd.TabIndex = 5;
             this.txtsoluongmua_lhd.Validated += new System.EventHandler(this.txtsoluongmua_lhd_Validated);
             // 
             // dgvLHD
@@ -1368,7 +1388,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dgvLHD.Name = "dgvLHD";
             this.dgvLHD.RowTemplate.Height = 25;
             this.dgvLHD.Size = new System.Drawing.Size(676, 220);
-            this.dgvLHD.TabIndex = 2;
+            this.dgvLHD.TabIndex = 11;
             this.dgvLHD.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLHD_CellClick);
             // 
             // lhdmasach
@@ -1418,6 +1438,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnRefeshMaDG);
             this.groupBox1.Controls.Add(this.cbMaDG);
             this.groupBox1.Controls.Add(this.dtimeNgayLap);
             this.groupBox1.Controls.Add(this.txtMaHD);
@@ -1431,13 +1452,24 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin hoá đơn";
             // 
+            // btnRefeshMaDG
+            // 
+            this.btnRefeshMaDG.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.refesh_blue;
+            this.btnRefeshMaDG.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnRefeshMaDG.Location = new System.Drawing.Point(683, 42);
+            this.btnRefeshMaDG.Name = "btnRefeshMaDG";
+            this.btnRefeshMaDG.Size = new System.Drawing.Size(25, 25);
+            this.btnRefeshMaDG.TabIndex = 8;
+            this.btnRefeshMaDG.TabStop = false;
+            this.btnRefeshMaDG.Click += new System.EventHandler(this.btnRefeshMaDG_Click);
+            // 
             // cbMaDG
             // 
             this.cbMaDG.FormattingEnabled = true;
             this.cbMaDG.Location = new System.Drawing.Point(511, 42);
             this.cbMaDG.Name = "cbMaDG";
             this.cbMaDG.Size = new System.Drawing.Size(166, 25);
-            this.cbMaDG.TabIndex = 7;
+            this.cbMaDG.TabIndex = 2;
             this.cbMaDG.Validated += new System.EventHandler(this.cbMaDG_Validated);
             // 
             // dtimeNgayLap
@@ -1447,7 +1479,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dtimeNgayLap.Location = new System.Drawing.Point(880, 42);
             this.dtimeNgayLap.Name = "dtimeNgayLap";
             this.dtimeNgayLap.Size = new System.Drawing.Size(172, 25);
-            this.dtimeNgayLap.TabIndex = 6;
+            this.dtimeNgayLap.TabIndex = 3;
             this.dtimeNgayLap.Validated += new System.EventHandler(this.dtimeNgayLap_Validated);
             // 
             // txtMaHD
@@ -1455,7 +1487,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtMaHD.Location = new System.Drawing.Point(122, 42);
             this.txtMaHD.Name = "txtMaHD";
             this.txtMaHD.Size = new System.Drawing.Size(163, 25);
-            this.txtMaHD.TabIndex = 4;
+            this.txtMaHD.TabIndex = 1;
             this.txtMaHD.Validated += new System.EventHandler(this.txtMaHD_Validated);
             // 
             // label17
@@ -1489,9 +1521,9 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.tabPage5.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabPage5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tabPage5.Controls.Add(this.btnRefeshSearchInforHD);
             this.tabPage5.Controls.Add(this.lbTongTien);
             this.tabPage5.Controls.Add(this.label26);
-            this.tabPage5.Controls.Add(this.btnRefeshInforHD);
             this.tabPage5.Controls.Add(this.cbTimKiemMaHD);
             this.tabPage5.Controls.Add(this.lbNgayLap);
             this.tabPage5.Controls.Add(this.label25);
@@ -1508,6 +1540,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage5.Controls.Add(this.label21);
             this.tabPage5.Controls.Add(this.label20);
             this.tabPage5.Controls.Add(this.dgvInforHD);
+            this.tabPage5.ImageKey = "receipt.png";
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -1516,10 +1549,21 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage5.Text = "Thông tin hoá đơn độc giả";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // btnRefeshSearchInforHD
+            // 
+            this.btnRefeshSearchInforHD.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.refesh_blue;
+            this.btnRefeshSearchInforHD.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnRefeshSearchInforHD.Location = new System.Drawing.Point(965, 479);
+            this.btnRefeshSearchInforHD.Name = "btnRefeshSearchInforHD";
+            this.btnRefeshSearchInforHD.Size = new System.Drawing.Size(33, 30);
+            this.btnRefeshSearchInforHD.TabIndex = 19;
+            this.btnRefeshSearchInforHD.TabStop = false;
+            this.btnRefeshSearchInforHD.Click += new System.EventHandler(this.btnRefeshSearchInforHD_Click);
+            // 
             // lbTongTien
             // 
             this.lbTongTien.AutoSize = true;
-            this.lbTongTien.Location = new System.Drawing.Point(841, 432);
+            this.lbTongTien.Location = new System.Drawing.Point(918, 432);
             this.lbTongTien.Name = "lbTongTien";
             this.lbTongTien.Size = new System.Drawing.Size(16, 17);
             this.lbTongTien.TabIndex = 18;
@@ -1528,22 +1572,11 @@ namespace LuuCongQuangVu_Nhom13
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(755, 432);
+            this.label26.Location = new System.Drawing.Point(832, 432);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(80, 17);
             this.label26.TabIndex = 17;
             this.label26.Text = "Tổng tiền :";
-            // 
-            // btnRefeshInforHD
-            // 
-            this.btnRefeshInforHD.ForeColor = System.Drawing.Color.Transparent;
-            this.btnRefeshInforHD.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Tick;
-            this.btnRefeshInforHD.Location = new System.Drawing.Point(974, 477);
-            this.btnRefeshInforHD.Name = "btnRefeshInforHD";
-            this.btnRefeshInforHD.Size = new System.Drawing.Size(35, 35);
-            this.btnRefeshInforHD.TabIndex = 16;
-            this.btnRefeshInforHD.UseVisualStyleBackColor = true;
-            this.btnRefeshInforHD.Click += new System.EventHandler(this.btnRefeshInforHD_Click);
             // 
             // cbTimKiemMaHD
             // 
@@ -1574,22 +1607,28 @@ namespace LuuCongQuangVu_Nhom13
             // btnInforXoa
             // 
             this.btnInforXoa.BackColor = System.Drawing.Color.Orange;
-            this.btnInforXoa.Location = new System.Drawing.Point(511, 474);
+            this.btnInforXoa.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Trash;
+            this.btnInforXoa.Location = new System.Drawing.Point(479, 474);
             this.btnInforXoa.Name = "btnInforXoa";
-            this.btnInforXoa.Size = new System.Drawing.Size(136, 40);
+            this.btnInforXoa.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.btnInforXoa.Size = new System.Drawing.Size(164, 40);
             this.btnInforXoa.TabIndex = 12;
             this.btnInforXoa.Text = "Xoá hoá đơn trên";
+            this.btnInforXoa.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInforXoa.UseVisualStyleBackColor = false;
             this.btnInforXoa.Click += new System.EventHandler(this.btnInforXoa_Click);
             // 
             // btnFirstHD
             // 
             this.btnFirstHD.BackColor = System.Drawing.Color.Orange;
+            this.btnFirstHD.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources._new;
             this.btnFirstHD.Location = new System.Drawing.Point(243, 473);
             this.btnFirstHD.Name = "btnFirstHD";
-            this.btnFirstHD.Size = new System.Drawing.Size(136, 40);
+            this.btnFirstHD.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnFirstHD.Size = new System.Drawing.Size(161, 40);
             this.btnFirstHD.TabIndex = 11;
             this.btnFirstHD.Text = "Hoá đơn vừa lập";
+            this.btnFirstHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFirstHD.UseVisualStyleBackColor = false;
             this.btnFirstHD.Click += new System.EventHandler(this.btnFirstHD_Click);
             // 
@@ -1628,11 +1667,14 @@ namespace LuuCongQuangVu_Nhom13
             // btnTimKiem_InforHD
             // 
             this.btnTimKiem_InforHD.BackColor = System.Drawing.Color.Orange;
-            this.btnTimKiem_InforHD.Location = new System.Drawing.Point(747, 474);
+            this.btnTimKiem_InforHD.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.Search;
+            this.btnTimKiem_InforHD.Location = new System.Drawing.Point(710, 474);
             this.btnTimKiem_InforHD.Name = "btnTimKiem_InforHD";
-            this.btnTimKiem_InforHD.Size = new System.Drawing.Size(85, 40);
+            this.btnTimKiem_InforHD.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnTimKiem_InforHD.Size = new System.Drawing.Size(122, 40);
             this.btnTimKiem_InforHD.TabIndex = 5;
             this.btnTimKiem_InforHD.Text = "Tìm kiếm";
+            this.btnTimKiem_InforHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTimKiem_InforHD.UseVisualStyleBackColor = false;
             this.btnTimKiem_InforHD.Click += new System.EventHandler(this.btnTimKiem_InforHD_Click);
             // 
@@ -1737,7 +1779,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage4.Controls.Add(this.btnLayDL);
             this.tabPage4.Controls.Add(this.btnDDLhistory);
             this.tabPage4.Controls.Add(this.dgvHistoryBS);
-            this.tabPage4.ImageKey = "statistics.png";
+            this.tabPage4.ImageKey = "clock.png";
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -1785,22 +1827,28 @@ namespace LuuCongQuangVu_Nhom13
             // btnLayDL
             // 
             this.btnLayDL.BackColor = System.Drawing.Color.Orange;
+            this.btnLayDL.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.schedule;
             this.btnLayDL.Location = new System.Drawing.Point(379, 451);
             this.btnLayDL.Name = "btnLayDL";
+            this.btnLayDL.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
             this.btnLayDL.Size = new System.Drawing.Size(168, 40);
             this.btnLayDL.TabIndex = 2;
             this.btnLayDL.Text = "Lấy dữ liệu";
+            this.btnLayDL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLayDL.UseVisualStyleBackColor = false;
             this.btnLayDL.Click += new System.EventHandler(this.btnLayDL_Click);
             // 
             // btnDDLhistory
             // 
             this.btnDDLhistory.BackColor = System.Drawing.Color.Orange;
+            this.btnDDLhistory.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.List;
             this.btnDDLhistory.Location = new System.Drawing.Point(131, 451);
             this.btnDDLhistory.Name = "btnDDLhistory";
+            this.btnDDLhistory.Padding = new System.Windows.Forms.Padding(16, 0, 0, 0);
             this.btnDDLhistory.Size = new System.Drawing.Size(168, 40);
             this.btnDDLhistory.TabIndex = 1;
             this.btnDDLhistory.Text = "Đọc dữ liệu";
+            this.btnDDLhistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDDLhistory.UseVisualStyleBackColor = false;
             this.btnDDLhistory.Click += new System.EventHandler(this.btnDDLhistory_Click);
             // 
@@ -1877,13 +1925,18 @@ namespace LuuCongQuangVu_Nhom13
             this.ImageMenu.Images.SetKeyName(5, "homework.png");
             this.ImageMenu.Images.SetKeyName(6, "semester.png");
             this.ImageMenu.Images.SetKeyName(7, "statistics.png");
+            this.ImageMenu.Images.SetKeyName(8, "receipt.png");
+            this.ImageMenu.Images.SetKeyName(9, "invoice.png");
+            this.ImageMenu.Images.SetKeyName(10, "clock.png");
+            this.ImageMenu.Images.SetKeyName(11, "buying.png");
+            this.ImageMenu.Images.SetKeyName(12, "selling.png");
             // 
             // tabQuanLyMuonTraSach
             // 
             this.tabQuanLyMuonTraSach.ImageKey = "homework.png";
-            this.tabQuanLyMuonTraSach.Location = new System.Drawing.Point(4, 30);
+            this.tabQuanLyMuonTraSach.Location = new System.Drawing.Point(4, 32);
             this.tabQuanLyMuonTraSach.Name = "tabQuanLyMuonTraSach";
-            this.tabQuanLyMuonTraSach.Size = new System.Drawing.Size(1284, 618);
+            this.tabQuanLyMuonTraSach.Size = new System.Drawing.Size(1284, 616);
             this.tabQuanLyMuonTraSach.TabIndex = 4;
             this.tabQuanLyMuonTraSach.Text = "Quản lý mượn trả sách";
             this.tabQuanLyMuonTraSach.UseVisualStyleBackColor = true;
@@ -1891,9 +1944,9 @@ namespace LuuCongQuangVu_Nhom13
             // tabThongKeSach
             // 
             this.tabThongKeSach.ImageKey = "analytics.png";
-            this.tabThongKeSach.Location = new System.Drawing.Point(4, 30);
+            this.tabThongKeSach.Location = new System.Drawing.Point(4, 32);
             this.tabThongKeSach.Name = "tabThongKeSach";
-            this.tabThongKeSach.Size = new System.Drawing.Size(1284, 618);
+            this.tabThongKeSach.Size = new System.Drawing.Size(1284, 616);
             this.tabThongKeSach.TabIndex = 5;
             this.tabThongKeSach.Text = "Thống kê sách";
             this.tabThongKeSach.UseVisualStyleBackColor = true;
@@ -1901,9 +1954,9 @@ namespace LuuCongQuangVu_Nhom13
             // tabBangLuuThongTin
             // 
             this.tabBangLuuThongTin.ImageKey = "semester.png";
-            this.tabBangLuuThongTin.Location = new System.Drawing.Point(4, 30);
+            this.tabBangLuuThongTin.Location = new System.Drawing.Point(4, 32);
             this.tabBangLuuThongTin.Name = "tabBangLuuThongTin";
-            this.tabBangLuuThongTin.Size = new System.Drawing.Size(1284, 618);
+            this.tabBangLuuThongTin.Size = new System.Drawing.Size(1284, 616);
             this.tabBangLuuThongTin.TabIndex = 6;
             this.tabBangLuuThongTin.Text = "Bảng lưu thông tin mượn trả sách";
             this.tabBangLuuThongTin.UseVisualStyleBackColor = true;
@@ -1911,29 +1964,29 @@ namespace LuuCongQuangVu_Nhom13
             // tabThongKeDocGia
             // 
             this.tabThongKeDocGia.ImageKey = "statistics.png";
-            this.tabThongKeDocGia.Location = new System.Drawing.Point(4, 30);
+            this.tabThongKeDocGia.Location = new System.Drawing.Point(4, 32);
             this.tabThongKeDocGia.Name = "tabThongKeDocGia";
-            this.tabThongKeDocGia.Size = new System.Drawing.Size(1284, 618);
+            this.tabThongKeDocGia.Size = new System.Drawing.Size(1284, 616);
             this.tabThongKeDocGia.TabIndex = 7;
             this.tabThongKeDocGia.Text = "Thống kê độc giả";
             this.tabThongKeDocGia.UseVisualStyleBackColor = true;
             // 
             // tabPage1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 30);
+            this.tabPage1.Location = new System.Drawing.Point(4, 32);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1284, 618);
+            this.tabPage1.Size = new System.Drawing.Size(1284, 616);
             this.tabPage1.TabIndex = 8;
             this.tabPage1.Text = "Quản lí phòng đọc";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 30);
+            this.tabPage2.Location = new System.Drawing.Point(4, 32);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1284, 618);
+            this.tabPage2.Size = new System.Drawing.Size(1284, 616);
             this.tabPage2.TabIndex = 9;
             this.tabPage2.Text = "Tạo hoá đơn";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1983,11 +2036,14 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRefeshMaSach)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLHD)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRefeshMaDG)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnRefeshSearchInforHD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInforHD)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
@@ -2124,7 +2180,6 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Label lbNgayLap;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox cbTimKiemMaHD;
-        private System.Windows.Forms.Button btnRefeshInforHD;
         private System.Windows.Forms.DataGridView dgvHistoryBS;
         private System.Windows.Forms.DataGridViewTextBoxColumn historyMaHD;
         private System.Windows.Forms.DataGridViewTextBoxColumn historyMaDG;
@@ -2156,6 +2211,9 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.RadioButton rdInCbMaSach;
         private System.Windows.Forms.RadioButton rdInCbTenSach;
+        private System.Windows.Forms.PictureBox btnRefeshMaDG;
+        private System.Windows.Forms.PictureBox btnRefeshMaSach;
+        private System.Windows.Forms.PictureBox btnRefeshSearchInforHD;
     }
 }
 

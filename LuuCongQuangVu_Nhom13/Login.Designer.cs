@@ -127,12 +127,14 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // Login
             // 
+            this.AcceptButton = this.btnDangNhap;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(163)))), ((int)(((byte)(103)))));
             this.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_Login;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CancelButton = this.btnThoat;
             this.ClientSize = new System.Drawing.Size(497, 512);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
