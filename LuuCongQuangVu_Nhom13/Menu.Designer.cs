@@ -1574,7 +1574,7 @@ namespace LuuCongQuangVu_Nhom13
             // btnInforXoa
             // 
             this.btnInforXoa.BackColor = System.Drawing.Color.Orange;
-            this.btnInforXoa.Location = new System.Drawing.Point(530, 473);
+            this.btnInforXoa.Location = new System.Drawing.Point(511, 474);
             this.btnInforXoa.Name = "btnInforXoa";
             this.btnInforXoa.Size = new System.Drawing.Size(136, 40);
             this.btnInforXoa.TabIndex = 12;

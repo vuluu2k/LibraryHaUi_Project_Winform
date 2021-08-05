@@ -686,9 +686,18 @@ namespace LuuCongQuangVu_Nhom13
         {
             if (cbMaSach_lhd.Text == "")
             {
-                GetError.SetError(cbMaSach_lhd,"Bạn phải nhập hoặc chọn mã sách!");
-                cbMaSach_lhd.Focus();
-                return false;
+                if (rdInCbMaSach.Checked)
+                {
+                    GetError.SetError(cbMaSach_lhd,"Bạn phải nhập hoặc chọn mã sách!");
+                    cbMaSach_lhd.Focus();
+                    return false;
+                }
+                else
+                {
+                    GetError.SetError(cbMaSach_lhd, "Bạn phải nhập hoặc chọn tên sách!");
+                    cbMaSach_lhd.Focus();
+                    return false;
+                }
             }
             else
             {
