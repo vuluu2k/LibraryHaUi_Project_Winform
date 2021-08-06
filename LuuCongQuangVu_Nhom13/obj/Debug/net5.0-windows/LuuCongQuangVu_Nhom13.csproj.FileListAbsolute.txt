@@ -214,3 +214,4 @@ D:\BTL_LapTrinhWD\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_
 D:\BTL_LapTrinhWD\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\ref\LuuCongQuangVu_Nhom13.dll
 D:\BTL_LapTrinhWD\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.pdb
 D:\BTL_LapTrinhWD\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.genruntimeconfig.cache
+D:\BTL_LapTrinhWD\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogUpdateLHD.resources

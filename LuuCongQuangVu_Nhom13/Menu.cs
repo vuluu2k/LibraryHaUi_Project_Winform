@@ -17,6 +17,7 @@ namespace LuuCongQuangVu_Nhom13
         Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
         int index=0;
         String laster_hd="";
+        public int slmua;
         private void RefeshInforHD()
         {
             cbTimKiemMaHD.DataSource = dbcontext.HoaDons.ToList();
@@ -1483,7 +1484,16 @@ namespace LuuCongQuangVu_Nhom13
                 {
                     book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.Text select b).FirstOrDefault();
                 }
-                if (book != null)
+                bool check=true;
+                for (int i = 0; i < dgvLHD.RowCount - 1; i++)
+                {
+                    if (dgvLHD.Rows[i].Cells[0].Value.ToString() == book.Idsach)
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+                if (check)
                 {
                     dgvLHD.ColumnCount = 5;
                     dgvLHD.Rows.Add();
@@ -1501,9 +1511,7 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    GetError.SetError(cbMaSach_lhd, "Mã sách/Tên sách này không tồn tại!");
-                    cbMaSach_lhd.Focus();
-                    cbMaSach_lhd.SelectAll();
+                    DialogResult confim= MessageBox.Show("Sách đã được thêm từ trước, Vui lòng thực hiện thao tác sửa", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1512,39 +1520,27 @@ namespace LuuCongQuangVu_Nhom13
             if (Validate_LHD_InforBuyBook())
             {
                 Models.Sach book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.SelectedValue.ToString() select b).FirstOrDefault();
-                if (book != null)
-                {
-                    dgvLHD.ColumnCount = 5;
-                    dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[0].Value = book.Idsach;
-                    dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[1].Value = book.Tensach;
-                    dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[2].Value = txtsoluongmua_lhd.Text;
-                    dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[3].Value = book.Giasach;
-                    dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[4].Value = int.Parse(txtsoluongmua_lhd.Text) * book.Giasach;
-                    //MessageBox.Show(Convert.ToString(dgvLHD.Rows[index].Cells[0].Value));
-                    //cbMaSach_lhd.Text = "";
-                    //txtsoluongmua_lhd.Clear();
-                    //cbMaSach_lhd.Focus();
-                    //MessageBox.Show(dgvLHD.RowCount.ToString());
-                }
-                else
-                {
-                    GetError.SetError(cbMaSach_lhd, "Mã sách này không tồn tại!");
-                    cbMaSach_lhd.Focus();
-                    cbMaSach_lhd.SelectAll();
-                }
+                dgvLHD.ColumnCount = 5;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[0].Value = book.Idsach;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[1].Value = book.Tensach;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[2].Value = txtsoluongmua_lhd.Text;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[3].Value = book.Giasach;
+                dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[4].Value = int.Parse(txtsoluongmua_lhd.Text) * book.Giasach;
             }
         }
         private void DelBookBuy()
         {
-            dgvLHD.Rows.RemoveAt(dgvLHD.SelectedCells[0].RowIndex);
+            DialogResult confim = MessageBox.Show("Bạn muốn xoá tên sách: "+dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[1].Value.ToString()+" ra khỏi danh sách nhập bán", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confim == DialogResult.Yes)
+            {
+                dgvLHD.Rows.RemoveAt(dgvLHD.SelectedCells[0].RowIndex); 
+            }
         }
         private void CreateBill()
         {
             if (Validate_LHD_InforHD())
             {
                 Models.Account acc = (Models.Account)this.Tag;
-                //MessageBox.Show(acc.Usename);
-                //string username = (string) this.Tag;
                 Models.HoaDon hd = new Models.HoaDon();
                 hd.MaHd = txtMaHD.Text;
                 hd.Iddocgia = cbMaDG.Text;
@@ -1553,10 +1549,10 @@ namespace LuuCongQuangVu_Nhom13
                 dbcontext.HoaDons.Add(hd);
                 for (int i = 0; i < dgvLHD.RowCount-1; i++)
                 {
-                    if (dgvLHD.Rows[i].Cells[0].Value == "")
-                    {
-                        dgvLHD.Rows.RemoveAt(i);
-                    }
+                    //if (dgvLHD.Rows[i].Cells[0].Value == "")
+                    //{
+                    //    dgvLHD.Rows.RemoveAt(i);
+                    //}
                     //MessageBox.Show(Convert.ToString(dgvLHD.Rows[i].Cells[0].Value));
                     Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
                     hdct.MaHd = hd.MaHd;
@@ -1821,7 +1817,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                 }
             }
-            if (dgvHistoryBS.RowCount == 1) ;
+            if (dgvHistoryBS.RowCount == 1)
             {
                 MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
