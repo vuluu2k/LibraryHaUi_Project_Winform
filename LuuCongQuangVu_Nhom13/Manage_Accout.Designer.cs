@@ -30,6 +30,7 @@ namespace LuuCongQuangVu_Nhom13
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Manage_Accout));
             this.dgvAccout = new System.Windows.Forms.DataGridView();
             this.taikhoan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.matkhau = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -405,6 +406,7 @@ namespace LuuCongQuangVu_Nhom13
             // GetError
             // 
             this.GetError.ContainerControl = this;
+            this.GetError.Icon = ((System.Drawing.Icon)(resources.GetObject("GetError.Icon")));
             // 
             // lbHoTen
             // 

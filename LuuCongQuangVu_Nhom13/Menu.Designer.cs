@@ -2009,6 +2009,7 @@ namespace LuuCongQuangVu_Nhom13
             // GetError
             // 
             this.GetError.ContainerControl = this;
+            this.GetError.Icon = ((System.Drawing.Icon)(resources.GetObject("GetError.Icon")));
             // 
             // QuanLiThuVien
             // 

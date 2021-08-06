@@ -15,6 +15,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         {
             HoaDonChiTiets = new HashSet<HoaDonChiTiet>();
             Muontrasaches = new HashSet<Muontrasach>();
+            Muontrataichos = new HashSet<Muontrataicho>();
         }
 
         [Key]
@@ -37,5 +38,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
         [InverseProperty(nameof(Muontrasach.IdsachNavigation))]
         public virtual ICollection<Muontrasach> Muontrasaches { get; set; }
+        [InverseProperty(nameof(Muontrataicho.IdsachNavigation))]
+        public virtual ICollection<Muontrataicho> Muontrataichos { get; set; }
     }
 }

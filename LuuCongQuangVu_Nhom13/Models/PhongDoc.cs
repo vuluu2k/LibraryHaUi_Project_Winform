@@ -13,7 +13,7 @@ namespace LuuCongQuangVu_Nhom13.Models
     {
         public PhongDoc()
         {
-            QuanLiPhongDocs = new HashSet<QuanLiPhongDoc>();
+            Muontrataichos = new HashSet<Muontrataicho>();
         }
 
         [Key]
@@ -21,8 +21,13 @@ namespace LuuCongQuangVu_Nhom13.Models
         public string Idphongdoc { get; set; }
         [StringLength(50)]
         public string Tennhanvien { get; set; }
+        public int? Soban { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? Giomocua { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? Giodong { get; set; }
 
-        [InverseProperty(nameof(QuanLiPhongDoc.IdphongdocNavigation))]
-        public virtual ICollection<QuanLiPhongDoc> QuanLiPhongDocs { get; set; }
+        [InverseProperty(nameof(Muontrataicho.IdphongdocNavigation))]
+        public virtual ICollection<Muontrataicho> Muontrataichos { get; set; }
     }
 }

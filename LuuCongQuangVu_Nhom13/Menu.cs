@@ -848,6 +848,7 @@ namespace LuuCongQuangVu_Nhom13
             Models.Sach id = (from book in dbcontext.Saches where book.Idsach==txtmasach.Text select book).FirstOrDefault();
             var idm = (from m in dbcontext.Muontrasaches where m.Idsach==txtmasach.Text select m).ToList();
             var hdcts = (from hdct in dbcontext.HoaDonChiTiets where hdct.Idsach == txtmasach.Text select hdct).ToList();
+            var mttcs = (from mttc in dbcontext.Muontrataichos where mttc.Idsach == txtmasach.Text select mttc).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -860,6 +861,10 @@ namespace LuuCongQuangVu_Nhom13
                     if (hdcts!=null)
                     {
                         dbcontext.HoaDonChiTiets.RemoveRange(hdcts);
+                    }
+                    if (mttcs != null)
+                    {
+                        dbcontext.Muontrataichos.RemoveRange(mttcs);
                     }
                     dbcontext.Saches.Remove(id);
                     dbcontext.SaveChanges();
@@ -1185,7 +1190,7 @@ namespace LuuCongQuangVu_Nhom13
             //var idt = (from t in dbcontext.Thethuviens where t.Iddocgia==txtMaDocGia.Text select t).ToList();cc
             Models.Docgium id = (from d in dbcontext.Docgia where d.Iddocgia==txtMaDocGia.Text select d).FirstOrDefault();
             var idm = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDocGia.Text select m).ToList();
-            var qlpds = (from qlpd in dbcontext.QuanLiPhongDocs where qlpd.Iddocgia == txtMaDocGia.Text select qlpd).ToList();
+            var mttcs = (from mttc in dbcontext.Muontrataichos where mttc.Iddocgia == txtMaDocGia.Text select mttc).ToList();
             var hds = (from hd in dbcontext.HoaDons where hd.Iddocgia == txtMaDocGia.Text select hd).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
@@ -1196,9 +1201,9 @@ namespace LuuCongQuangVu_Nhom13
                     {
                         dbcontext.Muontrasaches.RemoveRange(idm);
                     }
-                    if (qlpds != null)
+                    if (mttcs != null)
                     {
-                        dbcontext.QuanLiPhongDocs.RemoveRange(qlpds);
+                        dbcontext.Muontrataichos.RemoveRange(mttcs);
                     }
                     if (hds != null)
                     {
@@ -1274,7 +1279,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     else
                     {
-                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else if (rdTenDG.Checked)
@@ -1301,7 +1306,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     else
                     {
-                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else if (rdNgaySinhDG.Checked)
@@ -1328,7 +1333,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     else
                     {
-                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else if (rdDiaChiDG.Checked)
@@ -1355,7 +1360,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     else
                     {
-                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else if (rdNgheNghiepDG.Checked)
@@ -1382,7 +1387,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     else
                     {
-                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else if (rdSDT_DG.Checked)
@@ -1409,7 +1414,7 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     else
                     {
-                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -1777,7 +1782,7 @@ namespace LuuCongQuangVu_Nhom13
             int index_historybs = 0;
             if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
             {
-                MessageBox.Show("Điểm khởi đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Điểm khởi thời gian đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {

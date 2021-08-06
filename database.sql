@@ -92,28 +92,35 @@ go
 
 create table PhongDoc(
 	Idphongdoc char(4) primary key,
-	Tennhanvien nvarchar(50)
+	Tennhanvien nvarchar(50),
+	Soban int,
+	Giomocua datetime,
+	Giodong datetime,
 )
 go
-insert into PhongDoc values('p001', N'Phạm Thị Hà')
-insert into PhongDoc values('p002', N'Ngô Thị Trang')
+insert into PhongDoc values('p001',N'Phạm Thị Hà',40,'2021/1/2 12:00:00','2021/1/2 15:00:00')
+insert into PhongDoc values('p002',N'Lê Văn Thành',50,'2021/1/2 13:00:00','2021/1/2 16:00:00')
+insert into PhongDoc values('p003',N'Trần Văn Quân',45,'2021/1/2 12:00:00','2021/1/2 15:00:00')
 go
-create table QuanLiPhongDoc(
-	Idphongdoc char(4),
+
+create table Muontrataicho(
 	Iddocgia char(4),
-	primary key(Idphongdoc, Iddocgia),
-	constraint fk_idphongdoc foreign key(Idphongdoc) references PhongDoc(Idphongdoc),
-	constraint fkiddocgia foreign key(Iddocgia) references DocGia(Iddocgia),
+	Idsach char(4),
+	Idphongdoc char(4),
+	primary key(Iddocgia, Idsach, Idphongdoc),
+	constraint fk_iddphongdoc foreign key(Idphongdoc) references PhongDoc(Idphongdoc),
+	constraint fk_iddsach foreign key(Idsach) references sach(Idsach),
+	constraint fk_idddocgia foreign key(Iddocgia) references docgia(Iddocgia),
+	Vitriban int,
 	Giovao datetime,
-	Giora datetime
+	Giora datetime,
+	Tinhtrangsach nvarchar(100)
 )
+insert into Muontrataicho values('d001', 's001', 'p001',10, '2021/1/2 12:00:00', '2021/1/2 15:00:00', N'Bình Thường')
+insert into Muontrataicho values('d001', 's002','p001',12, '2021/1/2 12:00:00', '2021/1/2 14:00:00',N'Bình thường')
+insert into Muontrataicho values('d002', 's003','p002',5, '2021/1/2 12:00:00', '2021/1/2 13:00:00', N'Hỏng trang 20')
 go
-insert into QuanLiPhongDoc values('p001', 'd001','2021/1/2 12:00:00', '2021/1/2 15:00:00')
-insert into QuanLiPhongDoc values('p002', 'd002','2021/1/2 12:00:00', '2021/1/2 14:00:00')
-insert into QuanLiPhongDoc values('p002', 'd001','2021/1/2 12:00:00', '2021/1/2 13:00:00')
-insert into QuanLiPhongDoc values('p001', 'd003','2021/1/2 12:00:00', '2021/1/2 12:15:00')
-insert into QuanLiPhongDoc values('p001', 'd002','2021/1/2 12:00:00', '2021/1/2 12:30:00')
-go
+
 
 
 

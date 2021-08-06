@@ -8,25 +8,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LuuCongQuangVu_Nhom13.Models
 {
-    [Table("QuanLiPhongDoc")]
-    public partial class QuanLiPhongDoc
+    [Table("Muontrataicho")]
+    public partial class Muontrataicho
     {
         [Key]
         [StringLength(4)]
-        public string Idphongdoc { get; set; }
+        public string Iddocgia { get; set; }
         [Key]
         [StringLength(4)]
-        public string Iddocgia { get; set; }
+        public string Idsach { get; set; }
+        [Key]
+        [StringLength(4)]
+        public string Idphongdoc { get; set; }
+        public int? Vitriban { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Giovao { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Giora { get; set; }
+        [StringLength(100)]
+        public string Tinhtrangsach { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
-        [InverseProperty(nameof(Docgium.QuanLiPhongDocs))]
+        [InverseProperty(nameof(Docgium.Muontrataichos))]
         public virtual Docgium IddocgiaNavigation { get; set; }
         [ForeignKey(nameof(Idphongdoc))]
-        [InverseProperty(nameof(PhongDoc.QuanLiPhongDocs))]
+        [InverseProperty(nameof(PhongDoc.Muontrataichos))]
         public virtual PhongDoc IdphongdocNavigation { get; set; }
+        [ForeignKey(nameof(Idsach))]
+        [InverseProperty(nameof(Sach.Muontrataichos))]
+        public virtual Sach IdsachNavigation { get; set; }
     }
 }
