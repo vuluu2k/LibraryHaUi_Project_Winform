@@ -503,7 +503,6 @@ namespace LuuCongQuangVu_Nhom13
                     txtSDT_DocGia.SelectAll();
                     return false;
                 }
-                
             }
             
             return true;
@@ -1565,8 +1564,20 @@ namespace LuuCongQuangVu_Nhom13
                 dbcontext.SaveChanges();
                 MessageBox.Show("Lập hoá đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 laster_hd = txtMaHD.Text;
+                ClearALl();
             }
         }
+
+        private void ClearALl()
+        {
+            txtMaHD.Clear();
+            cbMaDG.SelectedIndex = -1;
+            dtimeNgayLap.Value = DateTime.Now;
+            cbMaSach_lhd.SelectedIndex = -1;
+            txtsoluongmua_lhd.Clear();
+            dgvLHD.Rows.Clear();
+        }
+
         private void dgvLHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int index_lhd = dgvLHD.SelectedCells[0].RowIndex;
