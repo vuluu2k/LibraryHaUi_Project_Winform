@@ -30,6 +30,7 @@ namespace LuuCongQuangVu_Nhom13
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogUpdateLHD));
             this.txtSLmua = new System.Windows.Forms.TextBox();
             this.btnXacNhan = new System.Windows.Forms.Button();
             this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
@@ -69,6 +70,7 @@ namespace LuuCongQuangVu_Nhom13
             // GetError
             // 
             this.GetError.ContainerControl = this;
+            this.GetError.Icon = ((System.Drawing.Icon)(resources.GetObject("GetError.Icon")));
             // 
             // lbTenSach
             // 
@@ -128,6 +130,7 @@ namespace LuuCongQuangVu_Nhom13
             this.Controls.Add(this.btnXacNhan);
             this.Controls.Add(this.txtSLmua);
             this.Name = "DialogUpdateLHD";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "UpdateLoop";
             this.Load += new System.EventHandler(this.DialogUpdateLHD_Load);
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();

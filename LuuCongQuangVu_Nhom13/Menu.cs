@@ -1102,11 +1102,13 @@ namespace LuuCongQuangVu_Nhom13
         private void btnThemSach_Click(object sender, EventArgs e)
         {
             AddBook();
+            ClearBook();
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
             DelBook();
+            ClearBook();
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -1428,11 +1430,13 @@ namespace LuuCongQuangVu_Nhom13
         private void btnThemDocGia_Click(object sender, EventArgs e)
         {
             AddReader();
+            ClearReader();
         }
 
         private void btnXoaDocGia_Click(object sender, EventArgs e)
         {
             DelReader();
+            ClearReader();
         }
 
         private void btnSuaDocGia_Click(object sender, EventArgs e)
@@ -1593,7 +1597,12 @@ namespace LuuCongQuangVu_Nhom13
             txtsoluongmua_lhd.Clear();
             dgvLHD.Rows.Clear();
         }
-
+        private void ClearBookBuy()
+        {
+            cbMaSach_lhd.Text = "" ;
+            txtsoluongmua_lhd.Clear();
+            cbMaSach_lhd.Focus();
+        }
         private void dgvLHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int index_lhd = dgvLHD.SelectedCells[0].RowIndex;
@@ -1613,6 +1622,7 @@ namespace LuuCongQuangVu_Nhom13
         private void btnXoaSachMua_Click(object sender, EventArgs e)
         {
             DelBookBuy();
+            ClearBookBuy();
         }
         private void btnLapHD_Click(object sender, EventArgs e)
         {
@@ -1665,27 +1675,31 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void btnInforXoa_Click(object sender, EventArgs e)
         {
-            Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == lbInforMaHD.Text select h).FirstOrDefault();
-            var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == lbInforMaHD.Text select hct).ToList();
-            if (hd != null)
+            DialogResult confim = MessageBox.Show("Bạn muốn xoá hoá đơn trên", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confim == DialogResult.Yes)
             {
-                if (hdct != null)
+                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == lbInforMaHD.Text select h).FirstOrDefault();
+                var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == lbInforMaHD.Text select hct).ToList();
+                if (hd != null)
                 {
-                    dbcontext.RemoveRange(hdct);
+                    if (hdct != null)
+                    {
+                        dbcontext.RemoveRange(hdct);
+                    }
+                    dbcontext.Remove(hd);
+                    dbcontext.SaveChanges();
+                    lbInforMaHD.Text = "";
+                    lbInforMaDG.Text = "";
+                    lbInforNLap.Text = "";
+                    lbInforTenDG.Text = "";
+                    lbNgayLap.Text = "";
+                    lbTongTien.Text = "0";
+                    dgvInforHD.Rows.Clear();
                 }
-                dbcontext.Remove(hd);
-                dbcontext.SaveChanges();
-                lbInforMaHD.Text = "";
-                lbInforMaDG.Text = "";
-                lbInforNLap.Text = "";
-                lbInforTenDG.Text = "";
-                lbNgayLap.Text = "";
-                lbTongTien.Text = "0";
-                dgvInforHD.Rows.Clear();
-            }
-            else
-            {
-                MessageBox.Show("Không có mã hoá đơn này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);//not working because it always get id
+                else
+                {
+                    MessageBox.Show("Không có mã hoá đơn này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);//not working because it always get id
+                }
             }
         }
         
