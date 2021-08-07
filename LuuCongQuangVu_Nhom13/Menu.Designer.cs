@@ -191,7 +191,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.dategiodongcua = new System.Windows.Forms.TabPage();
             this.dategiodongcuaphongdoc = new System.Windows.Forms.DateTimePicker();
-            this.dategiomocua = new System.Windows.Forms.DateTimePicker();
+            this.dategiomocuaphongdoc = new System.Windows.Forms.DateTimePicker();
             this.dgvphongdoc = new System.Windows.Forms.DataGridView();
             this.idphongdoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tennhanvien = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -2196,7 +2196,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.dategiodongcua.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("dategiodongcua.BackgroundImage")));
             this.dategiodongcua.Controls.Add(this.dategiodongcuaphongdoc);
-            this.dategiodongcua.Controls.Add(this.dategiomocua);
+            this.dategiodongcua.Controls.Add(this.dategiomocuaphongdoc);
             this.dategiodongcua.Controls.Add(this.dgvphongdoc);
             this.dategiodongcua.Controls.Add(this.btntimkiemphongdoc);
             this.dategiodongcua.Controls.Add(this.btnhuyphongdoc);
@@ -2222,17 +2222,24 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // dategiodongcuaphongdoc
             // 
+            this.dategiodongcuaphongdoc.CustomFormat = "dd/MM/yyyy  hh:mm:ss tt";
+            this.dategiodongcuaphongdoc.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dategiodongcuaphongdoc.Location = new System.Drawing.Point(281, 257);
             this.dategiodongcuaphongdoc.Name = "dategiodongcuaphongdoc";
+            this.dategiodongcuaphongdoc.ShowUpDown = true;
             this.dategiodongcuaphongdoc.Size = new System.Drawing.Size(327, 29);
             this.dategiodongcuaphongdoc.TabIndex = 18;
+            this.dategiodongcuaphongdoc.Value = new System.DateTime(2021, 8, 7, 0, 0, 0, 0);
             // 
-            // dategiomocua
+            // dategiomocuaphongdoc
             // 
-            this.dategiomocua.Location = new System.Drawing.Point(281, 194);
-            this.dategiomocua.Name = "dategiomocua";
-            this.dategiomocua.Size = new System.Drawing.Size(327, 29);
-            this.dategiomocua.TabIndex = 17;
+            this.dategiomocuaphongdoc.CustomFormat = "dd/MM/yyyy  hh:mm:ss tt";
+            this.dategiomocuaphongdoc.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dategiomocuaphongdoc.Location = new System.Drawing.Point(281, 194);
+            this.dategiomocuaphongdoc.Name = "dategiomocuaphongdoc";
+            this.dategiomocuaphongdoc.ShowUpDown = true;
+            this.dategiomocuaphongdoc.Size = new System.Drawing.Size(327, 29);
+            this.dategiomocuaphongdoc.TabIndex = 17;
             // 
             // dgvphongdoc
             // 
@@ -2698,18 +2705,25 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // dategioramuontra
             // 
+            this.dategioramuontra.CustomFormat = "dd/MM/yyyy   hh:mm:ss  tt";
+            this.dategioramuontra.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dategioramuontra.Location = new System.Drawing.Point(839, 95);
             this.dategioramuontra.Name = "dategioramuontra";
+            this.dategioramuontra.ShowUpDown = true;
             this.dategioramuontra.Size = new System.Drawing.Size(288, 29);
             this.dategioramuontra.TabIndex = 10;
+            this.dategioramuontra.Value = new System.DateTime(2021, 8, 7, 10, 30, 0, 0);
             // 
             // dategiovaomuontra
             // 
+            this.dategiovaomuontra.CustomFormat = "dd/MM/yyyy   hh:mm:ss  tt";
+            this.dategiovaomuontra.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dategiovaomuontra.Location = new System.Drawing.Point(839, 24);
             this.dategiovaomuontra.Name = "dategiovaomuontra";
+            this.dategiovaomuontra.ShowUpDown = true;
             this.dategiovaomuontra.Size = new System.Drawing.Size(288, 29);
             this.dategiovaomuontra.TabIndex = 9;
-            this.dategiovaomuontra.Value = new System.DateTime(2021, 7, 5, 0, 0, 0, 0);
+            this.dategiovaomuontra.Value = new System.DateTime(2021, 8, 7, 8, 20, 0, 0);
             // 
             // cbbiddocgiamuontra
             // 
@@ -3037,7 +3051,7 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage dategiodongcua;
         private System.Windows.Forms.DateTimePicker dategiodongcuaphongdoc;
-        private System.Windows.Forms.DateTimePicker dategiomocua;
+        private System.Windows.Forms.DateTimePicker dategiomocuaphongdoc;
         private System.Windows.Forms.DataGridView dgvphongdoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn idphongdoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn tennhanvien;

@@ -46,6 +46,8 @@ namespace LuuCongQuangVu_Nhom13
         {
 
             InitializeComponent();
+            dategiomocuaphongdoc.ShowUpDown = true;
+            dategiodongcuaphongdoc.ShowUpDown = true;
         }
         private void QuanLiThuVien_Load(object sender, EventArgs e)
         {
@@ -1861,7 +1863,7 @@ namespace LuuCongQuangVu_Nhom13
         {
             if (txtidphongdoc.Text == "")
             {
-                GetError.SetError(txtmasach, "Bạn phải nhập id phòng đọc!");
+                GetError.SetError(txtidphongdoc, "Bạn phải nhập id phòng đọc!");
                 txtidphongdoc.Focus();
                 return false;
             }
@@ -1916,23 +1918,23 @@ namespace LuuCongQuangVu_Nhom13
                     return false;
                 }
             }
-            if (dategiomocua.Text.Equals(""))
+            if (dategiomocuaphongdoc.Text.Equals(""))
             {
-                GetError.SetError(dategiomocua, "Bạn phải nhập giờ mở cửa!");
-                dategiomocua.Focus();
+                GetError.SetError(dategiomocuaphongdoc, "Bạn phải nhập giờ mở cửa!");
+                dategiomocuaphongdoc.Focus();
                 return false;
             }
-            if (dategiodongcua.Text.Equals(""))
+            if (dategiomocuaphongdoc.Text.Equals(""))
             {
                 GetError.SetError(dategiodongcua, "Bạn phải nhập giờ đóng cửa!");
                 dategiodongcua.Focus();
                 return false;
             }
-            if (dategiomocua.Value.Date >= dategiodongcuaphongdoc.Value.Date)
+            if (dategiomocuaphongdoc.Value.Date != dategiomocuaphongdoc.Value.Date)
             {
-                MessageBox.Show("giờ mở cửa  không được lớn hơn giờ đóng cửa!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("giờ mở cửa và giờ đóng cửa phải cùng ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
-            }        
+            }
             return true;
         }
         private bool Validate_ManagePhongDoc1()
@@ -1995,21 +1997,21 @@ namespace LuuCongQuangVu_Nhom13
                     return false;
                 }
             }
-            if (dategiomocua.Text.Equals(""))
+            if (dategiomocuaphongdoc.Text.Equals(""))
             {
-                GetError.SetError(dategiomocua, "Bạn phải nhập giờ mở cửa!");
-                dategiomocua.Focus();
+                GetError.SetError(dategiomocuaphongdoc, "Bạn phải nhập giờ mở cửa!");
+                dategiomocuaphongdoc.Focus();
                 return false;
             }
-            if (dategiodongcua.Text.Equals(""))
+            if (dategiodongcuaphongdoc.Text.Equals(""))
             {
                 GetError.SetError(dategiodongcua, "Bạn phải nhập giờ đóng cửa!");
                 dategiodongcua.Focus();
                 return false;
             }
-            if (dategiomocua.Value.Date >= dategiodongcuaphongdoc.Value.Date)
+            if (dategiomocuaphongdoc.Value.Date != dategiomocuaphongdoc.Value.Date)
             {
-                MessageBox.Show("giờ mở cửa  không được lớn hơn giờ đóng cửa!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("giờ mở cửa và giờ đóng cửa phải cùng ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             return true;
@@ -2046,19 +2048,19 @@ namespace LuuCongQuangVu_Nhom13
             txtidphongdoc.Clear();
             txttennhanvien.Clear();
             txtsobanphongdoc.Clear();
-            dategiomocua.Enabled = true;
+            dategiomocuaphongdoc.Enabled = true;
             dategiodongcuaphongdoc.Enabled = true;
 
         }
         private void AddPhongDoc()
-        {
+        {           
             if (Validate_ManagePhongDoc())
             {
                 Models.PhongDoc phongdoc = new Models.PhongDoc();
                 phongdoc.Idphongdoc = txtidphongdoc.Text;
                 phongdoc.Tennhanvien = txttennhanvien.Text;
                 phongdoc.Soban = int.Parse(txtsobanphongdoc.Text);
-                phongdoc.Giomocua = dategiomocua.Value;
+                phongdoc.Giomocua = dategiomocuaphongdoc.Value;
                 phongdoc.Giodong = dategiodongcuaphongdoc.Value;
                 dbcontext.PhongDocs.Add(phongdoc);
                 dbcontext.SaveChanges();
@@ -2074,7 +2076,7 @@ namespace LuuCongQuangVu_Nhom13
                 Models.PhongDoc phongdoc = (from pd in dbcontext.PhongDocs where pd.Idphongdoc == txtidphongdoc.Text select pd).FirstOrDefault();
                 phongdoc.Tennhanvien = txttennhanvien.Text;
                 phongdoc.Soban = int.Parse(txtsobanphongdoc.Text);
-                phongdoc.Giomocua = dategiomocua.Value;
+                phongdoc.Giomocua = dategiomocuaphongdoc.Value;
                 phongdoc.Giodong = dategiodongcuaphongdoc.Value;
                 dbcontext.SaveChanges();
                 ReadFileQuanLiPhongDoc();
@@ -2235,9 +2237,9 @@ namespace LuuCongQuangVu_Nhom13
                 dategioramuontra.Focus();
                 return false;
             }
-            if (dategiovaomuontra.Value.Date >= dategioramuontra.Value.Date)
+            if (dategiovaomuontra.Value.Date != dategioramuontra.Value.Date)
             {
-                MessageBox.Show("giờ vào không được lớn hơn giờ ra!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("giờ ra và giờ vào phải cùng một ngày ! Vui lòng chọn lại ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             return true;
@@ -2552,7 +2554,8 @@ namespace LuuCongQuangVu_Nhom13
             //                };
             using var dbcontext = new Models.QLThuVienContext();
             var list_thongke = (from mtc in dbcontext.Muontrataichos
-                             where mtc.Giovao.Value.Date == dategiovaomuontra.Value
+                             where mtc.Giovao.Value.Day == dategiovaomuontra.Value.Day
+                                && mtc.Giora.Value.Day == dategioramuontra.Value.Day
                                 join pd in dbcontext.PhongDocs on mtc.Idphongdoc equals pd.Idphongdoc
                                 join s in dbcontext.Saches on mtc.Idsach equals s.Idsach
                                 join dg in dbcontext.Docgia on mtc.Iddocgia equals dg.Iddocgia
@@ -2587,7 +2590,7 @@ namespace LuuCongQuangVu_Nhom13
             }
             else
             {
-                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Không tồn tại dữ liệu có ngày này ! Vui lòng kiểm tra lại ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void btnhienthimuontra_Click(object sender, EventArgs e)
