@@ -1485,8 +1485,10 @@ namespace LuuCongQuangVu_Nhom13
                     book = (from b in dbcontext.Saches where b.Idsach == cbMaSach_lhd.Text select b).FirstOrDefault();
                 }
                 bool check=true;
+                int index_insert=0;
                 for (int i = 0; i < dgvLHD.RowCount - 1; i++)
                 {
+                    index_insert = i;
                     if (dgvLHD.Rows[i].Cells[0].Value.ToString() == book.Idsach)
                     {
                         check = false;
@@ -1511,7 +1513,20 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    DialogResult confim= MessageBox.Show("Sách đã được thêm từ trước, Vui lòng thực hiện thao tác sửa", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DialogResult confim= MessageBox.Show("Sách đã được thêm từ trước!\nvYes.Để thay đổi số lượng\nNo.Để quay lại", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (confim == DialogResult.Yes)
+                    {
+                        using (DialogUpdateLHD DialogCustom = new DialogUpdateLHD())
+                        {
+                            DialogCustom.Text = dgvLHD.Rows[index_insert].Cells[0].Value.ToString();
+                            if (DialogCustom.ShowDialog() == DialogResult.OK)
+                            {
+                                dgvLHD.Rows[index_insert].Cells[2].Value = DialogCustom.TheValue;
+                                dgvLHD.Rows[index_insert].Cells[4].Value = DialogCustom.TheValue * double.Parse(dgvLHD.Rows[index_insert].Cells[3].Value.ToString());
+                                //MessageBox.Show(DialogCustom.TheValue.ToString());
+                            }
+                        }
+                    }
                 }
             }
         }
