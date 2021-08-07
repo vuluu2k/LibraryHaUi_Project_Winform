@@ -1513,7 +1513,7 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    DialogResult confim= MessageBox.Show("Sách đã được thêm từ trước!\nvYes.Để thay đổi số lượng\nNo.Để quay lại", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    DialogResult confim= MessageBox.Show("Sách đã được thêm từ trước!\nYes.Để thay đổi số lượng\nNo.Để quay lại", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (confim == DialogResult.Yes)
                     {
                         using (DialogUpdateLHD DialogCustom = new DialogUpdateLHD())
