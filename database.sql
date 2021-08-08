@@ -53,14 +53,15 @@ create table Muontrasach(
 	primary key(Iddocgia, Idsach),
 	constraint fk_idsach foreign key(Idsach) references sach(Idsach),
 	constraint fk_iddocgia foreign key(Iddocgia) references docgia(Iddocgia),
+	Soluongmuon int,
 	Ngaymuon datetime,
 	Ngayhentra datetime,
 	Ngaythuctra datetime
 )
 go
-insert into Muontrasach values('d001', 's001', '2021/01/10', '2021/01/20', '2021/01/18')
-insert into Muontrasach values('d002', 's001', '2021/01/7', '2021/01/15', '2021/01/13')
-insert into Muontrasach values('d003', 's003', '2021/01/9', '2021/01/14', '2021/01/14')
+insert into Muontrasach values('d001', 's001',2, '2021/01/10', '2021/01/20', '2021/01/18')
+insert into Muontrasach values('d002', 's001',3, '2021/01/7', '2021/01/15', '2021/01/13')
+insert into Muontrasach values('d003', 's003',3, '2021/01/9', '2021/01/14', '2021/01/14')
 go
 create table HoaDon(
 	MaHD char(4) primary key,
@@ -120,6 +121,38 @@ insert into Muontrataicho values('d001', 's001', 'p001',10, '2021/1/2 12:00:00',
 insert into Muontrataicho values('d001', 's002','p001',12, '2021/1/2 12:00:00', '2021/1/2 14:00:00',N'Bình thường')
 insert into Muontrataicho values('d002', 's003','p002',5, '2021/1/2 12:00:00', '2021/1/2 13:00:00', N'Hỏng trang 20')
 go
+
+create table HoaDonThanhLi(
+	MaHDTL char(4) primary key,
+	NgayLap datetime,
+	Usename nvarchar(50),
+	foreign key(Usename) references Account(Usename)
+)
+go
+insert into HoaDonThanhLi values('tl01',  '2020/05/25',N'thanh')
+insert into HoaDonThanhLi values('tl02',  '2020/06/16',N'vu')
+insert into HoaDonThanhLi values('tl03',  '2020/04/20',N'nam')
+go
+create table Thanhlisach(
+	
+	MaHDTL char(4),
+	Idsach char(4),
+	primary key(Idsach, MaHDTL),
+	constraint fk_idssach foreign key(Idsach) references Sach(Idsach),
+	constraint mahdtl foreign key(MaHDTL) references HoaDonThanhLi(MaHDTL),
+	Donvinhanthanhli nvarchar(50),
+	Soluong int,
+	Tinhtrangsach nvarchar(50),
+	Phantramgiaban float
+)
+go
+insert into Thanhlisach values('tl01','s001',  N'nha sach phương nam', 2, N'quá niên hạn', 0.25)
+insert into Thanhlisach values('tl01','s002',  N'nha sach phương nam', 3, N'quá niên hạn', 0.2)
+insert into Thanhlisach values('tl02','s003',  N'nha sach phương nam', 3, N'sách hư hỏng', 0.3)
+insert into Thanhlisach values('tl03','s002',  N'nha sach phương nam', 1, N'nội dung không còn phù hợp', 0.4)
+go
+
+
 
 
 

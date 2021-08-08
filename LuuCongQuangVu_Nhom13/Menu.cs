@@ -1878,5 +1878,9 @@ namespace LuuCongQuangVu_Nhom13
         }
         #endregion
 
+        private void tabPage11_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
