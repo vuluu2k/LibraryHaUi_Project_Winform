@@ -21,17 +21,19 @@ namespace LuuCongQuangVu_Nhom13.Models
         public virtual DbSet<Docgium> Docgia { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<HoaDonChiTiet> HoaDonChiTiets { get; set; }
+        public virtual DbSet<HoaDonThanhLi> HoaDonThanhLis { get; set; }
         public virtual DbSet<Muontrasach> Muontrasaches { get; set; }
         public virtual DbSet<Muontrataicho> Muontrataichos { get; set; }
         public virtual DbSet<PhongDoc> PhongDocs { get; set; }
         public virtual DbSet<Sach> Saches { get; set; }
+        public virtual DbSet<Thanhlisach> Thanhlisaches { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INQ0S4V;Initial Catalog=QLThuVien;Integrated Security=True");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INQ0S4V\n;Initial Catalog=QLThuVien;Integrated Security=True");
             }
         }
 
@@ -42,33 +44,63 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.Usename)
-                    .HasName("PK__Account__813EFC5DB844F59E");
+                    .HasName("PK__Account__813EFC5DC35DDC98");
+
+                entity.ToTable("Account");
+
+                entity.Property(e => e.Usename).HasMaxLength(50);
+
+                entity.Property(e => e.Capdo).HasMaxLength(50);
+
+                entity.Property(e => e.Password).HasMaxLength(50);
+
+                entity.Property(e => e.Tenchutaikhoan).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Docgium>(entity =>
             {
                 entity.HasKey(e => e.Iddocgia)
-                    .HasName("PK__Docgia__0646586F3BC1D7EE");
+                    .HasName("PK__Docgia__0646586F1028A570");
 
                 entity.Property(e => e.Iddocgia)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Sodienthoai).IsUnicode(false);
+                entity.Property(e => e.Diachi).HasMaxLength(100);
+
+                entity.Property(e => e.Hoten).HasMaxLength(50);
+
+                entity.Property(e => e.NgaySinh).HasColumnType("datetime");
+
+                entity.Property(e => e.Nghenghiep).HasMaxLength(50);
+
+                entity.Property(e => e.Sodienthoai)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<HoaDon>(entity =>
             {
                 entity.HasKey(e => e.MaHd)
-                    .HasName("PK__HoaDon__2725A6E0D6C74BF6");
+                    .HasName("PK__HoaDon__2725A6E0ECC6AEB5");
+
+                entity.ToTable("HoaDon");
 
                 entity.Property(e => e.MaHd)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
+                    .HasColumnName("MaHD")
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Iddocgia)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.NgayLap).HasColumnType("datetime");
+
+                entity.Property(e => e.Usename).HasMaxLength(50);
 
                 entity.HasOne(d => d.IddocgiaNavigation)
                     .WithMany(p => p.HoaDons)
@@ -84,14 +116,19 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<HoaDonChiTiet>(entity =>
             {
                 entity.HasKey(e => new { e.Idsach, e.MaHd })
-                    .HasName("PK__HoaDonCh__A47A85FFDE6310D7");
+                    .HasName("PK__HoaDonCh__A47A85FF91DB76B8");
+
+                entity.ToTable("HoaDonChiTiet");
 
                 entity.Property(e => e.Idsach)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.MaHd)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
+                    .HasColumnName("MaHD")
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.IdsachNavigation)
@@ -107,18 +144,51 @@ namespace LuuCongQuangVu_Nhom13.Models
                     .HasConstraintName("mahd");
             });
 
+            modelBuilder.Entity<HoaDonThanhLi>(entity =>
+            {
+                entity.HasKey(e => e.MaHdtl)
+                    .HasName("PK__HoaDonTh__141754D35D3BD4ED");
+
+                entity.ToTable("HoaDonThanhLi");
+
+                entity.Property(e => e.MaHdtl)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("MaHDTL")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.NgayLap).HasColumnType("datetime");
+
+                entity.Property(e => e.Usename).HasMaxLength(50);
+
+                entity.HasOne(d => d.UsenameNavigation)
+                    .WithMany(p => p.HoaDonThanhLis)
+                    .HasForeignKey(d => d.Usename)
+                    .HasConstraintName("FK__HoaDonTha__Usena__3C69FB99");
+            });
+
             modelBuilder.Entity<Muontrasach>(entity =>
             {
                 entity.HasKey(e => new { e.Iddocgia, e.Idsach })
-                    .HasName("PK__Muontras__0D26D59603FCC83A");
+                    .HasName("PK__Muontras__0D26D5966E0AB228");
+
+                entity.ToTable("Muontrasach");
 
                 entity.Property(e => e.Iddocgia)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Idsach)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.Ngayhentra).HasColumnType("datetime");
+
+                entity.Property(e => e.Ngaymuon).HasColumnType("datetime");
+
+                entity.Property(e => e.Ngaythuctra).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IddocgiaNavigation)
                     .WithMany(p => p.Muontrasaches)
@@ -136,19 +206,30 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<Muontrataicho>(entity =>
             {
                 entity.HasKey(e => new { e.Iddocgia, e.Idsach, e.Idphongdoc })
-                    .HasName("PK__Muontrat__16E00B35679933CA");
+                    .HasName("PK__Muontrat__16E00B35B35F793E");
+
+                entity.ToTable("Muontrataicho");
 
                 entity.Property(e => e.Iddocgia)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Idsach)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Idphongdoc)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.Giora).HasColumnType("datetime");
+
+                entity.Property(e => e.Giovao).HasColumnType("datetime");
+
+                entity.Property(e => e.Tinhtrangsach).HasMaxLength(100);
 
                 entity.HasOne(d => d.IddocgiaNavigation)
                     .WithMany(p => p.Muontrataichos)
@@ -172,21 +253,78 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<PhongDoc>(entity =>
             {
                 entity.HasKey(e => e.Idphongdoc)
-                    .HasName("PK__PhongDoc__C6DEA31A5BC0657F");
+                    .HasName("PK__PhongDoc__C6DEA31AEB6A3865");
+
+                entity.ToTable("PhongDoc");
 
                 entity.Property(e => e.Idphongdoc)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.Giodong).HasColumnType("datetime");
+
+                entity.Property(e => e.Giomocua).HasColumnType("datetime");
+
+                entity.Property(e => e.Tennhanvien).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Sach>(entity =>
             {
                 entity.HasKey(e => e.Idsach)
-                    .HasName("PK__Sach__B608DF9163E782B9");
+                    .HasName("PK__Sach__B608DF9107E95CAD");
+
+                entity.ToTable("Sach");
 
                 entity.Property(e => e.Idsach)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.Nhaxuatban).HasMaxLength(50);
+
+                entity.Property(e => e.Tacgia).HasMaxLength(50);
+
+                entity.Property(e => e.Tensach).HasMaxLength(50);
+
+                entity.Property(e => e.Theloai).HasMaxLength(50);
+
+                entity.Property(e => e.Vitri).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Thanhlisach>(entity =>
+            {
+                entity.HasKey(e => new { e.Idsach, e.MaHdtl })
+                    .HasName("PK__Thanhlis__9749AADC09B4A0C4");
+
+                entity.ToTable("Thanhlisach");
+
+                entity.Property(e => e.Idsach)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.MaHdtl)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .HasColumnName("MaHDTL")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Donvinhanthanhli).HasMaxLength(50);
+
+                entity.Property(e => e.Tinhtrangsach).HasMaxLength(50);
+
+                entity.HasOne(d => d.IdsachNavigation)
+                    .WithMany(p => p.Thanhlisaches)
+                    .HasForeignKey(d => d.Idsach)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_idssach");
+
+                entity.HasOne(d => d.MaHdtlNavigation)
+                    .WithMany(p => p.Thanhlisaches)
+                    .HasForeignKey(d => d.MaHdtl)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("mahdtl");
             });
 
             OnModelCreatingPartial(modelBuilder);
