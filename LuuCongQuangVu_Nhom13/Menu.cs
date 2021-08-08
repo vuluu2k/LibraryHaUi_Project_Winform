@@ -58,6 +58,10 @@ namespace LuuCongQuangVu_Nhom13
             //Models.Account acc = (Models.Account)this.Tag;
             //MessageBox.Show(acc.Usename);
             //MessageBox.Show(dgvLHD.RowCount.ToString());
+
+
+            //load combobox thể loại sách
+            load_tkcbbthloai();
         }
         #region Xử lí radion button
         private void rdvitri_CheckedChanged(object sender, EventArgs e)
@@ -1882,5 +1886,102 @@ namespace LuuCongQuangVu_Nhom13
         {
 
         }
+
+        private void tabQuanLiSach_Click(object sender, EventArgs e)
+        {
+
+        }
+        #region thống kê sách
+        //thống kê sách theo thể loại
+        private void load_tkcbbthloai()
+        {
+            var list_cbbtheloai = dbcontext.Saches.Select(s => s.Theloai).Distinct();
+            tkcbbtheloai.DataSource = list_cbbtheloai.ToList();
+            tkcbbtheloai.DisplayMember = "Theloai";
+
+            
+        }
+        private void tabPage13_Click(object sender, EventArgs e)
+        {
+
+            
+
+        }
+
+        private void tkbtnhienthi_Click(object sender, EventArgs e)
+        {
+            //hiển thị danh sách theo thể loại
+            var ds = dbcontext.Saches.Where(s => s.Theloai == tkcbbtheloai.SelectedValue.ToString()).Select(s => new
+            {
+                Idsach = s.Idsach,
+                Tensach= s.Tensach,
+                tacgia= s.Tacgia,
+                soluong= s.Soluong,
+                theloai= s.Theloai,
+                giasach= s.Giasach,
+                nhaxb= s.Nhaxuatban,
+                vitri= s.Vitri
+            }) ; // cần sửa lỗi không chọn thể loại nào
+            if (ds == null)
+            {
+                MessageBox.Show("Danh sách trống!", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tkcbbtheloai.Focus();
+                tkcbbtheloai.SelectAll();
+            }
+            else
+            {
+                if (checktkcbbempty())           
+                {
+                    tkdgvthongketheotheloai.DataSource = ds.ToList();
+
+                    //hiển thị số lượng sách theo thể loại lên label
+                    var sl = dbcontext.Saches.Count(s => s.Theloai == tkcbbtheloai.SelectedValue.ToString());
+                    tklbsltheotheloai.Text = Convert.ToString(sl);
+
+                    //chỉnh sửa độ rộng các cột
+                    tkdgvthongketheotheloai.Columns[0].Width = 60;
+                    tkdgvthongketheotheloai.Columns[1].Width = 200;
+                    tkdgvthongketheotheloai.Columns[2].Width = 150;
+                    tkdgvthongketheotheloai.Columns[3].Width = 60;
+                    tkdgvthongketheotheloai.Columns[4].Width = 150;
+                    tkdgvthongketheotheloai.Columns[5].Width = 60;
+                    tkdgvthongketheotheloai.Columns[6].Width = 150;
+                    tkdgvthongketheotheloai.Columns[7].Width = 150;
+                }
+            }          
+        }
+
+        //đưa tên thể loại lên combobox
+        private void tkdgvthongketheotheloai_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            DataGridViewRow row = tkdgvthongketheotheloai.Rows[index];
+            tkcbbtheloai.Text =Convert.ToString(row.Cells["Theloai"].Value);
+        }
+        //check combobox thể loại
+        private bool checktkcbbempty()
+        {
+            var check = dbcontext.Saches.Where(s => s.Theloai== tkcbbtheloai.Text).FirstOrDefault();
+            if (check == null) {
+                errorProvider1.SetError(tkcbbtheloai, "không tồn tại thể loại này!");
+                tkcbbtheloai.Focus();
+                tkcbbtheloai.SelectAll();
+                return false; 
+            }
+            if (tkcbbtheloai.SelectedValue == null)
+            {
+                errorProvider1.SetError(tkcbbtheloai, "bạn phải chọn thể loại trong combobox");
+                tkcbbtheloai.Focus();
+                tkcbbtheloai.SelectAll();
+                return false;
+            }
+            return true;
+        }
+
+        private void tkcbbtheloai_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkcbbtheloai, "");
+        }
+        #endregion
     }
 }
