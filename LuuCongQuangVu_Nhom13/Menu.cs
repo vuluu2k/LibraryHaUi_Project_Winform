@@ -727,8 +727,15 @@ namespace LuuCongQuangVu_Nhom13
                 }
                 else
                 {
-                    Models.Sach book = (from b in dbcontext.Saches where b.Tensach == cbMaSach_lhd.Text select b).FirstOrDefault();
-                    if (book == null)
+                    var book = (from b in dbcontext.Saches where b.Tensach == cbMaSach_lhd.Text select b).ToList();
+                    if (book.Count() > 1)
+                    {
+                        GetError.SetError(cbMaSach_lhd, "Tên sách này đang có hơn một mã sách, vui lòng nhập bằng mã!");
+                        cbMaSach_lhd.Focus();
+                        cbMaSach_lhd.SelectAll();
+                        return false;
+                    }
+                    else if (book.Count()==0)
                     {
                         GetError.SetError(cbMaSach_lhd, "Tên sách không tồn tại!");
                         cbMaSach_lhd.Focus();
@@ -839,6 +846,7 @@ namespace LuuCongQuangVu_Nhom13
                 dbcontext.Saches.Add(sach);
                 dbcontext.SaveChanges();
                 ReadFile();
+                ClearBook();
             }
         }
         private void DelBook()
@@ -870,6 +878,7 @@ namespace LuuCongQuangVu_Nhom13
                     dbcontext.Saches.Remove(id);
                     dbcontext.SaveChanges();
                     ReadFile();
+                    ClearBook();
                 }
                 else
                 {
@@ -1102,13 +1111,11 @@ namespace LuuCongQuangVu_Nhom13
         private void btnThemSach_Click(object sender, EventArgs e)
         {
             AddBook();
-            ClearBook();
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
             DelBook();
-            ClearBook();
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -1182,6 +1189,7 @@ namespace LuuCongQuangVu_Nhom13
                 dbcontext.Docgia.Add(docgia);
                 dbcontext.SaveChanges();
                 ReadFileReader();
+                ClearReader();
             }
         }
         private void DelReader()
@@ -1223,6 +1231,7 @@ namespace LuuCongQuangVu_Nhom13
                     dbcontext.Docgia.Remove(id);
                     dbcontext.SaveChanges();
                     ReadFileReader();
+                    ClearReader();
                 }
                 else
                 {
@@ -1430,13 +1439,11 @@ namespace LuuCongQuangVu_Nhom13
         private void btnThemDocGia_Click(object sender, EventArgs e)
         {
             AddReader();
-            ClearReader();
         }
 
         private void btnXoaDocGia_Click(object sender, EventArgs e)
         {
             DelReader();
-            ClearReader();
         }
 
         private void btnSuaDocGia_Click(object sender, EventArgs e)
@@ -1510,9 +1517,7 @@ namespace LuuCongQuangVu_Nhom13
                     dgvLHD.Rows[index].Cells[4].Value = int.Parse(txtsoluongmua_lhd.Text) * book.Giasach;
                     //MessageBox.Show(Convert.ToString(dgvLHD.Rows[index].Cells[0].Value));
                     index++;
-                    cbMaSach_lhd.Text = "";
-                    txtsoluongmua_lhd.Clear();
-                    cbMaSach_lhd.Focus();
+                    ClearBookBuy();
                     //MessageBox.Show(dgvLHD.RowCount.ToString());
                 }
                 else
@@ -1552,7 +1557,8 @@ namespace LuuCongQuangVu_Nhom13
             DialogResult confim = MessageBox.Show("Bạn muốn xoá tên sách: "+dgvLHD.Rows[dgvLHD.SelectedCells[0].RowIndex].Cells[1].Value.ToString()+" ra khỏi danh sách nhập bán", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confim == DialogResult.Yes)
             {
-                dgvLHD.Rows.RemoveAt(dgvLHD.SelectedCells[0].RowIndex); 
+                dgvLHD.Rows.RemoveAt(dgvLHD.SelectedCells[0].RowIndex);
+                ClearBookBuy();
             }
         }
         private void CreateBill()
@@ -1622,7 +1628,6 @@ namespace LuuCongQuangVu_Nhom13
         private void btnXoaSachMua_Click(object sender, EventArgs e)
         {
             DelBookBuy();
-            ClearBookBuy();
         }
         private void btnLapHD_Click(object sender, EventArgs e)
         {
