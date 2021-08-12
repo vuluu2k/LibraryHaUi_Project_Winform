@@ -195,22 +195,26 @@ namespace LuuCongQuangVu_Nhom13
             this.tkdgvthongketheotheloai = new System.Windows.Forms.DataGridView();
             this.tkbtnhienthi = new System.Windows.Forms.Button();
             this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.label45 = new System.Windows.Forms.Label();
+            this.tklbsachmuontheothang = new System.Windows.Forms.Label();
+            this.tklbtongsachmuonthang = new System.Windows.Forms.Label();
             this.button16 = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.label18 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.tkdtpdenngay = new System.Windows.Forms.DateTimePicker();
+            this.tkdtptungay = new System.Windows.Forms.DateTimePicker();
+            this.rbsmnngay = new System.Windows.Forms.RadioButton();
+            this.tkdtpsachmuonnhieu = new System.Windows.Forms.DateTimePicker();
+            this.rbsmnthang = new System.Windows.Forms.RadioButton();
+            this.dgvsachmuonnhieu = new System.Windows.Forms.DataGridView();
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.button15 = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.rbsachbanngay = new System.Windows.Forms.RadioButton();
+            this.tkdtpsachban = new System.Windows.Forms.DateTimePicker();
+            this.rbsachbanthang = new System.Windows.Forms.RadioButton();
+            this.tkdgvsachban = new System.Windows.Forms.DataGridView();
             this.label30 = new System.Windows.Forms.Label();
             this.tabPage16 = new System.Windows.Forms.TabPage();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -295,10 +299,10 @@ namespace LuuCongQuangVu_Nhom13
             ((System.ComponentModel.ISupportInitialize)(this.tkdgvthongketheotheloai)).BeginInit();
             this.tabPage14.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvsachmuonnhieu)).BeginInit();
             this.tabPage15.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tkdgvsachban)).BeginInit();
             this.tabPage16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
             this.tabPage6.SuspendLayout();
@@ -2159,10 +2163,12 @@ namespace LuuCongQuangVu_Nhom13
             // tabPage14
             // 
             this.tabPage14.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
+            this.tabPage14.Controls.Add(this.label45);
+            this.tabPage14.Controls.Add(this.tklbsachmuontheothang);
+            this.tabPage14.Controls.Add(this.tklbtongsachmuonthang);
             this.tabPage14.Controls.Add(this.button16);
             this.tabPage14.Controls.Add(this.groupBox8);
-            this.tabPage14.Controls.Add(this.label18);
-            this.tabPage14.Controls.Add(this.dataGridView1);
+            this.tabPage14.Controls.Add(this.dgvsachmuonnhieu);
             this.tabPage14.Location = new System.Drawing.Point(4, 26);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
@@ -2170,6 +2176,33 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage14.TabIndex = 1;
             this.tabPage14.Text = "Sách mượn nhiều";
             this.tabPage14.UseVisualStyleBackColor = true;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(536, 444);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(47, 17);
+            this.label45.TabIndex = 12;
+            this.label45.Text = "Cuốn.";
+            // 
+            // tklbsachmuontheothang
+            // 
+            this.tklbsachmuontheothang.AutoSize = true;
+            this.tklbsachmuontheothang.Location = new System.Drawing.Point(514, 444);
+            this.tklbsachmuontheothang.Name = "tklbsachmuontheothang";
+            this.tklbsachmuontheothang.Size = new System.Drawing.Size(16, 17);
+            this.tklbsachmuontheothang.TabIndex = 12;
+            this.tklbsachmuontheothang.Text = "0";
+            // 
+            // tklbtongsachmuonthang
+            // 
+            this.tklbtongsachmuonthang.AutoSize = true;
+            this.tklbtongsachmuonthang.Location = new System.Drawing.Point(270, 444);
+            this.tklbtongsachmuonthang.Name = "tklbtongsachmuonthang";
+            this.tklbtongsachmuonthang.Size = new System.Drawing.Size(184, 17);
+            this.tklbtongsachmuonthang.TabIndex = 11;
+            this.tklbtongsachmuonthang.Text = "tổng sách mượn theo tháng";
             // 
             // button16
             // 
@@ -2179,83 +2212,107 @@ namespace LuuCongQuangVu_Nhom13
             this.button16.TabIndex = 10;
             this.button16.Text = "Thống kê";
             this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.comboBox6);
-            this.groupBox8.Controls.Add(this.radioButton3);
-            this.groupBox8.Controls.Add(this.dateTimePicker3);
-            this.groupBox8.Controls.Add(this.radioButton4);
-            this.groupBox8.Location = new System.Drawing.Point(269, 76);
+            this.groupBox8.Controls.Add(this.label43);
+            this.groupBox8.Controls.Add(this.label35);
+            this.groupBox8.Controls.Add(this.tkdtpdenngay);
+            this.groupBox8.Controls.Add(this.tkdtptungay);
+            this.groupBox8.Controls.Add(this.rbsmnngay);
+            this.groupBox8.Controls.Add(this.tkdtpsachmuonnhieu);
+            this.groupBox8.Controls.Add(this.rbsmnthang);
+            this.groupBox8.Location = new System.Drawing.Point(269, 42);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(454, 84);
+            this.groupBox8.Size = new System.Drawing.Size(454, 121);
             this.groupBox8.TabIndex = 9;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "sách mượn theo";
             // 
-            // comboBox6
+            // label43
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(181, 25);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(121, 25);
-            this.comboBox6.TabIndex = 7;
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(111, 98);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(66, 17);
+            this.label43.TabIndex = 10;
+            this.label43.Text = "đến ngày";
             // 
-            // radioButton3
+            // label35
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(53, 62);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(59, 21);
-            this.radioButton3.TabIndex = 1;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Ngày";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(110, 70);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(56, 17);
+            this.label35.TabIndex = 9;
+            this.label35.Text = "từ ngày";
             // 
-            // dateTimePicker3
+            // tkdtpdenngay
             // 
-            this.dateTimePicker3.CustomFormat = "dd/MM/yyyy";
-            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.Location = new System.Drawing.Point(181, 58);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(200, 25);
-            this.dateTimePicker3.TabIndex = 6;
+            this.tkdtpdenngay.CustomFormat = "dd/MM/yyyy";
+            this.tkdtpdenngay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tkdtpdenngay.Location = new System.Drawing.Point(178, 96);
+            this.tkdtpdenngay.Name = "tkdtpdenngay";
+            this.tkdtpdenngay.Size = new System.Drawing.Size(200, 25);
+            this.tkdtpdenngay.TabIndex = 8;
             // 
-            // radioButton4
+            // tkdtptungay
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(52, 23);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(67, 21);
-            this.radioButton4.TabIndex = 0;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Tháng";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.tkdtptungay.CustomFormat = "dd/MM/yyyy";
+            this.tkdtptungay.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tkdtptungay.Location = new System.Drawing.Point(178, 65);
+            this.tkdtptungay.Name = "tkdtptungay";
+            this.tkdtptungay.Size = new System.Drawing.Size(200, 25);
+            this.tkdtptungay.TabIndex = 7;
             // 
-            // label18
+            // rbsmnngay
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(269, 51);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(118, 17);
-            this.label18.TabIndex = 3;
-            this.label18.Text = "sách mượn nhiều";
+            this.rbsmnngay.AutoSize = true;
+            this.rbsmnngay.Location = new System.Drawing.Point(18, 65);
+            this.rbsmnngay.Name = "rbsmnngay";
+            this.rbsmnngay.Size = new System.Drawing.Size(59, 21);
+            this.rbsmnngay.TabIndex = 1;
+            this.rbsmnngay.TabStop = true;
+            this.rbsmnngay.Text = "Ngày";
+            this.rbsmnngay.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // tkdtpsachmuonnhieu
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(269, 169);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(738, 257);
-            this.dataGridView1.TabIndex = 2;
+            this.tkdtpsachmuonnhieu.CustomFormat = "dd/MM/yyyy";
+            this.tkdtpsachmuonnhieu.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tkdtpsachmuonnhieu.Location = new System.Drawing.Point(178, 24);
+            this.tkdtpsachmuonnhieu.Name = "tkdtpsachmuonnhieu";
+            this.tkdtpsachmuonnhieu.Size = new System.Drawing.Size(200, 25);
+            this.tkdtpsachmuonnhieu.TabIndex = 6;
+            // 
+            // rbsmnthang
+            // 
+            this.rbsmnthang.AutoSize = true;
+            this.rbsmnthang.Location = new System.Drawing.Point(17, 26);
+            this.rbsmnthang.Name = "rbsmnthang";
+            this.rbsmnthang.Size = new System.Drawing.Size(67, 21);
+            this.rbsmnthang.TabIndex = 0;
+            this.rbsmnthang.TabStop = true;
+            this.rbsmnthang.Text = "Tháng";
+            this.rbsmnthang.UseVisualStyleBackColor = true;
+            this.rbsmnthang.CheckedChanged += new System.EventHandler(this.rbsmnthang_CheckedChanged);
+            // 
+            // dgvsachmuonnhieu
+            // 
+            this.dgvsachmuonnhieu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvsachmuonnhieu.Location = new System.Drawing.Point(269, 169);
+            this.dgvsachmuonnhieu.Name = "dgvsachmuonnhieu";
+            this.dgvsachmuonnhieu.RowTemplate.Height = 25;
+            this.dgvsachmuonnhieu.Size = new System.Drawing.Size(738, 257);
+            this.dgvsachmuonnhieu.TabIndex = 2;
             // 
             // tabPage15
             // 
             this.tabPage15.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
             this.tabPage15.Controls.Add(this.button15);
             this.tabPage15.Controls.Add(this.groupBox7);
-            this.tabPage15.Controls.Add(this.dataGridView2);
+            this.tabPage15.Controls.Add(this.tkdgvsachban);
             this.tabPage15.Controls.Add(this.label30);
             this.tabPage15.Location = new System.Drawing.Point(4, 26);
             this.tabPage15.Name = "tabPage15";
@@ -2273,13 +2330,13 @@ namespace LuuCongQuangVu_Nhom13
             this.button15.TabIndex = 8;
             this.button15.Text = "Thống kê";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.comboBox5);
-            this.groupBox7.Controls.Add(this.radioButton2);
-            this.groupBox7.Controls.Add(this.dateTimePicker2);
-            this.groupBox7.Controls.Add(this.radioButton1);
+            this.groupBox7.Controls.Add(this.rbsachbanngay);
+            this.groupBox7.Controls.Add(this.tkdtpsachban);
+            this.groupBox7.Controls.Add(this.rbsachbanthang);
             this.groupBox7.Location = new System.Drawing.Point(272, 124);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(454, 84);
@@ -2287,53 +2344,45 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "sách bán theo";
             // 
-            // comboBox5
+            // rbsachbanngay
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(181, 25);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(121, 25);
-            this.comboBox5.TabIndex = 7;
+            this.rbsachbanngay.AutoSize = true;
+            this.rbsachbanngay.Location = new System.Drawing.Point(53, 62);
+            this.rbsachbanngay.Name = "rbsachbanngay";
+            this.rbsachbanngay.Size = new System.Drawing.Size(59, 21);
+            this.rbsachbanngay.TabIndex = 1;
+            this.rbsachbanngay.TabStop = true;
+            this.rbsachbanngay.Text = "Ngày";
+            this.rbsachbanngay.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // tkdtpsachban
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(53, 62);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(59, 21);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Ngày";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.tkdtpsachban.CustomFormat = "dd/MM/yyyy";
+            this.tkdtpsachban.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tkdtpsachban.Location = new System.Drawing.Point(176, 24);
+            this.tkdtpsachban.Name = "tkdtpsachban";
+            this.tkdtpsachban.Size = new System.Drawing.Size(200, 25);
+            this.tkdtpsachban.TabIndex = 6;
             // 
-            // dateTimePicker2
+            // rbsachbanthang
             // 
-            this.dateTimePicker2.CustomFormat = "dd/MM/yyyy";
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(181, 58);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 25);
-            this.dateTimePicker2.TabIndex = 6;
+            this.rbsachbanthang.AutoSize = true;
+            this.rbsachbanthang.Location = new System.Drawing.Point(52, 23);
+            this.rbsachbanthang.Name = "rbsachbanthang";
+            this.rbsachbanthang.Size = new System.Drawing.Size(67, 21);
+            this.rbsachbanthang.TabIndex = 0;
+            this.rbsachbanthang.TabStop = true;
+            this.rbsachbanthang.Text = "Tháng";
+            this.rbsachbanthang.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // tkdgvsachban
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(52, 23);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(67, 21);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Tháng";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(272, 214);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(732, 258);
-            this.dataGridView2.TabIndex = 3;
+            this.tkdgvsachban.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tkdgvsachban.Location = new System.Drawing.Point(272, 214);
+            this.tkdgvsachban.Name = "tkdgvsachban";
+            this.tkdgvsachban.RowTemplate.Height = 25;
+            this.tkdgvsachban.Size = new System.Drawing.Size(732, 258);
+            this.tkdgvsachban.TabIndex = 3;
             // 
             // label30
             // 
@@ -2931,12 +2980,12 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage14.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvsachmuonnhieu)).EndInit();
             this.tabPage15.ResumeLayout(false);
             this.tabPage15.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tkdgvsachban)).EndInit();
             this.tabPage16.ResumeLayout(false);
             this.tabPage16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
@@ -3161,9 +3210,8 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label tklbsltheotheloai;
         private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dgvsachmuonnhieu;
+        private System.Windows.Forms.DataGridView tkdgvsachban;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.DataGridView dataGridView7;
         private System.Windows.Forms.Label label31;
@@ -3178,7 +3226,7 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker tkdtpsachban;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button button14;
@@ -3186,19 +3234,24 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.RadioButton rbsachbanngay;
+        private System.Windows.Forms.RadioButton rbsachbanthang;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton rbsmnngay;
+        private System.Windows.Forms.DateTimePicker tkdtpsachmuonnhieu;
+        private System.Windows.Forms.RadioButton rbsmnthang;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.DateTimePicker tkdtpdenngay;
+        private System.Windows.Forms.DateTimePicker tkdtptungay;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label tklbsachmuontheothang;
+        private System.Windows.Forms.Label tklbtongsachmuonthang;
     }
 }
 

@@ -1897,9 +1897,7 @@ namespace LuuCongQuangVu_Nhom13
         {
             var list_cbbtheloai = dbcontext.Saches.Select(s => s.Theloai).Distinct();
             tkcbbtheloai.DataSource = list_cbbtheloai.ToList();
-            tkcbbtheloai.DisplayMember = "Theloai";
-
-            
+            tkcbbtheloai.DisplayMember = "Theloai";        
         }
         private void tabPage13_Click(object sender, EventArgs e)
         {
@@ -1983,5 +1981,125 @@ namespace LuuCongQuangVu_Nhom13
             errorProvider1.SetError(tkcbbtheloai, "");
         }
         #endregion
+
+        //thống kê sách mượn nhiều
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (rbsmnthang.Checked == true)
+            {
+                var check = (from m in dbcontext.Muontrasaches
+                         where m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
+                         && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year
+                         select m).ToList();
+                if (check != null)
+                {
+                    if (check.Count> 0)
+                    {
+                        var ds = from s in dbcontext.Saches
+                                 join m in dbcontext.Muontrasaches on s.Idsach equals m.Idsach
+                                 where m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
+                                 && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year
+                                 select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
+                        var groupsachs = (from a in ds
+                                         group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                        into b
+                                        orderby b.Sum(s=>s.soluongmuon) descending
+                                         select new
+                                         {
+                                             idsach = b.Key.idsach,
+                                             tensach = b.Key.tensach,
+                                             tacgia = b.Key.tacgia,
+                                             theloai = b.Key.theloai,
+                                             nxb = b.Key.nxb,
+                                             giasach = b.Key.giasach,
+                                             tongslmuon = b.Sum(s => s.soluongmuon)
+                                         });
+
+                        dgvsachmuonnhieu.DataSource = groupsachs.ToList();  
+                    }
+                    else
+                    {
+                        MessageBox.Show("không có sách mượn trong tháng này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        tkdtpsachmuonnhieu.Focus();
+                    }
+                }
+                tklbtongsachmuonthang.Text = "Tổng sách mượn theo tháng " + tkdtpsachmuonnhieu.Value.Month + " là:";
+                var sachmuontheothang = dbcontext.Muontrasaches.Where(m => m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
+                          && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year).Sum(s => s.Soluongmuon);
+                tklbsachmuontheothang.Text =Convert.ToString(sachmuontheothang);
+            }
+            else
+            if (rbsmnngay.Checked == true)
+            {
+                if(tkdtpdenngay.Value.Date< tkdtptungay.Value.Date)
+                {
+                    DialogResult rs = MessageBox.Show("co phải ý bạn là từ ngày " + tkdtpdenngay.Value.Day + " đến ngày " + tkdtptungay.Value.Day + " không ?", "xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if(rs== DialogResult.Yes)
+                    {
+                        DateTime tg = new DateTime();
+                        tg = tkdtpdenngay.Value;
+                        tkdtpdenngay.Value = tkdtptungay.Value;
+                        tkdtptungay.Value = tg;
+                    }
+                }
+                var check = dbcontext.Muontrasaches.Where(m => m.Ngaymuon.Value.Date <= tkdtpdenngay.Value.Date && m.Ngaymuon.Value.Date >= tkdtptungay.Value.Date).ToList();
+                if (check != null)
+                {
+                    if (check.Count> 0)
+                    {
+                        var ds = from s in dbcontext.Saches
+                                 join m in dbcontext.Muontrasaches on s.Idsach equals m.Idsach
+                                 where m.Ngaymuon.Value.Date<= tkdtpdenngay.Value.Date && m.Ngaymuon.Value.Date >= tkdtptungay.Value.Date
+                                 select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
+                        var groupsachs = from a in ds
+                                         group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                into b
+                                         orderby b.Sum(s => s.soluongmuon) descending
+                                         select new
+                                         {
+                                             idsach = b.Key.idsach,
+                                             tensach = b.Key.tensach,
+                                             tacgia = b.Key.tacgia,
+                                             theloai = b.Key.theloai,
+                                             nxb = b.Key.nxb,
+                                             giasach = b.Key.giasach,
+                                             tongslmuon = b.Sum(s => s.soluongmuon)
+                                         };
+                        dgvsachmuonnhieu.DataSource = groupsachs.ToList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("không có sách mượn trong ngày này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        tkdtpsachmuonnhieu.Focus();
+                    } 
+                }
+            }
+            else
+            {
+                MessageBox.Show("bạn phải chọn hiển thị theo tháng hoặc ngày", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
+        }
+        //thống kê sách bán
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbsmnthang_CheckedChanged(object sender, EventArgs e)
+        {
+            if(rbsachbanthang.Checked==true)
+            {
+                tklbsachmuontheothang.Visible = !rbsachbanthang.Checked;
+                tklbtongsachmuonthang.Visible= !rbsachbanthang.Checked;
+                label45.Visible= !rbsachbanthang.Checked;
+            }
+            else
+            {
+                tklbsachmuontheothang.Visible = !rbsachbanthang.Checked;
+                tklbtongsachmuonthang.Visible = !rbsachbanthang.Checked;
+                label45.Visible = !rbsachbanthang.Checked;
+            }
+        }
     }
 }
