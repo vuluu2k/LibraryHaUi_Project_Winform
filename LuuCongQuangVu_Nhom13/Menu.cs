@@ -1882,16 +1882,8 @@ namespace LuuCongQuangVu_Nhom13
         }
         #endregion
 
-        private void tabPage11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabQuanLiSach_Click(object sender, EventArgs e)
-        {
-
-        }
         #region thống kê sách
+        #region thống kê sách theo thể loại
         //thống kê sách theo thể loại
         private void load_tkcbbthloai()
         {
@@ -1899,13 +1891,7 @@ namespace LuuCongQuangVu_Nhom13
             tkcbbtheloai.DataSource = list_cbbtheloai.ToList();
             tkcbbtheloai.DisplayMember = "Theloai";        
         }
-        private void tabPage13_Click(object sender, EventArgs e)
-        {
-
-            
-
-        }
-
+        
         private void tkbtnhienthi_Click(object sender, EventArgs e)
         {
             //hiển thị danh sách theo thể loại
@@ -1981,7 +1967,7 @@ namespace LuuCongQuangVu_Nhom13
             errorProvider1.SetError(tkcbbtheloai, "");
         }
         #endregion
-
+        #region thống kê sách mượn nhiều
         //thống kê sách mượn nhiều
         private void button16_Click(object sender, EventArgs e)
         {
@@ -2070,7 +2056,6 @@ namespace LuuCongQuangVu_Nhom13
                     else
                     {
                         MessageBox.Show("không có sách mượn trong ngày này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        tkdtpsachmuonnhieu.Focus();
                     } 
                 }
             }
@@ -2080,26 +2065,154 @@ namespace LuuCongQuangVu_Nhom13
             }
             
         }
-        //thống kê sách bán
-        private void button15_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void rbsmnthang_CheckedChanged(object sender, EventArgs e)
         {
-            if(rbsachbanthang.Checked==true)
+            tklbsachmuontheothang.Visible = rbsmnthang.Checked;
+            tklbtongsachmuonthang.Visible = rbsmnthang.Checked;
+            label45.Visible = rbsmnthang.Checked;
+        }
+        private void rbsmnngay_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbsachmuontheothang.Visible = !rbsmnngay.Checked;
+            tklbtongsachmuonthang.Visible = !rbsmnngay.Checked;
+            label45.Visible = !rbsmnngay.Checked;
+        }
+        #endregion
+        #region thống kê sách bán
+        //thống kê sách bán
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (rbsachbanthang.Checked == true)
             {
-                tklbsachmuontheothang.Visible = !rbsachbanthang.Checked;
-                tklbtongsachmuonthang.Visible= !rbsachbanthang.Checked;
-                label45.Visible= !rbsachbanthang.Checked;
+                var check = (from m in dbcontext.HoaDons
+                             where m.NgayLap.Value.Month == tkdtpsachban.Value.Month
+                             && m.NgayLap.Value.Year == tkdtpsachban.Value.Year
+                             select m).ToList();
+                if (check != null)
+                {
+                    if (check.Count > 0)
+                    {
+                        var ds = from h in dbcontext.HoaDons
+                                 join ct in dbcontext.HoaDonChiTiets on h.MaHd equals ct.MaHd
+                                 join s in dbcontext.Saches on ct.Idsach equals s.Idsach
+                                 where h.NgayLap.Value.Month == tkdtpsachban.Value.Month
+                                 && h.NgayLap.Value.Year == tkdtpsachban.Value.Year
+                                 select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua};
+                        var groupsachs = (from a in ds
+                                          group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                        into b
+                                          orderby b.Sum(ct => ct.SoLuongMua) descending
+                                          select new
+                                          {
+                                              idsach = b.Key.idsach,
+                                              tensach = b.Key.tensach,
+                                              tacgia = b.Key.tacgia,
+                                              theloai = b.Key.theloai,
+                                              nxb = b.Key.nxb,
+                                              giasach = b.Key.giasach,
+                                              tongslban = b.Sum(ct => ct.SoLuongMua)
+                                          });
+
+                        tkdgvsachban.DataSource = groupsachs.ToList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("không có sách bán trong tháng này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        tkdtpsachban.Focus();
+                    }
+                }
+                tklbtongsachban.Text = "Tổng sách bán theo tháng " + tkdtpsachban.Value.Month + " là:";
+                var sachbantheothang = (from h in dbcontext.HoaDons
+                                       join ct in dbcontext.HoaDonChiTiets on h.MaHd equals ct.MaHd
+                                       where h.NgayLap.Value.Month == tkdtpsachban.Value.Month
+                                 && h.NgayLap.Value.Year == tkdtpsachban.Value.Year
+                                       select ct).Sum(s=> s.SoLuongMua);
+                tklbsoluongsachban.Text = Convert.ToString(sachbantheothang);
+            }
+            else
+            if (rbsachbanngay.Checked == true)
+            {
+                if (tkdtpsachbandenngay.Value.Date < tkdtpsachbantungay.Value.Date)
+                {
+                    DialogResult rs = MessageBox.Show("co phải ý bạn là từ ngày " + tkdtpsachbandenngay.Value.Day + " đến ngày " + tkdtpsachbantungay.Value.Day + " không ?", "xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (rs == DialogResult.Yes)
+                    {
+                        DateTime tg = new DateTime();
+                        tg = tkdtpsachbandenngay.Value;
+                        tkdtpsachbandenngay.Value = tkdtpsachbantungay.Value;
+                        tkdtpsachbantungay.Value = tg;
+                    }
+                }
+                var check = (from m in dbcontext.HoaDons
+                             where m.NgayLap.Value.Date <= tkdtpsachbandenngay.Value.Date
+                             && m.NgayLap.Value.Date >= tkdtpsachbantungay.Value.Date
+                             select m).ToList();
+                if (check != null)
+                {
+                    if (check.Count > 0)
+                    {
+                        var ds = from h in dbcontext.HoaDons
+                                 join ct in dbcontext.HoaDonChiTiets on h.MaHd equals ct.MaHd
+                                 join s in dbcontext.Saches on ct.Idsach equals s.Idsach
+                                 where h.NgayLap.Value.Date <= tkdtpsachbandenngay.Value.Date
+                             && h.NgayLap.Value.Date >= tkdtpsachbantungay.Value.Date
+                                 select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
+                        var groupsachs = from a in ds
+                                         group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                into b
+                                         orderby b.Sum(s => s.SoLuongMua) descending
+                                         select new
+                                         {
+                                             idsach = b.Key.idsach,
+                                             tensach = b.Key.tensach,
+                                             tacgia = b.Key.tacgia,
+                                             theloai = b.Key.theloai,
+                                             nxb = b.Key.nxb,
+                                             giasach = b.Key.giasach,
+                                             tongslban = b.Sum(s => s.SoLuongMua)
+                                         };
+                        tkdgvsachban.DataSource = groupsachs.ToList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("không có sách bán trong ngày này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
             else
             {
-                tklbsachmuontheothang.Visible = !rbsachbanthang.Checked;
-                tklbtongsachmuonthang.Visible = !rbsachbanthang.Checked;
-                label45.Visible = !rbsachbanthang.Checked;
+                MessageBox.Show("bạn phải chọn hiển thị theo tháng hoặc ngày", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        
+        private void rbsachbanthang_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbtongsachban.Visible = rbsachbanthang.Checked;
+            tklbsoluongsachban.Visible = rbsachbanthang.Checked;
+            label44.Visible = rbsachbanthang.Checked;
+        }
+
+        private void rbsachbanngay_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbtongsachban.Visible = !rbsachbanngay.Checked;
+            tklbsoluongsachban.Visible = !rbsachbanngay.Checked;
+            label44.Visible = !rbsachbanngay.Checked;
+        }
+        #endregion
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var sachs = dbcontext.Saches.Select(s => s).Count();
+            tklbtongsach.Text = Convert.ToString(sachs);
+
+            var sachdangmuon = dbcontext.Muontrasaches.Where(m=> m.Ngaythuctra<= m.Ngayhentra).Count();
+            tklbsachdangmuon.Text = Convert.ToString(sachdangmuon);
+
+            tklbsosachconlai.Text = Convert.ToString(sachs- sachdangmuon);
+        }
+        
+        //thống kê sách mới nhập
+
     }
+    #endregion
 }
