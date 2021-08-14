@@ -140,16 +140,15 @@ create table Thanhlisach(
 	primary key(Idsach, MaHDTL),
 	constraint fk_idssach foreign key(Idsach) references Sach(Idsach),
 	constraint mahdtl foreign key(MaHDTL) references HoaDonThanhLi(MaHDTL),
-	Donvinhanthanhli nvarchar(50),
 	Soluong int,
 	Tinhtrangsach nvarchar(50),
 	Phantramgiaban float
 )
 go
-insert into Thanhlisach values('tl01','s001',  N'nha sach phương nam', 2, N'quá niên hạn', 0.25)
-insert into Thanhlisach values('tl01','s002',  N'nha sach phương nam', 3, N'quá niên hạn', 0.2)
-insert into Thanhlisach values('tl02','s003',  N'nha sach phương nam', 3, N'sách hư hỏng', 0.3)
-insert into Thanhlisach values('tl03','s002',  N'nha sach phương nam', 1, N'nội dung không còn phù hợp', 0.4)
+insert into Thanhlisach values('tl01','s001',   2, N'quá niên hạn', 0.25)
+insert into Thanhlisach values('tl01','s002',  3, N'quá niên hạn', 0.2)
+insert into Thanhlisach values('tl02','s003',   3, N'sách hư hỏng', 0.3)
+insert into Thanhlisach values('tl03','s002',  1, N'nội dung không còn phù hợp', 0.4)
 go
 
 
