@@ -400,6 +400,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabControl1.ShowToolTips = true;
             this.tabControl1.Size = new System.Drawing.Size(1477, 869);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabQuanLiSach
             // 
@@ -1162,6 +1163,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtSLmuon.Name = "txtSLmuon";
             this.txtSLmuon.Size = new System.Drawing.Size(313, 29);
             this.txtSLmuon.TabIndex = 81;
+            this.txtSLmuon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSLmuon_KeyPress);
             // 
             // label25
             // 
@@ -1221,6 +1223,7 @@ namespace LuuCongQuangVu_Nhom13
             this.comboBoxMasach.Name = "comboBoxMasach";
             this.comboBoxMasach.Size = new System.Drawing.Size(313, 30);
             this.comboBoxMasach.TabIndex = 75;
+            this.comboBoxMasach.SelectedValueChanged += new System.EventHandler(this.comboBoxMaDG_SelectedValueChanged);
             // 
             // comboBoxMaDG
             // 
@@ -1229,6 +1232,7 @@ namespace LuuCongQuangVu_Nhom13
             this.comboBoxMaDG.Name = "comboBoxMaDG";
             this.comboBoxMaDG.Size = new System.Drawing.Size(313, 30);
             this.comboBoxMaDG.TabIndex = 74;
+            this.comboBoxMaDG.SelectedValueChanged += new System.EventHandler(this.comboBoxMaDG_SelectedValueChanged);
             // 
             // rbMTMasach
             // 

@@ -6866,11 +6866,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\btlnam\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
       "projectName": "LuuCongQuangVu_Nhom13",
-      "projectPath": "D:\\btlnam\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "D:\\btlnam\\LuuCongQuangVu_Nhom13\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
