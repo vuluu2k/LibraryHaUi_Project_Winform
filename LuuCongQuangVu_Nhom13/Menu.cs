@@ -58,6 +58,11 @@ namespace LuuCongQuangVu_Nhom13
             //Models.Account acc = (Models.Account)this.Tag;
             //MessageBox.Show(acc.Usename);
             //MessageBox.Show(dgvLHD.RowCount.ToString());
+
+            //load combobox thể loại sách
+            load_tkcbbthloai();
+            //load combobox mã sách
+            load_cbbmasach();
         }
         #region Xử lí radion button
         private void rdvitri_CheckedChanged(object sender, EventArgs e)
@@ -1888,5 +1893,788 @@ namespace LuuCongQuangVu_Nhom13
         }
         #endregion
 
+        private void tabPage7_Click(object sender, EventArgs e)
+        {
+
+        }
+        #region thống kê sách
+        #region thống kê sách theo thể loại
+        //thống kê sách theo thể loại
+        private void load_tkcbbthloai()
+        {
+            var list_cbbtheloai = dbcontext.Saches.Select(s => s.Theloai).Distinct();
+            tkcbbtheloai.DataSource = list_cbbtheloai.ToList();
+            tkcbbtheloai.DisplayMember = "Theloai";
+        }
+        //hiển thị danh sách thể loại
+        private void tkbtnhienthi_Click(object sender, EventArgs e)
+        {
+            //hiển thị danh sách theo thể loại
+            var ds = dbcontext.Saches.Where(s => s.Theloai == tkcbbtheloai.SelectedValue.ToString()).Select(s => new
+            {
+                Idsach = s.Idsach,
+                Tensach = s.Tensach,
+                tacgia = s.Tacgia,
+                soluong = s.Soluong,
+                theloai = s.Theloai,
+                giasach = s.Giasach,
+                nhaxb = s.Nhaxuatban,
+                vitri = s.Vitri
+            });
+            if (ds == null)
+            {
+                MessageBox.Show("Danh sách trống!", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tkcbbtheloai.Focus();
+                tkcbbtheloai.SelectAll();
+            }
+            else
+            {
+                if (checktkcbbempty())
+                {
+                    tkdgvthongketheotheloai.DataSource = ds.ToList();
+
+                    //hiển thị số lượng sách theo thể loại lên label
+                    var sl = dbcontext.Saches.Count(s => s.Theloai == tkcbbtheloai.SelectedValue.ToString());
+                    tklbsltheotheloai.Text = Convert.ToString(sl);
+
+                    //chỉnh sửa độ rộng các cột
+                    tkdgvthongketheotheloai.Columns[0].Width = 60;
+                    tkdgvthongketheotheloai.Columns[1].Width = 200;
+                    tkdgvthongketheotheloai.Columns[2].Width = 150;
+                    tkdgvthongketheotheloai.Columns[3].Width = 60;
+                    tkdgvthongketheotheloai.Columns[4].Width = 150;
+                    tkdgvthongketheotheloai.Columns[5].Width = 60;
+                    tkdgvthongketheotheloai.Columns[6].Width = 150;
+                    tkdgvthongketheotheloai.Columns[7].Width = 150;
+                }
+            }
+        }
+
+        //đưa tên thể loại lên combobox
+        private void tkdgvthongketheotheloai_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            DataGridViewRow row = tkdgvthongketheotheloai.Rows[index];
+            tkcbbtheloai.Text = Convert.ToString(row.Cells["Theloai"].Value);
+        }
+        //check combobox thể loại
+        private bool checktkcbbempty()
+        {
+            var check = dbcontext.Saches.Where(s => s.Theloai == tkcbbtheloai.Text).FirstOrDefault();
+            if (check == null)
+            {
+                errorProvider1.SetError(tkcbbtheloai, "không tồn tại thể loại này!");
+                tkcbbtheloai.Focus();
+                tkcbbtheloai.SelectAll();
+                return false;
+            }
+            if (tkcbbtheloai.SelectedValue == null)
+            {
+                errorProvider1.SetError(tkcbbtheloai, "bạn phải chọn thể loại trong combobox");
+                tkcbbtheloai.Focus();
+                tkcbbtheloai.SelectAll();
+                return false;
+            }
+            return true;
+        }
+
+        private void tkcbbtheloai_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkcbbtheloai, "");
+        }
+        #endregion
+        #region thống kê sách mượn nhiều
+        //thống kê sách mượn nhiều
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (sachmuonnhieu_check())
+            {
+                if (rbsmnthang.Checked == true)
+                {
+                    var check = (from m in dbcontext.Muontrasaches
+                                 where m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
+                                 && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year
+                                 select m).ToList();
+                    if (check != null)
+                    {
+                        if (check.Count > 0)
+                        {
+                            var ds = from s in dbcontext.Saches
+                                     join m in dbcontext.Muontrasaches on s.Idsach equals m.Idsach
+                                     where m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
+                                     && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year
+                                     select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
+                            var groupsachs = (from a in ds
+                                              group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                            into b
+                                              orderby b.Sum(s => s.soluongmuon) descending
+                                              select new
+                                              {
+                                                  idsach = b.Key.idsach,
+                                                  tensach = b.Key.tensach,
+                                                  tacgia = b.Key.tacgia,
+                                                  theloai = b.Key.theloai,
+                                                  nxb = b.Key.nxb,
+                                                  giasach = b.Key.giasach,
+                                                  tongslmuon = b.Sum(s => s.soluongmuon)
+                                              });
+
+                            dgvsachmuonnhieu.DataSource = groupsachs.ToList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("không có sách mượn trong tháng này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            tkdtpsachmuonnhieu.Focus();
+                        }
+                    }
+                    tklbtongsachmuonthang.Text = "Tổng sách mượn theo tháng " + tkdtpsachmuonnhieu.Value.Month + " là:";
+                    var sachmuontheothang = dbcontext.Muontrasaches.Where(m => m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
+                              && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year).Sum(s => s.Soluongmuon);
+                    tklbsachmuontheothang.Text = Convert.ToString(sachmuontheothang);
+                }
+                else
+                    if (rbsmnngay.Checked == true)
+                {
+                    if (tkdtpdenngay.Value.Date < tkdtptungay.Value.Date)
+                    {
+                        DialogResult rs = MessageBox.Show("co phải ý bạn là từ ngày " + tkdtpdenngay.Value.Day + " đến ngày " + tkdtptungay.Value.Day + " không ?", "xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (rs == DialogResult.Yes)
+                        {
+                            DateTime tg = new DateTime();
+                            tg = tkdtpdenngay.Value;
+                            tkdtpdenngay.Value = tkdtptungay.Value;
+                            tkdtptungay.Value = tg;
+                        }
+                    }
+                    var check = dbcontext.Muontrasaches.Where(m => m.Ngaymuon.Value.Date <= tkdtpdenngay.Value.Date && m.Ngaymuon.Value.Date >= tkdtptungay.Value.Date).ToList();
+                    if (check != null)
+                    {
+                        if (check.Count > 0)
+                        {
+                            var ds = from s in dbcontext.Saches
+                                     join m in dbcontext.Muontrasaches on s.Idsach equals m.Idsach
+                                     where m.Ngaymuon.Value.Date <= tkdtpdenngay.Value.Date && m.Ngaymuon.Value.Date >= tkdtptungay.Value.Date
+                                     select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
+                            var groupsachs = from a in ds
+                                             group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                    into b
+                                             orderby b.Sum(s => s.soluongmuon) descending
+                                             select new
+                                             {
+                                                 idsach = b.Key.idsach,
+                                                 tensach = b.Key.tensach,
+                                                 tacgia = b.Key.tacgia,
+                                                 theloai = b.Key.theloai,
+                                                 nxb = b.Key.nxb,
+                                                 giasach = b.Key.giasach,
+                                                 tongslmuon = b.Sum(s => s.soluongmuon)
+                                             };
+                            dgvsachmuonnhieu.DataSource = groupsachs.ToList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("không có sách mượn trong ngày này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("bạn phải chọn hiển thị theo tháng hoặc ngày", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+        }
+
+        private void rbsmnthang_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbsachmuontheothang.Visible = rbsmnthang.Checked;
+            tklbtongsachmuonthang.Visible = rbsmnthang.Checked;
+            label45.Visible = rbsmnthang.Checked;
+        }
+        private void rbsmnngay_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbsachmuontheothang.Visible = !rbsmnngay.Checked;
+            tklbtongsachmuonthang.Visible = !rbsmnngay.Checked;
+            label45.Visible = !rbsmnngay.Checked;
+        }
+        #region bắt lỗi sách mượn nhiều
+        private bool sachmuonnhieu_check()
+        {
+            if (tkdtpsachmuonnhieu.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tkdtpsachmuonnhieu, "ngày không được lớn hơn ngày hiện tại");
+                tkdtpsachmuonnhieu.Focus();
+                return false;
+            }
+            if (tkdtptungay.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tkdtptungay, "ngày không được lớn hơn ngày hiện tại");
+                tkdtptungay.Focus();
+                return false;
+            }
+            if (tkdtpdenngay.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tkdtpdenngay, "ngày không được lớn hơn ngày hiện tại");
+                tkdtpdenngay.Focus();
+                return false;
+            }
+            return true;
+        }
+        private void tkdtpsachmuonnhieu_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkdtpsachmuonnhieu, "");
+        }
+
+        private void tkdtptungay_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkdtptungay, "");
+        }
+
+        private void tkdtpdenngay_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkdtpdenngay, "");
+        }
+        #endregion
+        #endregion
+        #region thống kê sách bán
+        //thống kê sách bán
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (sachban_check())
+            {
+                if (rbsachbanthang.Checked == true)
+                {
+                    var check = (from m in dbcontext.HoaDons
+                                 where m.NgayLap.Value.Month == tkdtpsachban.Value.Month
+                                 && m.NgayLap.Value.Year == tkdtpsachban.Value.Year
+                                 select m).ToList();
+                    if (check != null)
+                    {
+                        if (check.Count > 0)
+                        {
+                            var ds = from h in dbcontext.HoaDons
+                                     join ct in dbcontext.HoaDonChiTiets on h.MaHd equals ct.MaHd
+                                     join s in dbcontext.Saches on ct.Idsach equals s.Idsach
+                                     where h.NgayLap.Value.Month == tkdtpsachban.Value.Month
+                                     && h.NgayLap.Value.Year == tkdtpsachban.Value.Year
+                                     select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
+                            var groupsachs = (from a in ds
+                                              group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                            into b
+                                              orderby b.Sum(ct => ct.SoLuongMua) descending
+                                              select new
+                                              {
+                                                  idsach = b.Key.idsach,
+                                                  tensach = b.Key.tensach,
+                                                  tacgia = b.Key.tacgia,
+                                                  theloai = b.Key.theloai,
+                                                  nxb = b.Key.nxb,
+                                                  giasach = b.Key.giasach,
+                                                  tongslban = b.Sum(ct => ct.SoLuongMua)
+                                              });
+
+                            tkdgvsachban.DataSource = groupsachs.ToList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("không có sách bán trong tháng này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            tkdtpsachban.Focus();
+                        }
+                    }
+                    tklbtongsachban.Text = "Tổng sách bán theo tháng " + tkdtpsachban.Value.Month + " là:";
+                    var sachbantheothang = (from h in dbcontext.HoaDons
+                                            join ct in dbcontext.HoaDonChiTiets on h.MaHd equals ct.MaHd
+                                            where h.NgayLap.Value.Month == tkdtpsachban.Value.Month
+                                      && h.NgayLap.Value.Year == tkdtpsachban.Value.Year
+                                            select ct).Sum(s => s.SoLuongMua);
+                    tklbsoluongsachban.Text = Convert.ToString(sachbantheothang);
+                }
+                else
+                    if (rbsachbanngay.Checked == true)
+                {
+                    if (tkdtpsachbandenngay.Value.Date < tkdtpsachbantungay.Value.Date)
+                    {
+                        DialogResult rs = MessageBox.Show("co phải ý bạn là từ ngày " + tkdtpsachbandenngay.Value.Day + " đến ngày " + tkdtpsachbantungay.Value.Day + " không ?", "xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (rs == DialogResult.Yes)
+                        {
+                            DateTime tg = new DateTime();
+                            tg = tkdtpsachbandenngay.Value;
+                            tkdtpsachbandenngay.Value = tkdtpsachbantungay.Value;
+                            tkdtpsachbantungay.Value = tg;
+                        }
+                    }
+                    var check = (from m in dbcontext.HoaDons
+                                 where m.NgayLap.Value.Date <= tkdtpsachbandenngay.Value.Date
+                                 && m.NgayLap.Value.Date >= tkdtpsachbantungay.Value.Date
+                                 select m).ToList();
+                    if (check != null)
+                    {
+                        if (check.Count > 0)
+                        {
+                            var ds = from h in dbcontext.HoaDons
+                                     join ct in dbcontext.HoaDonChiTiets on h.MaHd equals ct.MaHd
+                                     join s in dbcontext.Saches on ct.Idsach equals s.Idsach
+                                     where h.NgayLap.Value.Date <= tkdtpsachbandenngay.Value.Date
+                                 && h.NgayLap.Value.Date >= tkdtpsachbantungay.Value.Date
+                                     select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
+                            var groupsachs = from a in ds
+                                             group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
+                                    into b
+                                             orderby b.Sum(s => s.SoLuongMua) descending
+                                             select new
+                                             {
+                                                 idsach = b.Key.idsach,
+                                                 tensach = b.Key.tensach,
+                                                 tacgia = b.Key.tacgia,
+                                                 theloai = b.Key.theloai,
+                                                 nxb = b.Key.nxb,
+                                                 giasach = b.Key.giasach,
+                                                 tongslban = b.Sum(s => s.SoLuongMua)
+                                             };
+                            tkdgvsachban.DataSource = groupsachs.ToList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("không có sách bán trong ngày này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("bạn phải chọn hiển thị theo tháng hoặc ngày", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private void rbsachbanthang_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbtongsachban.Visible = rbsachbanthang.Checked;
+            tklbsoluongsachban.Visible = rbsachbanthang.Checked;
+            label44.Visible = rbsachbanthang.Checked;
+        }
+
+        private void rbsachbanngay_CheckedChanged(object sender, EventArgs e)
+        {
+            tklbtongsachban.Visible = !rbsachbanngay.Checked;
+            tklbsoluongsachban.Visible = !rbsachbanngay.Checked;
+            label44.Visible = !rbsachbanngay.Checked;
+        }
+        #region bắt lỗi sách bán
+        private bool sachban_check()
+        {
+            if (tkdtpsachban.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tkdtpsachban, "ngày không được lớn hơn ngày hiện tại");
+                tkdtpsachban.Focus();
+                return false;
+            }
+            if (tkdtpsachbantungay.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tkdtpsachbantungay, "ngày không được lớn hơn ngày hiện tại");
+                tkdtpsachbantungay.Focus();
+                return false;
+            }
+            if (tkdtpsachbandenngay.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tkdtpsachbandenngay, "ngày không được lớn hơn ngày hiện tại");
+                tkdtpsachbandenngay.Focus();
+                return false;
+            }
+            return true;
+        }
+        private void tkdtpsachban_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkdtpsachban, "");
+        }
+        private void tkdtpsachbantungay_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkdtpsachbantungay, "");
+        }
+        private void tkdtpsachbandenngay_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tkdtpsachbandenngay, "");
+        }
+        #endregion
+        #endregion
+        #region thống kê tổng thể 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var sachs = dbcontext.Saches.Select(s => s).Count();
+            tklbtongsach.Text = Convert.ToString(sachs);
+
+            var sachdangmuon = dbcontext.Muontrasaches.Where(m => m.Ngaythuctra == null).Count();
+            tklbsachdangmuon.Text = Convert.ToString(sachdangmuon);
+
+            tklbsosachconlai.Text = Convert.ToString(sachs - sachdangmuon);
+        }
+        //hiển thị danh sách sách có sắp xếp theo tiêu chí được chọn
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var list = dbcontext.Saches.Select(s => new { s.Idsach, s.Tensach, s.Tacgia, s.Soluong, s.Theloai, s.Giasach, s.Nhaxuatban, s.Vitri });
+            if (tkrboption1.Checked == true)
+            {
+                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Tensach).ToList();
+            }
+            else if (tkrboption2.Checked == true)
+            {
+                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Soluong).ToList();
+            }
+            else if (tkrboption3.Checked == true)
+            {
+                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Giasach).ToList();
+            }
+            else if (tkrboption4.Checked == true)
+            {
+                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Nhaxuatban).ToList();
+            }
+            else
+            {
+                tkdgvtongthe.DataSource = list.ToList();
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            tkrboption1.Checked = false;
+            tkrboption2.Checked = false;
+            tkrboption3.Checked = false;
+            tkrboption4.Checked = false;
+        }
+        #endregion
+        #endregion
+        #region thanh lí sách
+        //load combobox mã sách
+        private void load_cbbmasach()
+        {
+            var masach = dbcontext.Saches.Select(s => s.Idsach).ToList();
+            tlcbbmasach.DataSource = masach;
+        }
+
+        #region bắt lỗi thanh lí sách
+        private bool thanhli_check()
+        {
+            if (tlcbbmasach.SelectedValue == null)
+            {
+                errorProvider1.SetError(tlcbbmasach, "bạn phải chọn mã trong combobox");
+                tlcbbmasach.Focus();
+                return false;
+            }
+            var checkmasach = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.Text).SingleOrDefault();
+            if (checkmasach == null)
+            {
+                errorProvider1.SetError(tlcbbmasach, "không có sách này trong bảng sách");
+                tlcbbmasach.Focus();
+                return false;
+            }
+            if (tlslthanhli.Text == "")
+            {
+                errorProvider1.SetError(tlslthanhli, "bạn phải nhập số lượng cần thanh lí");
+                tlslthanhli.Focus();
+                return false;
+            }
+            try
+            {
+                int.Parse(tlslthanhli.Text);
+                if (int.Parse(tlslthanhli.Text) <= 0)
+                {
+                    errorProvider1.SetError(tlslthanhli, "số lượng thanh lí phải >0");
+                    tlslthanhli.Focus();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorProvider1.SetError(tlslthanhli, "số lượng thanh lí phải là một số nguyên");
+                tlslthanhli.Focus();
+                return false;
+            }
+            if (tlptthanhli.Text == "")
+            {
+                errorProvider1.SetError(tlptthanhli, "bạn phải nhập phần trăm giá gốc");
+                tlptthanhli.Focus();
+                return false;
+            }
+            try
+            {
+                double a = double.Parse(tlptthanhli.Text);
+                if (a < 0 || a > 100)
+                {
+                    errorProvider1.SetError(tlptthanhli, "phần trăm giá từ 0 đến 100");
+                    tlptthanhli.Focus();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorProvider1.SetError(tlptthanhli, "phần trăm giá gốc phải là một số");
+                tlptthanhli.Focus();
+                return false;
+            }
+            if (tlcbbtinhtrang.Text == "")
+            {
+                errorProvider1.SetError(tlcbbtinhtrang, "bạn phải nhập/chọn tình trạng sách");
+                tlcbbtinhtrang.Focus();
+                return false;
+            }
+            return true;
+        }
+        private bool thankli_laphoadon()
+        {
+            if (tltxtmahdthanhli.Text == "")
+            {
+                errorProvider1.SetError(tltxtmahdthanhli, "bạn phải điền mã hóa đơn thanh lí");
+                tltxtmahdthanhli.Focus();
+                return false;
+            }
+            if (tltxtmahdthanhli.Text.Length != 4)
+            {
+                errorProvider1.SetError(tltxtmahdthanhli, "mã phải chứa 4 kí tự");
+                tltxtmahdthanhli.Focus();
+                return false;
+            }
+            var check_mahdtl = dbcontext.HoaDonThanhLis.Where(h => h.MaHdtl == tltxtmahdthanhli.Text).SingleOrDefault();
+            if (check_mahdtl != null)
+            {
+                errorProvider1.SetError(tltxtmahdthanhli, "mã này đã có trong bảng hóa đơn thanh lí");
+                tltxtmahdthanhli.Focus();
+                return false;
+            }
+            if (tldtpngaylap.Value > DateTime.Now)
+            {
+                errorProvider1.SetError(tldtpngaylap, "ngày lập không được lớn hơn ngày hiện tại");
+                tldtpngaylap.Focus();
+                return false;
+            }
+            return true;
+        }
+
+        private void tlcbbmasach_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tlcbbmasach, "");
+        }
+
+        private void tlslthanhli_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tlslthanhli, "");
+        }
+
+        private void tlptthanhli_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tlptthanhli, "");
+        }
+
+        private void tlcbbtinhtrang_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tlcbbtinhtrang, "");
+        }
+        private void textBox1_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(tltxtmahdthanhli, "");
+        }
+
+        #endregion
+        //thêm sách thanh lí
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (thanhli_check())
+            {
+                var sl = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.Text).Select(s => s.Soluong).SingleOrDefault();
+                bool check = true;
+                //int index=0;
+                for (int j = 0; j < tldgvthanhli.RowCount - 1; j++)
+                {
+                    //index = j;
+                    if (tlcbbmasach.Text == tldgvthanhli.Rows[j].Cells[0].Value.ToString())
+                    {
+                        tlcbbmasach.Focus();
+                        check = false;
+                    }
+                }
+
+                if (check)
+                {
+                    var soluong = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).Select(s => s.Soluong).SingleOrDefault();
+                    if (soluong < Convert.ToInt32(tlslthanhli.Text))
+                    {
+                        MessageBox.Show("số lượng thanh lí không được vượt quá số sách đang có của sách", "Quá số lượng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        tlslthanhli.Focus();
+                    }
+                    else
+                    if (soluong == 0)
+                    {
+                        MessageBox.Show("sách này đã hết", "hết", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        var ds = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).SingleOrDefault();
+                        tldgvthanhli.ColumnCount = 7;
+                        int i = tldgvthanhli.RowCount - 1;
+                        tldgvthanhli.Rows.Add();
+                        tldgvthanhli.Rows[i].Cells[0].Value = ds.Idsach;
+                        tldgvthanhli.Rows[i].Cells[1].Value = ds.Tensach;
+                        tldgvthanhli.Rows[i].Cells[2].Value = tlcbbtinhtrang.Text;
+                        tldgvthanhli.Rows[i].Cells[3].Value = tlptthanhli.Text;
+                        tldgvthanhli.Rows[i].Cells[4].Value = tlslthanhli.Text;
+                        tldgvthanhli.Rows[i].Cells[5].Value = ds.Giasach;
+                        tldgvthanhli.Rows[i].Cells[6].Value = ds.Giasach * Convert.ToInt32(tlslthanhli.Text) * Convert.ToDouble(tlptthanhli.Text) / 100;
+                        i++;
+                        tongslthanhli();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Đã tồn tại mã sách này, thay đổi thông tin và nhấn nút Sửa nếu bạn muốn", "Xác nhận", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        //sửa thông tin sách thanh lí
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (thanhli_check())
+            {
+                bool check = false;
+                int index = 0;
+                for (int j = 0; j < tldgvthanhli.RowCount - 1; j++)
+                {
+                    if (tlcbbmasach.Text == tldgvthanhli.Rows[j].Cells[0].Value.ToString())
+                    {
+                        index = j;
+                        tlcbbmasach.Focus();
+                        check = true;
+                    }
+                }
+
+                if (check)
+                {
+                    var soluong = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).Select(s => s.Soluong).SingleOrDefault();
+                    if (soluong < Convert.ToInt32(tlslthanhli.Text))
+                    {
+                        MessageBox.Show("số lượng thanh lí không được vượt quá số sách đang có của sách", "Quá số lượng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        tlslthanhli.Focus();
+                    }
+                    else
+                    if (soluong == 0)
+                    {
+                        MessageBox.Show("sách này đã hết", "hết", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        var ds = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).SingleOrDefault();
+                        tldgvthanhli.ColumnCount = 7;
+                        tldgvthanhli.Rows[index].Cells[0].Value = tlcbbmasach.Text;
+                        tldgvthanhli.Rows[index].Cells[1].Value = ds.Tensach;
+                        tldgvthanhli.Rows[index].Cells[2].Value = tlcbbtinhtrang.Text;
+                        tldgvthanhli.Rows[index].Cells[3].Value = tlptthanhli.Text;
+                        tldgvthanhli.Rows[index].Cells[4].Value = tlslthanhli.Text;
+                        tldgvthanhli.Rows[index].Cells[5].Value = ds.Giasach;
+                        tldgvthanhli.Rows[index].Cells[6].Value = ds.Giasach * Convert.ToInt32(tlslthanhli.Text) * Convert.ToDouble(tlptthanhli.Text) / 100;
+                        tongslthanhli();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("không có sách có mã này trong bảng thanh lí", "Trống dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        //cell click
+        private void tldgvthanhli_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int i = e.RowIndex;
+            DataGridViewRow row = tldgvthanhli.Rows[i];
+            tlcbbmasach.Text = Convert.ToString(row.Cells[0].Value);
+            tlslthanhli.Text = Convert.ToString(row.Cells[4].Value);
+            tlptthanhli.Text = Convert.ToString(row.Cells[3].Value);
+            tlcbbtinhtrang.Text = Convert.ToString(row.Cells[2].Value);
+        }
+        //xóa sách khỏi bảng thanh lí
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var check = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.Text).SingleOrDefault();
+            if (check != null)
+            {
+                int index = 0;
+                bool exist = false;
+                for (int j = 0; j < tldgvthanhli.RowCount - 1; j++)
+                {
+                    if (tlcbbmasach.Text == tldgvthanhli.Rows[j].Cells[0].Value.ToString())
+                    {
+                        index = j;
+                        exist = true;
+                    }
+                }
+                if (exist)
+                {
+                    DialogResult rs = MessageBox.Show("bạn muốn xóa không", "xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (rs == DialogResult.Yes)
+                    {
+                        tldgvthanhli.Rows.RemoveAt(index);
+                        tongslthanhli();
+                    }
+                    else
+                    {
+                        MessageBox.Show("bạn đã hủy xóa", "hủy xóa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("không có sách có mã này trong bảng thanh lí", "dữ liệu trống", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("không có sách có mã này trong bảng sách", "dữ liệu trống", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        //clear
+        private void button5_Click(object sender, EventArgs e)
+        {
+            tlcbbmasach.Text = "";
+            tlslthanhli.Text = "";
+            tlptthanhli.Text = "";
+            tlcbbtinhtrang.Text = "";
+            tlcbbmasach.Focus();
+        }
+        //lập hóa đơn thanh lí
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (thankli_laphoadon())
+            {
+                Models.Account acc = (Models.Account)this.Tag;
+                Models.HoaDonThanhLi hdtl = new Models.HoaDonThanhLi();
+                hdtl.MaHdtl = tltxtmahdthanhli.Text;
+                hdtl.NgayLap = tldtpngaylap.Value;
+                hdtl.Usename = acc.Usename;
+                dbcontext.HoaDonThanhLis.Add(hdtl);
+                for (int i = 0; i < tldgvthanhli.RowCount - 1; i++)
+                {
+                    Models.Thanhlisach tls = new Models.Thanhlisach();
+                    tls.MaHdtl = hdtl.MaHdtl;
+                    tls.Idsach = Convert.ToString(tldgvthanhli.Rows[i].Cells[0].Value);
+                    tls.Soluong = Convert.ToInt32(tldgvthanhli.Rows[i].Cells[4].Value);
+                    tls.Tinhtrangsach = Convert.ToString(tldgvthanhli.Rows[i].Cells[2].Value);
+                    tls.Phantramgiaban = Convert.ToInt32(tldgvthanhli.Rows[i].Cells[3].Value);
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == tls.Idsach select b).FirstOrDefault();
+                    book.Soluong = book.Soluong - tls.Soluong;
+                    dbcontext.Thanhlisaches.Add(tls);
+                    // thêm lệnh update lại số lượng sách có là được
+                }
+                dbcontext.SaveChanges();
+                MessageBox.Show("Lập hoá đơn thanh lí thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearALl();
+            }
+        }
+        //tính tổng tiền thanh lí sách
+        private void tongslthanhli()
+        {
+            double tong = 0;
+            for (int i = 0; i < tldgvthanhli.RowCount - 1; i++)
+            {
+                tong += Convert.ToDouble(tldgvthanhli.Rows[i].Cells[6].Value);
+            }
+            tllbtongtienthanhli.Text = tong.ToString();
+        }
+
+        #endregion
     }
 }

@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BTL_LapTrinhWD\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {}
+    "C:\\Users\\vuong\\Desktop\\New folder\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {}
   },
   "projects": {
-    "D:\\BTL_LapTrinhWD\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {
+    "C:\\Users\\vuong\\Desktop\\New folder\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTL_LapTrinhWD\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+        "projectUniqueName": "C:\\Users\\vuong\\Desktop\\New folder\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
         "projectName": "LuuCongQuangVu_Nhom13",
-        "projectPath": "D:\\BTL_LapTrinhWD\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
-        "packagesPath": "C:\\Users\\laptr\\.nuget\\packages\\",
-        "outputPath": "D:\\BTL_LapTrinhWD\\LuuCongQuangVu_Nhom13\\obj\\",
+        "projectPath": "C:\\Users\\vuong\\Desktop\\New folder\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+        "packagesPath": "C:\\Users\\vuong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vuong\\Desktop\\New folder\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\laptr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vuong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0-windows"
+          "net5.0-windows7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -95,7 +95,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
