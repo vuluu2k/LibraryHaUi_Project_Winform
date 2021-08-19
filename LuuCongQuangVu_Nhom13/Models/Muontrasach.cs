@@ -17,6 +17,7 @@ namespace LuuCongQuangVu_Nhom13.Models
         [Key]
         [StringLength(4)]
         public string Idsach { get; set; }
+        public int? Soluongmuon { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Ngaymuon { get; set; }
         [Column(TypeName = "datetime")]

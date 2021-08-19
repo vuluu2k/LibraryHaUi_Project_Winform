@@ -858,6 +858,7 @@ namespace LuuCongQuangVu_Nhom13
             var idm = (from m in dbcontext.Muontrasaches where m.Idsach==txtmasach.Text select m).ToList();
             var hdcts = (from hdct in dbcontext.HoaDonChiTiets where hdct.Idsach == txtmasach.Text select hdct).ToList();
             var mttcs = (from mttc in dbcontext.Muontrataichos where mttc.Idsach == txtmasach.Text select mttc).ToList();
+            var tlbooks = (from tlbook in dbcontext.Thanhlisaches where tlbook.Idsach == txtmasach.Text select tlbook).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -874,6 +875,10 @@ namespace LuuCongQuangVu_Nhom13
                     if (mttcs != null)
                     {
                         dbcontext.Muontrataichos.RemoveRange(mttcs);
+                    }
+                    if (tlbooks != null)
+                    {
+                        dbcontext.Thanhlisaches.RemoveRange(tlbooks);
                     }
                     dbcontext.Saches.Remove(id);
                     dbcontext.SaveChanges();

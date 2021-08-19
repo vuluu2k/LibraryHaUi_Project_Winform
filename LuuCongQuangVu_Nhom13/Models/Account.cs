@@ -13,6 +13,7 @@ namespace LuuCongQuangVu_Nhom13.Models
     {
         public Account()
         {
+            HoaDonThanhLis = new HashSet<HoaDonThanhLi>();
             HoaDons = new HashSet<HoaDon>();
         }
 
@@ -26,6 +27,8 @@ namespace LuuCongQuangVu_Nhom13.Models
         [StringLength(50)]
         public string Tenchutaikhoan { get; set; }
 
+        [InverseProperty(nameof(HoaDonThanhLi.UsenameNavigation))]
+        public virtual ICollection<HoaDonThanhLi> HoaDonThanhLis { get; set; }
         [InverseProperty(nameof(HoaDon.UsenameNavigation))]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
     }
