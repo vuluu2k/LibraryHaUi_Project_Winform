@@ -320,16 +320,6 @@ namespace LuuCongQuangVu_Nhom13
             this.label37 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.TKquahan = new System.Windows.Forms.TabPage();
-            this.btnAdmin = new System.Windows.Forms.Button();
-            this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.tlmasach = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tltensach = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tltinhtrang = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tlptgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tlsoluong = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tlthanhtien = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tldongia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnCapnhatQH = new System.Windows.Forms.Button();
             this.dgvTKQH = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -342,6 +332,16 @@ namespace LuuCongQuangVu_Nhom13
             this.ngayhentra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ngaythuctra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label58 = new System.Windows.Forms.Label();
+            this.btnAdmin = new System.Windows.Forms.Button();
+            this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.tlmasach = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tltensach = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tltinhtrang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tlptgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tlsoluong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tlthanhtien = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tldongia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.MainTabCT.SuspendLayout();
             this.tabQuanLiSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSach)).BeginInit();
@@ -383,9 +383,9 @@ namespace LuuCongQuangVu_Nhom13
             ((System.ComponentModel.ISupportInitialize)(this.tldgvthanhli)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.TKquahan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).BeginInit();
             this.SuspendLayout();
             // 
             // btndangxuat
@@ -2240,6 +2240,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // tabQuanLyMuonTraSach
             // 
+            this.tabQuanLyMuonTraSach.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tabQuanLyMuonTraSach.BackgroundImage")));
             this.tabQuanLyMuonTraSach.Controls.Add(this.groupBox5);
             this.tabQuanLyMuonTraSach.Controls.Add(this.txtSLmuon);
             this.tabQuanLyMuonTraSach.Controls.Add(this.label38);
@@ -2434,68 +2435,74 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // btnTimMTsach
             // 
+            this.btnTimMTsach.BackColor = System.Drawing.Color.DarkOrange;
             this.btnTimMTsach.Location = new System.Drawing.Point(827, 366);
             this.btnTimMTsach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTimMTsach.Name = "btnTimMTsach";
             this.btnTimMTsach.Size = new System.Drawing.Size(88, 44);
             this.btnTimMTsach.TabIndex = 101;
             this.btnTimMTsach.Text = "Tìm";
-            this.btnTimMTsach.UseVisualStyleBackColor = true;
+            this.btnTimMTsach.UseVisualStyleBackColor = false;
             this.btnTimMTsach.Click += new System.EventHandler(this.btnTimMTsach_Click);
             // 
             // btnHuyMTsach
             // 
+            this.btnHuyMTsach.BackColor = System.Drawing.Color.DarkOrange;
             this.btnHuyMTsach.Location = new System.Drawing.Point(662, 366);
             this.btnHuyMTsach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnHuyMTsach.Name = "btnHuyMTsach";
             this.btnHuyMTsach.Size = new System.Drawing.Size(96, 44);
             this.btnHuyMTsach.TabIndex = 100;
             this.btnHuyMTsach.Text = "Huỷ";
-            this.btnHuyMTsach.UseVisualStyleBackColor = true;
+            this.btnHuyMTsach.UseVisualStyleBackColor = false;
             this.btnHuyMTsach.Click += new System.EventHandler(this.btnHuyMTsach_Click);
             // 
             // btnSuaMTsach
             // 
+            this.btnSuaMTsach.BackColor = System.Drawing.Color.DarkOrange;
             this.btnSuaMTsach.Location = new System.Drawing.Point(536, 366);
             this.btnSuaMTsach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSuaMTsach.Name = "btnSuaMTsach";
             this.btnSuaMTsach.Size = new System.Drawing.Size(96, 44);
             this.btnSuaMTsach.TabIndex = 99;
             this.btnSuaMTsach.Text = "Sửa";
-            this.btnSuaMTsach.UseVisualStyleBackColor = true;
+            this.btnSuaMTsach.UseVisualStyleBackColor = false;
             this.btnSuaMTsach.Click += new System.EventHandler(this.btnSuaMTsach_Click);
             // 
             // btnXoaMTsach
             // 
+            this.btnXoaMTsach.BackColor = System.Drawing.Color.DarkOrange;
             this.btnXoaMTsach.Location = new System.Drawing.Point(408, 366);
             this.btnXoaMTsach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnXoaMTsach.Name = "btnXoaMTsach";
             this.btnXoaMTsach.Size = new System.Drawing.Size(96, 44);
             this.btnXoaMTsach.TabIndex = 98;
             this.btnXoaMTsach.Text = "Xoá";
-            this.btnXoaMTsach.UseVisualStyleBackColor = true;
+            this.btnXoaMTsach.UseVisualStyleBackColor = false;
             this.btnXoaMTsach.Click += new System.EventHandler(this.btnXoaMTsach_Click);
             // 
             // btnThemMTsach
             // 
+            this.btnThemMTsach.BackColor = System.Drawing.Color.DarkOrange;
             this.btnThemMTsach.Location = new System.Drawing.Point(282, 368);
             this.btnThemMTsach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnThemMTsach.Name = "btnThemMTsach";
             this.btnThemMTsach.Size = new System.Drawing.Size(96, 44);
             this.btnThemMTsach.TabIndex = 97;
             this.btnThemMTsach.Text = "Thêm";
-            this.btnThemMTsach.UseVisualStyleBackColor = true;
+            this.btnThemMTsach.UseVisualStyleBackColor = false;
             this.btnThemMTsach.Click += new System.EventHandler(this.btnThemMTsach_Click);
             // 
             // btnLoadMTsach
             // 
+            this.btnLoadMTsach.BackColor = System.Drawing.Color.DarkOrange;
             this.btnLoadMTsach.Location = new System.Drawing.Point(140, 368);
             this.btnLoadMTsach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLoadMTsach.Name = "btnLoadMTsach";
             this.btnLoadMTsach.Size = new System.Drawing.Size(112, 44);
             this.btnLoadMTsach.TabIndex = 96;
             this.btnLoadMTsach.Text = "Đọc dữ liệu";
-            this.btnLoadMTsach.UseVisualStyleBackColor = true;
+            this.btnLoadMTsach.UseVisualStyleBackColor = false;
             this.btnLoadMTsach.Click += new System.EventHandler(this.btnLoadMTsach_Click);
             // 
             // dgvMTsach
@@ -3773,6 +3780,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // TKquahan
             // 
+            this.TKquahan.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("TKquahan.BackgroundImage")));
             this.TKquahan.Controls.Add(this.btnCapnhatQH);
             this.TKquahan.Controls.Add(this.dgvTKQH);
             this.TKquahan.Controls.Add(this.label58);
@@ -3783,88 +3791,15 @@ namespace LuuCongQuangVu_Nhom13
             this.TKquahan.Text = "Thống kê Quá Hạn";
             this.TKquahan.UseVisualStyleBackColor = true;
             // 
-            // btnAdmin
-            // 
-            this.btnAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(175)))), ((int)(((byte)(194)))));
-            this.btnAdmin.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnAdmin.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.admin1;
-            this.btnAdmin.Location = new System.Drawing.Point(937, 877);
-            this.btnAdmin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnAdmin.Name = "btnAdmin";
-            this.btnAdmin.Size = new System.Drawing.Size(279, 53);
-            this.btnAdmin.TabIndex = 30;
-            this.btnAdmin.Text = "Trờ về cửa sổ quản lí của admin";
-            this.btnAdmin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAdmin.UseVisualStyleBackColor = false;
-            this.btnAdmin.Visible = false;
-            this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
-            // 
-            // GetError
-            // 
-            this.GetError.ContainerControl = this;
-            this.GetError.Icon = ((System.Drawing.Icon)(resources.GetObject("GetError.Icon")));
-            // 
-            // tlmasach
-            // 
-            this.tlmasach.HeaderText = "mã sách";
-            this.tlmasach.MinimumWidth = 6;
-            this.tlmasach.Name = "tlmasach";
-            this.tlmasach.Width = 60;
-            // 
-            // tltensach
-            // 
-            this.tltensach.HeaderText = "tên sách";
-            this.tltensach.MinimumWidth = 6;
-            this.tltensach.Name = "tltensach";
-            this.tltensach.Width = 200;
-            // 
-            // tltinhtrang
-            // 
-            this.tltinhtrang.HeaderText = "tình trạng";
-            this.tltinhtrang.MinimumWidth = 6;
-            this.tltinhtrang.Name = "tltinhtrang";
-            this.tltinhtrang.Width = 200;
-            // 
-            // tlptgia
-            // 
-            this.tlptgia.HeaderText = "phần trăm giá";
-            this.tlptgia.MinimumWidth = 6;
-            this.tlptgia.Name = "tlptgia";
-            this.tlptgia.Width = 60;
-            // 
-            // tlsoluong
-            // 
-            this.tlsoluong.HeaderText = "số lượng";
-            this.tlsoluong.MinimumWidth = 6;
-            this.tlsoluong.Name = "tlsoluong";
-            this.tlsoluong.Width = 60;
-            // 
-            // tlthanhtien
-            // 
-            this.tlthanhtien.HeaderText = "thành tiền";
-            this.tlthanhtien.MinimumWidth = 6;
-            this.tlthanhtien.Name = "tlthanhtien";
-            this.tlthanhtien.Width = 125;
-            // 
-            // tldongia
-            // 
-            this.tldongia.HeaderText = "đơn giá";
-            this.tldongia.MinimumWidth = 6;
-            this.tldongia.Name = "tldongia";
-            this.tldongia.Width = 60;
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
-            // 
             // btnCapnhatQH
             // 
+            this.btnCapnhatQH.BackColor = System.Drawing.Color.DarkOrange;
             this.btnCapnhatQH.Location = new System.Drawing.Point(129, 86);
             this.btnCapnhatQH.Name = "btnCapnhatQH";
             this.btnCapnhatQH.Size = new System.Drawing.Size(127, 45);
             this.btnCapnhatQH.TabIndex = 9;
             this.btnCapnhatQH.Text = "Cập Nhật";
-            this.btnCapnhatQH.UseVisualStyleBackColor = true;
+            this.btnCapnhatQH.UseVisualStyleBackColor = false;
             this.btnCapnhatQH.Click += new System.EventHandler(this.btnCapnhatQH_Click);
             // 
             // dgvTKQH
@@ -3959,6 +3894,80 @@ namespace LuuCongQuangVu_Nhom13
             this.label58.TabIndex = 7;
             this.label58.Text = "Bảng thống kê các độc giả quá hạn";
             // 
+            // btnAdmin
+            // 
+            this.btnAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(98)))), ((int)(((byte)(175)))), ((int)(((byte)(194)))));
+            this.btnAdmin.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAdmin.Image = global::LuuCongQuangVu_Nhom13.Properties.Resources.admin1;
+            this.btnAdmin.Location = new System.Drawing.Point(937, 877);
+            this.btnAdmin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnAdmin.Name = "btnAdmin";
+            this.btnAdmin.Size = new System.Drawing.Size(279, 53);
+            this.btnAdmin.TabIndex = 30;
+            this.btnAdmin.Text = "Trờ về cửa sổ quản lí của admin";
+            this.btnAdmin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAdmin.UseVisualStyleBackColor = false;
+            this.btnAdmin.Visible = false;
+            this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
+            // 
+            // GetError
+            // 
+            this.GetError.ContainerControl = this;
+            this.GetError.Icon = ((System.Drawing.Icon)(resources.GetObject("GetError.Icon")));
+            // 
+            // tlmasach
+            // 
+            this.tlmasach.HeaderText = "mã sách";
+            this.tlmasach.MinimumWidth = 6;
+            this.tlmasach.Name = "tlmasach";
+            this.tlmasach.Width = 60;
+            // 
+            // tltensach
+            // 
+            this.tltensach.HeaderText = "tên sách";
+            this.tltensach.MinimumWidth = 6;
+            this.tltensach.Name = "tltensach";
+            this.tltensach.Width = 200;
+            // 
+            // tltinhtrang
+            // 
+            this.tltinhtrang.HeaderText = "tình trạng";
+            this.tltinhtrang.MinimumWidth = 6;
+            this.tltinhtrang.Name = "tltinhtrang";
+            this.tltinhtrang.Width = 200;
+            // 
+            // tlptgia
+            // 
+            this.tlptgia.HeaderText = "phần trăm giá";
+            this.tlptgia.MinimumWidth = 6;
+            this.tlptgia.Name = "tlptgia";
+            this.tlptgia.Width = 60;
+            // 
+            // tlsoluong
+            // 
+            this.tlsoluong.HeaderText = "số lượng";
+            this.tlsoluong.MinimumWidth = 6;
+            this.tlsoluong.Name = "tlsoluong";
+            this.tlsoluong.Width = 60;
+            // 
+            // tlthanhtien
+            // 
+            this.tlthanhtien.HeaderText = "thành tiền";
+            this.tlthanhtien.MinimumWidth = 6;
+            this.tlthanhtien.Name = "tlthanhtien";
+            this.tlthanhtien.Width = 125;
+            // 
+            // tldongia
+            // 
+            this.tldongia.HeaderText = "đơn giá";
+            this.tldongia.MinimumWidth = 6;
+            this.tldongia.Name = "tldongia";
+            this.tldongia.Width = 60;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // QuanLiThuVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -4033,9 +4042,9 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox3.PerformLayout();
             this.TKquahan.ResumeLayout(false);
             this.TKquahan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).EndInit();
             this.ResumeLayout(false);
 
         }
