@@ -167,7 +167,7 @@ namespace LuuCongQuangVu_Nhom13
                 Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
                 if (acc == null)
                 {
-                    GetError.SetError(txtTaiKhoan, "Tài khoản này đã tồn tại!");
+                    GetError.SetError(txtTaiKhoan, "Không có tên tài khoản này!");
                     txtTaiKhoan.Focus();
                     txtTaiKhoan.SelectAll();
                     return false;
@@ -368,6 +368,7 @@ namespace LuuCongQuangVu_Nhom13
                     dbcontext.Accounts.Add(acc);
                     dbcontext.SaveChanges();
                     ReadFile();
+                    clear();
                 }
             }
             else if (lbThongBao.Text == btnSua.Text)
@@ -396,6 +397,7 @@ namespace LuuCongQuangVu_Nhom13
                         dbcontext.Accounts.Remove(acc);
                         dbcontext.SaveChanges();
                         ReadFile();
+                        clear();
                     }
                     else
                     {
