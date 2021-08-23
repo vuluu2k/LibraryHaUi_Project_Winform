@@ -63,7 +63,6 @@ insert into Sach values('S001', N'Lập trình Android', N'Phạm Quốc Vương
 insert into Sach values('S002', N'Lập trình C#', N'Lưu Công Quang Vũ', 15, 'T005', 80000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
 insert into Sach values('S003', N'Lập trình Java', N'Đỗ Viết Nam', 20, 'T005', 120000, N'HaUi', N'CS3-Tp.Phủ Lý-Hà Nam')
 insert into Sach values('S004', N'Lập trình Ruby', N'Lê Văn Thành', 16, 'T005', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S004', N'Lập trình hướng đối tượng', N'Bùi Công Nam', 16, 'T005', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
 insert into Sach values('S005', N'Kinh tế lượng', N'Trân Anh Toan', 16, 'T002', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
 insert into Sach values('S006', N'Thị trường chứng khoán', N'Hoàng Anh', 10, 'T002', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
 go
@@ -71,8 +70,8 @@ create table Muontrasach(
 	Iddocgia char(4),
 	Idsach char(4),
 	primary key(Iddocgia, Idsach),
-	constraint fk_idsach foreign key(Idsach) references sach(Idsach),
-	constraint fk_iddocgia foreign key(Iddocgia) references docgia(Iddocgia),
+	constraint fk_idsach foreign key(Idsach) references Sach(Idsach),
+	constraint fk_iddocgia foreign key(Iddocgia) references Docgia(Iddocgia),
 	Soluongmuon int,
 	Ngaymuon datetime,
 	Ngayhentra datetime,
@@ -83,7 +82,7 @@ insert into Muontrasach values('D001', 'S001',2, '2021/01/10', '2021/01/20', '20
 insert into Muontrasach values('D002', 'S001',3, '2021/01/7', '2021/01/15', '2021/01/13')
 insert into Muontrasach values('D003', 'S003',3, '2021/01/9', '2021/01/14', '2021/01/14')
 insert into Muontrasach values('D004', 'S001',3, '2021/01/9', '2021/01/14', '2021/01/14')
-insert into Muontrasach values('D005', 'S002',3, '2021/01/9', '2021/01/14', '2021/01/14')
+insert into Muontrasach values('GV05', 'S002',3, '2021/01/9', '2021/01/14', '2021/01/14')
 go
 create table HoaDon(
 	MaHD char(4) primary key,
