@@ -27,12 +27,13 @@ namespace LuuCongQuangVu_Nhom13.Models
         public virtual DbSet<PhongDoc> PhongDocs { get; set; }
         public virtual DbSet<Sach> Saches { get; set; }
         public virtual DbSet<Thanhlisach> Thanhlisaches { get; set; }
+        public virtual DbSet<Theloai> Theloais { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-CMV45C1\\SQLEXPRESS;Initial Catalog=QLThuVien;Integrated Security=True");
             }
         }
@@ -44,13 +45,13 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.Usename)
-                    .HasName("PK__Account__813EFC5DE0B9E3C5");
+                    .HasName("PK__Account__813EFC5D19F17139");
             });
 
             modelBuilder.Entity<Docgium>(entity =>
             {
                 entity.HasKey(e => e.Iddocgia)
-                    .HasName("PK__Docgia__0646586F0B385C03");
+                    .HasName("PK__Docgia__0646586FB565D99A");
 
                 entity.Property(e => e.Iddocgia)
                     .IsUnicode(false)
@@ -62,7 +63,7 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<HoaDon>(entity =>
             {
                 entity.HasKey(e => e.MaHd)
-                    .HasName("PK__HoaDon__2725A6E0D357A181");
+                    .HasName("PK__HoaDon__2725A6E0095EE713");
 
                 entity.Property(e => e.MaHd)
                     .IsUnicode(false)
@@ -72,21 +73,25 @@ namespace LuuCongQuangVu_Nhom13.Models
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
+                entity.Property(e => e.Idgiangvien)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.IddocgiaNavigation)
                     .WithMany(p => p.HoaDons)
                     .HasForeignKey(d => d.Iddocgia)
-                    .HasConstraintName("FK__HoaDon__Iddocgia__2F10007B");
+                    .HasConstraintName("FK__HoaDon__Iddocgia__31EC6D26");
 
                 entity.HasOne(d => d.UsenameNavigation)
                     .WithMany(p => p.HoaDons)
                     .HasForeignKey(d => d.Usename)
-                    .HasConstraintName("FK__HoaDon__Usename__2E1BDC42");
+                    .HasConstraintName("FK__HoaDon__Usename__30F848ED");
             });
 
             modelBuilder.Entity<HoaDonChiTiet>(entity =>
             {
                 entity.HasKey(e => new { e.Idsach, e.MaHd })
-                    .HasName("PK__HoaDonCh__A47A85FF41369892");
+                    .HasName("PK__HoaDonCh__A47A85FF04456D26");
 
                 entity.Property(e => e.Idsach)
                     .IsUnicode(false)
@@ -112,7 +117,7 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<HoaDonThanhLi>(entity =>
             {
                 entity.HasKey(e => e.MaHdtl)
-                    .HasName("PK__HoaDonTh__141754D300EAC5FE");
+                    .HasName("PK__HoaDonTh__141754D3EDC68658");
 
                 entity.Property(e => e.MaHdtl)
                     .IsUnicode(false)
@@ -121,13 +126,13 @@ namespace LuuCongQuangVu_Nhom13.Models
                 entity.HasOne(d => d.UsenameNavigation)
                     .WithMany(p => p.HoaDonThanhLis)
                     .HasForeignKey(d => d.Usename)
-                    .HasConstraintName("FK__HoaDonTha__Usena__3C69FB99");
+                    .HasConstraintName("FK__HoaDonTha__Usena__3F466844");
             });
 
             modelBuilder.Entity<Muontrasach>(entity =>
             {
                 entity.HasKey(e => new { e.Iddocgia, e.Idsach })
-                    .HasName("PK__Muontras__0D26D596C088E9DA");
+                    .HasName("PK__Muontras__0D26D5962356F757");
 
                 entity.Property(e => e.Iddocgia)
                     .IsUnicode(false)
@@ -153,7 +158,7 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<Muontrataicho>(entity =>
             {
                 entity.HasKey(e => new { e.Iddocgia, e.Idsach, e.Idphongdoc })
-                    .HasName("PK__Muontrat__16E00B353E8E71B3");
+                    .HasName("PK__Muontrat__16E00B35FA777A24");
 
                 entity.Property(e => e.Iddocgia)
                     .IsUnicode(false)
@@ -189,7 +194,7 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<PhongDoc>(entity =>
             {
                 entity.HasKey(e => e.Idphongdoc)
-                    .HasName("PK__PhongDoc__C6DEA31ACC85CFFF");
+                    .HasName("PK__PhongDoc__C6DEA31AF78A377D");
 
                 entity.Property(e => e.Idphongdoc)
                     .IsUnicode(false)
@@ -199,17 +204,26 @@ namespace LuuCongQuangVu_Nhom13.Models
             modelBuilder.Entity<Sach>(entity =>
             {
                 entity.HasKey(e => e.Idsach)
-                    .HasName("PK__Sach__B608DF913560F497");
+                    .HasName("PK__Sach__B608DF91A104C32A");
 
                 entity.Property(e => e.Idsach)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.Idtheloai)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.IdtheloaiNavigation)
+                    .WithMany(p => p.Saches)
+                    .HasForeignKey(d => d.Idtheloai)
+                    .HasConstraintName("fk_idtheloai");
             });
 
             modelBuilder.Entity<Thanhlisach>(entity =>
             {
                 entity.HasKey(e => new { e.Idsach, e.MaHdtl })
-                    .HasName("PK__Thanhlis__9749AADCE51A2DAE");
+                    .HasName("PK__Thanhlis__9749AADC8D5231FF");
 
                 entity.Property(e => e.Idsach)
                     .IsUnicode(false)
@@ -230,6 +244,16 @@ namespace LuuCongQuangVu_Nhom13.Models
                     .HasForeignKey(d => d.MaHdtl)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("mahdtl");
+            });
+
+            modelBuilder.Entity<Theloai>(entity =>
+            {
+                entity.HasKey(e => e.Idtheloai)
+                    .HasName("PK__Theloai__F9AEA238B704CC13");
+
+                entity.Property(e => e.Idtheloai)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
             });
 
             OnModelCreatingPartial(modelBuilder);

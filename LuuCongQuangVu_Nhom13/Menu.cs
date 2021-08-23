@@ -13,23 +13,11 @@ namespace LuuCongQuangVu_Nhom13
 {
     public partial class QuanLiThuVien : Form
     {
+        #region Lưu Công Quang Vũ
         #region Common
         Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
-        int index=0;
-        String laster_hd="";
+        int index = 0;
         public int slmua;
-        private void RefeshInforHD()
-        {
-            cbTimKiemMaHD.DataSource = dbcontext.HoaDons.ToList();
-            cbTimKiemMaHD.DisplayMember = "MaHD";
-            cbTimKiemMaHD.ValueMember = "MaHD";
-        }
-        private void RefeshMaDG()
-        {
-            cbMaDG.DataSource = dbcontext.Docgia.ToList();
-            cbMaDG.DisplayMember = "Iddocgia";
-            cbMaDG.ValueMember = "Iddocgia";
-        }
         private void InCbTenSach()
         {
             cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
@@ -42,6 +30,12 @@ namespace LuuCongQuangVu_Nhom13
             cbMaSach_lhd.DisplayMember = "Idsach";
             cbMaSach_lhd.ValueMember = "Idsach";
         }
+        private void CbTheLoai()
+        {
+            cbTheLoaiSach.DataSource = dbcontext.Theloais.ToList();
+            cbTheLoaiSach.DisplayMember = "Tentheloai";
+            cbTheLoaiSach.ValueMember = "Idtheloai";
+        }
         #endregion
         public QuanLiThuVien()
         {
@@ -50,21 +44,26 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void QuanLiThuVien_Load(object sender, EventArgs e)
         {
-            if (this.Text == "Admin") btnAdmin.Visible = true;
+            CbTheLoai();
+            rdByPersonal.Checked = true;
             rdInCbTenSach.Checked = true;
+            rdAllHistory.Checked = true;
             InCbTenSach();
-            RefeshMaDG();
-            RefeshInforHD();
-            //Models.Account acc = (Models.Account)this.Tag;
+            Models.Account acc = (Models.Account)this.Tag;
+            if(acc.Capdo=="Nhân viên")
+            {
+                MainTabCT.TabPages.Remove(tabQuanLiTaiKhoan);
+            }
+            txtNguoiLapLHD.Text = acc.Tenchutaikhoan;
             //MessageBox.Show(acc.Usename);
             //MessageBox.Show(dgvLHD.RowCount.ToString());
-
             //load combobox thể loại sách
             load_tkcbbthloai();
             //load combobox mã sách
             load_cbbmasach();
+            txtMaHD.Text = RandomCodeHD();
 
-
+            cbReadFileDG.Text = "Tất cả";
             
             loadIDPhong(cbbidphongmuontra);
             loadIDSach(cbbidsachmuontra);
@@ -129,11 +128,6 @@ namespace LuuCongQuangVu_Nhom13
             }
         }
 
-        private void btnAdmin_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            new Admin().Show();
-        }
         #endregion
         #region Xư lý lỗi quản lí sách
         private void txtmasach_Validated(object sender, EventArgs e)
@@ -158,7 +152,7 @@ namespace LuuCongQuangVu_Nhom13
 
         private void txttheloai_Validated(object sender, EventArgs e)
         {
-            GetError.SetError(txttheloai, "");
+            GetError.SetError(cbTheLoaiSach, "");
         }
 
         private void txtgiasach_Validated(object sender, EventArgs e)
@@ -241,10 +235,10 @@ namespace LuuCongQuangVu_Nhom13
                     return false;
                 }
             }
-            if (txttheloai.Text == "")
+            if (cbTheLoaiSach.Text == "")
             {
-                GetError.SetError(txttheloai, "Bạn phải nhập thể loại!");
-                txttheloai.Focus();
+                GetError.SetError(cbTheLoaiSach, "Bạn phải chọn thể loại!");
+                cbTheLoaiSach.Focus();
                 return false;
             }
             if (txtgiasach.Text == "")
@@ -354,10 +348,10 @@ namespace LuuCongQuangVu_Nhom13
                     return false;
                 }
             }
-            if (txttheloai.Text == "")
+            if (cbTheLoaiSach.Text == "")
             {
-                GetError.SetError(txttheloai, "Bạn phải nhập thể loại!");
-                txttheloai.Focus();
+                GetError.SetError(cbTheLoaiSach, "Bạn phải chọn thể loại!");
+                cbTheLoaiSach.Focus();
                 return false;
             }
             if (txtgiasach.Text == "")
@@ -431,10 +425,6 @@ namespace LuuCongQuangVu_Nhom13
             GetError.SetError(txtDiaChiDocGia, "");
         }
 
-        private void txtNgheNhiep_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(txtNgheNhiep, "");
-        }
 
         private void txtSDT_DocGia_Validated(object sender, EventArgs e)
         {
@@ -442,6 +432,12 @@ namespace LuuCongQuangVu_Nhom13
         }
         private bool Validate_ManageReader()
         {
+            if (rdStudents.Checked == false && rdTeachers.Checked == false)
+            {
+                //MessageBox.Show("Bạn chưa chọn loại độc giả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                GetError.SetError(gbloaiDG, "Bạn chưa chọn loại độc giả!");
+                return false;
+            }
             if (txtMaDocGia.Text == "")
             {
                 GetError.SetError(txtMaDocGia, "Bạn phải nhập mã độc giả!");
@@ -484,12 +480,6 @@ namespace LuuCongQuangVu_Nhom13
                 txtDiaChiDocGia.Focus();
                 return false;
             }
-            if (txtNgheNhiep.Text == "")
-            {
-                GetError.SetError(txtNgheNhiep, "Bạn phải nhập nghề nghiệp độc giả!");
-                txtNgheNhiep.Focus();
-                return false;
-            }
             if (txtSDT_DocGia.Text == "")
             {
                 GetError.SetError(txtSDT_DocGia, "Bạn phải nhập số điện thoại độc giả!");
@@ -521,6 +511,12 @@ namespace LuuCongQuangVu_Nhom13
         }
         private bool Validate_ManageReader1()
         {
+            if (rdStudents.Checked == false && rdTeachers.Checked == false)
+            {
+                //MessageBox.Show("Bạn chưa chọn loại độc giả", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                GetError.SetError(gbloaiDG, "Bạn chưa chọn loại độc giả!");
+                return false;
+            }
             if (txtMaDocGia.Text == "")
             {
                 GetError.SetError(txtMaDocGia, "Bạn phải nhập mã độc giả!");
@@ -563,12 +559,6 @@ namespace LuuCongQuangVu_Nhom13
                 txtDiaChiDocGia.Focus();
                 return false;
             }
-            if (txtNgheNhiep.Text == "")
-            {
-                GetError.SetError(txtNgheNhiep, "Bạn phải nhập nghề nghiệp độc giả!");
-                txtNgheNhiep.Focus();
-                return false;
-            }
             if (txtSDT_DocGia.Text == "")
             {
                 GetError.SetError(txtSDT_DocGia, "Bạn phải nhập số điện thoại độc giả!");
@@ -602,7 +592,7 @@ namespace LuuCongQuangVu_Nhom13
         }
         private bool CheckRadionReader()
         {
-            if (rdMaDG.Checked == false && rdTenDG.Checked == false && rdNgaySinhDG.Checked == false && rdDiaChiDG.Checked == false && rdNgheNghiepDG.Checked == false && rdSDT_DG.Checked == false)
+            if (rdMaDG.Checked == false && rdTenDG.Checked == false && rdNgaySinhDG.Checked == false && rdDiaChiDG.Checked == false && rdSDT_DG.Checked == false)
             {
                 MessageBox.Show("Bạn chưa chọn nút tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
@@ -611,15 +601,20 @@ namespace LuuCongQuangVu_Nhom13
         }
         #endregion
         #region Xử lý lỗi lập hoá đơn
+        private void txtMaSVLHD_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtMaSVLHD, "");
+        }
+
+        private void txtMaGVLHD_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtMaGVLHD, "");
+        }
         private void txtMaHD_Validated(object sender, EventArgs e)
         {
             GetError.SetError(txtMaHD, "");
         }
 
-        private void cbMaDG_Validated(object sender, EventArgs e)
-        {
-            GetError.SetError(cbMaDG, "");
-        }
 
         private void dtimeNgayLap_Validated(object sender, EventArgs e)
         {
@@ -637,52 +632,79 @@ namespace LuuCongQuangVu_Nhom13
         }
         private bool Validate_LHD_InforHD()
         {
-            if (txtMaHD.Text == "")
+            //if (txtMaHD.Text == "")
+            //{
+            //    GetError.SetError(txtMaHD, "Bạn phải nhập mã hoá đơn!");
+            //    txtMaHD.Focus();
+            //    return false;
+            //}
+            //else
+            //{
+            //    Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == txtMaHD.Text select h).FirstOrDefault();
+            //    if (txtMaHD.Text.Length > 4)
+            //    {
+            //        GetError.SetError(txtMaHD, "Mã hoá đơn chỉ cho phép tối đa 4 kí tự!");
+            //        txtMaHD.Focus();
+            //        txtMaHD.SelectAll();
+            //        return false;
+            //    }
+            //    if (hd != null)
+            //    {
+            //        GetError.SetError(txtMaHD, "Trùng mã hoá đơn, vui lòng nhập mã hoá đơn khác!");
+            //        txtMaHD.Focus();
+            //        txtMaHD.SelectAll();
+            //        return false;
+            //    }
+            //}
+            if (rdByFollowClass.Checked)
             {
-                GetError.SetError(txtMaHD, "Bạn phải nhập mã hoá đơn!");
-                txtMaHD.Focus();
-                return false;
-            }
-            else
-            {
-                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == txtMaHD.Text select h).FirstOrDefault();
-                if (txtMaHD.Text.Length > 4)
+                if (txtMaSVLHD.Text == "")
                 {
-                    GetError.SetError(txtMaHD, "Mã hoá đơn chỉ cho phép tối đa 4 kí tự!");
-                    txtMaHD.Focus();
-                    txtMaHD.Select();
+                    GetError.SetError(txtMaSVLHD, "Bạn phải nhập mã sinh viên!");
+                    txtMaSVLHD.Focus();
                     return false;
                 }
-                if (hd != null)
+                else
                 {
-                    GetError.SetError(txtMaHD, "Trùng mã hoá đơn, vui lòng nhập mã hoá đơn khác!");
-                    txtMaHD.Focus();
-                    txtMaHD.Select();
+                    Models.Docgium masv = (from code in dbcontext.Docgia where code.Iddocgia == txtMaSVLHD.Text && code.Nghenghiep == "Sinh viên" select code).FirstOrDefault();
+                    if (txtMaSVLHD.Text.Length > 4)
+                    {
+                        GetError.SetError(txtMaSVLHD, "Mã sinh viên chỉ cho phép tối đa 4 kí tự!");
+                        txtMaSVLHD.Focus();
+                        txtMaSVLHD.SelectAll();
+                        return false;
+                    }
+                    if (masv == null)
+                    {
+                        GetError.SetError(txtMaSVLHD, "Mã sinh viên này không tồn tại!");
+                        txtMaSVLHD.Focus();
+                        txtMaSVLHD.SelectAll();
+                        return false;
+                    }
+                }
+                if (txtMaGVLHD.Text == "")
+                {
+                    GetError.SetError(txtMaGVLHD, "Bạn phải nhập mã giảng viên!");
+                    txtMaGVLHD.Focus();
                     return false;
                 }
-            }
-            if (cbMaDG.Text == "")
-            {
-                GetError.SetError(cbMaDG, "Bạn phải nhập hoặc chọn mã độc giả!");
-                cbMaDG.Focus();
-                return false;
-            }
-            else
-            {
-                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == cbMaDG.Text select d).FirstOrDefault();
-                if (cbMaDG.Text.Length > 4)
+                else
                 {
-                    GetError.SetError(cbMaDG, "Mã độc giả chỉ tối đa 4 kí tự!");
-                    cbMaDG.Focus();
-                    cbMaDG.SelectAll();
-                    return false;
-                }
-                else if (dg == null)
-                {
-                    GetError.SetError(cbMaDG, "Mã độc giả không tồn tại");
-                    txtMaDocGia.Focus();
-                    txtMaDocGia.SelectAll();
-                    return false;
+                    Models.Docgium magv = (from code in dbcontext.Docgia where code.Iddocgia == txtMaGVLHD.Text && code.Nghenghiep=="Giảng viên" select code).FirstOrDefault();
+                    if (txtMaSVLHD.Text.Length > 4)
+                    {
+                        GetError.SetError(txtMaGVLHD, "Mã sinh viên chỉ cho phép tối đa 4 kí tự!");
+                        txtMaGVLHD.Focus();
+                        txtMaGVLHD.SelectAll();
+                        return false;
+                    }
+                    if (magv == null)
+                    {
+                        GetError.SetError(txtMaGVLHD, "Mã giảng viên này không tồn tại!");
+                        txtMaGVLHD.Focus();
+                        txtMaGVLHD.SelectAll();
+                        return false;
+                    }
                 }
             }
             if (dtimeNgayLap.Value > DateTime.Now)
@@ -824,12 +846,13 @@ namespace LuuCongQuangVu_Nhom13
                     dgvSach.ColumnCount = 8;
                     for (int i = 0; i < list_sach.Count(); i++)
                     {
+                        String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                         dgvSach.Rows.Add();
                         dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                         dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                         dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                         dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                        dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                        dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                         dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                         dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                         dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -850,7 +873,7 @@ namespace LuuCongQuangVu_Nhom13
                 sach.Tensach = txttensach.Text;
                 sach.Tacgia = txttacgia.Text;
                 sach.Soluong = int.Parse(txtsoluong.Text);
-                sach.Theloai = txttheloai.Text;
+                sach.Idtheloai = cbTheLoaiSach.SelectedValue.ToString();
                 sach.Giasach = double.Parse(txtgiasach.Text);
                 sach.Nhaxuatban = txtnhasx.Text;
                 sach.Vitri = cbvitri.Text;
@@ -912,7 +935,7 @@ namespace LuuCongQuangVu_Nhom13
                 sach.Tensach = txttensach.Text;
                 sach.Tacgia = txttacgia.Text;
                 sach.Soluong = int.Parse(txtsoluong.Text);
-                sach.Theloai = label.Text;
+                sach.Idtheloai = cbTheLoaiSach.SelectedValue.ToString(); 
                 sach.Giasach = double.Parse(txtgiasach.Text);
                 sach.Nhaxuatban = txtnhasx.Text;
                 sach.Vitri = cbvitri.Text;
@@ -939,12 +962,13 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.ColumnCount = 8;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
+                            String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                             dgvSach.Rows.Add();
                             dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                             dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                             dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                            dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                            dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                             dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                             dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -969,12 +993,13 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.ColumnCount = 8;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
+                            String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                             dgvSach.Rows.Add();
                             dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                             dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                             dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                            dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                            dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                             dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                             dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -999,12 +1024,13 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.ColumnCount = 8;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
+                            String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                             dgvSach.Rows.Add();
                             dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                             dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                             dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                            dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                            dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                             dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                             dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -1020,7 +1046,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Theloai == txttheloai.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Theloai == txtSearchBook.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Idtheloai == txtSearchBook.Text select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
@@ -1029,12 +1055,13 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.ColumnCount = 8;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
+                            String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                             dgvSach.Rows.Add();
                             dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                             dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                             dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                            dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                            dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                             dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                             dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -1059,12 +1086,13 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.ColumnCount = 8;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
+                            String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                             dgvSach.Rows.Add();
                             dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                             dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                             dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                            dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                            dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                             dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                             dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -1089,12 +1117,13 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.ColumnCount = 8;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
+                            String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
                             dgvSach.Rows.Add();
                             dgvSach.Rows[i].Cells[0].Value = list_sach[i].Idsach;
                             dgvSach.Rows[i].Cells[1].Value = list_sach[i].Tensach;
                             dgvSach.Rows[i].Cells[2].Value = list_sach[i].Tacgia;
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
-                            dgvSach.Rows[i].Cells[4].Value = list_sach[i].Theloai;
+                            dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
                             dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
                             dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
@@ -1113,7 +1142,7 @@ namespace LuuCongQuangVu_Nhom13
             txttensach.Clear();
             txttacgia.Clear();
             txtsoluong.Clear();
-            txttheloai.Clear();
+            cbTheLoaiSach.SelectedIndex=-1;
             txtgiasach.Clear();
             txtnhasx.Clear();
             cbvitri.SelectedIndex=-1;
@@ -1156,7 +1185,7 @@ namespace LuuCongQuangVu_Nhom13
             txttensach.Text = Convert.ToString(row.Cells[1].Value);
             txttacgia.Text = Convert.ToString(row.Cells[2].Value);
             txtsoluong.Text = Convert.ToString(row.Cells[3].Value);
-            txttheloai.Text = Convert.ToString(row.Cells[4].Value);
+            cbTheLoaiSach.Text = Convert.ToString(row.Cells[4].Value);
             txtgiasach.Text = Convert.ToString(row.Cells[5].Value);
             txtnhasx.Text = Convert.ToString(row.Cells[6].Value);
             cbvitri.Text = Convert.ToString(row.Cells[7].Value);
@@ -1164,8 +1193,21 @@ namespace LuuCongQuangVu_Nhom13
         #endregion
         #region Quản lí độc giả
         //------------------Quản lí độc giả--------------------------------------------------------------------------------------------------------------------
-        private void ReadFileReader()
+        private void rdStudents_CheckedChanged(object sender, EventArgs e)
         {
+            lbmadocgia.Text = "Mã sinh viên";
+            lbtendocgia.Text = "Tên sinh viên";
+        }
+
+        private void rdTeachers_CheckedChanged(object sender, EventArgs e)
+        {
+            lbmadocgia.Text = "Mã giảng viên";
+            lbtendocgia.Text = "Tên giảng viên";
+        }
+        private void ReadFileReaderAll()
+        {
+            dgvDocGia.Columns[0].HeaderText = "Mã";
+            dgvDocGia.Columns[1].HeaderText = "Họ tên";
             //using var dbcontext = new Models.QLThuVienContext();
             var list_docgia = dbcontext.Docgia.ToList();
             if (list_docgia != null)
@@ -1179,12 +1221,71 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows.Add();
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
+                        //dgvDocGia.Rows[i].Cells[2].Value = String.Format("{0:dd/MM/yyyy}",docgia.NgaySinh.Value);
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
                         i++;
                     }
+            }
+            else
+            {
+                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void ReadFileReaderStudents()
+        {
+            dgvDocGia.Columns[0].HeaderText = "Mã sinh viên";
+            dgvDocGia.Columns[1].HeaderText = "Tên sinh viên";
+            //using var dbcontext = new Models.QLThuVienContext();
+            var list_docgia = (from dg in dbcontext.Docgia where dg.Nghenghiep == "Sinh viên" select dg).ToList();
+            if (list_docgia != null)
+            {
+                dgvDocGia.Rows.Clear();
+                dgvDocGia.ColumnCount = 6;
+                lbSluongDG.Text = list_docgia.Count().ToString();
+                int i = 0;
+                foreach (var docgia in list_docgia)
+                {
+                    dgvDocGia.Rows.Add();
+                    dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
+                    dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
+                    dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
+                    dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
+                    dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
+                    dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
+                    i++;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void ReadFileReaderTeachers()
+        {
+            dgvDocGia.Columns[0].HeaderText = "Mã giảng viên";
+            dgvDocGia.Columns[1].HeaderText = "Tên giảng viên";
+            //using var dbcontext = new Models.QLThuVienContext();
+            var list_docgia = (from dg in dbcontext.Docgia where dg.Nghenghiep == "Giảng viên" select dg).ToList();
+            if (list_docgia != null)
+            {
+                dgvDocGia.Rows.Clear();
+                dgvDocGia.ColumnCount = 6;
+                lbSluongDG.Text = list_docgia.Count().ToString();
+                int i = 0;
+                foreach (var docgia in list_docgia)
+                {
+                    dgvDocGia.Rows.Add();
+                    dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
+                    dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
+                    dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
+                    dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
+                    dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
+                    dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
+                    i++;
+                }
             }
             else
             {
@@ -1200,11 +1301,25 @@ namespace LuuCongQuangVu_Nhom13
                 docgia.Hoten = txtTenDocGia.Text;
                 docgia.NgaySinh = dateDocGia.Value;
                 docgia.Diachi = txtDiaChiDocGia.Text;
-                docgia.Nghenghiep = txtNgheNhiep.Text;
+                if (rdStudents.Checked)
+                {
+                    docgia.Nghenghiep = rdStudents.Text;
+                }
+                else
+                {
+                    docgia.Nghenghiep = rdTeachers.Text;
+                }
                 docgia.Sodienthoai = txtSDT_DocGia.Text;
                 dbcontext.Docgia.Add(docgia);
                 dbcontext.SaveChanges();
-                ReadFileReader();
+                if (rdStudents.Checked)
+                {
+                    ReadFileReaderStudents();
+                }
+                else if(rdTeachers.Checked)
+                {
+                    ReadFileReaderTeachers();
+                }
                 ClearReader();
             }
         }
@@ -1246,7 +1361,14 @@ namespace LuuCongQuangVu_Nhom13
                     }
                     dbcontext.Docgia.Remove(id);
                     dbcontext.SaveChanges();
-                    ReadFileReader();
+                    if (rdStudents.Checked)
+                    {
+                        ReadFileReaderStudents();
+                    }
+                    else
+                    {
+                        ReadFileReaderTeachers();
+                    }
                     ClearReader();
                 }
                 else
@@ -1265,10 +1387,24 @@ namespace LuuCongQuangVu_Nhom13
                 id.Hoten = txtTenDocGia.Text;
                 id.NgaySinh = dateDocGia.Value;
                 id.Diachi = txtDiaChiDocGia.Text;
-                id.Nghenghiep = txtNgheNhiep.Text;
+                if (rdStudents.Checked)
+                {
+                    id.Nghenghiep = rdStudents.Text;
+                }
+                else
+                {
+                    id.Nghenghiep = rdTeachers.Text;
+                }
                 id.Sodienthoai = txtSDT_DocGia.Text;
+                if (rdStudents.Checked)
+                {
+                    ReadFileReaderStudents();
+                }
+                else
+                {
+                    ReadFileReaderTeachers();
+                }
                 dbcontext.SaveChanges();
-                ReadFileReader();
             }
         }
         private void ClearReader()
@@ -1276,7 +1412,8 @@ namespace LuuCongQuangVu_Nhom13
             txtMaDocGia.Clear();
             txtTenDocGia.Clear();
             txtDiaChiDocGia.Clear();
-            txtNgheNhiep.Clear();
+            rdStudents.Checked = false;
+            rdTeachers.Checked = false;
             txtSDT_DocGia.Clear();
         }
         private void SearchReader()
@@ -1298,7 +1435,7 @@ namespace LuuCongQuangVu_Nhom13
                             dgvDocGia.Rows.Add();
                             dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                             dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
+                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
                             dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                             dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                             dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1325,7 +1462,7 @@ namespace LuuCongQuangVu_Nhom13
                             dgvDocGia.Rows.Add();
                             dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                             dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
+                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
                             dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                             dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                             dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1352,7 +1489,7 @@ namespace LuuCongQuangVu_Nhom13
                             dgvDocGia.Rows.Add();
                             dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                             dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
+                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
                             dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                             dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                             dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1379,34 +1516,7 @@ namespace LuuCongQuangVu_Nhom13
                             dgvDocGia.Rows.Add();
                             dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                             dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
-                            dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
-                            dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
-                            dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                else if (rdNgheNghiepDG.Checked)
-                {
-                    //using var dbcontext = new Models.QLThuVienContext();
-                    //var list_docgia = dbcontext.Docgia.Where(d => d.Nghenghiep == txtNgheNhiep.Text).ToList();
-                    var list_docgia = (from d in dbcontext.Docgia where d.Nghenghiep == txtSearchDG.Text select d).ToList();
-                    if (list_docgia != null)
-                    {
-                        dgvDocGia.Rows.Clear();
-                        dgvDocGia.ColumnCount = 6;
-                        int i = 0;
-                        foreach (var docgia in list_docgia)
-                        {
-                            dgvDocGia.Rows.Add();
-                            dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
-                            dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
+                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
                             dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                             dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                             dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1433,7 +1543,7 @@ namespace LuuCongQuangVu_Nhom13
                             dgvDocGia.Rows.Add();
                             dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                             dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value;
+                            dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
                             dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                             dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                             dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1449,7 +1559,22 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void btnReadDocGia_Click(object sender, EventArgs e)
         {
-            ReadFileReader();
+            if (cbReadFileDG.Text == "")
+            {
+                MessageBox.Show("Bạn chưa chọn dữ liệu hiển thị", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if(cbReadFileDG.Text=="Tất cả")
+            {
+                ReadFileReaderAll();
+            }
+            else if(cbReadFileDG.Text=="Sinh viên")
+            {
+                ReadFileReaderStudents();
+            }
+            else if (cbReadFileDG.Text == "Giảng viên")
+            {
+                ReadFileReaderTeachers();
+            }
         }
 
         private void btnThemDocGia_Click(object sender, EventArgs e)
@@ -1483,16 +1608,100 @@ namespace LuuCongQuangVu_Nhom13
             DataGridViewRow row = dgvDocGia.Rows[index];
             txtMaDocGia.Text = Convert.ToString(row.Cells[0].Value);
             txtTenDocGia.Text = Convert.ToString(row.Cells[1].Value);
-            dateDocGia.Value = Convert.ToDateTime(row.Cells[2].Value);
+            String[] time = (Convert.ToString(row.Cells[2].Value)).Split("-");
+            dateDocGia.Value = Convert.ToDateTime(time[2]+"-"+time[1]+"-"+time[0]);
             txtDiaChiDocGia.Text = Convert.ToString(row.Cells[3].Value);
-            txtNgheNhiep.Text = Convert.ToString(row.Cells[4].Value);
+            if (Convert.ToString(row.Cells[4].Value) == rdStudents.Text)
+            {
+                rdStudents.Checked = true;
+            }
+            else
+            {
+                rdTeachers.Checked = true;
+            }
             txtSDT_DocGia.Text = Convert.ToString(row.Cells[5].Value);
         }
         #endregion
         #region Quản lí bán sách
 
         #region Quản lí bán sách>Lập hoá đơn
+        private void rdByPersonal_CheckedChanged(object sender, EventArgs e)
+        {
+            lbMaSVLHD.Visible = false;
+            lbTenSVLHD.Visible = false;
+            lbMaGVLHD.Visible = false;
+            lbTenGVLHD.Visible = false;
+            txtMaSVLHD.Visible = false;
+            txtTenSVLHD.Visible = false;
+            txtMaGVLHD.Visible = false;
+            txtTenGVLHD.Visible = false;
+            lbMaSVLHD.Enabled = false;
+            lbTenSVLHD.Enabled = false;
+            lbMaGVLHD.Enabled = false;
+            lbTenGVLHD.Enabled = false;
+            txtMaSVLHD.Enabled = false;
+            txtTenSVLHD.Enabled = false;
+            txtMaGVLHD.Enabled = false;
+            txtTenGVLHD.Enabled = false;
+        }
 
+        private void rdByFollowClass_CheckedChanged(object sender, EventArgs e)
+        {
+            lbMaSVLHD.Visible = true;
+            lbTenSVLHD.Visible = true;
+            lbMaGVLHD.Visible = true;
+            lbTenGVLHD.Visible = true;
+            txtMaSVLHD.Visible = true;
+            txtTenSVLHD.Visible = true;
+            txtMaGVLHD.Visible = true;
+            txtTenGVLHD.Visible = true;
+            lbMaSVLHD.Enabled = true;
+            lbTenSVLHD.Enabled = true;
+            lbMaGVLHD.Enabled = true;
+            lbTenGVLHD.Enabled = true;
+            txtMaSVLHD.Enabled = true;
+            txtTenSVLHD.Enabled = false;
+            txtMaGVLHD.Enabled = true;
+            txtTenGVLHD.Enabled = false;
+        }
+        private string RandomCodeHD()
+        {
+            Random r = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            String Code;
+            do
+            {
+                Code = new string(Enumerable.Repeat(chars, 4).Select(s => s[r.Next(s.Length)]).ToArray());
+            }
+            while ((from hd in dbcontext.HoaDons where hd.MaHd == Code select hd.MaHd).ToList() == null);
+            return Code;
+        }
+
+        private void randomCodeHD_Click(object sender, EventArgs e)
+        {
+            txtMaHD.Text = RandomCodeHD();
+        }
+        private void TinhTongTienLHD()
+        {
+            double TongTien = 0;
+            for (int i = 0; i < dgvLHD.RowCount - 1; i++)
+            {
+                TongTien += Convert.ToDouble(dgvLHD.Rows[i].Cells[4].Value);
+            }
+            lbTongTienLHD.Text = TongTien.ToString();
+        }
+
+        private void txtMaSVLHD_TextChanged(object sender, EventArgs e)
+        {
+            String masv = txtMaSVLHD.Text;
+            txtTenSVLHD.Text = (from code in dbcontext.Docgia where code.Iddocgia == masv && code.Nghenghiep=="Sinh viên" select code.Hoten).FirstOrDefault();
+        }
+
+        private void txtMaGVLHD_TextChanged(object sender, EventArgs e)
+        {
+            String magv = txtMaGVLHD.Text;
+            txtTenGVLHD.Text = (from code in dbcontext.Docgia where code.Iddocgia == magv && code.Nghenghiep=="Giảng viên" select code.Hoten).FirstOrDefault();
+        }
         private void AddBookBuy()
         {
             if (Validate_LHD_InforBuyBook())
@@ -1579,45 +1788,95 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void CreateBill()
         {
-            if (Validate_LHD_InforHD())
+            if (rdByPersonal.Checked)
             {
-                Models.Account acc = (Models.Account)this.Tag;
-                Models.HoaDon hd = new Models.HoaDon();
-                hd.MaHd = txtMaHD.Text;
-                hd.Iddocgia = cbMaDG.Text;
-                hd.Usename = acc.Usename;
-                hd.NgayLap = dtimeNgayLap.Value;
-                dbcontext.HoaDons.Add(hd);
-                for (int i = 0; i < dgvLHD.RowCount-1; i++)
+                if (Validate_LHD_InforHD())
                 {
-                    //if (dgvLHD.Rows[i].Cells[0].Value == "")
-                    //{
-                    //    dgvLHD.Rows.RemoveAt(i);
-                    //}
-                    //MessageBox.Show(Convert.ToString(dgvLHD.Rows[i].Cells[0].Value));
+                    Models.Account acc = (Models.Account)this.Tag;
+                    Models.HoaDon hd = new Models.HoaDon();
+                    hd.MaHd = txtMaHD.Text;
+                    hd.Iddocgia = null;
+                    hd.Idgiangvien = null;
+                    hd.Usename = acc.Usename;
+                    hd.NgayLap = dtimeNgayLap.Value;
+                    dbcontext.HoaDons.Add(hd);
                     Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
-                    hdct.MaHd = hd.MaHd;
-                    hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
-                    hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach==hdct.Idsach select b).FirstOrDefault();
-                    book.Soluong = book.Soluong - hdct.SoLuongMua;
-                    dbcontext.HoaDonChiTiets.Add(hdct);
+                    for (int i = 0; i < dgvLHD.RowCount-1; i++)
+                    {
+                        hdct.MaHd = hd.MaHd;
+                        hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
+                        hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
+                        Models.Sach book = (from b in dbcontext.Saches where b.Idsach==hdct.Idsach select b).FirstOrDefault();
+                        book.Soluong = book.Soluong - hdct.SoLuongMua;
+                        dbcontext.HoaDonChiTiets.Add(hdct);
+                    }
+                    DialogCustomerPay PayCustomer = new DialogCustomerPay();
+                    PayCustomer.Tag = lbTongTienLHD.Text;
+                    PayCustomer.ShowDialog();
+                    if (PayCustomer.DialogResult == DialogResult.OK) 
+                    {
+                        MessageBox.Show("Thanh toán thành công", "Thông báo");
+                        dbcontext.SaveChanges();
+                        ClearALl();
+                    }
+                    else
+                    {
+                        dbcontext.HoaDons.Remove(hd);
+                        dbcontext.HoaDonChiTiets.Remove(hdct);
+                    }
                 }
-                dbcontext.SaveChanges();
-                MessageBox.Show("Lập hoá đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                laster_hd = txtMaHD.Text;
-                ClearALl();
+            }
+            else
+            {
+                if (Validate_LHD_InforHD())
+                {
+                    Models.Account acc = (Models.Account)this.Tag;
+                    Models.HoaDon hd = new Models.HoaDon();
+                    hd.MaHd = txtMaHD.Text;
+                    hd.Iddocgia = txtMaSVLHD.Text;
+                    hd.Idgiangvien = txtMaGVLHD.Text;
+                    hd.Usename = acc.Usename;
+                    hd.NgayLap = dtimeNgayLap.Value;
+                    dbcontext.HoaDons.Add(hd);
+                    Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
+                    for (int i = 0; i < dgvLHD.RowCount - 1; i++)
+                    {
+                        hdct.MaHd = hd.MaHd;
+                        hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
+                        hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
+                        Models.Sach book = (from b in dbcontext.Saches where b.Idsach == hdct.Idsach select b).FirstOrDefault();
+                        book.Soluong = book.Soluong - hdct.SoLuongMua;
+                        dbcontext.HoaDonChiTiets.Add(hdct);
+                    }
+                    DialogCustomerPay PayCustomer = new DialogCustomerPay();
+                    PayCustomer.Tag = lbTongTienLHD.Text;
+                    PayCustomer.ShowDialog();
+                    if (PayCustomer.DialogResult == DialogResult.OK)
+                    {
+                        MessageBox.Show("Thanh toán thành công", "Thông báo");
+                        dbcontext.SaveChanges();
+                        ClearALl();
+                    }
+                    else
+                    {
+                        dbcontext.HoaDons.Remove(hd);
+                        dbcontext.HoaDonChiTiets.Remove(hdct);
+                    }
+                }
             }
         }
 
         private void ClearALl()
-        {
-            txtMaHD.Clear();
-            cbMaDG.SelectedIndex = -1;
+        {            
+            txtMaSVLHD.Clear();
+            txtTenSVLHD.Clear();
+            txtMaGVLHD.Clear();
+            txtTenGVLHD.Clear();
             dtimeNgayLap.Value = DateTime.Now;
-            cbMaSach_lhd.SelectedIndex = -1;
+            cbMaSach_lhd.Text="";
             txtsoluongmua_lhd.Clear();
             dgvLHD.Rows.Clear();
+            lbTongTienLHD.Text = "0";
         }
         private void ClearBookBuy()
         {
@@ -1636,14 +1895,17 @@ namespace LuuCongQuangVu_Nhom13
         private void btnThemSachMua_Click(object sender, EventArgs e)
         {
             AddBookBuy();
+            TinhTongTienLHD();
         }
         private void btnSuaSachMua_Click(object sender, EventArgs e)
         {
             UpdateBookBuy();
+            TinhTongTienLHD();
         }
         private void btnXoaSachMua_Click(object sender, EventArgs e)
         {
             DelBookBuy();
+            TinhTongTienLHD();
         }
         private void btnLapHD_Click(object sender, EventArgs e)
         {
@@ -1656,232 +1918,899 @@ namespace LuuCongQuangVu_Nhom13
         }
 
         #endregion
-        #region Quản lí bán sách>Thông tin hoá đơn độc giả
-        private void btnFirstHD_Click(object sender, EventArgs e)
-        {
-            //MessageBox.Show(laster_hd);
-            if (laster_hd != "")
-            {
-                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == laster_hd select h).FirstOrDefault();
-                var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == laster_hd select hct).ToList();
-                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == hd.Iddocgia select d).FirstOrDefault();
-                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == hd.Usename select a).FirstOrDefault();
-                lbInforMaHD.Text = hd.MaHd;
-                lbInforMaDG.Text = hd.Iddocgia;
-                lbInforNLap.Text = acc.Tenchutaikhoan;
-                lbNgayLap.Text = hd.NgayLap.ToString();
-                lbInforTenDG.Text = dg.Hoten;
-                dgvInforHD.Rows.Clear();
-                dgvInforHD.ColumnCount = 5;
-                int index_inforHD = 0;
-                double SumMoney = 0;
-                foreach(var item in hdct)
-                {
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == item.Idsach select b).FirstOrDefault();
-                    dgvInforHD.Rows.Add();
-                    dgvInforHD.Rows[index_inforHD].Cells[0].Value = item.Idsach;
-                    dgvInforHD.Rows[index_inforHD].Cells[1].Value = book.Tensach;
-                    dgvInforHD.Rows[index_inforHD].Cells[2].Value = item.SoLuongMua;
-                    dgvInforHD.Rows[index_inforHD].Cells[3].Value = book.Giasach;
-                    dgvInforHD.Rows[index_inforHD].Cells[4].Value = item.SoLuongMua * book.Giasach;
-                    SumMoney += item.SoLuongMua.Value*book.Giasach.Value;
-                    index_inforHD++;
-                }
-                lbTongTien.Text = SumMoney.ToString();
-            }
-            else
-            {
-                MessageBox.Show("Bạn chưa lập bất kì một hoá đơn nào từ kề lần đăng nhập gần nhất", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        private void btnInforXoa_Click(object sender, EventArgs e)
-        {
-            DialogResult confim = MessageBox.Show("Bạn muốn xoá hoá đơn trên", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (confim == DialogResult.Yes)
-            {
-                Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == lbInforMaHD.Text select h).FirstOrDefault();
-                var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == lbInforMaHD.Text select hct).ToList();
-                if (hd != null)
-                {
-                    if (hdct != null)
-                    {
-                        dbcontext.RemoveRange(hdct);
-                    }
-                    dbcontext.Remove(hd);
-                    dbcontext.SaveChanges();
-                    lbInforMaHD.Text = "";
-                    lbInforMaDG.Text = "";
-                    lbInforNLap.Text = "";
-                    lbInforTenDG.Text = "";
-                    lbNgayLap.Text = "";
-                    lbTongTien.Text = "0";
-                    dgvInforHD.Rows.Clear();
-                }
-                else
-                {
-                    MessageBox.Show("Không có mã hoá đơn này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);//not working because it always get id
-                }
-            }
-        }
-        
-        private void btnTimKiem_InforHD_Click(object sender, EventArgs e)
-        {
-            Models.HoaDon hd = (from h in dbcontext.HoaDons where h.MaHd == cbTimKiemMaHD.Text select h).FirstOrDefault();
-            if (hd != null)
-            {
-                var hdct = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == cbTimKiemMaHD.Text select hct).ToList();
-                Models.Docgium dg = (from d in dbcontext.Docgia where d.Iddocgia == hd.Iddocgia select d).FirstOrDefault();
-                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == hd.Usename select a).FirstOrDefault();
-                lbInforMaHD.Text = hd.MaHd;
-                lbInforMaDG.Text = hd.Iddocgia;
-                lbInforNLap.Text = acc.Tenchutaikhoan;
-                lbNgayLap.Text = hd.NgayLap.ToString();
-                lbInforTenDG.Text = dg.Hoten;
-                dgvInforHD.Rows.Clear();
-                dgvInforHD.ColumnCount = 5;
-                int index_inforHD = 0;
-                double SumMoney = 0;
-                foreach (var item in hdct)
-                {
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == item.Idsach select b).FirstOrDefault();
-                    dgvInforHD.Rows.Add();
-                    dgvInforHD.Rows[index_inforHD].Cells[0].Value = item.Idsach;
-                    dgvInforHD.Rows[index_inforHD].Cells[1].Value = book.Tensach;
-                    dgvInforHD.Rows[index_inforHD].Cells[2].Value = item.SoLuongMua;
-                    dgvInforHD.Rows[index_inforHD].Cells[3].Value = book.Giasach;
-                    dgvInforHD.Rows[index_inforHD].Cells[4].Value = item.SoLuongMua * book.Giasach;
-                    SumMoney += item.SoLuongMua.Value*book.Giasach.Value;
-                    index_inforHD++;
-                }
-                lbTongTien.Text = SumMoney.ToString();
-            }
-            else
-            {
-                MessageBox.Show("Không có mã hoá đơn này", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        #endregion
         #region Quản lí bán sách>Lịch sử bán sách
         private void btnDDLhistory_Click(object sender, EventArgs e)
         {
-            var hds = (from h in dbcontext.HoaDons
-                       join dg in dbcontext.Docgia on h.Iddocgia equals dg.Iddocgia
-                       join acc in dbcontext.Accounts on h.Usename equals acc.Usename
-                       select new
-                       {
-                           mahd = h.MaHd,
-                           madg = h.Iddocgia,
-                           tendg = dg.Hoten,
-                           nguoilap = acc.Tenchutaikhoan,
-                           ngaylap = h.NgayLap
-                       }).ToList();
-            dgvHistoryBS.Rows.Clear();
-            dgvHistoryBS.ColumnCount = 7;
-            int index_historybs = 0;
-            foreach (var item in hds)
+            if (rdAllHistory.Checked)
             {
-                var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
-                double SumMoney = 0;
-                foreach (var child_item in hdcts)
+                var hds = (from h in dbcontext.HoaDons
+                           join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           select new
+                           {
+                               mahd = h.MaHd,
+                               masv = h.Iddocgia,
+                               magv = h.Idgiangvien,
+                               nguoilap = acc.Tenchutaikhoan,
+                               ngaylap = h.NgayLap
+                           }).ToList();
+                dgvHistoryBS.Rows.Clear();
+                dgvHistoryBS.ColumnCount = 7;
+                int index_historybs = 0;
+                foreach (var item in hds)
                 {
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
-                    SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                    var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                    double SumMoney = 0;
+                    foreach (var child_item in hdcts)
+                    {
+                        Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                        SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                    }
+                    dgvHistoryBS.Rows.Add();
+                    dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                    dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.masv;
+                    dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
+                    dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                    dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                    dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                    int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                    if (days == 0)
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                    }
+                    else if (0 < days && days < 30)
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                    }
+                    else
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                    }
+                    index_historybs++;
                 }
-                dgvHistoryBS.Rows.Add();
-                dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
-                dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.madg;
-                dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.tendg;
-                dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
-                dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
-                dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
-                int days = DateTime.Now.Day - item.ngaylap.Value.Day;
-                if (days == 0)
+            }
+            else if (rdPersonalHistory.Checked)
+            {
+                var hds = (from h in dbcontext.HoaDons
+                           join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           where h.Iddocgia==null&&h.Idgiangvien==null
+                           select new
+                           {
+                               mahd = h.MaHd,
+                               masv = h.Iddocgia,
+                               magv = h.Idgiangvien,
+                               nguoilap = acc.Tenchutaikhoan,
+                               ngaylap = h.NgayLap
+                           }).ToList();
+                dgvHistoryBS.Rows.Clear();
+                dgvHistoryBS.ColumnCount = 7;
+                int index_historybs = 0;
+                foreach (var item in hds)
                 {
-                    dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                    var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                    double SumMoney = 0;
+                    foreach (var child_item in hdcts)
+                    {
+                        Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                        SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                    }
+                    dgvHistoryBS.Rows.Add();
+                    dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                    dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.masv;
+                    dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
+                    dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                    dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                    dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                    int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                    if (days == 0)
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                    }
+                    else if (0 < days && days < 30)
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                    }
+                    else
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                    }
+                    index_historybs++;
                 }
-                else if (0 < days && days < 30)
+            }
+            else if(rdClassHistory.Checked)
+            {
+                var hds = (from h in dbcontext.HoaDons
+                           join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           where h.Iddocgia != null && h.Idgiangvien != null
+                           select new
+                           {
+                               mahd = h.MaHd,
+                               masv = h.Iddocgia,
+                               magv = h.Idgiangvien,
+                               nguoilap = acc.Tenchutaikhoan,
+                               ngaylap = h.NgayLap
+                           }).ToList();
+                dgvHistoryBS.Rows.Clear();
+                dgvHistoryBS.ColumnCount = 7;
+                int index_historybs = 0;
+                foreach (var item in hds)
                 {
-                    dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                    var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                    double SumMoney = 0;
+                    foreach (var child_item in hdcts)
+                    {
+                        Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                        SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                    }
+                    dgvHistoryBS.Rows.Add();
+                    dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                    dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.masv;
+                    dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
+                    dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                    dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                    dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                    int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                    if (days == 0)
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                    }
+                    else if (0 < days && days < 30)
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                    }
+                    else
+                    {
+                        dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                    }
+                    index_historybs++;
                 }
-                else
-                {
-                    dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
-                }
-                index_historybs++;
             }
         }
         private void btnLayDL_Click(object sender, EventArgs e)
         {
-            var hds = (from h in dbcontext.HoaDons
-                       join dg in dbcontext.Docgia on h.Iddocgia equals dg.Iddocgia
-                       join acc in dbcontext.Accounts on h.Usename equals acc.Usename
-                       select new
-                       {
-                           mahd = h.MaHd,
-                           madg = h.Iddocgia,
-                           tendg = dg.Hoten,
-                           nguoilap = acc.Usename,
-                           ngaylap = h.NgayLap
-                       }).ToList();
-            dgvHistoryBS.Rows.Clear();
-            dgvHistoryBS.ColumnCount = 7;
-            int index_historybs = 0;
-            if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
+            if (rdAllHistory.Checked)
             {
-                MessageBox.Show("Điểm khởi thời gian đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                foreach (var item in hds)
-                {   
-                    if (dtimeStart.Value.Date<=item.ngaylap.Value.Date&&item.ngaylap.Value.Date<=dtimeEnd.Value.Date)
-                    {
-                        var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
-                        double SumMoney = 0;
-                        foreach (var child_item in hdcts)
+                var hds = (from h in dbcontext.HoaDons
+                           join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           select new
+                           {
+                               mahd = h.MaHd,
+                               masv = h.Iddocgia,
+                               magv = h.Idgiangvien,
+                               nguoilap = acc.Tenchutaikhoan,
+                               ngaylap = h.NgayLap
+                           }).ToList();
+                dgvHistoryBS.Rows.Clear();
+                dgvHistoryBS.ColumnCount = 7;
+                int index_historybs = 0;
+                if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
+                {
+                    MessageBox.Show("Điểm khởi thời gian đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    foreach (var item in hds)
+                    {   
+                        if (dtimeStart.Value.Date<=item.ngaylap.Value.Date&&item.ngaylap.Value.Date<=dtimeEnd.Value.Date)
                         {
-                            Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
-                            SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                            var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                            double SumMoney = 0;
+                            foreach (var child_item in hdcts)
+                            {
+                                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                                SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                            }
+                            dgvHistoryBS.Rows.Add();
+                            dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                            dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.masv;
+                            dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
+                            dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                            dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                            dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                            int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                            if (days == 0)
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                            }
+                            else if (0 < days && days < 30)
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                            }
+                            else
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                            }
+                            index_historybs++;
                         }
-                        dgvHistoryBS.Rows.Add();
-                        dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
-                        dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.madg;
-                        dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.tendg;
-                        dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
-                        dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
-                        dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
-                        int days = DateTime.Now.Day - item.ngaylap.Value.Day;
-                        if (days == 0)
-                        {
-                            dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
-                        }
-                        else if (0 < days && days < 30)
-                        {
-                            dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
-                        }
-                        else
-                        {
-                            dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
-                        }
-                        index_historybs++;
                     }
                 }
-            }
-            if (dgvHistoryBS.RowCount == 1)
+                if (dgvHistoryBS.RowCount == 1)
+                {
+                    MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }else if (rdPersonalHistory.Checked)
             {
-                MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var hds = (from h in dbcontext.HoaDons
+                           join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           where h.Iddocgia==null && h.Idgiangvien==null
+                           select new
+                           {
+                               mahd = h.MaHd,
+                               masv = h.Iddocgia,
+                               magv = h.Idgiangvien,
+                               nguoilap = acc.Tenchutaikhoan,
+                               ngaylap = h.NgayLap
+                           }).ToList();
+                dgvHistoryBS.Rows.Clear();
+                dgvHistoryBS.ColumnCount = 7;
+                int index_historybs = 0;
+                if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
+                {
+                    MessageBox.Show("Điểm khởi thời gian đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    foreach (var item in hds)
+                    {
+                        if (dtimeStart.Value.Date <= item.ngaylap.Value.Date && item.ngaylap.Value.Date <= dtimeEnd.Value.Date)
+                        {
+                            var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                            double SumMoney = 0;
+                            foreach (var child_item in hdcts)
+                            {
+                                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                                SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                            }
+                            dgvHistoryBS.Rows.Add();
+                            dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                            dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.masv;
+                            dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
+                            dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                            dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                            dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                            int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                            if (days == 0)
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                            }
+                            else if (0 < days && days < 30)
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                            }
+                            else
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                            }
+                            index_historybs++;
+                        }
+                    }
+                }
+                if (dgvHistoryBS.RowCount == 1)
+                {
+                    MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }else if (rdClassHistory.Checked)
+            {
+                var hds = (from h in dbcontext.HoaDons
+                           join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           where h.Iddocgia != null && h.Idgiangvien != null
+                           select new
+                           {
+                               mahd = h.MaHd,
+                               masv = h.Iddocgia,
+                               magv = h.Idgiangvien,
+                               nguoilap = acc.Tenchutaikhoan,
+                               ngaylap = h.NgayLap
+                           }).ToList();
+                dgvHistoryBS.Rows.Clear();
+                dgvHistoryBS.ColumnCount = 7;
+                int index_historybs = 0;
+                if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
+                {
+                    MessageBox.Show("Điểm khởi thời gian đầu lớn hơn điểm kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    foreach (var item in hds)
+                    {
+                        if (dtimeStart.Value.Date <= item.ngaylap.Value.Date && item.ngaylap.Value.Date <= dtimeEnd.Value.Date)
+                        {
+                            var hdcts = (from hct in dbcontext.HoaDonChiTiets where hct.MaHd == item.mahd select hct).ToList();
+                            double SumMoney = 0;
+                            foreach (var child_item in hdcts)
+                            {
+                                Models.Sach book = (from b in dbcontext.Saches where b.Idsach == child_item.Idsach select b).FirstOrDefault();
+                                SumMoney += child_item.SoLuongMua.Value * book.Giasach.Value;
+                            }
+                            dgvHistoryBS.Rows.Add();
+                            dgvHistoryBS.Rows[index_historybs].Cells[0].Value = item.mahd;
+                            dgvHistoryBS.Rows[index_historybs].Cells[1].Value = item.masv;
+                            dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
+                            dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
+                            dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
+                            dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                            int days = DateTime.Now.Day - item.ngaylap.Value.Day;
+                            if (days == 0)
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = "Hôm nay";
+                            }
+                            else if (0 < days && days < 30)
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = days + " ngày trước";
+                            }
+                            else
+                            {
+                                dgvHistoryBS.Rows[index_historybs].Cells[6].Value = ">=30 ngày trước";
+                            }
+                            index_historybs++;
+                        }
+                    }
+                }
+                if (dgvHistoryBS.RowCount == 1)
+                {
+                    MessageBox.Show($"Không có dữ liệu từ {dtimeStart.Value.Date} đến {dtimeEnd.Value.Date}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
+
+        #endregion
+
+        #endregion
+        #region Quản lí tài khoản
+        #region Đọc dữ liệu lên bảng tài khoản
+        private void clearTaiKhoan()
+        {
+            txtTaiKhoan.Clear();
+            txtMatKhau.Clear();
+            txtHoTen.Clear();
+            cbCapDo.SelectedIndex = -1;
+        }
+        private void ReadFileAccounts()
+        {
+            var list_accout = dbcontext.Accounts.ToList();
+            if (list_accout != null)
+            {
+                if (list_accout.Count() > 0)
+                {
+                    dgvAccout.Rows.Clear();
+                    dgvAccout.ColumnCount = 4;
+                    for (int i = 0; i < list_accout.Count(); i++)
+                    {
+                        dgvAccout.Rows.Add();
+                        dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                        dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                        dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                        dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void ReadfileTypeOfAccounts()
+        {
+            //var list_accout = dbcontext.Accounts.Where(a => a.Capdo == cbCapDo.Text).ToList();
+            var list_accout = (from a in dbcontext.Accounts where a.Capdo == cbCapDo.Text select a).ToList();
+            if (list_accout != null)
+            {
+                if (list_accout.Count() > 0)
+                {
+                    dgvAccout.Rows.Clear();
+                    dgvAccout.ColumnCount = 4;
+                    for (int i = 0; i < list_accout.Count(); i++)
+                    {
+                        dgvAccout.Rows.Add();
+                        dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                        dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                        dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                        dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void dgvAccout_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = dgvAccout.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dgvAccout.Rows[index];
+            txtTaiKhoan.Text = Convert.ToString(row.Cells[0].Value);
+            txtMatKhau.Text = Convert.ToString(row.Cells[1].Value);
+            txtHoTen.Text = Convert.ToString(row.Cells[2].Value);
+            cbCapDo.Text = Convert.ToString(row.Cells[3].Value);
+        }
+        #endregion
+        #region Xử lí lỗi tài khoản
+        private void txtTaiKhoan_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtTaiKhoan, "");
+        }
+
+        private void txtMatKhau_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtMatKhau, "");
+        }
+
+        private void txtHoTen_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(txtHoTen, "");
+        }
+
+        private void cbCapDo_Validated(object sender, EventArgs e)
+        {
+            GetError.SetError(cbCapDo, "");
+        }
+        private bool Validate_Account_Add()
+        {
+            if (txtTaiKhoan.Text == "")
+            {
+                GetError.SetError(txtTaiKhoan, "Bạn phải nhập tên tài khoản!");
+                txtTaiKhoan.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                if (acc != null)
+                {
+                    GetError.SetError(txtTaiKhoan, "Tài khoản này đã tồn tại!");
+                    txtTaiKhoan.Focus();
+                    txtTaiKhoan.SelectAll();
+                    return false;
+                }
+            }
+            if (txtMatKhau.Text == "")
+            {
+                GetError.SetError(txtMatKhau, "Bạn phải nhập mật khẩu!");
+                txtMatKhau.Focus();
+                return false;
+            }
+            if (txtHoTen.Text == "")
+            {
+                GetError.SetError(txtHoTen, "Bạn phải nhập họ tên!");
+                txtHoTen.Focus();
+                return false;
+            }
+            if (cbCapDo.Text == "")
+            {
+                GetError.SetError(cbCapDo, "Bạn phải chọn cấp độ!");
+                cbCapDo.Focus();
+                return false;
+            }
+            return true;
+        }
+        private bool Validate_Account_Update()
+        {
+            if (txtTaiKhoan.Text == "")
+            {
+                GetError.SetError(txtTaiKhoan, "Bạn phải nhập tên tài khoản!");
+                txtTaiKhoan.Focus();
+                return false;
+            }
+            else
+            {
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                if (acc == null)
+                {
+                    GetError.SetError(txtTaiKhoan, "Không có tên tài khoản này!");
+                    txtTaiKhoan.Focus();
+                    txtTaiKhoan.SelectAll();
+                    return false;
+                }
+            }
+            if (txtMatKhau.Text == "")
+            {
+                GetError.SetError(txtMatKhau, "Bạn phải nhập mật khẩu!");
+                txtMatKhau.Focus();
+                return false;
+            }
+            if (txtHoTen.Text == "")
+            {
+                GetError.SetError(txtHoTen, "Bạn phải nhập họ tên!");
+                txtHoTen.Focus();
+                return false;
+            }
+            if (cbCapDo.Text == "")
+            {
+                GetError.SetError(cbCapDo, "Bạn phải chọn cấp độ!");
+                cbCapDo.Focus();
+                return false;
+            }
+            return true;
+        }
+
+        #endregion
+
+        #region Xử lí main buttons (Accounts)
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnThemTaiKhoan.Text;
+            btnThemTaiKhoan.Visible = false;
+            btnSuaTaiKhoan.Visible = false;
+            btnXoaTaiKhoan.Visible = false;
+            btnPhanLoaiTaiKhoan.Visible = false;
+            btnTimKiemTaiKhoan.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Cấp";
+            btnOK.Visible = true;
+            btnCancelAccounts.Visible = true;
+            clearTaiKhoan();
+        }
+
+        private void btnSuaTaiKhoan_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnSua.Text;
+            btnThemTaiKhoan.Visible = false;
+            btnSuaTaiKhoan.Visible = false;
+            btnXoaTaiKhoan.Visible = false;
+            btnPhanLoaiTaiKhoan.Visible = false;
+            btnTimKiemTaiKhoan.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Đổi";
+            btnOK.Visible = true;
+            btnCancelAccounts.Visible = true;
+            clearTaiKhoan();
+        }
+
+        private void btnXoaTaiKhoan_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnXoa.Text;
+            btnThemTaiKhoan.Visible = false;
+            btnSuaTaiKhoan.Visible = false;
+            btnXoaTaiKhoan.Visible = false;
+            btnPhanLoaiTaiKhoan.Visible = false;
+            btnTimKiemTaiKhoan.Visible = false;
+            lbTaiKhoan.Visible = true;
+            txtTaiKhoan.Visible = true;
+            btnOK.Text = "Xoá";
+            btnOK.Visible = true;
+            btnCancelAccounts.Visible = true;
+            clearTaiKhoan();
+        }
+
+        private void btnPhanLoai_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnPhanLoaiTaiKhoan.Text;
+            btnThemTaiKhoan.Visible = false;
+            btnSuaTaiKhoan.Visible = false;
+            btnXoaTaiKhoan.Visible = false;
+            btnPhanLoaiTaiKhoan.Visible = false;
+            btnTimKiemTaiKhoan.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Thực thi";
+            btnOK.Visible = true;
+            btnCancelAccounts.Visible = true;
+            btnXoa1.Visible = true;
+            btnSua1.Visible = true;
+            clearTaiKhoan();
+        }
+
+        private void btnTimKiemTaiKhoan_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = btnTimKiemTaiKhoan.Text;
+            btnThemTaiKhoan.Visible = false;
+            btnSuaTaiKhoan.Visible = false;
+            btnXoaTaiKhoan.Visible = false;
+            btnPhanLoaiTaiKhoan.Visible = false;
+            btnTimKiemTaiKhoan.Visible = false;
+            lbTaiKhoan.Visible = true;
+            lbMatKhau.Visible = true;
+            lbHoTen.Visible = true;
+            lbCapDo.Visible = true;
+            txtTaiKhoan.Visible = true;
+            txtMatKhau.Visible = true;
+            txtHoTen.Visible = true;
+            cbCapDo.Visible = true;
+            btnOK.Text = "Tìm";
+            btnOK.Visible = true;
+            btnCancelAccounts.Visible = true;
+            btnXoa1.Visible = true;
+            btnSua1.Visible = true;
+            rdTaiKhoan.Visible = true;
+            rdMatKhau.Visible = true;
+            rdHoTen.Visible = true;
+            clearTaiKhoan();
+        }
+
+        private void btnReadFileAcconts_Click(object sender, EventArgs e)
+        {
+            ReadFileAccounts();
+        }
+        private void btnHuyAccounts_Click(object sender, EventArgs e)
+        {
+            clearTaiKhoan();
+        }
+        #endregion
+
+
+        #region Xử lí child buttons (Accounts)
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (lbThongBao.Text == btnThemTaiKhoan.Text)
+            {
+                if (Validate_Account_Add())
+                {
+                    Models.Account acc = new Models.Account();
+                    acc.Usename = txtTaiKhoan.Text;
+                    acc.Password = txtMatKhau.Text;
+                    acc.Tenchutaikhoan = txtHoTen.Text;
+                    acc.Capdo = cbCapDo.Text;
+                    dbcontext.Accounts.Add(acc);
+                    dbcontext.SaveChanges();
+                    ReadFileAccounts();
+                    clearTaiKhoan();
+                }
+            }
+            else if (lbThongBao.Text == btnSua.Text)
+            {
+                if (Validate_Account_Update())
+                {
+                    //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                    Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                    acc.Usename = txtTaiKhoan.Text;
+                    acc.Password = txtMatKhau.Text;
+                    acc.Tenchutaikhoan = txtHoTen.Text;
+                    acc.Capdo = cbCapDo.Text;
+                    dbcontext.SaveChanges();
+                    ReadFileAccounts();
+                }
+            }
+            else if (lbThongBao.Text == btnXoa.Text)
+            {
+                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
+                {
+                    if (acc != null)
+                    {
+                        dbcontext.Accounts.Remove(acc);
+                        dbcontext.SaveChanges();
+                        ReadFileAccounts();
+                        clearTaiKhoan();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            else if (lbThongBao.Text == btnPhanLoaiTaiKhoan.Text)
+            {
+                //var list_accout = dbcontext.Accounts.Where(a=>a.Capdo==cbCapDo.Text).ToList();
+                var list_accout = (from a in dbcontext.Accounts where a.Capdo == cbCapDo.Text select a).ToList();
+                if (list_accout != null)
+                {
+                    if (list_accout.Count() > 0)
+                    {
+                        dgvAccout.Rows.Clear();
+                        dgvAccout.ColumnCount = 8;
+                        for (int i = 0; i < list_accout.Count(); i++)
+                        {
+                            dgvAccout.Rows.Add();
+                            dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                            dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                            dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                            dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            else if (lbThongBao.Text == btnTimKiemTaiKhoan.Text)
+            {
+                if (rdTaiKhoan.Checked == false && rdMatKhau.Checked == false && rdHoTen.Checked == false)
+                {
+                    MessageBox.Show("Bạn vui chọn mục tìm kiếm theo Tài khoản / Mật khẩu/ Họ tên", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (rdTaiKhoan.Checked)
+                {
+                    if (txtTaiKhoan.Text == "")
+                    {
+                        GetError.SetError(txtTaiKhoan, "Bạn chưa nhập tên tài khoản cho việc tìm kiếm!");
+                        txtTaiKhoan.Focus();
+                    }
+                    else
+                    {
+                        //var list_accout = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).ToList();
+                        var list_accout = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).ToList();
+                        if (list_accout != null)
+                        {
+                            if (list_accout.Count() > 0)
+                            {
+                                dgvAccout.Rows.Clear();
+                                dgvAccout.ColumnCount = 4;
+                                for (int i = 0; i < list_accout.Count(); i++)
+                                {
+                                    dgvAccout.Rows.Add();
+                                    dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                                    dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                                    dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                                    dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+                else if (rdMatKhau.Checked)
+                {
+                    if (txtMatKhau.Text == "")
+                    {
+                        GetError.SetError(txtMatKhau, "Bạn chưa nhập mật khẩu cho việc tìm kiếm!");
+                        txtMatKhau.Focus();
+                    }
+                    else
+                    {
+                        //var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
+                        var list_accout = (from a in dbcontext.Accounts where a.Password == txtMatKhau.Text select a).ToList();
+                        if (list_accout != null)
+                        {
+                            if (list_accout.Count() > 0)
+                            {
+                                dgvAccout.Rows.Clear();
+                                dgvAccout.ColumnCount = 4;
+                                for (int i = 0; i < list_accout.Count(); i++)
+                                {
+                                    dgvAccout.Rows.Add();
+                                    dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                                    dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                                    dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                                    dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+                else if (rdHoTen.Checked)
+                {
+                    if (txtHoTen.Text == "")
+                    {
+                        GetError.SetError(txtHoTen, "Bạn chưa nhập họ tên tài khoản cho việc tìm kiếm!");
+                        txtHoTen.Focus();
+                    }
+                    else
+                    {
+                        //var list_accout = dbcontext.Accounts.Where(a => a.Password == txtMatKhau.Text).ToList();
+                        var list_accout = (from a in dbcontext.Accounts where a.Password == txtMatKhau.Text select a).ToList();
+                        if (list_accout != null)
+                        {
+                            if (list_accout.Count() > 0)
+                            {
+                                dgvAccout.Rows.Clear();
+                                dgvAccout.ColumnCount = 4;
+                                for (int i = 0; i < list_accout.Count(); i++)
+                                {
+                                    dgvAccout.Rows.Add();
+                                    dgvAccout.Rows[i].Cells[0].Value = list_accout[i].Usename;
+                                    dgvAccout.Rows[i].Cells[1].Value = list_accout[i].Password;
+                                    dgvAccout.Rows[i].Cells[2].Value = list_accout[i].Tenchutaikhoan;
+                                    dgvAccout.Rows[i].Cells[3].Value = list_accout[i].Capdo;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnCancelAccounts_Click(object sender, EventArgs e)
+        {
+            lbThongBao.Text = "";
+            btnThemTaiKhoan.Visible = true;
+            btnSuaTaiKhoan.Visible = true;
+            btnXoaTaiKhoan.Visible = true;
+            btnPhanLoaiTaiKhoan.Visible = true;
+            btnTimKiemTaiKhoan.Visible = true;
+            lbTaiKhoan.Visible = false;
+            lbMatKhau.Visible = false;
+            lbHoTen.Visible = false;
+            lbCapDo.Visible = false;
+            txtTaiKhoan.Visible = false;
+            txtMatKhau.Visible = false;
+            txtHoTen.Visible = false;
+            cbCapDo.Visible = false;
+            btnOK.Visible = false;
+            btnCancelAccounts.Visible = false;
+            rdTaiKhoan.Visible = false;
+            rdMatKhau.Visible = false;
+            rdHoTen.Visible = false;
+            btnXoa1.Visible = false;
+            btnSua1.Visible = false;
+        }
+
+        private void btnXoa1_Click(object sender, EventArgs e)
+        {
+            //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+            Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+            DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                if (acc != null)
+                {
+                    dbcontext.Accounts.Remove(acc);
+                    dbcontext.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("Tên tài khoản không tồn tại!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            if (lbThongBao.Text == btnPhanLoaiTaiKhoan.Text)
+            {
+                ReadfileTypeOfAccounts();
+            }
+            else
+            {
+                ReadFileAccounts();
+            }
+        }
+
+        private void btnSua1_Click(object sender, EventArgs e)
+        {
+            if (Validate_Account_Update())
+            {
+                //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
+                Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                acc.Usename = txtTaiKhoan.Text;
+                acc.Password = txtMatKhau.Text;
+                acc.Tenchutaikhoan = txtHoTen.Text;
+                acc.Capdo = cbCapDo.Text;
+                dbcontext.SaveChanges();
+            }
+            if (lbThongBao.Text == btnPhanLoaiTaiKhoan.Text)
+            {
+                ReadfileTypeOfAccounts();
+            }
+            else
+            {
+                ReadFileAccounts();
+            }
+        }
 
         #endregion
 
         #endregion
         #region Refesh Buttons
-        private void btnRefeshMaDG_Click(object sender, EventArgs e)
-        {
-            RefeshMaDG();
-        }
         private void btnRefeshMaSach_Click(object sender, EventArgs e)
         {
             if (rdInCbTenSach.Checked)
@@ -1893,22 +2822,14 @@ namespace LuuCongQuangVu_Nhom13
                 InCbMaSach();
             }
         }
-        private void btnRefeshSearchInforHD_Click(object sender, EventArgs e)
-        {
-            RefeshInforHD();
-        }
         #endregion
-
-        private void tabPage7_Click(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
         #region thống kê sách
         #region thống kê sách theo thể loại
         //thống kê sách theo thể loại
         private void load_tkcbbthloai()
         {
-            var list_cbbtheloai = dbcontext.Saches.Select(s => s.Theloai).Distinct();
+            var list_cbbtheloai = dbcontext.Saches.Select(s => s.Idtheloai).Distinct();
             tkcbbtheloai.DataSource = list_cbbtheloai.ToList();
             tkcbbtheloai.DisplayMember = "Theloai";
         }
@@ -1916,13 +2837,13 @@ namespace LuuCongQuangVu_Nhom13
         private void tkbtnhienthi_Click(object sender, EventArgs e)
         {
             //hiển thị danh sách theo thể loại
-            var ds = dbcontext.Saches.Where(s => s.Theloai == tkcbbtheloai.SelectedValue.ToString()).Select(s => new
+            var ds = dbcontext.Saches.Where(s => s.Idtheloai == tkcbbtheloai.SelectedValue.ToString()).Select(s => new
             {
                 Idsach = s.Idsach,
                 Tensach = s.Tensach,
                 tacgia = s.Tacgia,
                 soluong = s.Soluong,
-                theloai = s.Theloai,
+                theloai = s.Idtheloai,
                 giasach = s.Giasach,
                 nhaxb = s.Nhaxuatban,
                 vitri = s.Vitri
@@ -1940,7 +2861,7 @@ namespace LuuCongQuangVu_Nhom13
                     tkdgvthongketheotheloai.DataSource = ds.ToList();
 
                     //hiển thị số lượng sách theo thể loại lên label
-                    var sl = dbcontext.Saches.Count(s => s.Theloai == tkcbbtheloai.SelectedValue.ToString());
+                    var sl = dbcontext.Saches.Count(s => s.Idtheloai == tkcbbtheloai.SelectedValue.ToString());
                     tklbsltheotheloai.Text = Convert.ToString(sl);
 
                     //chỉnh sửa độ rộng các cột
@@ -1966,7 +2887,7 @@ namespace LuuCongQuangVu_Nhom13
         //check combobox thể loại
         private bool checktkcbbempty()
         {
-            var check = dbcontext.Saches.Where(s => s.Theloai == tkcbbtheloai.Text).FirstOrDefault();
+            var check = dbcontext.Saches.Where(s => s.Idtheloai == tkcbbtheloai.Text).FirstOrDefault();
             if (check == null)
             {
                 errorProvider1.SetError(tkcbbtheloai, "không tồn tại thể loại này!");
@@ -2009,7 +2930,7 @@ namespace LuuCongQuangVu_Nhom13
                                      join m in dbcontext.Muontrasaches on s.Idsach equals m.Idsach
                                      where m.Ngaymuon.Value.Month == tkdtpsachmuonnhieu.Value.Month
                                      && m.Ngaymuon.Value.Year == tkdtpsachmuonnhieu.Value.Year
-                                     select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
+                                     select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Idtheloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
                             var groupsachs = (from a in ds
                                               group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
                                             into b
@@ -2060,7 +2981,7 @@ namespace LuuCongQuangVu_Nhom13
                             var ds = from s in dbcontext.Saches
                                      join m in dbcontext.Muontrasaches on s.Idsach equals m.Idsach
                                      where m.Ngaymuon.Value.Date <= tkdtpdenngay.Value.Date && m.Ngaymuon.Value.Date >= tkdtptungay.Value.Date
-                                     select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
+                                     select new { idsach = m.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Idtheloai, nxb = s.Nhaxuatban, giasach = s.Giasach, soluongmuon = m.Soluongmuon };
                             var groupsachs = from a in ds
                                              group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
                                     into b
@@ -2163,7 +3084,7 @@ namespace LuuCongQuangVu_Nhom13
                                      join s in dbcontext.Saches on ct.Idsach equals s.Idsach
                                      where h.NgayLap.Value.Month == tkdtpsachban.Value.Month
                                      && h.NgayLap.Value.Year == tkdtpsachban.Value.Year
-                                     select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
+                                     select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Idtheloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
                             var groupsachs = (from a in ds
                                               group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
                                             into b
@@ -2222,7 +3143,7 @@ namespace LuuCongQuangVu_Nhom13
                                      join s in dbcontext.Saches on ct.Idsach equals s.Idsach
                                      where h.NgayLap.Value.Date <= tkdtpsachbandenngay.Value.Date
                                  && h.NgayLap.Value.Date >= tkdtpsachbantungay.Value.Date
-                                     select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Theloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
+                                     select new { idsach = s.Idsach, tensach = s.Tensach, tacgia = s.Tacgia, theloai = s.Idtheloai, nxb = s.Nhaxuatban, giasach = s.Giasach, ct.SoLuongMua };
                             var groupsachs = from a in ds
                                              group a by new { a.idsach, a.tensach, a.tacgia, a.theloai, a.nxb, a.giasach }
                                     into b
@@ -2316,7 +3237,7 @@ namespace LuuCongQuangVu_Nhom13
         //hiển thị danh sách sách có sắp xếp theo tiêu chí được chọn
         private void button6_Click(object sender, EventArgs e)
         {
-            var list = dbcontext.Saches.Select(s => new { s.Idsach, s.Tensach, s.Tacgia, s.Soluong, s.Theloai, s.Giasach, s.Nhaxuatban, s.Vitri });
+            var list = dbcontext.Saches.Select(s => new { s.Idsach, s.Tensach, s.Tacgia, s.Soluong, s.Idtheloai, s.Giasach, s.Nhaxuatban, s.Vitri });
             if (tkrboption1.Checked == true)
             {
                 tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Tensach).ToList();
@@ -4207,7 +5128,10 @@ namespace LuuCongQuangVu_Nhom13
         {
             ThongKeMuonTaiPhong();
         }
+
         #endregion
+
+
         
     }
 }

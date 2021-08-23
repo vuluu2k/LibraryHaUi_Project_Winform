@@ -32,26 +32,40 @@ insert into Docgia values('D001', N'Nguyen Van A','2000/03/04', N'Thanh Hóa', N
 insert into Docgia values('D002', N'Nguyen Van B','2001/06/10', N'Nghệ An', N'Sinh viên', '0940678352')
 insert into Docgia values('D003', N'Nguyen Van C','2000/08/15', N'Nam Định', N'Sinh viên', '0948888352')
 insert into Docgia values('D004', N'Nguyen Van D','2002/10/10', N'Hà Nội', N'Sinh viên', '0989709170')
-insert into Docgia values('D005', N'Nguyen Van E','2000/11/15', N'Hà Nam', N'Sinh viên', '0823547627')
+insert into Docgia values('GV05', N'Nguyen Van E','2000/11/15', N'Hà Nam', N'Giảng viên', '0823547627')
+go
+create table Theloai(
+	Idtheloai char(4) primary key,
+	Tentheloai nvarchar(50)
+)
+go
+insert into Theloai values('T001',N'Khoa học công nghệ')
+insert into Theloai values('T002',N'Kinh tế')
+insert into Theloai values('T003',N'Nghiên cứu khoa học')
+insert into Theloai values('T004',N'Văn hóa xã hội – Lịch sử')
+insert into Theloai values('T005',N'Giáo trình')
+insert into Theloai values('T006',N'Văn học nghệ thuật')
+insert into Theloai values('T007',N'Tài liệu khác')
 go
 create table Sach(
 	Idsach char(4) primary key,
 	Tensach nvarchar(50),
 	Tacgia nvarchar(50),
 	Soluong int,
-	Theloai nvarchar(50),
+	Idtheloai char(4),
 	Giasach float,
 	Nhaxuatban nvarchar(50),
-	Vitri nvarchar(50)
+	Vitri nvarchar(50),
+	constraint fk_idtheloai foreign key(Idtheloai) references Theloai(Idtheloai)
 )
 go
-insert into Sach values('S001', N'Lập trình Android', N'Phạm Quốc Vương', 10, N'Công nghệ', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S002', N'Lập trình C#', N'Lưu Công Quang Vũ', 15, N'Công nghệ', 80000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S003', N'Lập trình Java', N'Đỗ Viết Nam', 20, N'Công nghệ', 120000, N'HaUi', N'CS3-Tp.Phủ Lý-Hà Nam')
-insert into Sach values('S004', N'Lập trình Ruby', N'Lê Văn Thành', 16, N'Công nghệ', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S004', N'Lập trình hướng đối tượng', N'Bùi Công Nam', 16, N'Công nghệ', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S005', N'Kinh tế lượng', N'Trân Anh Toan', 16, N'Kinh tế', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S006', N'Thị trường chứng khoán', N'Hoàng Anh', 10, N'Kinh tế', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S001', N'Lập trình Android', N'Phạm Quốc Vương', 10, 'T005', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S002', N'Lập trình C#', N'Lưu Công Quang Vũ', 15, 'T005', 80000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S003', N'Lập trình Java', N'Đỗ Viết Nam', 20, 'T005', 120000, N'HaUi', N'CS3-Tp.Phủ Lý-Hà Nam')
+insert into Sach values('S004', N'Lập trình Ruby', N'Lê Văn Thành', 16, 'T005', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S004', N'Lập trình hướng đối tượng', N'Bùi Công Nam', 16, 'T005', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S005', N'Kinh tế lượng', N'Trân Anh Toan', 16, 'T002', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S006', N'Thị trường chứng khoán', N'Hoàng Anh', 10, 'T002', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
 go
 create table Muontrasach(
 	Iddocgia char(4),
@@ -75,16 +89,17 @@ create table HoaDon(
 	MaHD char(4) primary key,
 	NgayLap datetime,
 	Usename nvarchar(50),
-	foreign key(Usename) references Account(Usename),
 	Iddocgia char(4),
+	Idgiangvien char(4),
+	foreign key(Usename) references Account(Usename),
 	foreign key(Iddocgia) references Docgia(Iddocgia)
 )
 go
-insert into HoaDon values('H001',  '2020/05/20',N'Thanh', 'D001')
-insert into HoaDon values('H002',  '2020/05/14',N'Vu', 'D003')
-insert into HoaDon values('H003',  '2020/05/16',N'Nam', 'D002')
-insert into HoaDon values('H004',  '2020/04/16',N'Vuong', 'D003')
-insert into HoaDon values('H005',  '2020/06/16',N'Vuong', 'D001')
+insert into HoaDon values('H001',  '2020/05/20',N'Thanh', 'D001','GV05')
+insert into HoaDon values('H002',  '2020/05/14',N'Vu', 'D003','GV05')
+insert into HoaDon values('H003',  '2020/05/16',N'Nam', 'D002','GV05')
+insert into HoaDon values('H004',  '2020/04/16',N'Vuong', 'D003','GV05')
+insert into HoaDon values('H005',  '2020/06/16',N'Vuong', 'D001','GV05')
 go
 
 create table HoaDonChiTiet(

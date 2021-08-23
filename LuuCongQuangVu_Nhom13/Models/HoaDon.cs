@@ -26,6 +26,8 @@ namespace LuuCongQuangVu_Nhom13.Models
         public string Usename { get; set; }
         [StringLength(4)]
         public string Iddocgia { get; set; }
+        [StringLength(4)]
+        public string Idgiangvien { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
         [InverseProperty(nameof(Docgium.HoaDons))]

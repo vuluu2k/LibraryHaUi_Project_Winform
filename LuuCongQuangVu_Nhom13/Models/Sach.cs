@@ -27,14 +27,17 @@ namespace LuuCongQuangVu_Nhom13.Models
         [StringLength(50)]
         public string Tacgia { get; set; }
         public int? Soluong { get; set; }
-        [StringLength(50)]
-        public string Theloai { get; set; }
+        [StringLength(4)]
+        public string Idtheloai { get; set; }
         public double? Giasach { get; set; }
         [StringLength(50)]
         public string Nhaxuatban { get; set; }
         [StringLength(50)]
         public string Vitri { get; set; }
 
+        [ForeignKey(nameof(Idtheloai))]
+        [InverseProperty(nameof(Theloai.Saches))]
+        public virtual Theloai IdtheloaiNavigation { get; set; }
         [InverseProperty(nameof(HoaDonChiTiet.IdsachNavigation))]
         public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
         [InverseProperty(nameof(Muontrasach.IdsachNavigation))]

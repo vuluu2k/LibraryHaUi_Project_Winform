@@ -435,10 +435,8 @@ C:\ssss\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\ref\LuuCongQuangVu_Nhom13
 C:\ssss\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.pdb
 C:\ssss\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.genruntimeconfig.cache
 D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.csproj.AssemblyReference.cache
-D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Admin.resources
 D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogUpdateLHD.resources
 D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Login.resources
-D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Manage_Accout.resources
 D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.QuanLiThuVien.resources
 D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Properties.Resources.resources
 D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.csproj.GenerateResource.cache
@@ -580,3 +578,4 @@ F:\WINDOW BTL\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom
 F:\WINDOW BTL\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\ref\LuuCongQuangVu_Nhom13.dll
 F:\WINDOW BTL\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.pdb
 F:\WINDOW BTL\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.genruntimeconfig.cache
+D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogCustomerPay.resources

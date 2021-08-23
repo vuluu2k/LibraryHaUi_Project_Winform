@@ -24,22 +24,11 @@ namespace LuuCongQuangVu_Nhom13
             Models.Account acc = (from a in dbcontext.Accounts where (a.Usename == txtTaikhoan.Text && a.Password == txtMatkhau.Text) select a).FirstOrDefault();
             if (acc != null)
             {
-                
-                if (acc.Capdo.Equals("Nhân viên"))
-                {
                     this.Hide();
                     QuanLiThuVien menu = new QuanLiThuVien();
                     menu.Tag = acc;// get account nv
                     menu.Text = "Quản lí thư viện";
                     menu.Show();
-                }
-                else if (acc.Capdo.Equals("Admin"))
-                {
-                    this.Hide();
-                    Admin admin = new Admin();
-                    admin.Tag = acc;//get account ad
-                    admin.Show();
-                }
             }
             else
             {
