@@ -4,6 +4,9 @@
     <Compile Update="DialogCustomerPay.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="DialogInforHD.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DialogUpdateLHD.cs">
       <SubType>Form</SubType>
     </Compile>

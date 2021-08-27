@@ -30,6 +30,8 @@ namespace LuuCongQuangVu_Nhom13.Models
         [StringLength(4)]
         public string Idtheloai { get; set; }
         public double? Giasach { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? Ngaynhap { get; set; }
         [StringLength(50)]
         public string Nhaxuatban { get; set; }
         [StringLength(50)]

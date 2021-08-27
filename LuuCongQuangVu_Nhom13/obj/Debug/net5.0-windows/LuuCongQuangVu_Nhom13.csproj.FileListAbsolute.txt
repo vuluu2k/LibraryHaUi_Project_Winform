@@ -651,3 +651,4 @@ C:\moiws\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.dl
 C:\moiws\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\ref\LuuCongQuangVu_Nhom13.dll
 C:\moiws\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.pdb
 C:\moiws\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.genruntimeconfig.cache
+D:\BTL_LTW_TongHop\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogInforHD.resources

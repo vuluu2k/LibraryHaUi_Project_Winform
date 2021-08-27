@@ -16,7 +16,14 @@ namespace LuuCongQuangVu_Nhom13
         {
             InitializeComponent();
         }
-
+        public double moneyCustomer
+        {
+            get { return Convert.ToDouble(txtCustomerPay.Text);}
+        }
+        public bool checkPrinter
+        {
+            get { return checkPrint.Checked ? true : false; }
+        }
         private void DialogCustomerPay_Load(object sender, EventArgs e)
         {
             txtSumMoney.Text = (string)this.Tag;
@@ -32,7 +39,6 @@ namespace LuuCongQuangVu_Nhom13
         {
             GetError.SetError(txtCustomerPay, "");
         }
-
         private void txtCustomerPay_Validating(object sender, CancelEventArgs e)
         {
             if (txtCustomerPay.Text == "")
@@ -56,6 +62,18 @@ namespace LuuCongQuangVu_Nhom13
                     GetError.SetError(txtCustomerPay, "Bạn phải nhập là số thực!");
                     e.Cancel = true;
                 }
+            }
+        }
+
+        private void txtCustomerPay_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
             }
         }
     }

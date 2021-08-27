@@ -54,17 +54,18 @@ create table Sach(
 	Soluong int,
 	Idtheloai char(4),
 	Giasach float,
+	Ngaynhap datetime,
 	Nhaxuatban nvarchar(50),
 	Vitri nvarchar(50),
 	constraint fk_idtheloai foreign key(Idtheloai) references Theloai(Idtheloai)
 )
 go
-insert into Sach values('S001', N'Lập trình Android', N'Phạm Quốc Vương', 10, 'T005', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S002', N'Lập trình C#', N'Lưu Công Quang Vũ', 15, 'T005', 80000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S003', N'Lập trình Java', N'Đỗ Viết Nam', 20, 'T005', 120000, N'HaUi', N'CS3-Tp.Phủ Lý-Hà Nam')
-insert into Sach values('S004', N'Lập trình Ruby', N'Lê Văn Thành', 16, 'T005', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S005', N'Kinh tế lượng', N'Trân Anh Toan', 16, 'T002', 70000, N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
-insert into Sach values('S006', N'Thị trường chứng khoán', N'Hoàng Anh', 10, 'T002', 100000, N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S001', N'Lập trình Android', N'Phạm Quốc Vương', 10, 'T005', 100000,'2019/01/20', N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S002', N'Lập trình C#', N'Lưu Công Quang Vũ', 15, 'T005', 80000,'2020/01/20', N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S003', N'Lập trình Java', N'Đỗ Viết Nam', 20, 'T005', 120000,'2019/01/20', N'HaUi', N'CS3-Tp.Phủ Lý-Hà Nam')
+insert into Sach values('S004', N'Lập trình Ruby', N'Lê Văn Thành', 16, 'T005', 70000,'2018/01/20', N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S005', N'Kinh tế lượng', N'Trân Anh Toan', 16, 'T002', 70000,'2020/01/20', N'HaUi', N'CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội')
+insert into Sach values('S006', N'Thị trường chứng khoán', N'Hoàng Anh', 10, 'T002', 100000,'2021/01/20', N'HaUi', N'CS1-Nhổn-Bắc Từ Liêm-Hà Nội')
 go
 create table Muontrasach(
 	Iddocgia char(4),

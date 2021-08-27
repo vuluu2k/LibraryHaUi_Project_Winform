@@ -18,6 +18,9 @@ namespace LuuCongQuangVu_Nhom13
         Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
         int index = 0;
         public int slmua;
+        String codeHD = "";
+        String sumMoneyHD = "";
+        String moneyCustomer = "";
         private void InCbTenSach()
         {
             cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
@@ -831,6 +834,7 @@ namespace LuuCongQuangVu_Nhom13
             return true;
         }
         #endregion
+            
         #region Quản lí sách
         //----------------------------Quản lý sách-------------------------------------------------------------------------------------------------------------
         private void ReadFile()
@@ -843,7 +847,7 @@ namespace LuuCongQuangVu_Nhom13
                 {
                     txtSL_Sach.Text = Convert.ToString(list_sach.Count());
                     dgvSach.Rows.Clear();
-                    dgvSach.ColumnCount = 8;
+                    dgvSach.ColumnCount = 9;
                     for (int i = 0; i < list_sach.Count(); i++)
                     {
                         String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -854,8 +858,9 @@ namespace LuuCongQuangVu_Nhom13
                         dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                         dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                         dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                        dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                        dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                        dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                        dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                        dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                     }
                 }
                 else
@@ -875,6 +880,7 @@ namespace LuuCongQuangVu_Nhom13
                 sach.Soluong = int.Parse(txtsoluong.Text);
                 sach.Idtheloai = cbTheLoaiSach.SelectedValue.ToString();
                 sach.Giasach = double.Parse(txtgiasach.Text);
+                sach.Ngaynhap = dtimeSach.Value;
                 sach.Nhaxuatban = txtnhasx.Text;
                 sach.Vitri = cbvitri.Text;
                 dbcontext.Saches.Add(sach);
@@ -937,6 +943,7 @@ namespace LuuCongQuangVu_Nhom13
                 sach.Soluong = int.Parse(txtsoluong.Text);
                 sach.Idtheloai = cbTheLoaiSach.SelectedValue.ToString(); 
                 sach.Giasach = double.Parse(txtgiasach.Text);
+                sach.Ngaynhap = dtimeSach.Value;
                 sach.Nhaxuatban = txtnhasx.Text;
                 sach.Vitri = cbvitri.Text;
                 dbcontext.SaveChanges();
@@ -1187,8 +1194,8 @@ namespace LuuCongQuangVu_Nhom13
             txtsoluong.Text = Convert.ToString(row.Cells[3].Value);
             cbTheLoaiSach.Text = Convert.ToString(row.Cells[4].Value);
             txtgiasach.Text = Convert.ToString(row.Cells[5].Value);
-            txtnhasx.Text = Convert.ToString(row.Cells[6].Value);
-            cbvitri.Text = Convert.ToString(row.Cells[7].Value);
+            txtnhasx.Text = Convert.ToString(row.Cells[7].Value);
+            cbvitri.Text = Convert.ToString(row.Cells[8].Value);
         }
         #endregion
         #region Quản lí độc giả
@@ -1688,7 +1695,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 TongTien += Convert.ToDouble(dgvLHD.Rows[i].Cells[4].Value);
             }
-            lbTongTienLHD.Text = TongTien.ToString();
+            lbSumMoney.Text = TongTien.ToString();
         }
 
         private void txtMaSVLHD_TextChanged(object sender, EventArgs e)
@@ -1786,6 +1793,7 @@ namespace LuuCongQuangVu_Nhom13
                 ClearBookBuy();
             }
         }
+       
         private void CreateBill()
         {
             if (rdByPersonal.Checked)
@@ -1795,34 +1803,46 @@ namespace LuuCongQuangVu_Nhom13
                     Models.Account acc = (Models.Account)this.Tag;
                     Models.HoaDon hd = new Models.HoaDon();
                     hd.MaHd = txtMaHD.Text;
+                    codeHD = txtMaHD.Text;
                     hd.Iddocgia = null;
                     hd.Idgiangvien = null;
                     hd.Usename = acc.Usename;
                     hd.NgayLap = dtimeNgayLap.Value;
                     dbcontext.HoaDons.Add(hd);
-                    Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
+                    List<Models.HoaDonChiTiet> listHDCT = new List<Models.HoaDonChiTiet>();
                     for (int i = 0; i < dgvLHD.RowCount-1; i++)
                     {
+                        Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
                         hdct.MaHd = hd.MaHd;
                         hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
                         hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
+                        dbcontext.HoaDonChiTiets.Add(hdct);
+                        listHDCT.Add(hdct);
                         Models.Sach book = (from b in dbcontext.Saches where b.Idsach==hdct.Idsach select b).FirstOrDefault();
                         book.Soluong = book.Soluong - hdct.SoLuongMua;
-                        dbcontext.HoaDonChiTiets.Add(hdct);
                     }
                     DialogCustomerPay PayCustomer = new DialogCustomerPay();
-                    PayCustomer.Tag = lbTongTienLHD.Text;
+                    PayCustomer.Tag = lbSumMoney.Text;
                     PayCustomer.ShowDialog();
                     if (PayCustomer.DialogResult == DialogResult.OK) 
                     {
                         MessageBox.Show("Thanh toán thành công", "Thông báo");
                         dbcontext.SaveChanges();
+                        codeHD = txtMaHD.Text;
+                        sumMoneyHD = lbSumMoney.Text;
+                        moneyCustomer = Convert.ToString(PayCustomer.moneyCustomer);
+                        if (PayCustomer.checkPrinter == true)
+                        {
+                            printPreviewDialog1.Document = printDocument1;
+                            printPreviewDialog1.ShowDialog();
+                        }
+                        txtMaHD.Text = RandomCodeHD();
                         ClearALl();
                     }
                     else
                     {
                         dbcontext.HoaDons.Remove(hd);
-                        dbcontext.HoaDonChiTiets.Remove(hdct);
+                        dbcontext.HoaDonChiTiets.RemoveRange(listHDCT);
                     }
                 }
             }
@@ -1838,34 +1858,176 @@ namespace LuuCongQuangVu_Nhom13
                     hd.Usename = acc.Usename;
                     hd.NgayLap = dtimeNgayLap.Value;
                     dbcontext.HoaDons.Add(hd);
-                    Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
+                    List<Models.HoaDonChiTiet> listHDCT = new List<Models.HoaDonChiTiet>();
                     for (int i = 0; i < dgvLHD.RowCount - 1; i++)
                     {
+                        Models.HoaDonChiTiet hdct = new Models.HoaDonChiTiet();
                         hdct.MaHd = hd.MaHd;
                         hdct.Idsach = Convert.ToString(dgvLHD.Rows[i].Cells[0].Value);
                         hdct.SoLuongMua = Convert.ToInt32(dgvLHD.Rows[i].Cells[2].Value);
+                        dbcontext.HoaDonChiTiets.Add(hdct);
+                        listHDCT.Add(hdct);
                         Models.Sach book = (from b in dbcontext.Saches where b.Idsach == hdct.Idsach select b).FirstOrDefault();
                         book.Soluong = book.Soluong - hdct.SoLuongMua;
-                        dbcontext.HoaDonChiTiets.Add(hdct);
                     }
                     DialogCustomerPay PayCustomer = new DialogCustomerPay();
-                    PayCustomer.Tag = lbTongTienLHD.Text;
+                    PayCustomer.Tag = lbSumMoney.Text;
                     PayCustomer.ShowDialog();
                     if (PayCustomer.DialogResult == DialogResult.OK)
                     {
                         MessageBox.Show("Thanh toán thành công", "Thông báo");
                         dbcontext.SaveChanges();
+                        codeHD = txtMaHD.Text;
+                        sumMoneyHD = lbSumMoney.Text;
+                        moneyCustomer = Convert.ToString(PayCustomer.moneyCustomer);
+                        if (PayCustomer.checkPrinter == true)
+                        {
+                            printPreviewDialog1.Document = printDocument1;
+                            printPreviewDialog1.ShowDialog();
+                        }
+                        txtMaHD.Text = RandomCodeHD();
                         ClearALl();
                     }
                     else
                     {
                         dbcontext.HoaDons.Remove(hd);
-                        dbcontext.HoaDonChiTiets.Remove(hdct);
+                        dbcontext.HoaDonChiTiets.RemoveRange(listHDCT);
                     }
                 }
             }
         }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
 
+            if (codeHD != "")
+            {
+                if (rdByPersonal.Checked)
+                {
+                    var hd= (from code in dbcontext.HoaDons where code.MaHd == codeHD select code).FirstOrDefault();
+                    var peopleHD = (from name in dbcontext.Accounts where name.Usename == hd.Usename select name).FirstOrDefault();
+                    var result = (from hdct in dbcontext.HoaDonChiTiets
+                                 join book in dbcontext.Saches on hdct.Idsach equals book.Idsach
+                                 where hdct.MaHd == codeHD
+                                 select new
+                                 {
+                                     idBook = book.Idsach,
+                                     nameBook=book.Tensach,
+                                     slBook=hdct.SoLuongMua,
+                                     dgBook=book.Giasach,
+                                     sumBook=hdct.SoLuongMua*book.Giasach
+                                 }).ToList();
+                    var w = printDocument1.DefaultPageSettings.PaperSize.Width;
+                    e.Graphics.DrawString("Thư viện Trường Đại Học Công Nghiệp Hà Nội".ToUpper(), new Font("Courier New", 16, FontStyle.Bold), Brushes.Black, new Point(w/2-280, 40));
+                    e.Graphics.DrawString("Hoá đơn thanh toán".ToUpper(), new Font("Courier New", 14, FontStyle.Bold), Brushes.Black, new Point(w/2-100, 80));
+                    e.Graphics.DrawString("Mã hoá đơn: "+hd.MaHd, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50,120));
+                    e.Graphics.DrawString("Người lập: " + peopleHD.Tenchutaikhoan, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 140));
+                    e.Graphics.DrawString("Ngày lập: " +hd.NgayLap, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 160));
+                    Pen penBlack = new Pen(Color.Black,1);
+                    var y = 180;
+                    Point p1 = new Point(10, y);
+                    Point p2 = new Point(w - 10, y);
+                    e.Graphics.DrawLine(penBlack, p1, p2);
+                    y += 20;
+                    e.Graphics.DrawString("STT", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString("Mã sách", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(80, y));
+                    e.Graphics.DrawString("Tên sách", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(180, y));
+                    e.Graphics.DrawString("Số lượng", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w/2, y));
+                    e.Graphics.DrawString("Đơn giá", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w/2+150, y));
+                    e.Graphics.DrawString("Thành tiền", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w-150, y));
+                    int i = 1;
+                    y += 25;
+                    foreach(var item in result)
+                    {
+                        e.Graphics.DrawString(i++.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                        e.Graphics.DrawString(item.idBook, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(80, y));
+                        e.Graphics.DrawString(item.nameBook, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(180, y));
+                        e.Graphics.DrawString(item.slBook.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w / 2, y));
+                        e.Graphics.DrawString(item.dgBook.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w / 2 + 150, y));
+                        e.Graphics.DrawString(item.sumBook.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                        y += 20;
+                    }
+                    y += 20;
+                    p1 = new Point(10, y);
+                    p2 = new Point(w - 10, y);
+                    e.Graphics.DrawLine(penBlack, p1, p2);
+                    y += 20;
+                    e.Graphics.DrawString("Tổng tiền t.toán".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString(sumMoneyHD, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                    y += 20;
+                    e.Graphics.DrawString("Tiền độc giả trả".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString(moneyCustomer, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                    y += 20;
+                    e.Graphics.DrawString("Tiền trả lại".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString((Convert.ToDouble(moneyCustomer)-Convert.ToDouble(sumMoneyHD)).ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                }
+                else
+                {
+                    var hd = (from code in dbcontext.HoaDons where code.MaHd == codeHD select code).FirstOrDefault();
+                    var sv = (from codedg in dbcontext.Docgia where codedg.Iddocgia == hd.Iddocgia select codedg).FirstOrDefault();
+                    var gv = (from codedg in dbcontext.Docgia where codedg.Iddocgia == hd.Idgiangvien select codedg).FirstOrDefault();
+                    var peopleHD = (from name in dbcontext.Accounts where name.Usename == hd.Usename select name).FirstOrDefault();
+                    var result = (from hdct in dbcontext.HoaDonChiTiets
+                                  join book in dbcontext.Saches on hdct.Idsach equals book.Idsach
+                                  where hdct.MaHd == codeHD
+                                  select new
+                                  {
+                                      idBook = book.Idsach,
+                                      nameBook = book.Tensach,
+                                      slBook = hdct.SoLuongMua,
+                                      dgBook = book.Giasach,
+                                      sumBook = hdct.SoLuongMua * book.Giasach
+                                  }).ToList();
+                    var w = printDocument1.DefaultPageSettings.PaperSize.Width;
+                    e.Graphics.DrawString("Thư viện Trường Đại Học Công Nghiệp Hà Nội".ToUpper(), new Font("Courier New", 14, FontStyle.Bold), Brushes.Black, new Point(w / 2 - 280, 40));
+                    e.Graphics.DrawString("Hoá đơn thanh toán".ToUpper(), new Font("Courier New", 14, FontStyle.Bold), Brushes.Black, new Point(w/2-100, 80));
+                    e.Graphics.DrawString("Mã hoá đơn: " + hd.MaHd, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 120));
+                    e.Graphics.DrawString("Người lập: " + peopleHD.Tenchutaikhoan, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 140));
+                    e.Graphics.DrawString("Ngày lập: " + hd.NgayLap, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 160));
+                    e.Graphics.DrawString("Mã sinh viên: " + hd.Iddocgia, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 180));
+                    e.Graphics.DrawString("Tên sinh viên: " + sv.Hoten, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w/2, 180));
+                    e.Graphics.DrawString("Mã giảng viên: " + hd.Idgiangvien, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(50, 200));
+                    e.Graphics.DrawString("Tên giảng viên: " + gv.Hoten, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w/2, 200));
+                    Pen penBlack = new Pen(Color.Black, 1);
+                    var y = 220;
+                    Point p1 = new Point(10, y);
+                    Point p2 = new Point(w - 10, y);
+                    e.Graphics.DrawLine(penBlack, p1, p2);
+                    y += 20;
+                    e.Graphics.DrawString("STT", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString("Mã sách", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(80, y));
+                    e.Graphics.DrawString("Tên sách", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(180, y));
+                    e.Graphics.DrawString("Số lượng", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w / 2, y));
+                    e.Graphics.DrawString("Đơn giá", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w / 2 + 150, y));
+                    e.Graphics.DrawString("Thành tiền", new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                    int i = 1;
+                    y += 25;
+                    foreach (var item in result)
+                    {
+                        e.Graphics.DrawString(i++.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                        e.Graphics.DrawString(item.idBook, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(80, y));
+                        e.Graphics.DrawString(item.nameBook, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(180, y));
+                        e.Graphics.DrawString(item.slBook.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w / 2, y));
+                        e.Graphics.DrawString(item.dgBook.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w / 2 + 150, y));
+                        e.Graphics.DrawString(item.sumBook.ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                        y += 20;
+                    }
+                    y += 20;
+                    p1 = new Point(10, y);
+                    p2 = new Point(w - 10, y);
+                    e.Graphics.DrawLine(penBlack, p1, p2);
+                    y += 20;
+                    e.Graphics.DrawString("Tổng tiền t.toán".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString(sumMoneyHD, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                    y += 20;
+                    e.Graphics.DrawString("Tiền độc giả trả".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString(moneyCustomer, new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                    y += 20;
+                    e.Graphics.DrawString("Tiền trả lại".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(20, y));
+                    e.Graphics.DrawString((Convert.ToDouble(moneyCustomer) - Convert.ToDouble(sumMoneyHD)).ToString(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black, new Point(w - 150, y));
+                }
+
+            }
+        }
         private void ClearALl()
         {            
             txtMaSVLHD.Clear();
@@ -1876,7 +2038,7 @@ namespace LuuCongQuangVu_Nhom13
             cbMaSach_lhd.Text="";
             txtsoluongmua_lhd.Clear();
             dgvLHD.Rows.Clear();
-            lbTongTienLHD.Text = "0";
+            lbSumMoney.Text="0";
         }
         private void ClearBookBuy()
         {
@@ -1911,11 +2073,24 @@ namespace LuuCongQuangVu_Nhom13
         {
             CreateBill();
         }
+        private void btnPrintLHD_Click(object sender, EventArgs e)
+        {
+            if (codeHD != "")
+            {
+                printPreviewDialog1.Document = printDocument1;
+                printPreviewDialog1.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa nhập hoá đơn nào kể từ lần đăng nhập gần nhất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void btnHuySachMua_Click(object sender, EventArgs e)
         {
             cbMaSach_lhd.Text = "";
             txtsoluongmua_lhd.Clear();
         }
+        
 
         #endregion
         #region Quản lí bán sách>Lịch sử bán sách
@@ -1925,6 +2100,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 var hds = (from h in dbcontext.HoaDons
                            join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           orderby h.NgayLap descending
                            select new
                            {
                                mahd = h.MaHd,
@@ -1951,7 +2127,7 @@ namespace LuuCongQuangVu_Nhom13
                     dgvHistoryBS.Rows[index_historybs].Cells[2].Value = item.magv;
                     dgvHistoryBS.Rows[index_historybs].Cells[3].Value = SumMoney;
                     dgvHistoryBS.Rows[index_historybs].Cells[4].Value = item.nguoilap;
-                    dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap;
+                    dgvHistoryBS.Rows[index_historybs].Cells[5].Value = item.ngaylap.Value.ToString("dd/MM/yyyy HH:mm");
                     int days = DateTime.Now.Day - item.ngaylap.Value.Day;
                     if (days == 0)
                     {
@@ -1973,6 +2149,7 @@ namespace LuuCongQuangVu_Nhom13
                 var hds = (from h in dbcontext.HoaDons
                            join acc in dbcontext.Accounts on h.Usename equals acc.Usename
                            where h.Iddocgia==null&&h.Idgiangvien==null
+                           orderby h.NgayLap descending
                            select new
                            {
                                mahd = h.MaHd,
@@ -2021,6 +2198,7 @@ namespace LuuCongQuangVu_Nhom13
                 var hds = (from h in dbcontext.HoaDons
                            join acc in dbcontext.Accounts on h.Usename equals acc.Usename
                            where h.Iddocgia != null && h.Idgiangvien != null
+                           orderby h.NgayLap descending
                            select new
                            {
                                mahd = h.MaHd,
@@ -2071,6 +2249,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 var hds = (from h in dbcontext.HoaDons
                            join acc in dbcontext.Accounts on h.Usename equals acc.Usename
+                           orderby h.NgayLap descending
                            select new
                            {
                                mahd = h.MaHd,
@@ -2080,7 +2259,7 @@ namespace LuuCongQuangVu_Nhom13
                                ngaylap = h.NgayLap
                            }).ToList();
                 dgvHistoryBS.Rows.Clear();
-                dgvHistoryBS.ColumnCount = 7;
+                dgvHistoryBS.ColumnCount = 6;
                 int index_historybs = 0;
                 if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
                 {
@@ -2132,6 +2311,7 @@ namespace LuuCongQuangVu_Nhom13
                 var hds = (from h in dbcontext.HoaDons
                            join acc in dbcontext.Accounts on h.Usename equals acc.Usename
                            where h.Iddocgia==null && h.Idgiangvien==null
+                           orderby h.NgayLap descending
                            select new
                            {
                                mahd = h.MaHd,
@@ -2141,7 +2321,7 @@ namespace LuuCongQuangVu_Nhom13
                                ngaylap = h.NgayLap
                            }).ToList();
                 dgvHistoryBS.Rows.Clear();
-                dgvHistoryBS.ColumnCount = 7;
+                dgvHistoryBS.ColumnCount = 6;
                 int index_historybs = 0;
                 if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
                 {
@@ -2193,6 +2373,7 @@ namespace LuuCongQuangVu_Nhom13
                 var hds = (from h in dbcontext.HoaDons
                            join acc in dbcontext.Accounts on h.Usename equals acc.Usename
                            where h.Iddocgia != null && h.Idgiangvien != null
+                           orderby h.NgayLap descending
                            select new
                            {
                                mahd = h.MaHd,
@@ -2202,7 +2383,7 @@ namespace LuuCongQuangVu_Nhom13
                                ngaylap = h.NgayLap
                            }).ToList();
                 dgvHistoryBS.Rows.Clear();
-                dgvHistoryBS.ColumnCount = 7;
+                dgvHistoryBS.ColumnCount = 6;
                 int index_historybs = 0;
                 if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
                 {
@@ -5129,9 +5310,46 @@ namespace LuuCongQuangVu_Nhom13
             ThongKeMuonTaiPhong();
         }
 
+
+
+
         #endregion
 
 
-        
+        private void dgvHistoryBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = dgvHistoryBS.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dgvHistoryBS.Rows[index];
+            List<String> listTag = new List<string>();
+            listTag.Add(row.Cells[0].Value.ToString());
+            if (row.Cells[1].Value == null)
+            {
+                listTag.Add("");
+            }
+            else
+            {
+                listTag.Add(row.Cells[1].Value.ToString());
+            }
+            if (row.Cells[2].Value == null)
+            {
+                listTag.Add("");
+            }
+            else
+            {
+                listTag.Add(row.Cells[2].Value.ToString());
+            }
+            listTag.Add(row.Cells[3].Value.ToString());
+            listTag.Add(row.Cells[4].Value.ToString());
+            listTag.Add(row.Cells[5].Value.ToString());
+            DialogInforHD inforHDForm = new DialogInforHD();
+            inforHDForm.Tag = listTag;
+            inforHDForm.ShowDialog();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            dtimeNgayLap.Value = DateTime.Now;
+            dtimeSach.Value= DateTime.Now;
+        }
     }
 }

@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\moiws\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {}
+    "D:\\BTL_LTW_TongHop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {}
   },
   "projects": {
-    "C:\\moiws\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {
+    "D:\\BTL_LTW_TongHop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\moiws\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+        "projectUniqueName": "D:\\BTL_LTW_TongHop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
         "projectName": "LuuCongQuangVu_Nhom13",
-        "projectPath": "C:\\moiws\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\moiws\\LuuCongQuangVu_Nhom13\\obj\\",
+        "projectPath": "D:\\BTL_LTW_TongHop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\LuuCongQuangVu_Nhom13.csproj",
+        "packagesPath": "C:\\Users\\laptr\\.nuget\\packages\\",
+        "outputPath": "D:\\BTL_LTW_TongHop\\BTL_Nhom13\\LuuCongQuangVu_Nhom13\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\laptr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0-windows7.0"
@@ -101,7 +95,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

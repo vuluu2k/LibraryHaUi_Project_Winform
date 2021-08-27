@@ -38,7 +38,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtCustomerPay = new System.Windows.Forms.TextBox();
             this.txtEmployPay = new System.Windows.Forms.TextBox();
             this.btnPay = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkPrint = new System.Windows.Forms.CheckBox();
             this.GetError = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).BeginInit();
             this.SuspendLayout();
@@ -93,6 +93,7 @@ namespace LuuCongQuangVu_Nhom13
             this.txtCustomerPay.Size = new System.Drawing.Size(137, 22);
             this.txtCustomerPay.TabIndex = 4;
             this.txtCustomerPay.TextChanged += new System.EventHandler(this.txtCustomerPay_TextChanged);
+            this.txtCustomerPay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCustomerPay_KeyPress);
             this.txtCustomerPay.Validating += new System.ComponentModel.CancelEventHandler(this.txtCustomerPay_Validating);
             this.txtCustomerPay.Validated += new System.EventHandler(this.txtCustomerPay_Validated);
             // 
@@ -119,17 +120,17 @@ namespace LuuCongQuangVu_Nhom13
             this.btnPay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPay.UseVisualStyleBackColor = false;
             // 
-            // checkBox1
+            // checkPrint
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.checkBox1.Location = new System.Drawing.Point(148, 142);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(82, 19);
-            this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "In hoá đơn";
-            this.checkBox1.UseVisualStyleBackColor = false;
+            this.checkPrint.AutoSize = true;
+            this.checkPrint.BackColor = System.Drawing.Color.Transparent;
+            this.checkPrint.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.checkPrint.Location = new System.Drawing.Point(148, 142);
+            this.checkPrint.Name = "checkPrint";
+            this.checkPrint.Size = new System.Drawing.Size(82, 19);
+            this.checkPrint.TabIndex = 8;
+            this.checkPrint.Text = "In hoá đơn";
+            this.checkPrint.UseVisualStyleBackColor = false;
             // 
             // GetError
             // 
@@ -142,7 +143,7 @@ namespace LuuCongQuangVu_Nhom13
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_admin;
             this.ClientSize = new System.Drawing.Size(327, 248);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.checkPrint);
             this.Controls.Add(this.btnPay);
             this.Controls.Add(this.txtEmployPay);
             this.Controls.Add(this.txtCustomerPay);
@@ -169,7 +170,7 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.TextBox txtCustomerPay;
         private System.Windows.Forms.TextBox txtEmployPay;
         private System.Windows.Forms.Button btnPay;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkPrint;
         private System.Windows.Forms.ErrorProvider GetError;
     }
 }
