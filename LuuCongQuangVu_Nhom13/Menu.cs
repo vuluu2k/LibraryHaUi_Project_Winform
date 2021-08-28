@@ -61,10 +61,13 @@ namespace LuuCongQuangVu_Nhom13
             txtNguoiLapLHD.Text = acc.Tenchutaikhoan;
             //MessageBox.Show(acc.Usename);
             //MessageBox.Show(dgvLHD.RowCount.ToString());
-            //load combobox thể loại sách
-            load_tkcbbthloai();
-            //load combobox mã sách
-            load_cbbmasach();
+
+            //timer thống kê sách tổng thể
+            timertktongthe.Enabled = true;
+            timerlabelthanhly.Enabled = true;
+            timerupdategridviewthanhly.Enabled = true;
+            ngaythongkethanhly.Text = Convert.ToString(DateTime.Now.Day) + "/" + Convert.ToString(DateTime.Now.Month) + "/" + Convert.ToString(DateTime.Now.Year);
+
             txtMaHD.Text = RandomCodeHD();
 
             cbReadFileDG.Text = "Tất cả";
@@ -3034,92 +3037,7 @@ namespace LuuCongQuangVu_Nhom13
         }
         #endregion
         #endregion
-        #region thống kê sách
-        #region thống kê sách theo thể loại
-        //thống kê sách theo thể loại
-        private void load_tkcbbthloai()
-        {
-            var list_cbbtheloai = dbcontext.Saches.Select(s => s.Idtheloai).Distinct();
-            tkcbbtheloai.DataSource = list_cbbtheloai.ToList();
-            tkcbbtheloai.DisplayMember = "Theloai";
-        }
-        //hiển thị danh sách thể loại
-        private void tkbtnhienthi_Click(object sender, EventArgs e)
-        {
-            //hiển thị danh sách theo thể loại
-            var ds = dbcontext.Saches.Where(s => s.Idtheloai == tkcbbtheloai.SelectedValue.ToString()).Select(s => new
-            {
-                Idsach = s.Idsach,
-                Tensach = s.Tensach,
-                tacgia = s.Tacgia,
-                soluong = s.Soluong,
-                theloai = s.Idtheloai,
-                giasach = s.Giasach,
-                nhaxb = s.Nhaxuatban,
-                vitri = s.Vitri
-            });
-            if (ds == null)
-            {
-                MessageBox.Show("Danh sách trống!", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tkcbbtheloai.Focus();
-                tkcbbtheloai.SelectAll();
-            }
-            else
-            {
-                if (checktkcbbempty())
-                {
-                    tkdgvthongketheotheloai.DataSource = ds.ToList();
-
-                    //hiển thị số lượng sách theo thể loại lên label
-                    var sl = dbcontext.Saches.Count(s => s.Idtheloai == tkcbbtheloai.SelectedValue.ToString());
-                    tklbsltheotheloai.Text = Convert.ToString(sl);
-
-                    //chỉnh sửa độ rộng các cột
-                    tkdgvthongketheotheloai.Columns[0].Width = 60;
-                    tkdgvthongketheotheloai.Columns[1].Width = 200;
-                    tkdgvthongketheotheloai.Columns[2].Width = 150;
-                    tkdgvthongketheotheloai.Columns[3].Width = 60;
-                    tkdgvthongketheotheloai.Columns[4].Width = 150;
-                    tkdgvthongketheotheloai.Columns[5].Width = 60;
-                    tkdgvthongketheotheloai.Columns[6].Width = 150;
-                    tkdgvthongketheotheloai.Columns[7].Width = 150;
-                }
-            }
-        }
-
-        //đưa tên thể loại lên combobox
-        private void tkdgvthongketheotheloai_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int index = e.RowIndex;
-            DataGridViewRow row = tkdgvthongketheotheloai.Rows[index];
-            tkcbbtheloai.Text = Convert.ToString(row.Cells["Theloai"].Value);
-        }
-        //check combobox thể loại
-        private bool checktkcbbempty()
-        {
-            var check = dbcontext.Saches.Where(s => s.Idtheloai == tkcbbtheloai.Text).FirstOrDefault();
-            if (check == null)
-            {
-                errorProvider1.SetError(tkcbbtheloai, "không tồn tại thể loại này!");
-                tkcbbtheloai.Focus();
-                tkcbbtheloai.SelectAll();
-                return false;
-            }
-            if (tkcbbtheloai.SelectedValue == null)
-            {
-                errorProvider1.SetError(tkcbbtheloai, "bạn phải chọn thể loại trong combobox");
-                tkcbbtheloai.Focus();
-                tkcbbtheloai.SelectAll();
-                return false;
-            }
-            return true;
-        }
-
-        private void tkcbbtheloai_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(tkcbbtheloai, "");
-        }
-        #endregion
+        #region thống kê sách      
         #region thống kê sách mượn nhiều
         //thống kê sách mượn nhiều
         private void button16_Click(object sender, EventArgs e)
@@ -3434,7 +3352,13 @@ namespace LuuCongQuangVu_Nhom13
         #endregion
         #endregion
         #region thống kê tổng thể 
-        private void button1_Click(object sender, EventArgs e)
+        //hiển thị danh sách sách 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var list = dbcontext.Saches.Select(s => new { s.Idsach, s.Tensach, s.Tacgia, s.Soluong, s.Idtheloai, s.Giasach, s.Nhaxuatban, s.Vitri });
+            tkdgvtongthe.DataSource = list.ToList();
+        }
+        private void timertktongthe_Tick(object sender, EventArgs e)
         {
             var sachs = dbcontext.Saches.Select(s => s).Count();
             tklbtongsach.Text = Convert.ToString(sachs);
@@ -3444,372 +3368,110 @@ namespace LuuCongQuangVu_Nhom13
 
             tklbsosachconlai.Text = Convert.ToString(sachs - sachdangmuon);
         }
-        //hiển thị danh sách sách có sắp xếp theo tiêu chí được chọn
-        private void button6_Click(object sender, EventArgs e)
-        {
-            var list = dbcontext.Saches.Select(s => new { s.Idsach, s.Tensach, s.Tacgia, s.Soluong, s.Idtheloai, s.Giasach, s.Nhaxuatban, s.Vitri });
-            if (tkrboption1.Checked == true)
-            {
-                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Tensach).ToList();
-            }
-            else if (tkrboption2.Checked == true)
-            {
-                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Soluong).ToList();
-            }
-            else if (tkrboption3.Checked == true)
-            {
-                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Giasach).ToList();
-            }
-            else if (tkrboption4.Checked == true)
-            {
-                tkdgvtongthe.DataSource = list.OrderByDescending(s => s.Nhaxuatban).ToList();
-            }
-            else
-            {
-                tkdgvtongthe.DataSource = list.ToList();
-            }
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            tkrboption1.Checked = false;
-            tkrboption2.Checked = false;
-            tkrboption3.Checked = false;
-            tkrboption4.Checked = false;
-        }
         #endregion
         #endregion
         #region thanh lí sách
-        //load combobox mã sách
-        private void load_cbbmasach()
+        private void timerupdategridviewthanhly_Tick(object sender, EventArgs e)
         {
-            var masach = dbcontext.Saches.Select(s => s.Idsach).ToList();
-            tlcbbmasach.DataSource = masach;
-        }
+            var check = dbcontext.Muontrasaches.Where(s => s.Tinhtrangtra != "bình thường" && s.Tinhtrangtra != null).ToList();
+            var loithoi = (from s in dbcontext.Saches
+                           join t in dbcontext.Theloais on s.Idtheloai equals t.Idtheloai
+                           where DateTime.Now.Year - s.Ngaynhap.Value.Year >= 2
+                           select new { s.Idsach, s.Tensach, s.Vitri, s.Tacgia, s.Nhaxuatban, t.Tentheloai, s.Ngaynhap, tinhtrang = "lỗi thời" }).ToList();
+            tldgvthanhli.ColumnCount = 9;
+            int i = 0;
+            if (check.Count > 0)
+            {
+                var ds = (from m in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join t in dbcontext.Theloais on s.Idtheloai equals t.Idtheloai
+                          where m.Tinhtrangtra != "bình thường" && m.Tinhtrangtra != null
+                          select new { s.Idsach, s.Tensach, m.Soluongmuon, s.Vitri, s.Tacgia, s.Nhaxuatban, t.Tentheloai, s.Ngaynhap, m.Tinhtrangtra }).ToList();
 
-        #region bắt lỗi thanh lí sách
-        private bool thanhli_check()
-        {
-            if (tlcbbmasach.SelectedValue == null)
-            {
-                errorProvider1.SetError(tlcbbmasach, "bạn phải chọn mã trong combobox");
-                tlcbbmasach.Focus();
-                return false;
-            }
-            var checkmasach = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.Text).SingleOrDefault();
-            if (checkmasach == null)
-            {
-                errorProvider1.SetError(tlcbbmasach, "không có sách này trong bảng sách");
-                tlcbbmasach.Focus();
-                return false;
-            }
-            if (tlslthanhli.Text == "")
-            {
-                errorProvider1.SetError(tlslthanhli, "bạn phải nhập số lượng cần thanh lí");
-                tlslthanhli.Focus();
-                return false;
-            }
-            try
-            {
-                int.Parse(tlslthanhli.Text);
-                if (int.Parse(tlslthanhli.Text) <= 0)
+                foreach (var item in ds)
                 {
-                    errorProvider1.SetError(tlslthanhli, "số lượng thanh lí phải >0");
-                    tlslthanhli.Focus();
-                    return false;
+                    tldgvthanhli.Rows.Add();
+                    tldgvthanhli.Rows[i].Cells[0].Value = item.Idsach;
+                    tldgvthanhli.Rows[i].Cells[1].Value = item.Tensach;
+                    tldgvthanhli.Rows[i].Cells[2].Value = item.Soluongmuon;
+                    tldgvthanhli.Rows[i].Cells[3].Value = item.Vitri;
+                    tldgvthanhli.Rows[i].Cells[4].Value = item.Tacgia;
+                    tldgvthanhli.Rows[i].Cells[5].Value = item.Nhaxuatban;
+                    tldgvthanhli.Rows[i].Cells[6].Value = item.Tentheloai;
+                    tldgvthanhli.Rows[i].Cells[7].Value = item.Ngaynhap;
+                    tldgvthanhli.Rows[i].Cells[8].Value = item.Tinhtrangtra;
+                    i++;
                 }
             }
-            catch (Exception ex)
+            var sachtheloai = (from s in dbcontext.Saches
+                               join t in dbcontext.Theloais on s.Idtheloai equals t.Idtheloai
+                               select new { s.Idsach, s.Tensach, s.Vitri, s.Tacgia, s.Nhaxuatban, t.Tentheloai, s.Ngaynhap, tinhtrang = "lỗi thời" }).ToList();
+            foreach (var item in sachtheloai)
             {
-                errorProvider1.SetError(tlslthanhli, "số lượng thanh lí phải là một số nguyên");
-                tlslthanhli.Focus();
-                return false;
-            }
-            if (tlptthanhli.Text == "")
-            {
-                errorProvider1.SetError(tlptthanhli, "bạn phải nhập phần trăm giá gốc");
-                tlptthanhli.Focus();
-                return false;
-            }
-            try
-            {
-                double a = double.Parse(tlptthanhli.Text);
-                if (a < 0 || a > 100)
+                var checksm = from m in dbcontext.Muontrasaches
+                              where m.Idsach == item.Idsach
+                              select m;
+                if (checksm.Count() == 0 && (DateTime.Now.Year - item.Ngaynhap.Value.Year >= 3))
                 {
-                    errorProvider1.SetError(tlptthanhli, "phần trăm giá từ 0 đến 100");
-                    tlptthanhli.Focus();
-                    return false;
+                    tldgvthanhli.Rows.Add();
+                    tldgvthanhli.Rows[i].Cells[0].Value = item.Idsach;
+                    tldgvthanhli.Rows[i].Cells[1].Value = item.Tensach;
+                    tldgvthanhli.Rows[i].Cells[2].Value = 0;
+                    tldgvthanhli.Rows[i].Cells[3].Value = item.Vitri;
+                    tldgvthanhli.Rows[i].Cells[4].Value = item.Tacgia;
+                    tldgvthanhli.Rows[i].Cells[5].Value = item.Nhaxuatban;
+                    tldgvthanhli.Rows[i].Cells[6].Value = item.Tentheloai;
+                    tldgvthanhli.Rows[i].Cells[7].Value = item.Ngaynhap;
+                    tldgvthanhli.Rows[i].Cells[8].Value = item.tinhtrang;
+                    i++;
                 }
             }
-            catch (Exception ex)
+            if (i <= 0)
             {
-                errorProvider1.SetError(tlptthanhli, "phần trăm giá gốc phải là một số");
-                tlptthanhli.Focus();
-                return false;
+                MessageBox.Show("hiện tại không có sách cần thanh lý", "dữ liệu trống!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            if (tlcbbtinhtrang.Text == "")
-            {
-                errorProvider1.SetError(tlcbbtinhtrang, "bạn phải nhập/chọn tình trạng sách");
-                tlcbbtinhtrang.Focus();
-                return false;
-            }
-            return true;
         }
-        private bool thankli_laphoadon()
+        //đồng hồ
+        private void timerlabelthanhly_Tick(object sender, EventArgs e)
         {
-            if (tltxtmahdthanhli.Text == "")
-            {
-                errorProvider1.SetError(tltxtmahdthanhli, "bạn phải điền mã hóa đơn thanh lí");
-                tltxtmahdthanhli.Focus();
-                return false;
-            }
-            if (tltxtmahdthanhli.Text.Length != 4)
-            {
-                errorProvider1.SetError(tltxtmahdthanhli, "mã phải chứa 4 kí tự");
-                tltxtmahdthanhli.Focus();
-                return false;
-            }
-            var check_mahdtl = dbcontext.HoaDonThanhLis.Where(h => h.MaHdtl == tltxtmahdthanhli.Text).SingleOrDefault();
-            if (check_mahdtl != null)
-            {
-                errorProvider1.SetError(tltxtmahdthanhli, "mã này đã có trong bảng hóa đơn thanh lí");
-                tltxtmahdthanhli.Focus();
-                return false;
-            }
-            if (tldtpngaylap.Value > DateTime.Now)
-            {
-                errorProvider1.SetError(tldtpngaylap, "ngày lập không được lớn hơn ngày hiện tại");
-                tldtpngaylap.Focus();
-                return false;
-            }
-            return true;
+            tllbgio.Text = Convert.ToString(DateTime.Now.Hour);
+            tllbphut.Text = Convert.ToString(DateTime.Now.Minute);
         }
-
-        private void tlcbbmasach_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(tlcbbmasach, "");
-        }
-
-        private void tlslthanhli_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(tlslthanhli, "");
-        }
-
-        private void tlptthanhli_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(tlptthanhli, "");
-        }
-
-        private void tlcbbtinhtrang_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(tlcbbtinhtrang, "");
-        }
-        private void textBox1_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(tltxtmahdthanhli, "");
-        }
-
-        #endregion
-        //thêm sách thanh lí
+        //đặt lại thời gian thống kê thanh lý
         private void button2_Click(object sender, EventArgs e)
         {
-            if (thanhli_check())
+            try
             {
-                var sl = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.Text).Select(s => s.Soluong).SingleOrDefault();
-                bool check = true;
-                //int index=0;
-                for (int j = 0; j < tldgvthanhli.RowCount - 1; j++)
+                if (Convert.ToInt32(txtsettimer.Text) <= 0)
                 {
-                    //index = j;
-                    if (tlcbbmasach.Text == tldgvthanhli.Rows[j].Cells[0].Value.ToString())
-                    {
-                        tlcbbmasach.Focus();
-                        check = false;
-                    }
-                }
-
-                if (check)
-                {
-                    var soluong = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).Select(s => s.Soluong).SingleOrDefault();
-                    if (soluong < Convert.ToInt32(tlslthanhli.Text))
-                    {
-                        MessageBox.Show("số lượng thanh lí không được vượt quá số sách đang có của sách", "Quá số lượng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        tlslthanhli.Focus();
-                    }
-                    else
-                    if (soluong == 0)
-                    {
-                        MessageBox.Show("sách này đã hết", "hết", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        var ds = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).SingleOrDefault();
-                        tldgvthanhli.ColumnCount = 7;
-                        int i = tldgvthanhli.RowCount - 1;
-                        tldgvthanhli.Rows.Add();
-                        tldgvthanhli.Rows[i].Cells[0].Value = ds.Idsach;
-                        tldgvthanhli.Rows[i].Cells[1].Value = ds.Tensach;
-                        tldgvthanhli.Rows[i].Cells[2].Value = tlcbbtinhtrang.Text;
-                        tldgvthanhli.Rows[i].Cells[3].Value = tlptthanhli.Text;
-                        tldgvthanhli.Rows[i].Cells[4].Value = tlslthanhli.Text;
-                        tldgvthanhli.Rows[i].Cells[5].Value = ds.Giasach;
-                        tldgvthanhli.Rows[i].Cells[6].Value = ds.Giasach * Convert.ToInt32(tlslthanhli.Text) * Convert.ToDouble(tlptthanhli.Text) / 100;
-                        i++;
-                        tongslthanhli();
-                    }
+                    MessageBox.Show("ngày phải lớn hơn 0", "lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtsettimer.Focus();
                 }
                 else
                 {
-                    MessageBox.Show("Đã tồn tại mã sách này, thay đổi thông tin và nhấn nút Sửa nếu bạn muốn", "Xác nhận", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    timerupdategridviewthanhly.Interval = 1000 * 60 * 60 * 24 * Convert.ToInt32(txtsettimer.Text);
+                    MessageBox.Show("đặt thành công", "sucessful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
-        //sửa thông tin sách thanh lí
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (thanhli_check())
+            catch (Exception)
             {
-                bool check = false;
-                int index = 0;
-                for (int j = 0; j < tldgvthanhli.RowCount - 1; j++)
-                {
-                    if (tlcbbmasach.Text == tldgvthanhli.Rows[j].Cells[0].Value.ToString())
-                    {
-                        index = j;
-                        tlcbbmasach.Focus();
-                        check = true;
-                    }
-                }
-
-                if (check)
-                {
-                    var soluong = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).Select(s => s.Soluong).SingleOrDefault();
-                    if (soluong < Convert.ToInt32(tlslthanhli.Text))
-                    {
-                        MessageBox.Show("số lượng thanh lí không được vượt quá số sách đang có của sách", "Quá số lượng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        tlslthanhli.Focus();
-                    }
-                    else
-                    if (soluong == 0)
-                    {
-                        MessageBox.Show("sách này đã hết", "hết", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        var ds = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.SelectedValue.ToString()).SingleOrDefault();
-                        tldgvthanhli.ColumnCount = 7;
-                        tldgvthanhli.Rows[index].Cells[0].Value = tlcbbmasach.Text;
-                        tldgvthanhli.Rows[index].Cells[1].Value = ds.Tensach;
-                        tldgvthanhli.Rows[index].Cells[2].Value = tlcbbtinhtrang.Text;
-                        tldgvthanhli.Rows[index].Cells[3].Value = tlptthanhli.Text;
-                        tldgvthanhli.Rows[index].Cells[4].Value = tlslthanhli.Text;
-                        tldgvthanhli.Rows[index].Cells[5].Value = ds.Giasach;
-                        tldgvthanhli.Rows[index].Cells[6].Value = ds.Giasach * Convert.ToInt32(tlslthanhli.Text) * Convert.ToDouble(tlptthanhli.Text) / 100;
-                        tongslthanhli();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("không có sách có mã này trong bảng thanh lí", "Trống dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("ngày phải là một số nguyên", "lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtsettimer.Focus();
             }
         }
-        //cell click
-        private void tldgvthanhli_CellClick(object sender, DataGridViewCellEventArgs e)
+        Bitmap bmp;
+        private void printDocumentxuatthanhly_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            int i = e.RowIndex;
-            DataGridViewRow row = tldgvthanhli.Rows[i];
-            tlcbbmasach.Text = Convert.ToString(row.Cells[0].Value);
-            tlslthanhli.Text = Convert.ToString(row.Cells[4].Value);
-            tlptthanhli.Text = Convert.ToString(row.Cells[3].Value);
-            tlcbbtinhtrang.Text = Convert.ToString(row.Cells[2].Value);
+            e.Graphics.DrawImage(bmp, 0, 0);
         }
-        //xóa sách khỏi bảng thanh lí
-        private void button4_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            var check = dbcontext.Saches.Where(s => s.Idsach == tlcbbmasach.Text).SingleOrDefault();
-            if (check != null)
-            {
-                int index = 0;
-                bool exist = false;
-                for (int j = 0; j < tldgvthanhli.RowCount - 1; j++)
-                {
-                    if (tlcbbmasach.Text == tldgvthanhli.Rows[j].Cells[0].Value.ToString())
-                    {
-                        index = j;
-                        exist = true;
-                    }
-                }
-                if (exist)
-                {
-                    DialogResult rs = MessageBox.Show("bạn muốn xóa không", "xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (rs == DialogResult.Yes)
-                    {
-                        tldgvthanhli.Rows.RemoveAt(index);
-                        tongslthanhli();
-                    }
-                    else
-                    {
-                        MessageBox.Show("bạn đã hủy xóa", "hủy xóa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("không có sách có mã này trong bảng thanh lí", "dữ liệu trống", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                MessageBox.Show("không có sách có mã này trong bảng sách", "dữ liệu trống", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        //clear
-        private void button5_Click(object sender, EventArgs e)
-        {
-            tlcbbmasach.Text = "";
-            tlslthanhli.Text = "";
-            tlptthanhli.Text = "";
-            tlcbbtinhtrang.Text = "";
-            tlcbbmasach.Focus();
-        }
-        //lập hóa đơn thanh lí
-        private void button8_Click(object sender, EventArgs e)
-        {
-            if (thankli_laphoadon())
-            {
-                Models.Account acc = (Models.Account)this.Tag;
-                Models.HoaDonThanhLi hdtl = new Models.HoaDonThanhLi();
-                hdtl.MaHdtl = tltxtmahdthanhli.Text;
-                hdtl.NgayLap = tldtpngaylap.Value;
-                hdtl.Usename = acc.Usename;
-                dbcontext.HoaDonThanhLis.Add(hdtl);
-                for (int i = 0; i < tldgvthanhli.RowCount - 1; i++)
-                {
-                    Models.Thanhlisach tls = new Models.Thanhlisach();
-                    tls.MaHdtl = hdtl.MaHdtl;
-                    tls.Idsach = Convert.ToString(tldgvthanhli.Rows[i].Cells[0].Value);
-                    tls.Soluong = Convert.ToInt32(tldgvthanhli.Rows[i].Cells[4].Value);
-                    tls.Tinhtrangsach = Convert.ToString(tldgvthanhli.Rows[i].Cells[2].Value);
-                    tls.Phantramgiaban = Convert.ToInt32(tldgvthanhli.Rows[i].Cells[3].Value);
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == tls.Idsach select b).FirstOrDefault();
-                    book.Soluong = book.Soluong - tls.Soluong;
-                    dbcontext.Thanhlisaches.Add(tls);
-                    // thêm lệnh update lại số lượng sách có là được
-                }
-                dbcontext.SaveChanges();
-                MessageBox.Show("Lập hoá đơn thanh lí thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ClearALl();
-            }
-        }
-        //tính tổng tiền thanh lí sách
-        private void tongslthanhli()
-        {
-            double tong = 0;
-            for (int i = 0; i < tldgvthanhli.RowCount - 1; i++)
-            {
-                tong += Convert.ToDouble(tldgvthanhli.Rows[i].Cells[6].Value);
-            }
-            tllbtongtienthanhli.Text = tong.ToString();
+            int height = tldgvthanhli.Height;
+            tldgvthanhli.Height = tldgvthanhli.RowCount * tldgvthanhli.RowTemplate.Height * 2;
+            bmp = new Bitmap(tldgvthanhli.Width * 2, tldgvthanhli.Height);
+            tldgvthanhli.DrawToBitmap(bmp, new Rectangle(0, 0, tldgvthanhli.Width * 2, tldgvthanhli.Height));
+            tldgvthanhli.Height = height;
+            printPreviewDialog2.ShowDialog();
         }
 
         #endregion
