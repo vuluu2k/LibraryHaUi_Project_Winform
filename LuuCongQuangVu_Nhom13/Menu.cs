@@ -68,9 +68,18 @@ namespace LuuCongQuangVu_Nhom13
 
             cbReadFileDG.Text = "Tất cả";
             
-            loadIDPhong(cbbidphongmuontra);
+            //loadIDPhong(cbbidphongmuontra);
             loadIDSach(cbbidsachmuontra);
             loadIDdocgiamuontra(cbbiddocgiamuontra);
+
+            txtSLmuon.Enabled = false;
+            
+            dgvMTsach.Columns["dataGridViewTextBoxColumn9"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvMTsach.Columns["dataGridViewTextBoxColumn10"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvMTsach.Columns["dataGridViewTextBoxColumn11"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvTKQH.Columns["ngaymuon"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvTKQH.Columns["ngayhentra"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgvTKQH.Columns["ngaythuctra"].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
         #region Xử lí radion button
         private void rdvitri_CheckedChanged(object sender, EventArgs e)
@@ -3803,719 +3812,7 @@ namespace LuuCongQuangVu_Nhom13
         }
 
         #endregion
-        #region Mượn trả sách
-        // QUản lý Mượn trả sách
 
-        private void ReadFileQLMTSach()
-        {
-            ClearQLMTsach();
-            loadIDdocgia(comboBoxMaDG);
-            loadmasach(comboBoxMasach);
-            dateNgaymuon.Value = DateTime.Now;
-            dateNgayhentra.Value = DateTime.Now;
-            dateNgaythuctra.Value = DateTime.Now;
-
-            using var dbcontext = new Models.QLThuVienContext();
-            var list_mt = from m in dbcontext.Muontrasaches
-                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
-                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
-                          select new
-                          {
-                              iddocgia = m.Iddocgia,
-                              hoten = dg.Hoten,
-                              masach = m.Idsach,
-                              tensach = s.Tensach,
-                              soluongmuon = m.Soluongmuon,
-                              dongia = s.Giasach,
-                              ngaymuon = m.Ngaymuon,
-                              ngayhentra = m.Ngayhentra,
-                              ngaythuctra = m.Ngaythuctra
-                          };
-            txtHotenMT.DataBindings.Clear();
-            txtHotenMT.DataBindings.Add("Text", comboBoxMaDG.DataSource, "Hoten");
-            txtTensachMT.DataBindings.Clear();
-            txtTensachMT.DataBindings.Add("Text", comboBoxMasach.DataSource, "Tensach");
-
-
-            if (list_mt != null)
-            {
-
-                dgvMTsach.Rows.Clear();
-                dgvMTsach.ColumnCount = 9;
-                int i = 0;
-                foreach (var muontra in list_mt)
-                {
-                    dgvMTsach.Rows.Add();
-                    dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
-                    dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
-                    dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
-                    dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
-                    dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
-                    dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
-
-                    dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
-                    dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
-                    dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
-                    i++;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        void loadIDdocgia(ComboBox cb)
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            cb.DataSource = dbcontext.Docgia.ToList();
-            cb.DisplayMember = "Iddocgia";
-
-        }
-        void loadmasach(ComboBox cb)
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            cb.DataSource = dbcontext.Saches.ToList();
-            cb.DisplayMember = "Idsach";
-
-        }
-
-        private void ClearQLMTsach()
-        {
-
-            if (rbMuonsach.Checked)
-            {
-                dateNgaythuctra.Visible = false;
-                dateNgayhentra.Visible = true;
-                dateNgaymuon.Visible = true;
-                txtSLmuon.Enabled = true;
-                lblNgaythuctra.Visible = false;
-                lblNgaymuon.Visible = true;
-                lblNgayhentra.Visible = true;
-                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = false;
-            }
-            else if (rbTrasach.Checked)
-            {
-                dateNgaythuctra.Visible = true;
-                dateNgayhentra.Visible = false;
-                dateNgaymuon.Visible = false;
-                txtSLmuon.Enabled = false;
-                lblNgaythuctra.Visible = true;
-                lblNgaymuon.Visible = false;
-                lblNgayhentra.Visible = false;
-                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
-            }
-
-            comboBoxMaDG.Text = "d001";
-            comboBoxMasach.Text = "s001";
-            //txtTensachMT.Clear();
-            //txtHotenMT.Clear();
-            rbMTIDDG.Checked = false;
-            rbMTMasach.Checked = false;
-            rbMTNgaymuon.Checked = false;
-            comboBoxMaDG.Enabled = true;
-            comboBoxMasach.Enabled = true;
-            dateMTtungay.Enabled = true;
-            dateMTdenngay.Enabled = true;
-            dateMTtungay.Value = DateTime.Now;
-            dateMTdenngay.Value = DateTime.Now;
-            //rbMuonsach.Checked = false;
-            //rbTrasach.Checked = false;
-            txtSLmuon.Text = "";
-            dateNgaythuctra.Value = DateTime.Now;
-            dateNgayhentra.Value = DateTime.Now;
-            dateNgaymuon.Value = DateTime.Now;
-        }
-        private bool isBoxMTEmpty()
-        {
-            if (comboBoxMaDG.Text.Equals("") || comboBoxMasach.Text.Equals("") || txtSLmuon.Text.Equals(""))
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool isRadioIsEmptyMT()
-        {
-            if (rbMuonsach.Checked == false && rbTrasach.Checked == false)
-            {
-                return true;
-            }
-            return false;
-        }
-
-
-
-
-       
-
-        private void txtSLmuon_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void rbMuonsach_CheckedChanged(object sender, EventArgs e)
-        {
-            dateNgaythuctra.Visible = false;
-            dateNgayhentra.Visible = true;
-            dateNgaymuon.Visible = true;
-            txtSLmuon.Enabled = true;
-            lblNgaythuctra.Visible = false;
-            lblNgaymuon.Visible = true;
-            lblNgayhentra.Visible = true;
-            dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = false;
-        }
-
-        private void rbTrasach_CheckedChanged(object sender, EventArgs e)
-        {
-            dateNgaythuctra.Visible = true;
-            dateNgayhentra.Visible = false;
-            dateNgaymuon.Visible = false;
-            txtSLmuon.Enabled = false;
-            lblNgaythuctra.Visible = true;
-            lblNgaymuon.Visible = false;
-            lblNgayhentra.Visible = false;
-            dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
-        }
-
-        private void comboBoxMaDG_SelectedValueChanged(object sender, EventArgs e)
-        {
-            Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
-            if (rbTrasach.Checked)
-            {
-                var mts = dbcontext.Muontrasaches.Where(s => (s.Iddocgia == comboBoxMaDG.Text && s.Idsach == comboBoxMasach.Text)).FirstOrDefault();
-                if (mts != null)
-                {
-                    txtSLmuon.Text = mts.Soluongmuon.Value.ToString();
-                }
-                else
-                {
-                    txtSLmuon.Text = "";
-                }
-
-
-            }
-        }
-
-        private void AddMT()
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            var list_mt = from m in dbcontext.Muontrasaches
-                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
-                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
-                          where m.Iddocgia == comboBoxMaDG.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null)
-                          select new
-                          {
-                              ngaymuon = m.Ngaymuon,
-                              soluongmuon = m.Soluongmuon
-                          };
-            var sumsl = list_mt.Sum(s => s.soluongmuon);
-
-
-            var ngaymuon = (from m in dbcontext.Muontrasaches
-                            where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text
-                            select m.Ngaymuon).FirstOrDefault();
-
-
-
-            
-            if (isRadioIsEmptyMT())
-            {
-                MessageBox.Show("Bạn chưa chọn loại Mượn hoặc trả sách", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (rbMuonsach.Checked)
-            {
-                if (isBoxMTEmpty())
-                {
-                    MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    comboBoxMaDG.Focus();
-                }
-                else if (dateNgayhentra.Value.Date <= dateNgaymuon.Value.Date)
-                {
-                    MessageBox.Show("Ngày hẹn trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    comboBoxMaDG.Focus();
-                }
-                else if ((int.Parse(sumsl.Value.ToString()) + int.Parse(txtSLmuon.Text)) >= 10)
-                {
-                    MessageBox.Show("Khách hàng không thể mượn quá 10 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-                else
-                {
-                    using (dbcontext)
-                    {
-                        try
-                        {
-                            Models.Muontrasach mt = new Models.Muontrasach();
-                            mt.Iddocgia = comboBoxMaDG.Text;
-                            mt.Idsach = comboBoxMasach.Text;
-                            mt.Soluongmuon = int.Parse(txtSLmuon.Text);
-                            mt.Ngaymuon = dateNgaymuon.Value;
-                            mt.Ngayhentra = dateNgayhentra.Value;
-                            Models.Sach sach = (from s in dbcontext.Saches where s.Idsach == mt.Idsach select s).FirstOrDefault();
-                            sach.Soluong = sach.Soluong - int.Parse(txtSLmuon.Text);
-                            dbcontext.Muontrasaches.Add(mt);
-                            dbcontext.SaveChanges();
-                            ReadFileQLMTSach();
-
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Đã tồn tại dữ liệu trong bảng ");
-                        }
-
-                    }
-                }
-
-            }
-            else if (rbTrasach.Checked)
-            {
-                var slmuon = (from m in dbcontext.Muontrasaches
-                              where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text
-                              select m.Soluongmuon).FirstOrDefault();
-
-                var ngaytra = (from m in dbcontext.Muontrasaches
-                               where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text
-                               select m.Ngaythuctra).FirstOrDefault();
-
-                using (dbcontext)
-                {
-                    Models.Muontrasach mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
-
-                    if (mt == null)
-                    {
-                        MessageBox.Show("Không tồn tại dữ liệu này!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-                    else if (isBoxMTEmpty())
-                    {
-                        MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-                    else if (Convert.ToString(ngaytra) != "")
-                    {
-                        MessageBox.Show("Dã thêm ngày trả sách không thể thêm nữa!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-                    else if (ngaymuon.Value.Date >= dateNgaythuctra.Value.Date)
-                    {
-                        MessageBox.Show("Ngày trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-
-                    else
-                    {
-
-                        mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
-                        if (mt != null)
-                        {
-                            mt.Iddocgia = comboBoxMaDG.Text;
-                            mt.Idsach = comboBoxMasach.Text;
-                            Models.Sach sach = (from s in dbcontext.Saches where s.Idsach == mt.Idsach select s).FirstOrDefault();
-                            sach.Soluong = sach.Soluong + int.Parse(txtSLmuon.Text);
-                            mt.Ngaythuctra = dateNgaythuctra.Value;
-
-                            dbcontext.SaveChanges();
-                            ReadFileQLMTSach();
-                        }
-
-                    }
-                }
-
-            }
-
-        }
-        private void DelMT()
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            //Models.Muontrasach id = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
-            Models.Muontrasach id = (from mt in dbcontext.Muontrasaches where mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text select mt).FirstOrDefault();
-            DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (confirm == DialogResult.Yes)
-            {
-                if (id != null)
-                {
-                    dbcontext.Muontrasaches.Remove(id);
-                    dbcontext.SaveChanges();
-                    ReadFileQLMTSach();
-                }
-                else
-                {
-                    MessageBox.Show("Mã sách không tồn tại", "Thông báo");
-                }
-            }
-        }
-        private void UpdateMT()
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            var list_mt = from m in dbcontext.Muontrasaches
-                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
-                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
-                          where m.Iddocgia == comboBoxMaDG.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null)
-                          select new
-                          {
-                              ngaymuon = m.Ngaymuon,
-                              soluongmuon = m.Soluongmuon
-                          };
-            var sumsl = list_mt.Sum(s => s.soluongmuon);
-
-
-            var ngaymuon = (from m in dbcontext.Muontrasaches
-                            where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text
-                            select m.Ngaymuon).FirstOrDefault();
-
-            var slmuon = (from m in dbcontext.Muontrasaches
-                          where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text
-                          select m.Soluongmuon).FirstOrDefault();
-
-
-
-            if (isRadioIsEmptyMT())
-            {
-                MessageBox.Show("Bạn chưa chọn loại Mượn hoặc trả sách", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (rbMuonsach.Checked)
-            {
-
-                if (isBoxMTEmpty())
-                {
-                    MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    comboBoxMaDG.Focus();
-                }
-                else if (dateNgayhentra.Value.Date <= dateNgaymuon.Value.Date)
-                {
-                    MessageBox.Show("Ngày hẹn trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    comboBoxMaDG.Focus();
-                }
-                else if ((sumsl + (int.Parse(txtSLmuon.Text) - slmuon)) >= 10)
-                {
-                    MessageBox.Show("Khách hàng không thể mượn quá 10 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-                else
-                {
-
-                    //Models.Muontrasach mt = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
-                    Models.Muontrasach mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
-                    if (mt != null)
-                    {
-                        mt.Iddocgia = comboBoxMaDG.Text;
-                        mt.Idsach = comboBoxMasach.Text;
-                        mt.Soluongmuon = int.Parse(txtSLmuon.Text);
-                        mt.Ngaymuon = dateNgaymuon.Value;
-                        mt.Ngayhentra = dateNgayhentra.Value;
-
-
-                        dbcontext.SaveChanges();
-                        ReadFileQLMTSach();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tồn tại", "Thông báo");
-                    }
-                }
-            }
-            else if (rbTrasach.Checked)
-            {
-
-                using (dbcontext)
-                {
-                    Models.Muontrasach mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
-
-                    if (mt == null)
-                    {
-                        MessageBox.Show("Không tồn tại dữ liệu này!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-                    else if (isBoxMTEmpty())
-                    {
-                        MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-                    else if (ngaymuon.Value.Date >= dateNgaythuctra.Value.Date)
-                    {
-                        MessageBox.Show("Ngày trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        comboBoxMaDG.Focus();
-                    }
-
-                    else
-                    {
-
-                        mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == comboBoxMaDG.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
-                        if (mt != null)
-                        {
-                            mt.Iddocgia = comboBoxMaDG.Text;
-                            mt.Idsach = comboBoxMasach.Text;
-
-                            mt.Ngaythuctra = dateNgaythuctra.Value;
-
-                            dbcontext.SaveChanges();
-                            ReadFileQLMTSach();
-                        }
-
-
-
-                    }
-                }
-            }
-
-        }
-
-        private bool isRadioIsEmptyTimkiem()
-        {
-            if (rbMTIDDG.Checked == false && rbMTMasach.Checked == false && rbMTNgaymuon.Checked == false)
-            {
-                return true;
-            }
-            return false;
-        }
-        private void SearchMT()
-        {
-            if (isRadioIsEmptyTimkiem())
-            {
-                MessageBox.Show("Bạn chưa chọn loại tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (rbMTIDDG.Checked)
-            {
-
-                /*
-                //var list_mt = from mt in dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text).ToList()
-                //              join s in dbcontext.Saches on mt.Idsach equals s.Idsach
-                //              join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
-                //              select new
-                //              {
-                //                  iddocgia = mt.Iddocgia,
-                //                  hoten = dg.Hoten,
-                //                  masach = mt.Idsach,
-                //                  tensach = s.Tensach,
-                //                  ngaymuon = mt.Ngaymuon,
-                //                  ngayhentra = mt.Ngayhentra,
-                //                  ngaythuctra = mt.Ngaythuctra
-                //              };
-                */
-
-                using var dbcontext = new Models.QLThuVienContext();
-                var list_mt = (from mt in dbcontext.Muontrasaches
-                               where mt.Iddocgia == comboBoxMaDG.Text
-                               join s in dbcontext.Saches on mt.Idsach equals s.Idsach
-                               join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
-                               select new
-                               {
-                                   iddocgia = mt.Iddocgia,
-                                   hoten = dg.Hoten,
-                                   masach = mt.Idsach,
-                                   tensach = s.Tensach,
-                                   soluongmuon = mt.Soluongmuon,
-                                   dongia = s.Giasach,
-                                   ngaymuon = mt.Ngaymuon,
-                                   ngayhentra = mt.Ngayhentra,
-                                   ngaythuctra = mt.Ngaythuctra
-                               }).ToList();
-
-                if (list_mt != null)
-                {
-                    if (list_mt.Count() > 0)
-                    {
-                        dgvMTsach.Rows.Clear();
-                        dgvMTsach.ColumnCount = 9;
-                        int i = 0;
-                        foreach (var muontra in list_mt)
-                        {
-                            dgvMTsach.Rows.Add();
-                            dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
-                            dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
-                            dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
-                            dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
-                            dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
-                            dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
-                            dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
-                            dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
-                            dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            else if (rbMTMasach.Checked)
-            {
-
-
-                using var dbcontext = new Models.QLThuVienContext();
-                var list_mt = (from mt in dbcontext.Muontrasaches
-                               where mt.Idsach == comboBoxMasach.Text
-                               join s in dbcontext.Saches on mt.Idsach equals s.Idsach
-                               join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
-                               select new
-                               {
-                                   iddocgia = mt.Iddocgia,
-                                   hoten = dg.Hoten,
-                                   masach = mt.Idsach,
-                                   tensach = s.Tensach,
-                                   soluongmuon = mt.Soluongmuon,
-                                   dongia = s.Giasach,
-                                   ngaymuon = mt.Ngaymuon,
-                                   ngayhentra = mt.Ngayhentra,
-                                   ngaythuctra = mt.Ngaythuctra
-                               }).ToList();
-
-                if (list_mt != null)
-                {
-                    if (list_mt.Count() > 0)
-                    {
-                        dgvMTsach.Rows.Clear();
-                        dgvMTsach.ColumnCount = 9;
-                        int i = 0;
-                        foreach (var muontra in list_mt)
-                        {
-                            dgvMTsach.Rows.Add();
-                            dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
-                            dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
-                            dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
-                            dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
-                            dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
-                            dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
-                            dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
-                            dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
-                            dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            else if (rbMTNgaymuon.Checked)
-            {
-
-
-                using var dbcontext = new Models.QLThuVienContext();
-                var list_mt = (from mt in dbcontext.Muontrasaches
-                               where mt.Ngaymuon >= dateMTtungay.Value && mt.Ngaymuon <= dateMTdenngay.Value
-                               join s in dbcontext.Saches on mt.Idsach equals s.Idsach
-                               join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
-                               select new
-                               {
-                                   iddocgia = mt.Iddocgia,
-                                   hoten = dg.Hoten,
-                                   masach = mt.Idsach,
-                                   tensach = s.Tensach,
-                                   soluongmuon = mt.Soluongmuon,
-                                   dongia = s.Giasach,
-                                   ngaymuon = mt.Ngaymuon,
-                                   ngayhentra = mt.Ngayhentra,
-                                   ngaythuctra = mt.Ngaythuctra
-                               }).ToList();
-
-                if (list_mt != null)
-                {
-                    if (list_mt.Count() > 0)
-                    {
-                        dgvMTsach.Rows.Clear();
-                        dgvMTsach.ColumnCount = 9;
-                        int i = 0;
-                        foreach (var muontra in list_mt)
-                        {
-                            dgvMTsach.Rows.Add();
-                            dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
-                            dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
-                            dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
-                            dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
-                            dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
-                            dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
-                            dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
-                            dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
-                            dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-        }
-
-        private void dgvMTsach_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int index = dgvMTsach.SelectedCells[0].RowIndex;
-            DataGridViewRow row = dgvMTsach.Rows[index];
-            comboBoxMaDG.Text = Convert.ToString(row.Cells[0].Value);
-            txtHotenMT.Text = Convert.ToString(row.Cells[1].Value);
-            comboBoxMasach.Text = Convert.ToString(row.Cells[2].Value);
-            txtTensachMT.Text = Convert.ToString(row.Cells[3].Value);
-            txtSLmuon.Text = Convert.ToString(row.Cells[4].Value);
-            dateNgaymuon.Value = Convert.ToDateTime(row.Cells[6].Value);
-            dateNgayhentra.Value = Convert.ToDateTime(row.Cells[7].Value);
-            if (Convert.ToString(row.Cells[8].Value) == "")
-            {
-                dateNgaythuctra.Value = DateTime.Now;
-            }
-            else
-            {
-                dateNgaythuctra.Value = Convert.ToDateTime(row.Cells[8].Value);
-            }
-        }
-
-
-        private void rbMTIDDG_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxMasach.Enabled = !rbMTIDDG.Checked;
-            dateMTtungay.Enabled = !rbMTIDDG.Checked;
-            dateMTdenngay.Enabled = !rbMTIDDG.Checked;
-        }
-
-        private void rbMTMasach_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxMaDG.Enabled = !rbMTMasach.Checked;
-            dateMTtungay.Enabled = !rbMTMasach.Checked;
-            dateMTdenngay.Enabled = !rbMTMasach.Checked;
-        }
-
-        private void rbMTNgaymuon_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxMasach.Enabled = !rbMTNgaymuon.Checked;
-            comboBoxMaDG.Enabled = !rbMTNgaymuon.Checked;
-        }
-
-        private void btnLoadMTsach_Click(object sender, EventArgs e)
-        {
-            ReadFileQLMTSach();
-        }
-
-        private void btnThemMTsach_Click(object sender, EventArgs e)
-        {
-            AddMT();
-        }
-
-        private void btnXoaMTsach_Click(object sender, EventArgs e)
-        {
-            DelMT();
-        }
-
-        private void btnSuaMTsach_Click(object sender, EventArgs e)
-        {
-            UpdateMT();
-        }
-
-        private void btnHuyMTsach_Click(object sender, EventArgs e)
-        {
-            ClearQLMTsach();
-        }
-
-        private void btnTimMTsach_Click(object sender, EventArgs e)
-        {
-            SearchMT();
-        }
-        #endregion
 
         #region Thống kê Quá Hạn 
         //------------------Thống kê Quá Hạn 
@@ -4524,7 +3821,7 @@ namespace LuuCongQuangVu_Nhom13
 
             using var dbcontext = new Models.QLThuVienContext();
             var list_tkqh = (from m in dbcontext.Muontrasaches
-                             where m.Ngayhentra.Value.Date < m.Ngaythuctra.Value.Date
+                             where (m.Ngayhentra.Value.Date < m.Ngaythuctra.Value.Date && m.Ngaymuon > DateTime.Now.AddDays(-365)) || (m.Ngayhentra < DateTime.Now && m.Ngaythuctra == null)
                              join s in dbcontext.Saches on m.Idsach equals s.Idsach
                              join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
                              select new
@@ -4537,7 +3834,8 @@ namespace LuuCongQuangVu_Nhom13
                                  dongia = s.Giasach,
                                  ngaymuon = m.Ngaymuon,
                                  ngayhentra = m.Ngayhentra,
-                                 ngaythuctra = m.Ngaythuctra
+                                 ngaythuctra = m.Ngaythuctra,
+                                 tinhtrang = m.Tinhtrangtra
                              }).ToList();
 
 
@@ -4554,11 +3852,12 @@ namespace LuuCongQuangVu_Nhom13
                     dgvTKQH.Rows[i].Cells[1].Value = quahan.hoten;
                     dgvTKQH.Rows[i].Cells[2].Value = quahan.masach;
                     dgvTKQH.Rows[i].Cells[3].Value = quahan.tensach;
-                    dgvTKQH.Rows[i].Cells[4].Value = quahan.slmuon;
-                    dgvTKQH.Rows[i].Cells[5].Value = quahan.slmuon * quahan.dongia;
-                    dgvTKQH.Rows[i].Cells[6].Value = quahan.ngaymuon;
-                    dgvTKQH.Rows[i].Cells[7].Value = quahan.ngayhentra;
-                    dgvTKQH.Rows[i].Cells[8].Value = quahan.ngaythuctra;
+
+                    dgvTKQH.Rows[i].Cells[4].Value = quahan.slmuon * quahan.dongia;
+                    dgvTKQH.Rows[i].Cells[5].Value = quahan.ngaymuon;
+                    dgvTKQH.Rows[i].Cells[6].Value = quahan.ngayhentra;
+                    dgvTKQH.Rows[i].Cells[7].Value = quahan.ngaythuctra;
+                    dgvTKQH.Rows[i].Cells[8].Value = quahan.tinhtrang;
                     i++;
                 }
             }
@@ -4571,7 +3870,19 @@ namespace LuuCongQuangVu_Nhom13
         {
             ReadFileTKQH();
         }
-
+        private void btnXuatbc_Click(object sender, EventArgs e)
+        {
+            DGVPrinter printer = new DGVPrinter();
+            printer.Title = "Thống kê quá hạn";
+            printer.SubTitle = "Thời gian xuất : " + DateTime.Now.ToString("dd/MM/yyyy");
+            printer.SubTitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
+            printer.PageNumbers = true;
+            printer.PageNumberInHeader = true;
+            printer.PorportionalColumns = true;
+            printer.HeaderCellAlignment = StringAlignment.Near;
+            printer.printDocument.DefaultPageSettings.Landscape = true;
+            printer.PrintDataGridView(dgvTKQH);
+        }
         #endregion
 
 
@@ -4901,13 +4212,13 @@ namespace LuuCongQuangVu_Nhom13
             txttinhtrangsachmuontra.Clear();
             cbbidphongmuontra.Focus();
         }
-        void loadIDPhong(ComboBox pmt)
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            pmt.DataSource = dbcontext.PhongDocs.ToList();
-            pmt.DisplayMember = "Idphongdoc";
-            pmt.ValueMember = "Idphongdoc";
-        }
+        //void loadIDPhong(ComboBox pmt)
+        //{
+        //    using var dbcontext = new Models.QLThuVienContext();
+        //    pmt.DataSource = dbcontext.PhongDocs.ToList();
+        //    pmt.DisplayMember = "Idphongdoc";
+        //    pmt.ValueMember = "Idphongdoc";
+        //}
         void loadIDSach(ComboBox s)
         {
             using var dbcontext = new Models.QLThuVienContext();
@@ -5370,6 +4681,994 @@ namespace LuuCongQuangVu_Nhom13
             dtimeNgayLap.Value = DateTime.Now;
             dtimeSach.Value= DateTime.Now;
         }
+
+        #region Mượn trả sách
+        // QUản lý Mượn trả sách
+
+        private void ReadFileQLMTSach()
+        {
+
+            using var dbcontext = new Models.QLThuVienContext();
+
+            //dgvMTsach.Columns[9].DefaultCellStyle.Format = "Custom";
+
+
+
+
+            var list_mt = from m in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                          select new
+                          {
+                              iddocgia = m.Iddocgia,
+                              hoten = dg.Hoten,
+                              masach = m.Idsach,
+                              tensach = s.Tensach,
+                              soluongmuon = m.Soluongmuon,
+                              dongia = s.Giasach,
+                              ngaymuon = m.Ngaymuon,
+                              ngayhentra = m.Ngayhentra,
+                              ngaythuctra = m.Ngaythuctra,
+                              tinhtrang = m.Tinhtrangtra
+                          };
+
+            var list_datra = from m in dbcontext.Muontrasaches
+                             join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                             join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                             where txtMaDGMT.Text == m.Iddocgia && m.Ngaythuctra != null
+                             select new
+                             {
+                                 iddocgia = m.Iddocgia,
+                                 hoten = dg.Hoten,
+                                 masach = m.Idsach,
+                                 tensach = s.Tensach,
+                                 soluongmuon = m.Soluongmuon,
+                                 dongia = s.Giasach,
+                                 ngaymuon = m.Ngaymuon,
+                                 ngayhentra = m.Ngayhentra,
+                                 ngaythuctra = m.Ngaythuctra,
+                                 tinhtrang = m.Tinhtrangtra
+                             };
+            //txtTensachMT.DataBindings.Clear();
+            //txtTensachMT.DataBindings.Add("Text", comboBoxMasach.DataSource, "Tensach");
+            if (rbMuonsach.Checked)
+            {
+                ClearQLMTsach();
+
+                //loadmasach(comboBoxMasach);
+                Cbmasach();
+                dateNgaymuon.Value = DateTime.Now;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
+                dgvMTsach.Columns["tinhtrang"].Visible = true;
+                //loadtheloai(comboTheloaiMT);
+                Cbmatheloai();
+
+                if (list_mt != null)
+                {
+
+                    dgvMTsach.Rows.Clear();
+                    dgvMTsach.ColumnCount = 10;
+                    int i = 0;
+                    foreach (var muontra in list_mt)
+                    {
+                        dgvMTsach.Rows.Add();
+                        dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
+                        dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
+                        dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
+                        dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
+                        dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
+                        dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
+
+                        dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
+                        dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
+                        dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
+                        dgvMTsach.Rows[i].Cells[9].Value = muontra.tinhtrang;
+                        i++;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (rbTrasach.Checked)
+            {
+                if (list_datra != null)
+                {
+
+                    dgvMTsach.Rows.Clear();
+                    dgvMTsach.ColumnCount = 10;
+                    int i = 0;
+                    foreach (var tra in list_datra)
+                    {
+                        dgvMTsach.Rows.Add();
+                        dgvMTsach.Rows[i].Cells[0].Value = tra.iddocgia;
+                        dgvMTsach.Rows[i].Cells[1].Value = tra.hoten;
+                        dgvMTsach.Rows[i].Cells[2].Value = tra.masach;
+                        dgvMTsach.Rows[i].Cells[3].Value = tra.tensach;
+                        dgvMTsach.Rows[i].Cells[4].Value = tra.soluongmuon;
+                        dgvMTsach.Rows[i].Cells[5].Value = tra.soluongmuon * tra.dongia;
+
+                        dgvMTsach.Rows[i].Cells[6].Value = tra.ngaymuon;
+                        dgvMTsach.Rows[i].Cells[7].Value = tra.ngayhentra;
+                        dgvMTsach.Rows[i].Cells[8].Value = tra.ngaythuctra;
+                        dgvMTsach.Rows[i].Cells[9].Value = tra.tinhtrang;
+                        i++;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void ReadThemSuaMT()
+        {
+
+            using var dbcontext = new Models.QLThuVienContext();
+            dateNgaymuon.Value = DateTime.Now;
+
+            var list_mt = from m in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                          where txtMaDGMT.Text == m.Iddocgia && comboBoxMasach.Text == m.Idsach
+                          select new
+                          {
+                              iddocgia = m.Iddocgia,
+                              hoten = dg.Hoten,
+                              masach = m.Idsach,
+                              tensach = s.Tensach,
+                              soluongmuon = m.Soluongmuon,
+                              dongia = s.Giasach,
+                              ngaymuon = m.Ngaymuon,
+                              ngayhentra = m.Ngayhentra,
+                              ngaythuctra = m.Ngaythuctra,
+                              tinhtrang = m.Tinhtrangtra
+                          };
+
+
+
+
+            if (list_mt != null)
+            {
+
+                dgvMTsach.Rows.Clear();
+                dgvMTsach.ColumnCount = 10;
+                int i = 0;
+                foreach (var muontra in list_mt)
+                {
+                    dgvMTsach.Rows.Add();
+                    dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
+                    dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
+                    dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
+                    dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
+                    dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
+                    dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
+
+                    dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
+                    dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
+                    dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
+                    dgvMTsach.Rows[i].Cells[9].Value = muontra.tinhtrang;
+                    i++;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void Cbmasach()
+        {
+            var list_macbmasach = dbcontext.Saches.Select(book => book.Idsach).ToList();
+            comboBoxMasach.DataSource = list_macbmasach;
+            comboBoxMasach.SelectedIndex = 0;
+
+        }
+        //void loadmasach(ComboBox cb)
+        //{
+        //    using var dbcontext = new Models.QLThuVienContext();
+        //    cb.DataSource = dbcontext.Saches.ToList();
+        //    cb.DisplayMember = "Idsach";
+
+        //}
+        private void Cbmatheloai()
+        {
+            var list_macbmasach = dbcontext.Theloais.Select(name => name.Tentheloai).ToList();
+
+            comboTheloaiMT.Items.Add("Tất cả");
+            comboTheloaiMT.SelectedIndex = 0;
+            foreach (var item in list_macbmasach)
+            {
+                comboTheloaiMT.Items.Add(item);
+            }
+
+
+        }
+        //void loadtheloai(ComboBox cb)
+        //{
+
+        //    using var dbcontext = new Models.QLThuVienContext();
+        //    cb.DataSource = dbcontext.Theloais.ToList();
+        //    cb.DisplayMember = "Tentheloai";
+
+        //}
+
+        private void ClearQLMTsach()
+        {
+
+            if (rbMuonsach.Checked)
+            {
+                btnSuaMTsach.Enabled = false;
+                dateNgaythuctra.Visible = false;
+                dateNgayhentra.Visible = true;
+                dateNgaymuon.Visible = true;
+                dateNgayhentra.Enabled = false;
+                dateNgaymuon.Enabled = false;
+                dateNgayhentra.Value = DateTime.Now.AddDays(90);
+                dateNgaymuon.Value = DateTime.Now;
+
+                txtSLmuon.Enabled = false;
+                lblNgaythuctra.Visible = false;
+                lblNgaymuon.Visible = true;
+                lblNgayhentra.Visible = true;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = false;
+                dgvMTsach.Columns["tinhtrang"].Visible = false;
+            }
+            else if (rbTrasach.Checked)
+            {
+                btnSuaMTsach.Enabled = true;
+                dateNgaythuctra.Visible = true;
+                dateNgayhentra.Visible = false;
+                dateNgaymuon.Visible = false;
+                txtSLmuon.Enabled = false;
+                lblNgaythuctra.Visible = true;
+                lblNgaymuon.Visible = false;
+                lblNgayhentra.Visible = false;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
+                dgvMTsach.Columns["tinhtrang"].Visible = true;
+            }
+
+            txtMaDGMT.Text = " ";
+            comboBoxMasach.Text = "s001";
+            //txtTensachMT.Clear();
+            //txtHotenMT.Clear();
+            comboTheloaiMT.Text = "Tất cả";
+            txtMaDGMT.Enabled = true;
+            comboBoxMasach.Enabled = true;
+            txtSLmuon.Text = "1";
+            //txtSLmuon.Enabled = false;
+            dateNgaythuctra.Value = DateTime.Now;
+            dateNgayhentra.Value = DateTime.Now.AddDays(90);
+            dateNgaymuon.Value = DateTime.Now;
+        }
+        private bool isBoxMTEmpty()
+        {
+            if (txtMaDGMT.Text.Equals("") || comboBoxMasach.Text.Equals("") || txtSLmuon.Text.Equals(""))
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool isRadioIsEmptyMT()
+        {
+            if (rbMuonsach.Checked == false && rbTrasach.Checked == false)
+            {
+                return true;
+            }
+            return false;
+        }
+        private void rbMuonsach_CheckedChanged(object sender, EventArgs e)
+        {
+            dateNgaythuctra.Visible = false;
+            dateNgayhentra.Visible = true;
+            dateNgaymuon.Visible = true;
+            dateNgayhentra.Enabled = false;
+            dateNgaymuon.Enabled = false;
+            dateNgayhentra.Value = DateTime.Now.AddDays(90);
+            dateNgaymuon.Value = DateTime.Now;
+
+            btnSuaMTsach.Enabled = false;
+            txtSLmuon.Enabled = true;
+            lblNgaythuctra.Visible = false;
+            lblNgaymuon.Visible = true;
+            lblNgayhentra.Visible = true;
+            dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = false;
+            dgvMTsach.Columns["tinhtrang"].Visible = false;
+            dgvMTsach.Rows.Clear();
+            btnThemMTsach.Text = "Mượn";
+            btnLoadMTsach.Text = "Đọc dữ liệu";
+
+            lblTinhtrangMT.Visible = false;
+            comboBoxTinhtrangMT.Visible = false;
+        }
+
+        private void rbTrasach_CheckedChanged(object sender, EventArgs e)
+        {
+            btnSuaMTsach.Enabled = true;
+            dateNgaythuctra.Visible = true;
+            dateNgayhentra.Visible = false;
+            dateNgaymuon.Visible = false;
+            txtSLmuon.Enabled = false;
+            lblNgaythuctra.Visible = true;
+            lblNgaymuon.Visible = false;
+            lblNgayhentra.Visible = false;
+            dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
+            dgvMTsach.Columns["tinhtrang"].Visible = true;
+            lblmamtsachtk.Visible = false;
+            btnThemMTsach.Text = "Trả";
+            btnLoadMTsach.Text = "DS trả";
+            lblTinhtrangMT.Visible = true;
+            comboBoxTinhtrangMT.Visible = true;
+        }
+
+        private void comboBoxMasach_SelectedValueChanged(object sender, EventArgs e)
+        {
+            Models.QLThuVienContext dbcontext = new Models.QLThuVienContext();
+            if (rbTrasach.Checked)
+            {
+                var mts = dbcontext.Muontrasaches.Where(s => (s.Iddocgia == txtMaDGMT.Text && s.Idsach == comboBoxMasach.Text)).FirstOrDefault();
+                if (mts != null)
+                {
+                    txtSLmuon.Text = mts.Soluongmuon.Value.ToString();
+                }
+                else
+                {
+                    txtSLmuon.Text = "";
+                }
+
+            }
+
+            var tgmuon = (from s in dbcontext.Saches
+                          join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
+                          where comboBoxMasach.Text == s.Idsach
+                          select new
+                          {
+                              s.Idtheloai
+                          }).FirstOrDefault();
+
+            if (tgmuon == null)
+            {
+                dateNgaymuon.Value = DateTime.Now;
+                dateNgayhentra.Value = DateTime.Now.AddDays(90);
+            }
+            else if (tgmuon.Idtheloai.ToString() == "T005")
+            {
+                dateNgaymuon.Value = DateTime.Now;
+                dateNgayhentra.Value = DateTime.Now.AddDays(90);
+            }
+            else
+            {
+                dateNgaymuon.Value = DateTime.Now;
+                dateNgayhentra.Value = DateTime.Now.AddDays(30);
+            }
+
+            var tensach = (from s in dbcontext.Saches
+                           join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
+                           where comboBoxMasach.Text == s.Idsach
+                           select new
+                           {
+                               s.Tensach
+                           }).FirstOrDefault();
+            if (tensach != null)
+            {
+                txtTensachMT.Text = tensach.Tensach.ToString();
+            }
+            else
+            {
+                txtTensachMT.Text = "";
+            }
+        }
+
+        private void AddMT()
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            var list_mt = from m in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                          where m.Iddocgia == txtMaDGMT.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null) && s.Idtheloai == "T005"
+                          select new
+                          {
+                              ngaymuon = m.Ngaymuon,
+                              soluongmuon = m.Soluongmuon
+                          };
+            var sumsl = list_mt.Sum(s => s.soluongmuon);
+
+            var sachtk = from m in dbcontext.Muontrasaches
+                         join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                         join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                         where m.Iddocgia == txtMaDGMT.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null) && s.Idtheloai != "T005"
+                         select new
+                         {
+                             soluongmuon = m.Soluongmuon
+                         };
+
+            var sumsltk = sachtk.Sum(s => s.soluongmuon);
+
+            var ngaymuon = (from m in dbcontext.Muontrasaches
+                            where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text
+                            select m.Ngaymuon).FirstOrDefault();
+
+            var chucvu = (from mt in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on mt.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
+                          where dg.Iddocgia == txtMaDGMT.Text
+                          select new
+                          {
+                              iddocgia = mt.Iddocgia,
+                              chucvu = dg.Nghenghiep
+                          }).FirstOrDefault();
+
+            var ktratheloai = (from s in dbcontext.Saches
+                               join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
+                               where comboBoxMasach.Text == s.Idsach
+                               select new
+                               {
+                                   s.Idtheloai
+                               }).FirstOrDefault();
+
+            var muonquahan = (from m in dbcontext.Muontrasaches
+                              where m.Iddocgia == txtMaDGMT.Text && DateTime.Now > m.Ngayhentra && m.Ngaythuctra == null
+                              select new
+                              {
+                                  soluongmuon = m.Soluongmuon,
+                                  ngaythuctra = m.Ngaythuctra
+                              }).FirstOrDefault();
+
+            if (isRadioIsEmptyMT())
+            {
+                MessageBox.Show("Bạn chưa chọn loại Mượn hoặc trả sách", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (rbMuonsach.Checked)
+            {
+
+                if (isBoxMTEmpty())
+                {
+                    MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtMaDGMT.Focus();
+                }
+                else if (chucvu == null)
+                {
+                    MessageBox.Show("Không có mã độc giả này ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (muonquahan != null)
+                {
+                    MessageBox.Show("Bạn cần trả sách mượn quá hạn trước khi mượn tiếp", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                else if (chucvu.chucvu.ToString() == "Giảng viên" && ((int.Parse(sumsltk.Value.ToString()) + int.Parse(sumsl.Value.ToString()) + int.Parse(txtSLmuon.Text))) > 5)
+                {
+                    MessageBox.Show("Giáo viên không thể mượn quá 5 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (chucvu.chucvu.ToString() == "Sinh viên" && ktratheloai.Idtheloai.ToString() == "T005" && (int.Parse(sumsl.Value.ToString()) + int.Parse(txtSLmuon.Text)) > 10)
+                {
+                    MessageBox.Show("Sinh viên không thể mượn quá 10 quyển giáo trình !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (chucvu.chucvu.ToString() == "Sinh viên" && ktratheloai.Idtheloai.ToString() != "T005" && (int.Parse(sumsltk.Value.ToString()) + int.Parse(txtSLmuon.Text)) > 3)
+                {
+                    MessageBox.Show("Sinh viên không thể mượn quá 3 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+
+                else
+                {
+                    using (dbcontext)
+                    {
+                        try
+                        {
+                            Models.Muontrasach mt = new Models.Muontrasach();
+                            mt.Iddocgia = txtMaDGMT.Text;
+                            mt.Idsach = comboBoxMasach.Text;
+                            mt.Soluongmuon = int.Parse(txtSLmuon.Text);
+                            mt.Ngaymuon = dateNgaymuon.Value;
+                            mt.Ngayhentra = dateNgayhentra.Value;
+                            Models.Sach sach = (from s in dbcontext.Saches where s.Idsach == mt.Idsach select s).FirstOrDefault();
+                            sach.Soluong = sach.Soluong - int.Parse(txtSLmuon.Text);
+                            dbcontext.Muontrasaches.Add(mt);
+                            dbcontext.SaveChanges();
+                            ReadThemSuaMT();
+
+                            MessageBox.Show("Đã mượn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Đã tồn tại dữ liệu trong bảng ");
+                        }
+
+                    }
+                }
+
+            }
+            else if (rbTrasach.Checked)
+            {
+                var slmuon = (from m in dbcontext.Muontrasaches
+                              where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text
+                              select m.Soluongmuon).FirstOrDefault();
+
+                var ngaytra = (from m in dbcontext.Muontrasaches
+                               where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text
+                               select m.Ngaythuctra).FirstOrDefault();
+
+                using (dbcontext)
+                {
+                    Models.Muontrasach mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
+
+                    if (mt == null)
+                    {
+                        MessageBox.Show("Không tồn tại dữ liệu này!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+                    else if (isBoxMTEmpty())
+                    {
+                        MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+                    else if (comboBoxTinhtrangMT.Text=="")
+                    {
+                        MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        comboBoxTinhtrangMT.Focus();
+                    }
+                    else if (Convert.ToString(ngaytra) != "")
+                    {
+                        MessageBox.Show("Dã thêm ngày trả sách không thể thêm nữa!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+                    else if (ngaymuon.Value.Date >= dateNgaythuctra.Value.Date)
+                    {
+                        MessageBox.Show("Ngày trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+
+                    else
+                    {
+
+                        mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
+                        if (mt != null)
+                        {
+                            mt.Iddocgia = txtMaDGMT.Text;
+                            mt.Idsach = comboBoxMasach.Text;
+                            Models.Sach sach = (from s in dbcontext.Saches where s.Idsach == mt.Idsach select s).FirstOrDefault();
+                            sach.Soluong = sach.Soluong + int.Parse(txtSLmuon.Text);
+                            mt.Ngaythuctra = dateNgaythuctra.Value;
+                            mt.Tinhtrangtra = comboBoxTinhtrangMT.Text;
+
+                            dbcontext.SaveChanges();
+                            ReadThemSuaMT();
+                            MessageBox.Show("Đã trả thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+        private void DelMT()
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            //Models.Muontrasach id = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
+            Models.Muontrasach id = (from mt in dbcontext.Muontrasaches where mt.Iddocgia == txtMaDGMT.Text && mt.Idsach == comboBoxMasach.Text select mt).FirstOrDefault();
+            DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm == DialogResult.Yes)
+            {
+                if (id != null)
+                {
+                    dbcontext.Muontrasaches.Remove(id);
+                    dbcontext.SaveChanges();
+                    ReadFileQLMTSach();
+                }
+                else
+                {
+                    MessageBox.Show("Mã sách không tồn tại", "Thông báo");
+                }
+            }
+        }
+        private void UpdateMT()
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            var list_mt = from m in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                          where m.Iddocgia == txtMaDGMT.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null)
+                          select new
+                          {
+                              ngaymuon = m.Ngaymuon,
+                              soluongmuon = m.Soluongmuon
+                          };
+            var sumsl = list_mt.Sum(s => s.soluongmuon);
+
+
+            var ngaymuon = (from m in dbcontext.Muontrasaches
+                            where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text
+                            select m.Ngaymuon).FirstOrDefault();
+
+            var slmuon = (from m in dbcontext.Muontrasaches
+                          where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text
+                          select m.Soluongmuon).FirstOrDefault();
+
+
+
+            if (isRadioIsEmptyMT())
+            {
+                MessageBox.Show("Bạn chưa chọn loại Mượn hoặc trả sách", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (rbMuonsach.Checked)
+            {
+
+                if (isBoxMTEmpty())
+                {
+                    MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtMaDGMT.Focus();
+                }
+                else if (comboBoxTinhtrangMT.Text == "")
+                {
+                    MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    comboBoxTinhtrangMT.Focus();
+                }
+                else if (dateNgayhentra.Value.Date <= dateNgaymuon.Value.Date)
+                {
+                    MessageBox.Show("Ngày hẹn trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtMaDGMT.Focus();
+                }
+                else if ((sumsl + (int.Parse(txtSLmuon.Text) - slmuon)) >= 10)
+                {
+                    MessageBox.Show("Khách hàng không thể mượn quá 10 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                else
+                {
+
+                    //Models.Muontrasach mt = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
+                    Models.Muontrasach mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
+                    if (mt != null)
+                    {
+                        mt.Iddocgia = txtMaDGMT.Text;
+                        mt.Idsach = comboBoxMasach.Text;
+                        mt.Soluongmuon = int.Parse(txtSLmuon.Text);
+                        mt.Ngaymuon = dateNgaymuon.Value;
+                        mt.Ngayhentra = dateNgayhentra.Value;
+
+
+                        dbcontext.SaveChanges();
+                        ReadFileQLMTSach();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tồn tại", "Thông báo");
+                    }
+                }
+            }
+            else if (rbTrasach.Checked)
+            {
+
+                using (dbcontext)
+                {
+                    Models.Muontrasach mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
+
+                    if (mt == null)
+                    {
+                        MessageBox.Show("Không tồn tại dữ liệu này!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+                    else if (isBoxMTEmpty())
+                    {
+                        MessageBox.Show("Bạn đang để trống trường nhập dữ liệu!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+                    else if (ngaymuon.Value.Date >= dateNgaythuctra.Value.Date)
+                    {
+                        MessageBox.Show("Ngày trả không được sớm hơn ngày mượn!!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        txtMaDGMT.Focus();
+                    }
+
+                    else
+                    {
+
+                        mt = (from m in dbcontext.Muontrasaches where m.Iddocgia == txtMaDGMT.Text && m.Idsach == comboBoxMasach.Text select m).FirstOrDefault();
+                        if (mt != null)
+                        {
+                            mt.Iddocgia = txtMaDGMT.Text;
+                            mt.Idsach = comboBoxMasach.Text;
+
+                            mt.Ngaythuctra = dateNgaythuctra.Value;
+                            mt.Tinhtrangtra = comboBoxTinhtrangMT.Text;
+
+                            dbcontext.SaveChanges();
+                            ReadThemSuaMT();
+                        }
+
+
+
+                    }
+                }
+            }
+
+        }
+
+
+        private void SearchMT()
+        {
+
+            /*
+            //var list_mt = from mt in dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text).ToList()
+            //              join s in dbcontext.Saches on mt.Idsach equals s.Idsach
+            //              join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
+            //              select new
+            //              {
+            //                  iddocgia = mt.Iddocgia,
+            //                  hoten = dg.Hoten,
+            //                  masach = mt.Idsach,
+            //                  tensach = s.Tensach,
+            //                  ngaymuon = mt.Ngaymuon,
+            //                  ngayhentra = mt.Ngayhentra,
+            //                  ngaythuctra = mt.Ngaythuctra
+            //              };
+            */
+
+            using var dbcontext = new Models.QLThuVienContext();
+            var list_mt = (from mt in dbcontext.Muontrasaches
+                           where mt.Iddocgia == txtMaDGMT.Text && mt.Ngaythuctra == null
+                           join s in dbcontext.Saches on mt.Idsach equals s.Idsach
+                           join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
+                           select new
+                           {
+                               iddocgia = mt.Iddocgia,
+                               hoten = dg.Hoten,
+                               masach = mt.Idsach,
+                               tensach = s.Tensach,
+                               soluongmuon = mt.Soluongmuon,
+                               dongia = s.Giasach,
+                               ngaymuon = mt.Ngaymuon,
+                               ngayhentra = mt.Ngayhentra,
+                               ngaythuctra = mt.Ngaythuctra,
+                               tinhtrang = mt.Tinhtrangtra
+                           }).ToList();
+            var tontai = (from mt in dbcontext.Muontrasaches
+                          where mt.Iddocgia == txtMaDGMT.Text
+                          join s in dbcontext.Saches on mt.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
+                          select new
+                          {
+                              iddocgia = mt.Iddocgia,
+                              hoten = dg.Hoten,
+                              masach = mt.Idsach,
+                              tensach = s.Tensach,
+                              soluongmuon = mt.Soluongmuon,
+                              dongia = s.Giasach,
+                              ngaymuon = mt.Ngaymuon,
+                              ngayhentra = mt.Ngayhentra,
+                              ngaythuctra = mt.Ngaythuctra,
+                              tinhtrang = mt.Tinhtrangtra
+
+                          }).FirstOrDefault();
+
+            if (tontai == null)
+            {
+
+                MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            }
+            else
+            {
+                if (list_mt != null)
+                {
+                    if (list_mt.Count() > 0)
+                    {
+                        dgvMTsach.Rows.Clear();
+                        dgvMTsach.ColumnCount = 10;
+                        int i = 0;
+                        foreach (var muontra in list_mt)
+                        {
+                            dgvMTsach.Rows.Add();
+                            dgvMTsach.Rows[i].Cells[0].Value = muontra.iddocgia;
+                            dgvMTsach.Rows[i].Cells[1].Value = muontra.hoten;
+                            dgvMTsach.Rows[i].Cells[2].Value = muontra.masach;
+                            dgvMTsach.Rows[i].Cells[3].Value = muontra.tensach;
+                            dgvMTsach.Rows[i].Cells[4].Value = muontra.soluongmuon;
+                            dgvMTsach.Rows[i].Cells[5].Value = muontra.soluongmuon * muontra.dongia;
+                            dgvMTsach.Rows[i].Cells[6].Value = muontra.ngaymuon;
+                            dgvMTsach.Rows[i].Cells[7].Value = muontra.ngayhentra;
+                            dgvMTsach.Rows[i].Cells[8].Value = muontra.ngaythuctra;
+                            dgvMTsach.Rows[i].Cells[9].Value = muontra.tinhtrang;
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Bạn không có sách nào đang mượn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+
+
+        }
+
+        private void dgvMTsach_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = dgvMTsach.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dgvMTsach.Rows[index];
+            txtMaDGMT.Text = Convert.ToString(row.Cells[0].Value);
+            txtHotenMT.Text = Convert.ToString(row.Cells[1].Value);
+            comboBoxMasach.Text = Convert.ToString(row.Cells[2].Value);
+            txtTensachMT.Text = Convert.ToString(row.Cells[3].Value);
+            txtSLmuon.Text = Convert.ToString(row.Cells[4].Value);
+            dateNgaymuon.Value = Convert.ToDateTime(row.Cells[6].Value);
+            dateNgayhentra.Value = Convert.ToDateTime(row.Cells[7].Value);
+            if (Convert.ToString(row.Cells[8].Value) == "")
+            {
+                dateNgaythuctra.Value = DateTime.Now;
+            }
+            else
+            {
+                dateNgaythuctra.Value = Convert.ToDateTime(row.Cells[8].Value);
+            }
+            comboBoxTinhtrangMT.Text = Convert.ToString(row.Cells[9].Value);
+        }
+
+        private void btnLoadMTsach_Click(object sender, EventArgs e)
+        {
+            ReadFileQLMTSach();
+        }
+
+        private void btnThemMTsach_Click(object sender, EventArgs e)
+        {
+            AddMT();
+        }
+
+        private void btnXoaMTsach_Click(object sender, EventArgs e)
+        {
+            DelMT();
+        }
+
+        private void btnSuaMTsach_Click(object sender, EventArgs e)
+        {
+            UpdateMT();
+        }
+
+        private void btnHuyMTsach_Click(object sender, EventArgs e)
+        {
+            ClearQLMTsach();
+        }
+
+        private void btnTimMTsach_Click(object sender, EventArgs e)
+        {
+            SearchMT();
+        }
+        private void txtMaDGMT_TextChanged(object sender, EventArgs e)
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            var mts = (from mt in dbcontext.Muontrasaches
+                       join s in dbcontext.Saches on mt.Idsach equals s.Idsach
+                       join dg in dbcontext.Docgia on mt.Iddocgia equals dg.Iddocgia
+                       where dg.Iddocgia == txtMaDGMT.Text
+                       select new
+                       {
+                           iddocgia = mt.Iddocgia,
+                           hoten = dg.Hoten,
+                           masach = mt.Idsach,
+                           tensach = s.Tensach,
+                           soluongmuon = mt.Soluongmuon,
+                           dongia = s.Giasach,
+                           ngaymuon = mt.Ngaymuon,
+                           ngayhentra = mt.Ngayhentra,
+                           ngaythuctra = mt.Ngaythuctra,
+                           chucvu = dg.Nghenghiep,
+
+                       }).FirstOrDefault();
+
+            var sachtk = from m in dbcontext.Muontrasaches
+                         join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                         join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                         where m.Iddocgia == txtMaDGMT.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null) && s.Idtheloai != "T005"
+                         select new
+                         {
+                             soluongmuon = m.Soluongmuon
+                         };
+
+
+            var list_mt = from m in dbcontext.Muontrasaches
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                          where m.Iddocgia == txtMaDGMT.Text && (m.Ngaythuctra >= DateTime.Now || m.Ngaythuctra == null) && s.Idtheloai == "T005"
+                          select new
+                          {
+                              soluongmuon = m.Soluongmuon
+                          };
+            var sumsl = list_mt.Sum(s => s.soluongmuon);
+
+            var sumsltk = sachtk.Sum(s => s.soluongmuon);
+
+
+            if (mts == null)
+            {
+                txtHotenMT.Text = "";
+
+            }
+            else if (txtMaDGMT.Text == mts.iddocgia.ToString())
+            {
+                txtHotenMT.Text = mts.hoten.ToString();
+
+            }
+
+            if (mts == null)
+            {
+                lblmamtsach.Text = " ";
+                lblmamtsachtk.Text = " ";
+            }
+            else if (mts.chucvu.ToString() == "Sinh viên")
+            {
+                lblmamtsach.Text = "Giáo trình " + mts.chucvu.ToString() + " còn có thể mượn :" + (10 - sumsl) + " quyển";
+                lblmamtsachtk.Text = "Sách tham khảo " + mts.chucvu.ToString() + " còn có thể mượn :" + (3 - sumsltk) + " quyển";
+            }
+            else if (mts.chucvu.ToString() == "Giảng viên")
+            {
+                lblmamtsach.Text = mts.chucvu.ToString() + " còn có thể mượn :" + (5 - sumsl - sumsltk) + " quyển";
+                lblmamtsachtk.Visible = false;
+            }
+            else
+            {
+                lblmamtsach.Text = " ";
+                lblmamtsachtk.Text = " ";
+            }
+
+
+
+            if (rbTrasach.Checked)
+            {
+                var mdg = dbcontext.Muontrasaches.Where(s => (s.Iddocgia == txtMaDGMT.Text && s.Idsach == comboBoxMasach.Text)).FirstOrDefault();
+                if (mdg != null)
+                {
+                    txtSLmuon.Text = mdg.Soluongmuon.Value.ToString();
+                }
+                else
+                {
+                    txtSLmuon.Text = "";
+                }
+                lblmamtsach.Visible = false;
+                lblmamtsachtk.Visible = false;
+            }
+
+            if (rbMuonsach.Checked)
+            {
+                var muonquahan = (from m in dbcontext.Muontrasaches
+                                  where m.Iddocgia == txtMaDGMT.Text && DateTime.Now > m.Ngayhentra && m.Ngaythuctra == null
+                                  select new
+                                  {
+                                      soluongmuon = m.Soluongmuon,
+                                      ngaythuctra = m.Ngaythuctra
+                                  }).FirstOrDefault();
+                if (muonquahan != null)
+                {
+                    MessageBox.Show("Bạn cần trả sách mượn quá hạn trước khi mượn tiếp", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearQLMTsach();
+                }
+            }
+        }
+
+        private void comboTheloaiMT_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboTheloaiMT.Text != "Tất cả")
+            {
+                var idTypeOfBook = dbcontext.Theloais.Where(tl => tl.Tentheloai == comboTheloaiMT.Text).Select(x => x.Idtheloai).FirstOrDefault();
+                var listmasach = dbcontext.Saches.Where(book => book.Idtheloai == idTypeOfBook).ToList();
+                comboBoxMasach.DataSource = listmasach;
+                comboBoxMasach.ValueMember = "Idsach";
+                comboBoxMasach.DisplayMember = "Idsach";
+            }
+            else
+            {
+                Cbmasach();
+            }
+        }
+
+
+
+
+
+
+        #endregion
 
         
     }

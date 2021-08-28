@@ -24,6 +24,8 @@ namespace LuuCongQuangVu_Nhom13.Models
         public DateTime? Ngayhentra { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Ngaythuctra { get; set; }
+        [StringLength(150)]
+        public string Tinhtrangtra { get; set; }
 
         [ForeignKey(nameof(Iddocgia))]
         [InverseProperty(nameof(Docgium.Muontrasaches))]
