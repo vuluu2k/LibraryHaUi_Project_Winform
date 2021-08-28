@@ -48,33 +48,33 @@ namespace LuuCongQuangVu_Nhom13
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(81, 38);
+            this.label1.Location = new System.Drawing.Point(19, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 15);
+            this.label1.Size = new System.Drawing.Size(123, 15);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Tổng tiền";
+            this.label1.Text = "TỔNG TIỀN T.TOÁN";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(41, 75);
+            this.label2.Location = new System.Drawing.Point(19, 75);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 15);
+            this.label2.Size = new System.Drawing.Size(120, 15);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Số tiền khách trả";
+            this.label2.Text = "TIỀN ĐỘC GIẢ TRẢ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(37, 112);
+            this.label3.Location = new System.Drawing.Point(19, 112);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 15);
+            this.label3.Size = new System.Drawing.Size(88, 15);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Số tiền cần trả lại";
+            this.label3.Text = "TIỀN TRẢ LẠI";
             // 
             // txtSumMoney
             // 
@@ -127,9 +127,9 @@ namespace LuuCongQuangVu_Nhom13
             this.checkPrint.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.checkPrint.Location = new System.Drawing.Point(148, 142);
             this.checkPrint.Name = "checkPrint";
-            this.checkPrint.Size = new System.Drawing.Size(82, 19);
+            this.checkPrint.Size = new System.Drawing.Size(101, 19);
             this.checkPrint.TabIndex = 8;
-            this.checkPrint.Text = "In hoá đơn";
+            this.checkPrint.Text = "IN HOÁ ĐƠN";
             this.checkPrint.UseVisualStyleBackColor = false;
             // 
             // GetError
@@ -139,10 +139,11 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // DialogCustomerPay
             // 
+            this.AcceptButton = this.btnPay;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_admin;
-            this.ClientSize = new System.Drawing.Size(327, 248);
+            this.ClientSize = new System.Drawing.Size(317, 248);
             this.Controls.Add(this.checkPrint);
             this.Controls.Add(this.btnPay);
             this.Controls.Add(this.txtEmployPay);
@@ -153,7 +154,7 @@ namespace LuuCongQuangVu_Nhom13
             this.Controls.Add(this.label1);
             this.Name = "DialogCustomerPay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DialogCustomerPay";
+            this.Text = "Thanh toán";
             this.Load += new System.EventHandler(this.DialogCustomerPay_Load);
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();
             this.ResumeLayout(false);

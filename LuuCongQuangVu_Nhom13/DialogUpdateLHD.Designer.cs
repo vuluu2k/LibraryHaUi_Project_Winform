@@ -131,7 +131,7 @@ namespace LuuCongQuangVu_Nhom13
             this.Controls.Add(this.txtSLmua);
             this.Name = "DialogUpdateLHD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "UpdateLoop";
+            this.Text = "Thay đổi số lượng";
             this.Load += new System.EventHandler(this.DialogUpdateLHD_Load);
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();
             this.ResumeLayout(false);

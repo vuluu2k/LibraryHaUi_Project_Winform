@@ -331,7 +331,7 @@ namespace LuuCongQuangVu_Nhom13
             this.Controls.Add(this.label1);
             this.Name = "DialogInforHD";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DialogInforHD";
+            this.Text = "Hoá đơn";
             this.Load += new System.EventHandler(this.DialogInforHD_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInforHD)).EndInit();
             this.ResumeLayout(false);

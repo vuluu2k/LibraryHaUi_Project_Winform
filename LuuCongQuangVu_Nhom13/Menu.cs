@@ -77,12 +77,25 @@ namespace LuuCongQuangVu_Nhom13
         {
             txtSearchBook.Visible = false;
             cbSeachBook.Visible = true;
+            List<String> listGps = new List<string>();
+            listGps.Add("CS1-Nhổn-Bắc Từ Liêm-Hà Nội");
+            listGps.Add("CS2-Tây Tựu-Bắc Từ Liêm-Hà Nội");
+            listGps.Add("CS3-Tp.Phủ Lý-Hà Nam");
+            cbSeachBook.DataSource = listGps;
         }
 
         private void rdmasach_CheckedChanged(object sender, EventArgs e)
         {
             txtSearchBook.Visible = true;
             cbSeachBook.Visible = false;
+        }
+        private void rdtheloai_CheckedChanged(object sender, EventArgs e)
+        {
+            txtSearchBook.Visible = false;
+            cbSeachBook.Visible = true;
+            cbSeachBook.DataSource = dbcontext.Theloais.ToList();
+            cbSeachBook.DisplayMember = "Tentheloai";
+            cbSeachBook.ValueMember = "Idtheloai";
         }
         private void rdMaDG_CheckedChanged(object sender, EventArgs e)
         {
@@ -966,7 +979,7 @@ namespace LuuCongQuangVu_Nhom13
                     if (list_sach.Count() > 0)
                     {
                         dgvSach.Rows.Clear();
-                        dgvSach.ColumnCount = 8;
+                        dgvSach.ColumnCount = 9;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
                             String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -977,8 +990,9 @@ namespace LuuCongQuangVu_Nhom13
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                             dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                            dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                         }
                     }
                     else
@@ -997,7 +1011,7 @@ namespace LuuCongQuangVu_Nhom13
                     if (list_sach.Count() > 0)
                     {
                         dgvSach.Rows.Clear();
-                        dgvSach.ColumnCount = 8;
+                        dgvSach.ColumnCount = 9;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
                             String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -1008,8 +1022,9 @@ namespace LuuCongQuangVu_Nhom13
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                             dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                            dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                         }
                     }
                     else
@@ -1028,7 +1043,7 @@ namespace LuuCongQuangVu_Nhom13
                     if (list_sach.Count() > 0)
                     {
                         dgvSach.Rows.Clear();
-                        dgvSach.ColumnCount = 8;
+                        dgvSach.ColumnCount = 9;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
                             String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -1039,8 +1054,9 @@ namespace LuuCongQuangVu_Nhom13
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                             dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                            dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                         }
                     }
                     else
@@ -1053,13 +1069,13 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //using var dbcontext = new Models.QLThuVienContext();
                 //var list_sach = dbcontext.Saches.Where(book => book.Theloai == txttheloai.Text).ToList();
-                var list_sach = (from book in dbcontext.Saches where book.Idtheloai == txtSearchBook.Text select book).ToList();
+                var list_sach = (from book in dbcontext.Saches where book.Idtheloai == cbSeachBook.SelectedValue.ToString() select book).ToList();
                 if (list_sach != null)
                 {
                     if (list_sach.Count() > 0)
                     {
                         dgvSach.Rows.Clear();
-                        dgvSach.ColumnCount = 8;
+                        dgvSach.ColumnCount = 9;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
                             String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -1070,8 +1086,9 @@ namespace LuuCongQuangVu_Nhom13
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                             dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                            dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                         }
                     }
                     else
@@ -1090,7 +1107,7 @@ namespace LuuCongQuangVu_Nhom13
                     if (list_sach.Count() > 0)
                     {
                         dgvSach.Rows.Clear();
-                        dgvSach.ColumnCount = 8;
+                        dgvSach.ColumnCount = 9;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
                             String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -1101,8 +1118,9 @@ namespace LuuCongQuangVu_Nhom13
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                             dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                            dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                         }
                     }
                     else
@@ -1121,7 +1139,7 @@ namespace LuuCongQuangVu_Nhom13
                     if (list_sach.Count() > 0)
                     {
                         dgvSach.Rows.Clear();
-                        dgvSach.ColumnCount = 8;
+                        dgvSach.ColumnCount = 9;
                         for (int i = 0; i < list_sach.Count(); i++)
                         {
                             String Tentheloai = (from name in dbcontext.Theloais where name.Idtheloai == list_sach[i].Idtheloai select name.Tentheloai).FirstOrDefault();
@@ -1132,8 +1150,9 @@ namespace LuuCongQuangVu_Nhom13
                             dgvSach.Rows[i].Cells[3].Value = list_sach[i].Soluong;
                             dgvSach.Rows[i].Cells[4].Value = Tentheloai;
                             dgvSach.Rows[i].Cells[5].Value = list_sach[i].Giasach;
-                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Nhaxuatban;
-                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Vitri;
+                            dgvSach.Rows[i].Cells[6].Value = list_sach[i].Ngaynhap.Value.ToString("dd/MM/yyyy");
+                            dgvSach.Rows[i].Cells[7].Value = list_sach[i].Nhaxuatban;
+                            dgvSach.Rows[i].Cells[8].Value = list_sach[i].Vitri;
                         }
                     }
                     else
@@ -1229,7 +1248,7 @@ namespace LuuCongQuangVu_Nhom13
                         dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                         dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
                         //dgvDocGia.Rows[i].Cells[2].Value = String.Format("{0:dd/MM/yyyy}",docgia.NgaySinh.Value);
-                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
+                        dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd/MM/yyyy");
                         dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                         dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                         dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1258,7 +1277,7 @@ namespace LuuCongQuangVu_Nhom13
                     dgvDocGia.Rows.Add();
                     dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                     dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                    dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
+                    dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd/MM/yyyy");
                     dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                     dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                     dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1287,7 +1306,7 @@ namespace LuuCongQuangVu_Nhom13
                     dgvDocGia.Rows.Add();
                     dgvDocGia.Rows[i].Cells[0].Value = docgia.Iddocgia;
                     dgvDocGia.Rows[i].Cells[1].Value = docgia.Hoten;
-                    dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd-MM-yyyy");
+                    dgvDocGia.Rows[i].Cells[2].Value = docgia.NgaySinh.Value.ToString("dd/MM/yyyy");
                     dgvDocGia.Rows[i].Cells[3].Value = docgia.Diachi;
                     dgvDocGia.Rows[i].Cells[4].Value = docgia.Nghenghiep;
                     dgvDocGia.Rows[i].Cells[5].Value = docgia.Sodienthoai;
@@ -1615,8 +1634,8 @@ namespace LuuCongQuangVu_Nhom13
             DataGridViewRow row = dgvDocGia.Rows[index];
             txtMaDocGia.Text = Convert.ToString(row.Cells[0].Value);
             txtTenDocGia.Text = Convert.ToString(row.Cells[1].Value);
-            String[] time = (Convert.ToString(row.Cells[2].Value)).Split("-");
-            dateDocGia.Value = Convert.ToDateTime(time[2]+"-"+time[1]+"-"+time[0]);
+            String[] time = (Convert.ToString(row.Cells[2].Value)).Split("/");
+            dateDocGia.Value = Convert.ToDateTime(time[2]+"/"+time[1]+"/"+time[0]);
             txtDiaChiDocGia.Text = Convert.ToString(row.Cells[3].Value);
             if (Convert.ToString(row.Cells[4].Value) == rdStudents.Text)
             {
@@ -1759,7 +1778,7 @@ namespace LuuCongQuangVu_Nhom13
                     {
                         using (DialogUpdateLHD DialogCustom = new DialogUpdateLHD())
                         {
-                            DialogCustom.Text = dgvLHD.Rows[index_insert].Cells[0].Value.ToString();
+                            DialogCustom.Tag = dgvLHD.Rows[index_insert].Cells[0].Value.ToString();
                             if (DialogCustom.ShowDialog() == DialogResult.OK)
                             {
                                 dgvLHD.Rows[index_insert].Cells[2].Value = DialogCustom.TheValue;
@@ -2259,7 +2278,7 @@ namespace LuuCongQuangVu_Nhom13
                                ngaylap = h.NgayLap
                            }).ToList();
                 dgvHistoryBS.Rows.Clear();
-                dgvHistoryBS.ColumnCount = 6;
+                dgvHistoryBS.ColumnCount = 7;
                 int index_historybs = 0;
                 if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
                 {
@@ -2321,7 +2340,7 @@ namespace LuuCongQuangVu_Nhom13
                                ngaylap = h.NgayLap
                            }).ToList();
                 dgvHistoryBS.Rows.Clear();
-                dgvHistoryBS.ColumnCount = 6;
+                dgvHistoryBS.ColumnCount = 7;
                 int index_historybs = 0;
                 if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
                 {
@@ -2383,7 +2402,7 @@ namespace LuuCongQuangVu_Nhom13
                                ngaylap = h.NgayLap
                            }).ToList();
                 dgvHistoryBS.Rows.Clear();
-                dgvHistoryBS.ColumnCount = 6;
+                dgvHistoryBS.ColumnCount = 7;
                 int index_historybs = 0;
                 if (dtimeStart.Value.Date > dtimeEnd.Value.Date)
                 {
@@ -5351,5 +5370,7 @@ namespace LuuCongQuangVu_Nhom13
             dtimeNgayLap.Value = DateTime.Now;
             dtimeSach.Value= DateTime.Now;
         }
+
+        
     }
 }

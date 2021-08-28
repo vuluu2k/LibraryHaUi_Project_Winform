@@ -24,7 +24,7 @@ namespace LuuCongQuangVu_Nhom13
 
         private void DialogUpdateLHD_Load(object sender, EventArgs e)
         {
-            Models.Sach book = (from b in dbcontext.Saches where b.Idsach == this.Text select b).FirstOrDefault();
+            Models.Sach book = (from b in dbcontext.Saches where b.Idsach == (string) this.Tag select b).FirstOrDefault();
             lbMaSach.Text = book.Idsach;
             lbTenSach.Text = book.Tensach;
             btnXacNhan.DialogResult = DialogResult.OK;
@@ -44,7 +44,7 @@ namespace LuuCongQuangVu_Nhom13
             {
                 try
                 {
-                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == this.Text select b).FirstOrDefault();
+                    Models.Sach book = (from b in dbcontext.Saches where b.Idsach == (string) this.Tag select b).FirstOrDefault();
                     if (int.Parse(txtSLmua.Text) > book.Soluong)
                     {
                         GetError.SetError(txtSLmua, "Số lượng mua bạn sửa vượt quá số lượng có, hiện tại còn " + book.Soluong + " quyển");

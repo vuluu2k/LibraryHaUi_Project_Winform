@@ -862,7 +862,7 @@ namespace LuuCongQuangVu_Nhom13
             this.rdtheloai.TabStop = true;
             this.rdtheloai.Text = "Thể loại";
             this.rdtheloai.UseVisualStyleBackColor = false;
-            this.rdtheloai.CheckedChanged += new System.EventHandler(this.rdmasach_CheckedChanged);
+            this.rdtheloai.CheckedChanged += new System.EventHandler(this.rdtheloai_CheckedChanged);
             // 
             // rdtacgia
             // 
@@ -1187,7 +1187,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // dtimeSearchDG
             // 
-            this.dtimeSearchDG.CustomFormat = "dd-MM-yyyy";
+            this.dtimeSearchDG.CustomFormat = "dd/MM/yyyy";
             this.dtimeSearchDG.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtimeSearchDG.Location = new System.Drawing.Point(829, 232);
             this.dtimeSearchDG.Name = "dtimeSearchDG";
@@ -1354,7 +1354,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // dateDocGia
             // 
-            this.dateDocGia.CustomFormat = "dd-MM-yyyy";
+            this.dateDocGia.CustomFormat = "dd/MM/yyyy";
             this.dateDocGia.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateDocGia.Location = new System.Drawing.Point(263, 174);
             this.dateDocGia.MinDate = new System.DateTime(1788, 1, 1, 0, 0, 0, 0);
@@ -2048,12 +2048,12 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label9.Location = new System.Drawing.Point(582, 409);
+            this.label9.Location = new System.Drawing.Point(135, 10);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(565, 17);
+            this.label9.Size = new System.Drawing.Size(690, 17);
             this.label9.TabIndex = 8;
-            this.label9.Text = "Thông báo: Để xem thông tin chi tiết hoá đơn, thực hiện thao tác Double click để " +
-    "xem";
+            this.label9.Text = "Thông báo: Để xem thông tin chi tiết hoá đơn, thực hiện thao tác Double click đến" +
+    " dòng hoá đơn cần xem";
             // 
             // groupBox11
             // 
@@ -2102,17 +2102,17 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // dtimeEnd
             // 
-            this.dtimeEnd.CustomFormat = "dd-MM-yyyy";
+            this.dtimeEnd.CustomFormat = "dd/MM/yyyy";
             this.dtimeEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtimeEnd.Location = new System.Drawing.Point(934, 497);
+            this.dtimeEnd.Location = new System.Drawing.Point(923, 497);
             this.dtimeEnd.Name = "dtimeEnd";
-            this.dtimeEnd.Size = new System.Drawing.Size(200, 25);
+            this.dtimeEnd.Size = new System.Drawing.Size(175, 25);
             this.dtimeEnd.TabIndex = 6;
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(885, 503);
+            this.label28.Location = new System.Drawing.Point(859, 503);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(32, 17);
             this.label28.TabIndex = 5;
@@ -2120,11 +2120,11 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // dtimeStart
             // 
-            this.dtimeStart.CustomFormat = "dd-MM-yyyy";
+            this.dtimeStart.CustomFormat = "dd/MM/yyyy";
             this.dtimeStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtimeStart.Location = new System.Drawing.Point(650, 497);
             this.dtimeStart.Name = "dtimeStart";
-            this.dtimeStart.Size = new System.Drawing.Size(200, 25);
+            this.dtimeStart.Size = new System.Drawing.Size(175, 25);
             this.dtimeStart.TabIndex = 4;
             // 
             // label27
@@ -2252,6 +2252,7 @@ namespace LuuCongQuangVu_Nhom13
             this.ImageMenu.Images.SetKeyName(10, "clock.png");
             this.ImageMenu.Images.SetKeyName(11, "buying.png");
             this.ImageMenu.Images.SetKeyName(12, "selling.png");
+            this.ImageMenu.Images.SetKeyName(13, "user.png");
             // 
             // tabQuanLyMuonTraSach
             // 
@@ -4496,6 +4497,8 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiTaiKhoan.Controls.Add(this.label72);
             this.tabQuanLiTaiKhoan.Controls.Add(this.btnSuaTaiKhoan);
             this.tabQuanLiTaiKhoan.Controls.Add(this.dgvAccout);
+            this.GetError.SetIconAlignment(this.tabQuanLiTaiKhoan, System.Windows.Forms.ErrorIconAlignment.BottomRight);
+            this.tabQuanLiTaiKhoan.ImageKey = "user.png";
             this.tabQuanLiTaiKhoan.Location = new System.Drawing.Point(4, 32);
             this.tabQuanLiTaiKhoan.Name = "tabQuanLiTaiKhoan";
             this.tabQuanLiTaiKhoan.Padding = new System.Windows.Forms.Padding(3);
@@ -4658,6 +4661,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnTimKiemTaiKhoan.Text = "Tìm kiếm, Xoá , Sửa";
             this.btnTimKiemTaiKhoan.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTimKiemTaiKhoan.UseVisualStyleBackColor = false;
+            this.btnTimKiemTaiKhoan.Visible = false;
             this.btnTimKiemTaiKhoan.Click += new System.EventHandler(this.btnTimKiemTaiKhoan_Click);
             // 
             // btnPhanLoaiTaiKhoan
@@ -4673,6 +4677,7 @@ namespace LuuCongQuangVu_Nhom13
             this.btnPhanLoaiTaiKhoan.Text = "Phân loại, Xoá, Sửa";
             this.btnPhanLoaiTaiKhoan.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnPhanLoaiTaiKhoan.UseVisualStyleBackColor = false;
+            this.btnPhanLoaiTaiKhoan.Visible = false;
             this.btnPhanLoaiTaiKhoan.Click += new System.EventHandler(this.btnPhanLoai_Click);
             // 
             // btnXoaTaiKhoan
