@@ -44,6 +44,7 @@ namespace LuuCongQuangVu_Nhom13
         {
 
             InitializeComponent();
+            rbMuonsach.Checked = true;
         }
         private void QuanLiThuVien_Load(object sender, EventArgs e)
         {

@@ -371,6 +371,17 @@ namespace LuuCongQuangVu_Nhom13
             this.label37 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.TKquahan = new System.Windows.Forms.TabPage();
+            this.btnXuatbc = new System.Windows.Forms.Button();
+            this.dgvTKQH = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ngaymuon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ngayhentra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ngaythuctra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCapnhatQH = new System.Windows.Forms.Button();
             this.label58 = new System.Windows.Forms.Label();
             this.tabQuanLiTaiKhoan = new System.Windows.Forms.TabPage();
@@ -417,17 +428,6 @@ namespace LuuCongQuangVu_Nhom13
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnXuatbc = new System.Windows.Forms.Button();
-            this.dgvTKQH = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ngaymuon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ngayhentra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ngaythuctra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MainTabCT.SuspendLayout();
             this.tabQuanLiSach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSach)).BeginInit();
@@ -475,12 +475,12 @@ namespace LuuCongQuangVu_Nhom13
             ((System.ComponentModel.ISupportInitialize)(this.tldgvthanhli)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.TKquahan.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).BeginInit();
             this.tabQuanLiTaiKhoan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).BeginInit();
             this.SuspendLayout();
             // 
             // btndangxuat
@@ -2358,6 +2358,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // tabQuanLyMuonTraSach
             // 
+            this.tabQuanLyMuonTraSach.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tabQuanLyMuonTraSach.BackgroundImage")));
             this.tabQuanLyMuonTraSach.Controls.Add(this.comboBoxTinhtrangMT);
             this.tabQuanLyMuonTraSach.Controls.Add(this.lblTinhtrangMT);
             this.tabQuanLyMuonTraSach.Controls.Add(this.lblmamtsachtk);
@@ -2613,7 +2614,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dgvMTsach.Name = "dgvMTsach";
             this.dgvMTsach.RowHeadersWidth = 51;
             this.dgvMTsach.RowTemplate.Height = 29;
-            this.dgvMTsach.Size = new System.Drawing.Size(1305, 265);
+            this.dgvMTsach.Size = new System.Drawing.Size(1308, 265);
             this.dgvMTsach.TabIndex = 133;
             this.dgvMTsach.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMTsach_CellClick);
             // 
@@ -2629,7 +2630,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tendocgia.HeaderText = "Tên độc giả";
             this.tendocgia.MinimumWidth = 6;
             this.tendocgia.Name = "tendocgia";
-            this.tendocgia.Width = 180;
+            this.tendocgia.Width = 170;
             // 
             // dataGridViewTextBoxColumn7
             // 
@@ -2643,7 +2644,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dataGridViewTextBoxColumn8.HeaderText = "Tên sách";
             this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.Width = 225;
+            this.dataGridViewTextBoxColumn8.Width = 200;
             // 
             // Slmuon
             // 
@@ -2664,28 +2665,28 @@ namespace LuuCongQuangVu_Nhom13
             this.dataGridViewTextBoxColumn9.HeaderText = "Ngày mượn";
             this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.Width = 170;
+            this.dataGridViewTextBoxColumn9.Width = 150;
             // 
             // dataGridViewTextBoxColumn10
             // 
             this.dataGridViewTextBoxColumn10.HeaderText = "Ngày hẹn trả ";
             this.dataGridViewTextBoxColumn10.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.Width = 170;
+            this.dataGridViewTextBoxColumn10.Width = 150;
             // 
             // dataGridViewTextBoxColumn11
             // 
             this.dataGridViewTextBoxColumn11.HeaderText = "Ngày thực trả";
             this.dataGridViewTextBoxColumn11.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.Width = 170;
+            this.dataGridViewTextBoxColumn11.Width = 150;
             // 
             // tinhtrang
             // 
             this.tinhtrang.HeaderText = "Tình trạng ";
             this.tinhtrang.MinimumWidth = 6;
             this.tinhtrang.Name = "tinhtrang";
-            this.tinhtrang.Width = 125;
+            this.tinhtrang.Width = 110;
             // 
             // dateNgayhentra
             // 
@@ -4481,6 +4482,100 @@ namespace LuuCongQuangVu_Nhom13
             this.TKquahan.Text = "Thống kê Quá Hạn";
             this.TKquahan.UseVisualStyleBackColor = true;
             // 
+            // btnXuatbc
+            // 
+            this.btnXuatbc.BackColor = System.Drawing.Color.DarkOrange;
+            this.btnXuatbc.Location = new System.Drawing.Point(597, 747);
+            this.btnXuatbc.Name = "btnXuatbc";
+            this.btnXuatbc.Size = new System.Drawing.Size(127, 45);
+            this.btnXuatbc.TabIndex = 12;
+            this.btnXuatbc.Text = "Xuất PDF";
+            this.btnXuatbc.UseVisualStyleBackColor = false;
+            this.btnXuatbc.Click += new System.EventHandler(this.btnXuatbc_Click);
+            // 
+            // dgvTKQH
+            // 
+            this.dgvTKQH.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTKQH.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn13,
+            this.ngaymuon,
+            this.ngayhentra,
+            this.ngaythuctra,
+            this.dataGridViewTextBoxColumn14});
+            this.dgvTKQH.Location = new System.Drawing.Point(76, 183);
+            this.dgvTKQH.Name = "dgvTKQH";
+            this.dgvTKQH.RowHeadersWidth = 51;
+            this.dgvTKQH.RowTemplate.Height = 29;
+            this.dgvTKQH.Size = new System.Drawing.Size(1128, 543);
+            this.dgvTKQH.TabIndex = 11;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Mã độc giả ";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Họ Tên ";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 140;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Mã Sách ";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 80;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Tên Sách";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 180;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.HeaderText = "Tiền Cọc";
+            this.dataGridViewTextBoxColumn13.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.Width = 95;
+            // 
+            // ngaymuon
+            // 
+            this.ngaymuon.HeaderText = "Ngày Mượn ";
+            this.ngaymuon.MinimumWidth = 6;
+            this.ngaymuon.Name = "ngaymuon";
+            this.ngaymuon.Width = 110;
+            // 
+            // ngayhentra
+            // 
+            this.ngayhentra.HeaderText = "Ngày hẹn chả";
+            this.ngayhentra.MinimumWidth = 6;
+            this.ngayhentra.Name = "ngayhentra";
+            this.ngayhentra.Width = 110;
+            // 
+            // ngaythuctra
+            // 
+            this.ngaythuctra.HeaderText = "Ngày thực trả ";
+            this.ngaythuctra.MinimumWidth = 6;
+            this.ngaythuctra.Name = "ngaythuctra";
+            this.ngaythuctra.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.HeaderText = "Tình trạng trả";
+            this.dataGridViewTextBoxColumn14.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.Width = 95;
+            // 
             // btnCapnhatQH
             // 
             this.btnCapnhatQH.BackColor = System.Drawing.Color.DarkOrange;
@@ -5016,100 +5111,6 @@ namespace LuuCongQuangVu_Nhom13
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btnXuatbc
-            // 
-            this.btnXuatbc.BackColor = System.Drawing.Color.DarkOrange;
-            this.btnXuatbc.Location = new System.Drawing.Point(597, 747);
-            this.btnXuatbc.Name = "btnXuatbc";
-            this.btnXuatbc.Size = new System.Drawing.Size(127, 45);
-            this.btnXuatbc.TabIndex = 12;
-            this.btnXuatbc.Text = "Xuất PDF";
-            this.btnXuatbc.UseVisualStyleBackColor = false;
-            this.btnXuatbc.Click += new System.EventHandler(this.btnXuatbc_Click);
-            // 
-            // dgvTKQH
-            // 
-            this.dgvTKQH.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTKQH.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn13,
-            this.ngaymuon,
-            this.ngayhentra,
-            this.ngaythuctra,
-            this.dataGridViewTextBoxColumn14});
-            this.dgvTKQH.Location = new System.Drawing.Point(76, 183);
-            this.dgvTKQH.Name = "dgvTKQH";
-            this.dgvTKQH.RowHeadersWidth = 51;
-            this.dgvTKQH.RowTemplate.Height = 29;
-            this.dgvTKQH.Size = new System.Drawing.Size(1128, 543);
-            this.dgvTKQH.TabIndex = 11;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Mã độc giả ";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 70;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Họ Tên ";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 140;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Mã Sách ";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Tên Sách";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 180;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "Tiền Cọc";
-            this.dataGridViewTextBoxColumn13.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Width = 95;
-            // 
-            // ngaymuon
-            // 
-            this.ngaymuon.HeaderText = "Ngày Mượn ";
-            this.ngaymuon.MinimumWidth = 6;
-            this.ngaymuon.Name = "ngaymuon";
-            this.ngaymuon.Width = 110;
-            // 
-            // ngayhentra
-            // 
-            this.ngayhentra.HeaderText = "Ngày hẹn chả";
-            this.ngayhentra.MinimumWidth = 6;
-            this.ngayhentra.Name = "ngayhentra";
-            this.ngayhentra.Width = 110;
-            // 
-            // ngaythuctra
-            // 
-            this.ngaythuctra.HeaderText = "Ngày thực trả ";
-            this.ngaythuctra.MinimumWidth = 6;
-            this.ngaythuctra.Name = "ngaythuctra";
-            this.ngaythuctra.Width = 110;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "Tình trạng trả";
-            this.dataGridViewTextBoxColumn14.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.Width = 95;
-            // 
             // QuanLiThuVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -5193,13 +5194,13 @@ namespace LuuCongQuangVu_Nhom13
             this.groupBox3.PerformLayout();
             this.TKquahan.ResumeLayout(false);
             this.TKquahan.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).EndInit();
             this.tabQuanLiTaiKhoan.ResumeLayout(false);
             this.tabQuanLiTaiKhoan.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GetError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTKQH)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5569,16 +5570,6 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.Button btnThemMTsach;
         private System.Windows.Forms.Button btnLoadMTsach;
         private System.Windows.Forms.DataGridView dgvMTsach;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tendocgia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Slmuon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tiencoc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tinhtrang;
         private System.Windows.Forms.DateTimePicker dateNgayhentra;
         private System.Windows.Forms.DateTimePicker dateNgaythuctra;
         private System.Windows.Forms.DateTimePicker dateNgaymuon;
@@ -5602,6 +5593,16 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.DataGridViewTextBoxColumn ngayhentra;
         private System.Windows.Forms.DataGridViewTextBoxColumn ngaythuctra;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tendocgia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Slmuon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tiencoc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tinhtrang;
     }
 }
 
