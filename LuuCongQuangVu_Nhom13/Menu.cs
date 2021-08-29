@@ -23,13 +23,13 @@ namespace LuuCongQuangVu_Nhom13
         String moneyCustomer = "";
         private void InCbTenSach()
         {
-            cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
+            cbMaSach_lhd.DataSource = dbcontext.Saches.Where(x=>x.Idtheloai=="T005").ToList();
             cbMaSach_lhd.DisplayMember = "Tensach";
             cbMaSach_lhd.ValueMember = "Idsach";
         }
         private void InCbMaSach()
         {
-            cbMaSach_lhd.DataSource = dbcontext.Saches.ToList();
+            cbMaSach_lhd.DataSource = dbcontext.Saches.Where(x => x.Idtheloai == "T005").ToList();
             cbMaSach_lhd.DisplayMember = "Idsach";
             cbMaSach_lhd.ValueMember = "Idsach";
         }
@@ -790,6 +790,12 @@ namespace LuuCongQuangVu_Nhom13
                         cbMaSach_lhd.Focus();
                         cbMaSach_lhd.SelectAll();
                         return false;
+                    }else if (book.Idtheloai != "T005")
+                    {
+                        GetError.SetError(cbMaSach_lhd, "Mã sách này không phải giáo trình!");
+                        cbMaSach_lhd.Focus();
+                        cbMaSach_lhd.SelectAll();
+                        return false;
                     }
                 }
                 else
@@ -808,6 +814,25 @@ namespace LuuCongQuangVu_Nhom13
                         cbMaSach_lhd.Focus();
                         cbMaSach_lhd.SelectAll();
                         return false;
+                    }
+                    else 
+                    {
+                        bool check = true;
+                        foreach(var item in book)
+                        {
+                            if (item.Idtheloai == "T005")
+                            {
+                                check = false;
+                                break;
+                            }
+                        }
+                        if (check)
+                        {
+                            GetError.SetError(cbMaSach_lhd, "Tên sách này không phải giáo trình!");
+                            cbMaSach_lhd.Focus();
+                            cbMaSach_lhd.SelectAll();
+                            return false;
+                        }
                     }
                 }
             }

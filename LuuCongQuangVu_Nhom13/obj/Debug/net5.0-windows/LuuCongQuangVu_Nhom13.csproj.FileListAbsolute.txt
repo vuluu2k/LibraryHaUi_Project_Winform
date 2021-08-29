@@ -127,9 +127,7 @@ D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\bin\Debug\net5.0-windows\runt
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\bin\Debug\net5.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.csproj.AssemblyReference.cache
-D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Admin.resources
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Login.resources
-D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Manage_Accout.resources
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.QuanLiThuVien.resources
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.Properties.Resources.resources
 D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.csproj.GenerateResource.cache
@@ -1090,3 +1088,6 @@ C:\Users\vuong\Desktop\finallytest\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\ne
 C:\Users\vuong\Desktop\finallytest\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\ref\LuuCongQuangVu_Nhom13.dll
 C:\Users\vuong\Desktop\finallytest\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.pdb
 C:\Users\vuong\Desktop\finallytest\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.genruntimeconfig.cache
+D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogCustomerPay.resources
+D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogInforHD.resources
+D:\BTL_LapTrinhWD\BTL_Nhom13\LuuCongQuangVu_Nhom13\obj\Debug\net5.0-windows\LuuCongQuangVu_Nhom13.DialogUpdateLHD.resources
