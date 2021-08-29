@@ -3549,76 +3549,7 @@ namespace LuuCongQuangVu_Nhom13
         #endregion
 
 
-        #region Thống kê Quá Hạn 
-        //------------------Thống kê Quá Hạn 
-        private void ReadFileTKQH()
-        {
-
-            using var dbcontext = new Models.QLThuVienContext();
-            var list_tkqh = (from m in dbcontext.Muontrasaches
-                             where (m.Ngayhentra.Value.Date < m.Ngaythuctra.Value.Date && m.Ngaymuon > DateTime.Now.AddDays(-365)) || (m.Ngayhentra < DateTime.Now && m.Ngaythuctra == null)
-                             join s in dbcontext.Saches on m.Idsach equals s.Idsach
-                             join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
-                             select new
-                             {
-                                 iddocgia = m.Iddocgia,
-                                 hoten = dg.Hoten,
-                                 masach = m.Idsach,
-                                 tensach = s.Tensach,
-                                 slmuon = m.Soluongmuon,
-                                 dongia = s.Giasach,
-                                 ngaymuon = m.Ngaymuon,
-                                 ngayhentra = m.Ngayhentra,
-                                 ngaythuctra = m.Ngaythuctra,
-                                 tinhtrang = m.Tinhtrangtra
-                             }).ToList();
-
-
-
-            if (list_tkqh != null)
-            {
-                dgvTKQH.Rows.Clear();
-                dgvTKQH.ColumnCount = 9;
-                int i = 0;
-                foreach (var quahan in list_tkqh)
-                {
-                    dgvTKQH.Rows.Add();
-                    dgvTKQH.Rows[i].Cells[0].Value = quahan.iddocgia;
-                    dgvTKQH.Rows[i].Cells[1].Value = quahan.hoten;
-                    dgvTKQH.Rows[i].Cells[2].Value = quahan.masach;
-                    dgvTKQH.Rows[i].Cells[3].Value = quahan.tensach;
-
-                    dgvTKQH.Rows[i].Cells[4].Value = quahan.slmuon * quahan.dongia;
-                    dgvTKQH.Rows[i].Cells[5].Value = quahan.ngaymuon;
-                    dgvTKQH.Rows[i].Cells[6].Value = quahan.ngayhentra;
-                    dgvTKQH.Rows[i].Cells[7].Value = quahan.ngaythuctra;
-                    dgvTKQH.Rows[i].Cells[8].Value = quahan.tinhtrang;
-                    i++;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        private void btnCapnhatQH_Click(object sender, EventArgs e)
-        {
-            ReadFileTKQH();
-        }
-        private void btnXuatbc_Click(object sender, EventArgs e)
-        {
-            DGVPrinter printer = new DGVPrinter();
-            printer.Title = "Thống kê quá hạn";
-            printer.SubTitle = "Thời gian xuất : " + DateTime.Now.ToString("dd/MM/yyyy");
-            printer.SubTitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
-            printer.PageNumbers = true;
-            printer.PageNumberInHeader = true;
-            printer.PorportionalColumns = true;
-            printer.HeaderCellAlignment = StringAlignment.Near;
-            printer.printDocument.DefaultPageSettings.Landscape = true;
-            printer.PrintDataGridView(dgvTKQH);
-        }
-        #endregion
+        
 
 
         #region lê văn thành
@@ -5467,37 +5398,6 @@ namespace LuuCongQuangVu_Nhom13
             }
         }
 
-
-
-
-
-
-
-        #endregion
-        #endregion
-
-
-
-        
-
-        private void dategiodongcua_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
-
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            //String idstk = txtidsachtimkiem.Text;
-            //txtidsachtimkiem.Text =  (from s in dbcontext.Saches
-            //                 join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
-            //                 where s.Idsach == txtidsachtimkiem.Text && tl.Tentheloai == cbbtheloaisachmuon.Text
-            //                 select s).ToList();
-        }
-
         private void btnin_Click(object sender, EventArgs e)
         {
             var ktra = (from m in dbcontext.Muontrasaches
@@ -5586,5 +5486,107 @@ namespace LuuCongQuangVu_Nhom13
             }
 
         }
+
+
+
+
+
+        #endregion
+        #region Thống kê Quá Hạn 
+                //------------------Thống kê Quá Hạn 
+                private void ReadFileTKQH()
+                {
+
+                    using var dbcontext = new Models.QLThuVienContext();
+                    var list_tkqh = (from m in dbcontext.Muontrasaches
+                                     where (m.Ngayhentra.Value.Date < m.Ngaythuctra.Value.Date && m.Ngaymuon > DateTime.Now.AddDays(-365)) || (m.Ngayhentra < DateTime.Now && m.Ngaythuctra == null)
+                                     join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                                     join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                                     select new
+                                     {
+                                         iddocgia = m.Iddocgia,
+                                         hoten = dg.Hoten,
+                                         masach = m.Idsach,
+                                         tensach = s.Tensach,
+                                         slmuon = m.Soluongmuon,
+                                         dongia = s.Giasach,
+                                         ngaymuon = m.Ngaymuon,
+                                         ngayhentra = m.Ngayhentra,
+                                         ngaythuctra = m.Ngaythuctra,
+                                         tinhtrang = m.Tinhtrangtra
+                                     }).ToList();
+
+
+
+                    if (list_tkqh != null)
+                    {
+                        dgvTKQH.Rows.Clear();
+                        dgvTKQH.ColumnCount = 9;
+                        int i = 0;
+                        foreach (var quahan in list_tkqh)
+                        {
+                            dgvTKQH.Rows.Add();
+                            dgvTKQH.Rows[i].Cells[0].Value = quahan.iddocgia;
+                            dgvTKQH.Rows[i].Cells[1].Value = quahan.hoten;
+                            dgvTKQH.Rows[i].Cells[2].Value = quahan.masach;
+                            dgvTKQH.Rows[i].Cells[3].Value = quahan.tensach;
+
+                            dgvTKQH.Rows[i].Cells[4].Value = quahan.slmuon * quahan.dongia;
+                            dgvTKQH.Rows[i].Cells[5].Value = quahan.ngaymuon;
+                            dgvTKQH.Rows[i].Cells[6].Value = quahan.ngayhentra;
+                            dgvTKQH.Rows[i].Cells[7].Value = quahan.ngaythuctra;
+                            dgvTKQH.Rows[i].Cells[8].Value = quahan.tinhtrang;
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                private void btnCapnhatQH_Click(object sender, EventArgs e)
+                {
+                    ReadFileTKQH();
+                }
+                private void btnXuatbc_Click(object sender, EventArgs e)
+                {
+                    DGVPrinter printer = new DGVPrinter();
+                    printer.Title = "Thống kê quá hạn";
+                    printer.SubTitle = "Thời gian xuất : " + DateTime.Now.ToString("dd/MM/yyyy");
+                    printer.SubTitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
+                    printer.PageNumbers = true;
+                    printer.PageNumberInHeader = true;
+                    printer.PorportionalColumns = true;
+                    printer.HeaderCellAlignment = StringAlignment.Near;
+                    printer.printDocument.DefaultPageSettings.Landscape = true;
+                    printer.PrintDataGridView(dgvTKQH);
+                }
+                #endregion
+
+        #endregion
+
+
+
+
+
+        private void dategiodongcua_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            //String idstk = txtidsachtimkiem.Text;
+            //txtidsachtimkiem.Text =  (from s in dbcontext.Saches
+            //                 join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
+            //                 where s.Idsach == txtidsachtimkiem.Text && tl.Tentheloai == cbbtheloaisachmuon.Text
+            //                 select s).ToList();
+        }
+
+        
     }
 }
