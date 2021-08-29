@@ -1,35 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
 namespace LuuCongQuangVu_Nhom13.Models
 {
-    [Table("Account")]
     public partial class Account
     {
         public Account()
         {
             HoaDonThanhLis = new HashSet<HoaDonThanhLi>();
             HoaDons = new HashSet<HoaDon>();
+            PhongDocs = new HashSet<PhongDoc>();
         }
 
-        [Key]
-        [StringLength(50)]
         public string Usename { get; set; }
-        [StringLength(50)]
         public string Password { get; set; }
-        [StringLength(50)]
         public string Capdo { get; set; }
-        [StringLength(50)]
         public string Tenchutaikhoan { get; set; }
 
-        [InverseProperty(nameof(HoaDonThanhLi.UsenameNavigation))]
         public virtual ICollection<HoaDonThanhLi> HoaDonThanhLis { get; set; }
-        [InverseProperty(nameof(HoaDon.UsenameNavigation))]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
+        public virtual ICollection<PhongDoc> PhongDocs { get; set; }
     }
 }

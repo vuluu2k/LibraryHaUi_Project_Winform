@@ -71,11 +71,9 @@ namespace LuuCongQuangVu_Nhom13
             txtMaHD.Text = RandomCodeHD();
 
             cbReadFileDG.Text = "Tất cả";
-            
-            //loadIDPhong(cbbidphongmuontra);
-            loadIDSach(cbbidsachmuontra);
-            loadIDdocgiamuontra(cbbiddocgiamuontra);
 
+            loadUsername(cbbusernamephongdoc);
+            cbbtheloaimuon(cbbtheloaisachmuon);
             txtSLmuon.Enabled = false;
             
             dgvMTsach.Columns["dataGridViewTextBoxColumn9"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -3549,6 +3547,7 @@ namespace LuuCongQuangVu_Nhom13
         #endregion
 
 
+        #region lê văn thành
         #region quản lý phòng đọc
         private bool Validate_ManagePhongDoc()
         {
@@ -3576,55 +3575,119 @@ namespace LuuCongQuangVu_Nhom13
                     return false;
                 }
             }
-            if (txttennhanvien.Text == "")
+            if (cbbusernamephongdoc.Text.Equals(""))
             {
-                GetError.SetError(txttennhanvien, "Bạn phải nhập tên nhân viên!");
-                txttennhanvien.Focus();
+                GetError.SetError(cbbusernamephongdoc, "Bạn phải nhập UserName!");
+                cbbusernamephongdoc.Focus();
                 return false;
             }
-            if (txtsobanphongdoc.Text == "")
+            if (txtsoghephongdoc.Text == "")
             {
-                GetError.SetError(txtsobanphongdoc, "Bạn phải nhập số bàn trong phòng đọc!");
-                txtsobanphongdoc.Focus();
+                GetError.SetError(txtsoghephongdoc, "Bạn phải nhập số ghế trong phòng đọc!");
+                txtsoghephongdoc.Focus();
                 return false;
             }
             else
             {
                 try
                 {
-                    int.Parse(txtsobanphongdoc.Text);
-                    if (int.Parse(txtsobanphongdoc.Text) < 0)
+                    int.Parse(txtsoghephongdoc.Text);
+                    if (int.Parse(txtsoghephongdoc.Text) < 0)
                     {
-                        GetError.SetError(txtsobanphongdoc, "Bạn phải nhập số bàn đọc  >0!");
-                        txtsobanphongdoc.Focus();
-                        txtsobanphongdoc.SelectAll();
+                        GetError.SetError(txtsoghephongdoc, "Bạn phải nhập ghế >0!");
+                        txtsoghephongdoc.Focus();
+                        txtsoghephongdoc.SelectAll();
                         return false;
                     }
                 }
                 catch (Exception)
                 {
-                    GetError.SetError(txtsobanphongdoc, "Bạn phải nhập số lượng là số nguyên!");
-                    txtsobanphongdoc.Focus();
-                    txtsobanphongdoc.SelectAll();
+                    GetError.SetError(txtsoghephongdoc, "Bạn phải nhập số ghế là số nguyên!");
+                    txtsoghephongdoc.Focus();
+                    txtsoghephongdoc.SelectAll();
                     return false;
                 }
             }
-            if (dategiomocuaphongdoc.Text.Equals(""))
+            if (txtsomaytinhphongdoc.Text == "")
             {
-                GetError.SetError(dategiomocuaphongdoc, "Bạn phải nhập giờ mở cửa!");
-                dategiomocuaphongdoc.Focus();
+                GetError.SetError(txtsomaytinhphongdoc, "Bạn phải nhập số máy tính trong phòng đọc!");
+                txtsomaytinhphongdoc.Focus();
                 return false;
             }
-            if (dategiomocuaphongdoc.Text.Equals(""))
+            else
             {
-                GetError.SetError(dategiodongcua, "Bạn phải nhập giờ đóng cửa!");
-                dategiodongcua.Focus();
+                try
+                {
+                    int.Parse(txtsomaytinhphongdoc.Text);
+                    if (int.Parse(txtsomaytinhphongdoc.Text) < 0)
+                    {
+                        GetError.SetError(txtsomaytinhphongdoc, "Bạn phải nhập máy tính >0!");
+                        txtsomaytinhphongdoc.Focus();
+                        txtsomaytinhphongdoc.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsomaytinhphongdoc, "Bạn phải nhập số máy tính là số nguyên!");
+                    txtsomaytinhphongdoc.Focus();
+                    txtsomaytinhphongdoc.SelectAll();
+                    return false;
+                }
+            }
+            if (txtsodieuhoaphongdoc.Text == "")
+            {
+                GetError.SetError(txtsodieuhoaphongdoc, "Bạn phải nhập số điều hòa trong phòng đọc!");
+                txtsodieuhoaphongdoc.Focus();
                 return false;
             }
-            if (dategiomocuaphongdoc.Value.Date != dategiomocuaphongdoc.Value.Date)
+            else
             {
-                MessageBox.Show("giờ mở cửa và giờ đóng cửa phải cùng ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    int.Parse(txtsodieuhoaphongdoc.Text);
+                    if (int.Parse(txtsodieuhoaphongdoc.Text) < 0)
+                    {
+                        GetError.SetError(txtsodieuhoaphongdoc, "Bạn phải nhập điều hòa >0!");
+                        txtsodieuhoaphongdoc.Focus();
+                        txtsodieuhoaphongdoc.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsodieuhoaphongdoc, "Bạn phải nhập số điều hòa là số nguyên!");
+                    txtsodieuhoaphongdoc.Focus();
+                    txtsodieuhoaphongdoc.SelectAll();
+                    return false;
+                }
+            }
+            if (txtsoquattranphongdoc.Text == "")
+            {
+                GetError.SetError(txtsoquattranphongdoc, "Bạn phải nhập số quạt trần trong phòng đọc!");
+                txtsoquattranphongdoc.Focus();
                 return false;
+            }
+            else
+            {
+                try
+                {
+                    int.Parse(txtsoquattranphongdoc.Text);
+                    if (int.Parse(txtsoquattranphongdoc.Text) < 0)
+                    {
+                        GetError.SetError(txtsoquattranphongdoc, "Bạn phải nhập quạt trần >0!");
+                        txtsoquattranphongdoc.Focus();
+                        txtsodieuhoaphongdoc.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsoquattranphongdoc, "Bạn phải nhập số quạt trần là số nguyên!");
+                    txtsoquattranphongdoc.Focus();
+                    txtsoquattranphongdoc.SelectAll();
+                    return false;
+                }
             }
             return true;
         }
@@ -3655,78 +3718,154 @@ namespace LuuCongQuangVu_Nhom13
                 }
 
             }
-            if (txttennhanvien.Text == "")
+            if (cbbusernamephongdoc.Text.Equals(""))
             {
-                GetError.SetError(txttennhanvien, "Bạn phải nhập tên nhân viên!");
-                txttennhanvien.Focus();
+                GetError.SetError(cbbusernamephongdoc, "Bạn phải nhập UserName!");
+                cbbusernamephongdoc.Focus();
                 return false;
             }
-            if (txtsobanphongdoc.Text == "")
+            if (txtsoghephongdoc.Text == "")
             {
-                GetError.SetError(txtsobanphongdoc, "Bạn phải nhập số bàn trong phòng đọc!");
-                txtsobanphongdoc.Focus();
+                GetError.SetError(txtsoghephongdoc, "Bạn phải nhập số ghế trong phòng đọc!");
+                txtsoghephongdoc.Focus();
                 return false;
             }
             else
             {
                 try
                 {
-                    int.Parse(txtsobanphongdoc.Text);
-                    if (int.Parse(txtsobanphongdoc.Text) < 0)
+                    int.Parse(txtsoghephongdoc.Text);
+                    if (int.Parse(txtsoghephongdoc.Text) < 0)
                     {
-                        GetError.SetError(txtsobanphongdoc, "Bạn phải nhập số bàn đọc  >0!");
-                        txtsobanphongdoc.Focus();
-                        txtsobanphongdoc.SelectAll();
+                        GetError.SetError(txtsoghephongdoc, "Bạn phải nhập ghế >0!");
+                        txtsoghephongdoc.Focus();
+                        txtsoghephongdoc.SelectAll();
                         return false;
                     }
                 }
                 catch (Exception)
                 {
-                    GetError.SetError(txtsobanphongdoc, "Bạn phải nhập số lượng là số nguyên!");
-                    txtsobanphongdoc.Focus();
-                    txtsobanphongdoc.SelectAll();
+                    GetError.SetError(txtsoghephongdoc, "Bạn phải nhập số ghế là số nguyên!");
+                    txtsoghephongdoc.Focus();
+                    txtsoghephongdoc.SelectAll();
                     return false;
                 }
             }
-            if (dategiomocuaphongdoc.Text.Equals(""))
+            if (txtsomaytinhphongdoc.Text == "")
             {
-                GetError.SetError(dategiomocuaphongdoc, "Bạn phải nhập giờ mở cửa!");
-                dategiomocuaphongdoc.Focus();
+                GetError.SetError(txtsomaytinhphongdoc, "Bạn phải nhập số máy tính trong phòng đọc!");
+                txtsomaytinhphongdoc.Focus();
                 return false;
             }
-            if (dategiodongcuaphongdoc.Text.Equals(""))
+            else
             {
-                GetError.SetError(dategiodongcua, "Bạn phải nhập giờ đóng cửa!");
-                dategiodongcua.Focus();
+                try
+                {
+                    int.Parse(txtsomaytinhphongdoc.Text);
+                    if (int.Parse(txtsomaytinhphongdoc.Text) < 0)
+                    {
+                        GetError.SetError(txtsomaytinhphongdoc, "Bạn phải nhập máy tính >0!");
+                        txtsomaytinhphongdoc.Focus();
+                        txtsomaytinhphongdoc.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsomaytinhphongdoc, "Bạn phải nhập số máy tính là số nguyên!");
+                    txtsomaytinhphongdoc.Focus();
+                    txtsomaytinhphongdoc.SelectAll();
+                    return false;
+                }
+            }
+            if (txtsodieuhoaphongdoc.Text == "")
+            {
+                GetError.SetError(txtsodieuhoaphongdoc, "Bạn phải nhập số điều hòa trong phòng đọc!");
+                txtsodieuhoaphongdoc.Focus();
                 return false;
             }
-            if (dategiomocuaphongdoc.Value.Date != dategiomocuaphongdoc.Value.Date)
+            else
             {
-                MessageBox.Show("giờ mở cửa và giờ đóng cửa phải cùng ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    int.Parse(txtsodieuhoaphongdoc.Text);
+                    if (int.Parse(txtsodieuhoaphongdoc.Text) < 0)
+                    {
+                        GetError.SetError(txtsodieuhoaphongdoc, "Bạn phải nhập điều hòa >0!");
+                        txtsodieuhoaphongdoc.Focus();
+                        txtsodieuhoaphongdoc.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsodieuhoaphongdoc, "Bạn phải nhập số điều hòa là số nguyên!");
+                    txtsodieuhoaphongdoc.Focus();
+                    txtsodieuhoaphongdoc.SelectAll();
+                    return false;
+                }
+            }
+            if (txtsoquattranphongdoc.Text == "")
+            {
+                GetError.SetError(txtsoquattranphongdoc, "Bạn phải nhập số quạt trần trong phòng đọc!");
+                txtsoquattranphongdoc.Focus();
                 return false;
+            }
+            else
+            {
+                try
+                {
+                    int.Parse(txtsoquattranphongdoc.Text);
+                    if (int.Parse(txtsoquattranphongdoc.Text) < 0)
+                    {
+                        GetError.SetError(txtsoquattranphongdoc, "Bạn phải nhập quạt trần >0!");
+                        txtsoquattranphongdoc.Focus();
+                        txtsodieuhoaphongdoc.SelectAll();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    GetError.SetError(txtsoquattranphongdoc, "Bạn phải nhập số quạt trần là số nguyên!");
+                    txtsoquattranphongdoc.Focus();
+                    txtsoquattranphongdoc.SelectAll();
+                    return false;
+                }
             }
             return true;
         }
         private void ReadFileQuanLiPhongDoc()
         {
-            //using var dbcontext = new Models.QLThuVienContext();
-            var list_phongdoc = dbcontext.PhongDocs.ToList();
+            var list_phongdoc = from pd in dbcontext.PhongDocs
+                                join ac in dbcontext.Accounts on pd.Usename equals ac.Usename
+                                select new
+                                {
+                                    idphongdoc = pd.Idphongdoc,
+                                    tenchutaikhoanphongdoc = ac.Tenchutaikhoan,
+                                    soghe = pd.Soghe,
+                                    somaytinh = pd.Somaytinh,
+                                    sodieuhoa = pd.Sodieuhoa,
+                                    soquattran = pd.Soquattran
+                                };
             if (list_phongdoc != null)
             {
                 if (list_phongdoc.Count() > 0)
                 {
-                    txtSL_Sach.Text = Convert.ToString(list_phongdoc.Count());
                     dgvphongdoc.Rows.Clear();
-                    dgvphongdoc.ColumnCount = 5;
-                    for (int i = 0; i < list_phongdoc.Count(); i++)
+                    dgvphongdoc.ColumnCount = 6;
+                    int i = 0;
+                    foreach (var phongdoc in list_phongdoc)
                     {
                         dgvphongdoc.Rows.Add();
-                        dgvphongdoc.Rows[i].Cells[0].Value = list_phongdoc[i].Idphongdoc;
-                        dgvphongdoc.Rows[i].Cells[1].Value = list_phongdoc[i].Tennhanvien;
-                        dgvphongdoc.Rows[i].Cells[2].Value = list_phongdoc[i].Soban;
-                        dgvphongdoc.Rows[i].Cells[3].Value = list_phongdoc[i].Giomocua;
-                        dgvphongdoc.Rows[i].Cells[4].Value = list_phongdoc[i].Giodong;
+                        dgvphongdoc.Rows[i].Cells[0].Value = phongdoc.idphongdoc;
+                        dgvphongdoc.Rows[i].Cells[1].Value = phongdoc.tenchutaikhoanphongdoc;
+                        dgvphongdoc.Rows[i].Cells[2].Value = phongdoc.soghe;
+                        dgvphongdoc.Rows[i].Cells[3].Value = phongdoc.somaytinh;
+                        dgvphongdoc.Rows[i].Cells[4].Value = phongdoc.sodieuhoa;
+                        dgvphongdoc.Rows[i].Cells[5].Value = phongdoc.soquattran;
+                        i++;
                     }
+
                 }
                 else
                 {
@@ -3737,11 +3876,18 @@ namespace LuuCongQuangVu_Nhom13
         private void ClearPhongDoc()
         {
             txtidphongdoc.Clear();
-            txttennhanvien.Clear();
-            txtsobanphongdoc.Clear();
-            dategiomocuaphongdoc.Enabled = true;
-            dategiodongcuaphongdoc.Enabled = true;
-
+            cbbusernamephongdoc.Text = "";
+            txtsoghephongdoc.Clear();
+            txtsomaytinhphongdoc.Clear();
+            txtsodieuhoaphongdoc.Clear();
+            txtsoquattranphongdoc.Clear();
+        }
+        void loadUsername(ComboBox username)
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            username.DataSource = dbcontext.Accounts.Where(s => s.Capdo == "Nhân viên").ToList();
+            username.DisplayMember = "Tenchutaikhoan";
+            username.ValueMember = "Usename";
         }
         private void AddPhongDoc()
         {
@@ -3749,10 +3895,12 @@ namespace LuuCongQuangVu_Nhom13
             {
                 Models.PhongDoc phongdoc = new Models.PhongDoc();
                 phongdoc.Idphongdoc = txtidphongdoc.Text;
-                phongdoc.Tennhanvien = txttennhanvien.Text;
-                phongdoc.Soban = int.Parse(txtsobanphongdoc.Text);
-                phongdoc.Giomocua = dategiomocuaphongdoc.Value;
-                phongdoc.Giodong = dategiodongcuaphongdoc.Value;
+                phongdoc.Usename = cbbusernamephongdoc.SelectedValue.ToString();
+                phongdoc.Soghe = int.Parse(txtsoghephongdoc.Text);
+                phongdoc.Somaytinh = int.Parse(txtsomaytinhphongdoc.Text);
+                phongdoc.Sodieuhoa = int.Parse(txtsodieuhoaphongdoc.Text);
+                phongdoc.Soquattran = int.Parse(txtsoquattranphongdoc.Text);
+
                 dbcontext.PhongDocs.Add(phongdoc);
                 dbcontext.SaveChanges();
                 ReadFileQuanLiPhongDoc();
@@ -3760,36 +3908,29 @@ namespace LuuCongQuangVu_Nhom13
         }
         private void UpdatePhongDoc()
         {
-            //using var dbcontext = new Models.QLThuVienContext();
-            //Models.Sach sach = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
             if (Validate_ManagePhongDoc1())
             {
                 Models.PhongDoc phongdoc = (from pd in dbcontext.PhongDocs where pd.Idphongdoc == txtidphongdoc.Text select pd).FirstOrDefault();
-                phongdoc.Tennhanvien = txttennhanvien.Text;
-                phongdoc.Soban = int.Parse(txtsobanphongdoc.Text);
-                phongdoc.Giomocua = dategiomocuaphongdoc.Value;
-                phongdoc.Giodong = dategiodongcuaphongdoc.Value;
+                phongdoc.Idphongdoc = txtidphongdoc.Text;
+                phongdoc.Usename = cbbusernamephongdoc.SelectedValue.ToString();
+                phongdoc.Soghe = int.Parse(txtsoghephongdoc.Text);
+                phongdoc.Somaytinh = int.Parse(txtsomaytinhphongdoc.Text);
+                phongdoc.Sodieuhoa = int.Parse(txtsodieuhoaphongdoc.Text);
+                phongdoc.Soquattran = int.Parse(txtsoquattranphongdoc.Text);
                 dbcontext.SaveChanges();
                 ReadFileQuanLiPhongDoc();
             }
         }
         private void DelPhongDoc()
         {
-            //using var dbcontext = new Models.QLThuVienContext();
-            //Models.Sach id = dbcontext.Saches.Where(sach => sach.Idsach == txtmasach.Text).FirstOrDefault();
-            //var idm = dbcontext.Muontrasaches.Where(m => m.Idsach == txtmasach.Text).ToList();
-            Models.PhongDoc phongdoc = (from pd in dbcontext.PhongDocs where pd.Idphongdoc == txtidphongdoc.Text select pd).FirstOrDefault();
-            var mttcs = (from mttc in dbcontext.Muontrataichos where mttc.Idphongdoc == txtidphongdoc.Text select mttc).ToList();
+            Models.PhongDoc delpd = (from pd in dbcontext.PhongDocs where pd.Idphongdoc == txtidphongdoc.Text select pd).FirstOrDefault();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
-                if (phongdoc != null)
+                if (delpd != null)
                 {
-                    if (mttcs != null)
-                    {
-                        dbcontext.Muontrataichos.RemoveRange(mttcs);
-                    }
-                    dbcontext.PhongDocs.Remove(phongdoc);
+
+                    dbcontext.PhongDocs.Remove(delpd);
                     dbcontext.SaveChanges();
                     ReadFileQuanLiPhongDoc();
                 }
@@ -3799,166 +3940,144 @@ namespace LuuCongQuangVu_Nhom13
                 }
             }
         }
-        private void SearchPhongDoc()
-        {
-            //using var dbcontext = new Models.QLThuVienContext();
-            //var list_sach = dbcontext.Saches.Where(book=>book.Idsach==txtmasach.Text).ToList();
-            var list_phongdoc = (from pd in dbcontext.PhongDocs where pd.Idphongdoc == txtidphongdoc.Text select pd).ToList();
-            if (list_phongdoc != null)
-            {
-                if (list_phongdoc.Count() > 0)
-                {
-                    dgvphongdoc.Rows.Clear();
-                    dgvphongdoc.ColumnCount = 5;
-                    for (int i = 0; i < list_phongdoc.Count(); i++)
-                    {
-                        dgvphongdoc.Rows.Add();
-                        dgvphongdoc.Rows[i].Cells[0].Value = list_phongdoc[i].Idphongdoc;
-                        dgvphongdoc.Rows[i].Cells[1].Value = list_phongdoc[i].Tennhanvien;
-                        dgvphongdoc.Rows[i].Cells[2].Value = list_phongdoc[i].Soban;
-                        dgvphongdoc.Rows[i].Cells[3].Value = list_phongdoc[i].Giomocua;
-                        dgvphongdoc.Rows[i].Cells[4].Value = list_phongdoc[i].Giodong;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
         private void btnhienthiphongdoc_Click(object sender, EventArgs e)
         {
             ReadFileQuanLiPhongDoc();
         }
+
         private void btnthemphongdoc_Click(object sender, EventArgs e)
         {
-            
             AddPhongDoc();
             ClearPhongDoc();
         }
-        private void btnsuaphongdoc_Click(object sender, EventArgs e)
-        {
-            UpdatePhongDoc();
-        }
-        private void cellclick_phongdoc(object sender, DataGridViewCellEventArgs e)
+
+        private void CellClick_Phongdoc(object sender, DataGridViewCellEventArgs e)
         {
             int index = dgvphongdoc.SelectedCells[0].RowIndex;
             DataGridViewRow row = dgvphongdoc.Rows[index];
             txtidphongdoc.Text = Convert.ToString(row.Cells[0].Value);
-            txttennhanvien.Text = Convert.ToString(row.Cells[1].Value);
-            txtsobanphongdoc.Text = Convert.ToString(row.Cells[2].Value);
+            cbbusernamephongdoc.Text = Convert.ToString(row.Cells[1].Value);
+            txtsoghephongdoc.Text = Convert.ToString(row.Cells[2].Value);
+            txtsomaytinhphongdoc.Text = Convert.ToString(row.Cells[3].Value);
+            txtsodieuhoaphongdoc.Text = Convert.ToString(row.Cells[4].Value);
+            txtsoquattranphongdoc.Text = Convert.ToString(row.Cells[5].Value);
         }
+
+        private void btnsuaphongdoc_Click(object sender, EventArgs e)
+        {
+            UpdatePhongDoc();
+        }
+
         private void btnxoaphongdoc_Click(object sender, EventArgs e)
         {
             DelPhongDoc();
             ClearPhongDoc();
         }
+
         private void btnhuyphongdoc_Click(object sender, EventArgs e)
         {
             ClearPhongDoc();
-        }
-        private void btntimkiemphongdoc_Click(object sender, EventArgs e)
-        {
-            SearchPhongDoc();
         }
         #endregion
 
         #region mượn trả tại chỗ
         private void ClearMuonTraTaiPhong()
         {
-            cbbiddocgiamuontra.Text = "";
-            cbbidphongmuontra.Text = "";
-            cbbidsachmuontra.Text = "";
-            txtvitringoimuontra.Clear();
-            dategiovaomuontra.Enabled = true;
-            dategioramuontra.Enabled = true;
-            txttinhtrangsachmuontra.Clear();
-            cbbidphongmuontra.Focus();
+            txtiddocgiamuontrataicho.Clear();
+            txthotendocgiamuontrataicho.Clear();
+            dategiomuontaicho.Enabled = true;
+            txtidsachmuontrataicho.Clear();
+            txttensachmuontrataicho.Clear();
+            txttrangthaimuontrataicho.Clear();
+            txtiddocgiamuontrataicho.Focus();
         }
-        //void loadIDPhong(ComboBox pmt)
-        //{
-        //    using var dbcontext = new Models.QLThuVienContext();
-        //    pmt.DataSource = dbcontext.PhongDocs.ToList();
-        //    pmt.DisplayMember = "Idphongdoc";
-        //    pmt.ValueMember = "Idphongdoc";
-        //}
-        void loadIDSach(ComboBox s)
+        void cbbtheloaimuon(ComboBox loadtheloai)
         {
             using var dbcontext = new Models.QLThuVienContext();
-            s.DataSource = dbcontext.Saches.ToList();
-            s.DisplayMember = "Idsach";
-            s.ValueMember = "Idsach";
+            loadtheloai.DataSource = dbcontext.Theloais.ToList();
+            loadtheloai.DisplayMember = "Tentheloai";
+            loadtheloai.ValueMember = "Idtheloai";
         }
-        void loadIDdocgiamuontra(ComboBox cb)
+        private void cbbtheloaisachmuon_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var idTypeOfBook = dbcontext.Theloais.Where(tlmt => tlmt.Tentheloai == cbbtheloaisachmuon.Text).Select(x => x.Idtheloai).FirstOrDefault();
+            cbbtensachmuon.DataSource = dbcontext.Saches.Where(book => book.Idtheloai == idTypeOfBook).ToList();
+            cbbtensachmuon.ValueMember = "Idsach";
+            cbbtensachmuon.DisplayMember = "Tensach";
+        }
+        private bool check_Idsach()
         {
             using var dbcontext = new Models.QLThuVienContext();
-            cb.DataSource = dbcontext.Docgia.ToList();
-            cb.DisplayMember = "Iddocgia";
-            cb.ValueMember = "Iddocgia";
+            var list_idsach = dbcontext.Saches.Where(s => s.Idsach == txtidsachmuontrataicho.Text).FirstOrDefault();
+            if (list_idsach == null)
+            {
+                errorProvider1.SetError(txtidsachmuontrataicho, "mã sách không tồn tại");
+                return false;
+            }
+            return true;
+        }
+        private bool check_Iddocgia()
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            var list_iddocgia = dbcontext.Docgia.Where(dg => dg.Iddocgia == txtiddocgiamuontrataicho.Text).FirstOrDefault();
+            if (list_iddocgia == null)
+            {
+                errorProvider1.SetError(txtiddocgiamuontrataicho, "mã đọc giả không tồn tại");
+                return false;
+            }
+            return true;
+        }
+        private void txtidsachmuontra(object sender, EventArgs e)
+        {
+            String ids = txtidsachmuontrataicho.Text;
+            txttensachmuontrataicho.Text = dbcontext.Saches.Where(s => s.Idsach == ids).Select(s => s.Tensach).FirstOrDefault();
+        }
+        private void txtiddocgiamuontrataicho_TextChanged(object sender, EventArgs e)
+        {
+            String iddg = txtiddocgiamuontrataicho.Text;
+            txthotendocgiamuontrataicho.Text = dbcontext.Docgia.Where(dg => dg.Iddocgia == iddg).Select(dg => dg.Hoten).FirstOrDefault();
+        }
+        private void txtidsachmuontrataicho_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(txtidsachmuontrataicho, "");
+        }
+        private void txtiddocgiamuontrataicho_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(txtiddocgiamuontrataicho, "");
         }
         private bool Validate_ManageMuonTraTaiPhong()
         {
-            if (cbbidphongmuontra.Text.Equals(""))
+            if (txtiddocgiamuontrataicho.Text == "")
             {
-                GetError.SetError(cbbidphongmuontra, "Bạn chưa chọn ID phòng đọc!");
-                cbbidphongmuontra.Focus();
+                GetError.SetError(txtiddocgiamuontrataicho, "Bạn chưa nhập ID đọc giả!");
+                txtiddocgiamuontrataicho.Focus();
                 return false;
             }
-            if (cbbidsachmuontra.Text.Equals(""))
+            if (txtidsachmuontrataicho.Text == "")
             {
-                GetError.SetError(cbbidsachmuontra, "Bạn chưa chọn ID sách!");
-                cbbidsachmuontra.Focus();
-                return false;
-            }
-            if (cbbiddocgiamuontra.Text.Equals(""))
-            {
-                GetError.SetError(cbbiddocgiamuontra, "Bạn chưa chọn ID đọc giả!");
-                cbbiddocgiamuontra.Focus();
-                return false;
-            }
-            if (txtvitringoimuontra.Text == "")
-            {
-                GetError.SetError(txtvitringoimuontra, "Bạn phải nhập vị trí ngồi!");
-                txtvitringoimuontra.Focus();
-                return false;
-            }
-            if (dategiovaomuontra.Text.Equals(""))
-            {
-                GetError.SetError(dategiovaomuontra, "Bạn phải nhập giờ vào!");
-                dategiovaomuontra.Focus();
-                return false;
-            }
-            if (dategioramuontra.Text.Equals(""))
-            {
-                GetError.SetError(dategioramuontra, "Bạn phải nhập giờ ra!");
-                dategioramuontra.Focus();
-                return false;
-            }
-            if (dategiovaomuontra.Value.Date != dategioramuontra.Value.Date)
-            {
-                MessageBox.Show("giờ ra và giờ vào phải cùng một ngày ! Vui lòng chọn lại ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                GetError.SetError(txtidsachmuontrataicho, "Bạn chưa nhập ID sách!");
+                txtidsachmuontrataicho.Focus();
                 return false;
             }
             return true;
         }
         private void ReadFileQuanLyMuonTraTaiCho()
         {
-            
             using var dbcontext = new Models.QLThuVienContext();
             var list_muontrataicho = from mttcs in dbcontext.Muontrataichos
-                                     join p in dbcontext.PhongDocs on mttcs.Idphongdoc equals p.Idphongdoc
                                      join s in dbcontext.Saches on mttcs.Idsach equals s.Idsach
                                      join dg in dbcontext.Docgia on mttcs.Iddocgia equals dg.Iddocgia
                                      select new
                                      {
-                                         idphongdoc = mttcs.Idphongdoc,
-                                         idsachmuontaiphong = mttcs.Idsach,
                                          iddocgiamuontaiphong = mttcs.Iddocgia,
-                                         vitri = mttcs.Vitriban,
-                                         giovaomuontaiphong = mttcs.Giovao,
-                                         gioramuontaiphong = mttcs.Giora,
-                                         tinhtrangsachmuon = mttcs.Tinhtrangsach
+                                         hotenmuontrataiphong = dg.Hoten,
+                                         giomuontaiphong = mttcs.Giomuon,
+                                         giotramuontaiphong = mttcs.Giotra,
+                                         idsachmuontaiphong = mttcs.Idsach,
+                                         tensachmuontrataiphong = s.Tensach,
+                                         trangthaimuontrataiphong = mttcs.Trangthai
                                      };
+
             if (list_muontrataicho != null)
             {
                 dgvmuontrataiphong.Rows.Clear();
@@ -3967,13 +4086,13 @@ namespace LuuCongQuangVu_Nhom13
                 foreach (var muontaicho in list_muontrataicho)
                 {
                     dgvmuontrataiphong.Rows.Add();
-                    dgvmuontrataiphong.Rows[i].Cells[0].Value = muontaicho.idphongdoc;
-                    dgvmuontrataiphong.Rows[i].Cells[1].Value = muontaicho.idsachmuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[2].Value = muontaicho.iddocgiamuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[3].Value = muontaicho.vitri;
-                    dgvmuontrataiphong.Rows[i].Cells[4].Value = muontaicho.giovaomuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[5].Value = muontaicho.gioramuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[6].Value = muontaicho.tinhtrangsachmuon;
+                    dgvmuontrataiphong.Rows[i].Cells[0].Value = muontaicho.iddocgiamuontaiphong;
+                    dgvmuontrataiphong.Rows[i].Cells[1].Value = muontaicho.hotenmuontrataiphong;
+                    dgvmuontrataiphong.Rows[i].Cells[2].Value = muontaicho.giomuontaiphong;
+                    dgvmuontrataiphong.Rows[i].Cells[3].Value = muontaicho.giotramuontaiphong;
+                    dgvmuontrataiphong.Rows[i].Cells[4].Value = muontaicho.idsachmuontaiphong;
+                    dgvmuontrataiphong.Rows[i].Cells[5].Value = muontaicho.tensachmuontrataiphong;
+                    dgvmuontrataiphong.Rows[i].Cells[6].Value = muontaicho.trangthaimuontrataiphong;
                     i++;
                 }
             }
@@ -3982,55 +4101,96 @@ namespace LuuCongQuangVu_Nhom13
                 MessageBox.Show("Không tồn tại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private bool isRadioIsEmptyMuonTraTaiPhong()
+        {
+            if (radmuonsachtaiphong.Checked == false && radtrasachtaiphong.Checked == false)
+            {
+                return true;
+            }
+            return false;
+        }
         private void AddMuonTraTaiPhong()
         {
-            if (Validate_ManageMuonTraTaiPhong())
+            using var dbcontext = new Models.QLThuVienContext();
+            var list_mttc = (from m in dbcontext.Muontrataichos
+                             join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                             join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                             where m.Iddocgia == txtiddocgiamuontrataicho.Text && m.Trangthai == "Đang mượn"
+                             select m).ToList();
+            var sumid = list_mttc.Count();
+            var active = (from m in dbcontext.Muontrataichos
+                          join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                          where m.Iddocgia == txtiddocgiamuontrataicho.Text
+                            && m.Idsach == txtidsachmuontrataicho.Text
+                            && m.Trangthai == "Đang mượn"
+                          select new
+                          {
+                              iddocgiamuontra = m.Iddocgia,
+                              idsachmuontrataiphong = m.Idsach,
+                              trangthaimuontrataiphong = m.Trangthai
+                          }).FirstOrDefault();
+            var chucvu = (from mttc in dbcontext.Muontrataichos
+                          join s in dbcontext.Saches on mttc.Idsach equals s.Idsach
+                          join dg in dbcontext.Docgia on mttc.Iddocgia equals dg.Iddocgia
+                          where dg.Iddocgia == txtiddocgiamuontrataicho.Text
+                          select new
+                          {
+                              iddocgia = mttc.Iddocgia,
+                              chucvu = dg.Nghenghiep
+                          }).FirstOrDefault();
+            if (isRadioIsEmptyMuonTraTaiPhong())
             {
-                using (var dbcontext = new Models.QLThuVienContext())
+                MessageBox.Show("Bạn chưa chọn loại Mượn hoặc trả sách", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (radmuonsachtaiphong.Checked)
+            {
+                if (Validate_ManageMuonTraTaiPhong())
                 {
-                    try
+                    if (chucvu.chucvu.ToString() == "Giảng viên" && sumid >= 5)
                     {
+                        MessageBox.Show("Giáo viên không thể mượn quá 5 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (chucvu.chucvu.ToString() == "Sinh viên" && sumid >= 10)
+                    {
+                        MessageBox.Show("Sinh viên không thể mượn quá 10 quyển giáo trình !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (active == null)
+                    {
+                        DateTime dategiomuontaicho = DateTime.Now;
                         Models.Muontrataicho mttcs = new Models.Muontrataicho();
-                        mttcs.Idphongdoc = cbbidphongmuontra.Text;
-                        mttcs.Idsach = cbbidsachmuontra.Text;
-                        mttcs.Iddocgia = cbbiddocgiamuontra.Text;
-                        mttcs.Vitriban = int.Parse(txtvitringoimuontra.Text);
-                        mttcs.Giovao = dategiovaomuontra.Value;
-                        mttcs.Giora = dategioramuontra.Value;
-                        mttcs.Tinhtrangsach = txttinhtrangsachmuontra.Text;
+                        mttcs.Iddocgia = txtiddocgiamuontrataicho.Text;
+                        mttcs.Idsach = txtidsachmuontrataicho.Text;
+                        mttcs.Giomuon = dategiomuontaicho;
+                        mttcs.Giotra = null;
+                        mttcs.Trangthai = "Đang mượn";
                         dbcontext.Muontrataichos.Add(mttcs);
                         dbcontext.SaveChanges();
                         ReadFileQuanLyMuonTraTaiCho();
-
                     }
-                    catch (Exception)
+                    else
                     {
-                        MessageBox.Show("Dữ liệu đầu vào bảng sai");
+                        MessageBox.Show("Đã tồn tại dữ liệu trong bảng");
                     }
-
                 }
+
             }
         }
         private void UpdateMuonTraTaiPhong()
         {
             if (Validate_ManageMuonTraTaiPhong())
             {
-                using var dbcontext = new Models.QLThuVienContext();
-                //Models.Muontrasach mt = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
                 Models.Muontrataicho mt = (from mttcs in dbcontext.Muontrataichos
-                                           where mttcs.Idphongdoc == cbbidphongmuontra.Text
-                                              && mttcs.Idsach == cbbidsachmuontra.Text
-                                              && mttcs.Iddocgia == cbbiddocgiamuontra.Text
+                                           where mttcs.Iddocgia == txtiddocgiamuontrataicho.Text
+                                              && mttcs.Idsach == txtidsachmuontrataicho.Text
                                            select mttcs).FirstOrDefault();
                 if (mt != null)
                 {
-                    mt.Idphongdoc = cbbidphongmuontra.Text;
-                    mt.Idsach = cbbidsachmuontra.Text;
-                    mt.Iddocgia = cbbiddocgiamuontra.Text;
-                    mt.Vitriban = int.Parse(txtvitringoimuontra.Text);
-                    mt.Giovao = dategiovaomuontra.Value;
-                    mt.Giora = dategioramuontra.Value;
-                    mt.Tinhtrangsach = txttinhtrangsachmuontra.Text;
+                    DateTime dategiomuontaicho = DateTime.Now;
+                    mt.Iddocgia = txtiddocgiamuontrataicho.Text;
+                    mt.Idsach = txtidsachmuontrataicho.Text;
+                    mt.Giomuon = dategiomuontaicho;
+                    mt.Trangthai = txttrangthaimuontrataicho.Text;
                     dbcontext.SaveChanges();
                     ReadFileQuanLyMuonTraTaiCho();
                 }
@@ -4040,14 +4200,31 @@ namespace LuuCongQuangVu_Nhom13
                 }
             }
         }
+        private void searchmuontrataiphong()
+        {
+            var vitri = (from sxg in dbcontext.Sachxepgia
+                          join s in dbcontext.Saches on sxg.Idsach equals s.Idsach
+                          where sxg.Idsach == cbbtensachmuon.Text
+                          select new
+                          {
+                              idxepgia  = sxg.Idxepgia,
+                          }).FirstOrDefault();
+            if (vitri != null)
+            {
+                txtvitrisachmuon.Text = vitri.idxepgia.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
         private void DelMuonTraTaiPhong()
         {
-            using var dbcontext = new Models.QLThuVienContext();
-            //Models.Muontrasach id = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
+            //using var dbcontext = new Models.QLThuVienContext();
+            // Models.Muontrasach id = dbcontext.Muontrasaches.Where(mt => mt.Iddocgia == comboBoxMaDG.Text && mt.Idsach == comboBoxMasach.Text).FirstOrDefault();
             Models.Muontrataicho id = (from mttcs in dbcontext.Muontrataichos
-                                       where mttcs.Idphongdoc == cbbidphongmuontra.Text
-                                          && mttcs.Idsach == cbbidsachmuontra.Text
-                                          && mttcs.Iddocgia == cbbiddocgiamuontra.Text
+                                       where mttcs.Iddocgia == txtiddocgiamuontrataicho.Text
+                                          && mttcs.Idsach == txtidsachmuontrataicho.Text
                                        select mttcs).FirstOrDefault();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
@@ -4064,225 +4241,17 @@ namespace LuuCongQuangVu_Nhom13
                 }
             }
         }
-        private bool isRadioIsEmptyMuonTraTaiPhong()
-        {
-            if (radidphongmuontra.Checked == false && radidsachmuontra.Checked == false && radiddocgiamuontra.Checked == false)
-            {
-                MessageBox.Show("Bạn chưa chọn loại tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
-            }
-            return true;
-        }
-        private void SearchMuonTraTaiPhong()
-        {
-            if (isRadioIsEmptyMuonTraTaiPhong())
-            { 
-                if (radidphongmuontra.Checked)
-                {
-                        using var dbcontext = new Models.QLThuVienContext();
-                        var list_mttcs = (from mttcs in dbcontext.Muontrataichos
-                                          where mttcs.Idphongdoc == cbbidphongmuontra.SelectedValue.ToString()
-                                          join pd in dbcontext.PhongDocs on mttcs.Idphongdoc equals pd.Idphongdoc
-                                          join s in dbcontext.Saches on mttcs.Idsach equals s.Idsach
-                                          join dg in dbcontext.Docgia on mttcs.Iddocgia equals dg.Iddocgia
-                                          select new
-                                          {
-                                              idphongmuontaiphong = mttcs.Idphongdoc,
-                                              idsachmuontaiphong = mttcs.Idsach,
-                                              iddocgiamuontaiphong = mttcs.Iddocgia,
-                                              vitringoi = mttcs.Vitriban,
-                                              giovaomuontaiphong = mttcs.Giovao,
-                                              gioramuontaiphong = mttcs.Giora,
-                                              tinhtrangsachmuon = mttcs.Tinhtrangsach
-
-                                          }).ToList();
-
-                        if (list_mttcs != null)
-                        {
-                            if (list_mttcs.Count() > 0)
-                            {
-                                dgvmuontrataiphong.Rows.Clear();
-                                dgvmuontrataiphong.ColumnCount = 7;
-                                int i = 0;
-                                foreach (var muontra in list_mttcs)
-                                {
-                                    dgvmuontrataiphong.Rows.Add();
-                                    dgvmuontrataiphong.Rows[i].Cells[0].Value = muontra.idphongmuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[1].Value = muontra.idsachmuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[2].Value = muontra.iddocgiamuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[3].Value = muontra.vitringoi;
-                                    dgvmuontrataiphong.Rows[i].Cells[4].Value = muontra.giovaomuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[5].Value = muontra.gioramuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[6].Value = muontra.tinhtrangsachmuon;
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }  
-                }
-                else if (radidsachmuontra.Checked)
-                {
-                        using var dbcontext = new Models.QLThuVienContext();
-                        var list_mttcs = (from mttcs in dbcontext.Muontrataichos
-                                          where mttcs.Idsach == cbbidsachmuontra.SelectedValue.ToString()
-                                          join pd in dbcontext.PhongDocs on mttcs.Idphongdoc equals pd.Idphongdoc
-                                          join s in dbcontext.Saches on mttcs.Idsach equals s.Idsach
-                                          join dg in dbcontext.Docgia on mttcs.Iddocgia equals dg.Iddocgia
-                                          select new
-                                          {
-                                              idphongmuontaiphong = mttcs.Idphongdoc,
-                                              idsachmuontaiphong = mttcs.Idsach,
-                                              iddocgiamuontaiphong = mttcs.Iddocgia,
-                                              vitringoi = mttcs.Vitriban,
-                                              giovaomuontaiphong = mttcs.Giovao,
-                                              gioramuontaiphong = mttcs.Giora,
-                                              tinhtrangsachmuon = mttcs.Tinhtrangsach
-                                          }).ToList();
-
-                        if (list_mttcs != null)
-                        {
-                            if (list_mttcs.Count() > 0)
-                            {
-                                dgvmuontrataiphong.Rows.Clear();
-                                dgvmuontrataiphong.ColumnCount = 7;
-                                int i = 0;
-                                foreach (var muontra in list_mttcs)
-                                {
-                                    dgvmuontrataiphong.Rows.Add();
-                                    dgvmuontrataiphong.Rows[i].Cells[0].Value = muontra.idphongmuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[1].Value = muontra.idsachmuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[2].Value = muontra.iddocgiamuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[3].Value = muontra.vitringoi;
-                                    dgvmuontrataiphong.Rows[i].Cells[4].Value = muontra.giovaomuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[5].Value = muontra.gioramuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[6].Value = muontra.tinhtrangsachmuon;
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                    
-                }
-                else if (radiddocgiamuontra.Checked)
-                {
-                   
-                        using var dbcontext = new Models.QLThuVienContext();
-                        var list_mttcs = (from mttcs in dbcontext.Muontrataichos
-                                          join pd in dbcontext.PhongDocs on mttcs.Idphongdoc equals pd.Idphongdoc
-                                          join s in dbcontext.Saches on mttcs.Idsach equals s.Idsach
-                                          join dg in dbcontext.Docgia on mttcs.Iddocgia equals dg.Iddocgia
-                                          where mttcs.Iddocgia == cbbiddocgiamuontra.SelectedValue.ToString()
-                                          select new
-                                          {
-                                              idphongmuontaiphong = mttcs.Idphongdoc,
-                                              idsachmuontaiphong = mttcs.Idsach,
-                                              iddocgiamuontaiphong = mttcs.Iddocgia,
-                                              vitringoi = mttcs.Vitriban,
-                                              giovaomuontaiphong = mttcs.Giovao,
-                                              gioramuontaiphong = mttcs.Giora,
-                                              tinhtrangsachmuon = mttcs.Tinhtrangsach
-                                          }).ToList();
-                        if (list_mttcs != null)
-                        {
-                            if (list_mttcs.Count > 0)
-                            {
-                                dgvmuontrataiphong.Rows.Clear();
-                                dgvmuontrataiphong.ColumnCount = 7;
-                                int i = 0;
-                                foreach (var muontra in list_mttcs)
-                                {
-                                    dgvmuontrataiphong.Rows.Add();
-                                    dgvmuontrataiphong.Rows[i].Cells[0].Value = muontra.idphongmuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[1].Value = muontra.idsachmuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[2].Value = muontra.iddocgiamuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[3].Value = muontra.vitringoi;
-                                    dgvmuontrataiphong.Rows[i].Cells[4].Value = muontra.giovaomuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[5].Value = muontra.gioramuontaiphong;
-                                    dgvmuontrataiphong.Rows[i].Cells[6].Value = muontra.tinhtrangsachmuon;
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                    
-                }
-            }
-        }
-        private void ThongKeMuonTaiPhong()
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            var list_thongke = (from mtc in dbcontext.Muontrataichos
-                                where mtc.Giovao.Value.Day == dategiovaomuontra.Value.Day
-                                   && mtc.Giora.Value.Day == dategioramuontra.Value.Day
-                                join pd in dbcontext.PhongDocs on mtc.Idphongdoc equals pd.Idphongdoc
-                                join s in dbcontext.Saches on mtc.Idsach equals s.Idsach
-                                join dg in dbcontext.Docgia on mtc.Iddocgia equals dg.Iddocgia
-                                select new
-                                {
-                                    idphongmuontaiphong = mtc.Idphongdoc,
-                                    idsachmuontaiphong = mtc.Idsach,
-                                    iddocgiamuontaiphong = mtc.Iddocgia,
-                                    vitringoi = mtc.Vitriban,
-                                    giovaomuontaiphong = mtc.Giovao,
-                                    gioramuontaiphong = mtc.Giora,
-                                    tinhtrangsachmuon = mtc.Tinhtrangsach
-                                }).ToList();
-
-            if (list_thongke != null)
-            {
-                dgvmuontrataiphong.Rows.Clear();
-                dgvmuontrataiphong.ColumnCount = 7;
-                int i = 0;
-                foreach (var thongke in list_thongke)
-                {
-                    dgvmuontrataiphong.Rows.Add();
-                    dgvmuontrataiphong.Rows[i].Cells[0].Value = thongke.idphongmuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[1].Value = thongke.idsachmuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[2].Value = thongke.iddocgiamuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[3].Value = thongke.vitringoi;
-                    dgvmuontrataiphong.Rows[i].Cells[4].Value = thongke.giovaomuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[5].Value = thongke.gioramuontaiphong;
-                    dgvmuontrataiphong.Rows[i].Cells[6].Value = thongke.tinhtrangsachmuon;
-                    i++;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Không tồn tại dữ liệu có ngày này ! Vui lòng kiểm tra lại ngày", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        private void btnhienthimuontra_Click(object sender, EventArgs e)
-        {
-            ReadFileQuanLyMuonTraTaiCho();
-        }
-        private void btnthemmuontra_Click(object sender, EventArgs e)
-        {
-            AddMuonTraTaiPhong();
-            ClearMuonTraTaiPhong();
-        }
-        private void btnsuamuontra_Click(object sender, EventArgs e)
-        {
-            UpdateMuonTraTaiPhong();
-            ClearMuonTraTaiPhong();
-        }
-        private void cellclick_muontrataiphong(object sender, DataGridViewCellEventArgs e)
+        private void Muontrataiphong_Cellclick(object sender, DataGridViewCellEventArgs e)
         {
             int index = dgvmuontrataiphong.SelectedCells[0].RowIndex;
             DataGridViewRow row = dgvmuontrataiphong.Rows[index];
-            cbbidphongmuontra.Text = Convert.ToString(row.Cells[0].Value);
-            cbbidsachmuontra.Text = Convert.ToString(row.Cells[1].Value);
-            cbbiddocgiamuontra.Text = Convert.ToString(row.Cells[2].Value);
-            txtvitringoimuontra.Text = Convert.ToString(row.Cells[3].Value);
-            txttinhtrangsachmuontra.Text = Convert.ToString(row.Cells[6].Value);
+            txtiddocgiamuontrataicho.Text = Convert.ToString(row.Cells[0].Value);
+            txthotendocgiamuontrataicho.Text = Convert.ToString(row.Cells[1].Value);
+            dategiomuontaicho.Value = Convert.ToDateTime(row.Cells[2].Value);
+            //dategiomuontaicho.Value = Convert.ToDateTime(row.Cells[3].Value);
+            txtidsachmuontrataicho.Text = Convert.ToString(row.Cells[4].Value);
+            txttensachmuontrataicho.Text = Convert.ToString(row.Cells[5].Value);
+            txttrangthaimuontrataicho.Text = Convert.ToString(row.Cells[6].Value);
         }
         private void btnxoamuontra_Click(object sender, EventArgs e)
         {
@@ -4293,18 +4262,108 @@ namespace LuuCongQuangVu_Nhom13
         {
             ClearMuonTraTaiPhong();
         }
-        private void btntimkiemmuontra_Click(object sender, EventArgs e)
+        private void btnthemmuontra_Click(object sender, EventArgs e)
         {
+            if (check_Iddocgia() && check_Idsach())
+            {
+                AddMuonTraTaiPhong();
+            }
+        }
+        private void btnhienthimuontra_Click(object sender, EventArgs e)
+        {
+            ReadFileQuanLyMuonTraTaiCho();
+        }
+        private void btnsuamuontra_Click(object sender, EventArgs e)
+        {
+            UpdateMuonTraTaiPhong();
             ClearMuonTraTaiPhong();
-            SearchMuonTraTaiPhong();
         }
-        private void btnthongkemuontra_Click(object sender, EventArgs e)
+        private void btnxacnhantrataiphong_Click(object sender, EventArgs e)
         {
-            ThongKeMuonTaiPhong();
+            var muontrataicho = (from mttc in dbcontext.Muontrataichos
+                                 where mttc.Iddocgia == txtiddocgiamuontrataicho.Text
+                                    && mttc.Idsach == txtidsachmuontrataicho.Text
+                                    && mttc.Trangthai == "Đang mượn"
+                                 select mttc).FirstOrDefault();
+
+            if (muontrataicho != null)
+            {
+                DateTime dategiotrataiphong = DateTime.Now;
+                muontrataicho.Iddocgia = txtiddocgiamuontrataicho.Text;
+                muontrataicho.Idsach = txtidsachmuontrataicho.Text;
+                //muontrataicho.Giomuon = dategiomuontaicho;
+                muontrataicho.Giotra = dategiotrataiphong;
+                muontrataicho.Trangthai = "Đã trả";
+                dbcontext.SaveChanges();
+                ReadFileQuanLyMuonTraTaiCho();
+            }
+            else
+            {
+                MessageBox.Show("Đọc giả đã trả sách có mã này", "Thông báo");
+            }
+        }
+        private void radtrasachtaiphong_CheckedChanged(object sender, EventArgs e)
+        {
+            lblgiomuontra.Text = "giờ trả";
+            lbltrangthaimuontra.Visible = false;
+            txttrangthaimuontrataicho.Visible = false;
+            btnhienthimuontra.Visible = false;
+            btnthemmuontra.Visible = false;
+            btnsuamuontra.Visible = false;
+            btnxoamuontra.Visible = false;
+            btnhuymuontra.Visible = false;
+            btnxacnhantrataiphong.Visible = true;
+            btnhuybomuontaiphong.Visible = true;
+            dategiomuontaicho.Visible = false;
+            dategiotrataiphong.Visible = true;
+            dategiotrataiphong.Enabled = false;
+        }
+        private void radmuonsachtaiphong_CheckedChanged(object sender, EventArgs e)
+        {
+            lblgiomuontra.Text = "giờ mượn";
+            lbltrangthaimuontra.Text = "Trạng thái";
+            //dgvmuontrataiphong.Columns["giomuontaiphong"].Visible = true;
+            //dgvmuontrataiphong.Columns["giotramuontaiphong"].Visible = false;
+            lbltrangthaimuontra.Visible = true;
+            txttrangthaimuontrataicho.Visible = true;
+            btnhienthimuontra.Visible = true;
+            btnthemmuontra.Visible = true;
+            btnsuamuontra.Visible = true;
+            btnxoamuontra.Visible = true;
+            btnhuymuontra.Visible = true;
+            btnxacnhantrataiphong.Visible = false;
+            btnhuybomuontaiphong.Visible = false;
+            dategiomuontaicho.Visible = true;
+            dategiotrataiphong.Visible = false;
+            txttrangthaimuontrataicho.ReadOnly = false;
+            txttrangthaimuontrataicho.Enabled = false;
+            txttrangthaimuontrataicho.Text = "Đang mượn";
+            txttrangthaimuontrataicho.Visible = true;
+            dategiomuontaicho.Enabled = false;
+        }
+        private void dgvmuontrataiphong_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //ReadFileQuanLyMuonTraTaiCho();
+        }
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+        private void btnhuybomuontaiphong_Click(object sender, EventArgs e)
+        {
+
+            DialogResult confirm = MessageBox.Show("Bạn có chắc chắn muốn hủy không không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm == DialogResult.Yes)
+            {
+                Environment.Exit(0);
+            }
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            searchmuontrataiphong();
         }
 
-
-
+        #endregion
 
         #endregion
 
@@ -5331,8 +5390,21 @@ namespace LuuCongQuangVu_Nhom13
 
 
 
+
         #endregion
 
+        private void dategiodongcua_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
+
+        private void comboBoxMasach_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }
