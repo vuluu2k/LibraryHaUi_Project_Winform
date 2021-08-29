@@ -40,6 +40,13 @@ namespace LuuCongQuangVu_Nhom13
             cbTheLoaiSach.ValueMember = "Idtheloai";
         }
         #endregion
+        #region Timer
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            dtimeNgayLap.Value = DateTime.Now;
+            dtimeSach.Value = DateTime.Now;
+        }
+        #endregion
         public QuanLiThuVien()
         {
 
@@ -2467,6 +2474,35 @@ namespace LuuCongQuangVu_Nhom13
                 }
             }
         }
+        private void dgvHistoryBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = dgvHistoryBS.SelectedCells[0].RowIndex;
+            DataGridViewRow row = dgvHistoryBS.Rows[index];
+            List<String> listTag = new List<string>();
+            listTag.Add(row.Cells[0].Value.ToString());
+            if (row.Cells[1].Value == null)
+            {
+                listTag.Add("");
+            }
+            else
+            {
+                listTag.Add(row.Cells[1].Value.ToString());
+            }
+            if (row.Cells[2].Value == null)
+            {
+                listTag.Add("");
+            }
+            else
+            {
+                listTag.Add(row.Cells[2].Value.ToString());
+            }
+            listTag.Add(row.Cells[3].Value.ToString());
+            listTag.Add(row.Cells[4].Value.ToString());
+            listTag.Add(row.Cells[5].Value.ToString());
+            DialogInforHD inforHDForm = new DialogInforHD();
+            inforHDForm.Tag = listTag;
+            inforHDForm.ShowDialog();
+        }
 
 
         #endregion
@@ -2986,8 +3022,8 @@ namespace LuuCongQuangVu_Nhom13
             btnThemTaiKhoan.Visible = true;
             btnSuaTaiKhoan.Visible = true;
             btnXoaTaiKhoan.Visible = true;
-            btnPhanLoaiTaiKhoan.Visible = true;
-            btnTimKiemTaiKhoan.Visible = true;
+            btnPhanLoaiTaiKhoan.Visible = false;
+            btnTimKiemTaiKhoan.Visible = false;
             lbTaiKhoan.Visible = false;
             lbMatKhau.Visible = false;
             lbHoTen.Visible = false;
@@ -3071,6 +3107,8 @@ namespace LuuCongQuangVu_Nhom13
         }
         #endregion
         #endregion
+
+
         #region thống kê sách      
         #region thống kê sách mượn nhiều
         //thống kê sách mượn nhiều
@@ -4440,41 +4478,7 @@ namespace LuuCongQuangVu_Nhom13
         #endregion
 
 
-        private void dgvHistoryBS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int index = dgvHistoryBS.SelectedCells[0].RowIndex;
-            DataGridViewRow row = dgvHistoryBS.Rows[index];
-            List<String> listTag = new List<string>();
-            listTag.Add(row.Cells[0].Value.ToString());
-            if (row.Cells[1].Value == null)
-            {
-                listTag.Add("");
-            }
-            else
-            {
-                listTag.Add(row.Cells[1].Value.ToString());
-            }
-            if (row.Cells[2].Value == null)
-            {
-                listTag.Add("");
-            }
-            else
-            {
-                listTag.Add(row.Cells[2].Value.ToString());
-            }
-            listTag.Add(row.Cells[3].Value.ToString());
-            listTag.Add(row.Cells[4].Value.ToString());
-            listTag.Add(row.Cells[5].Value.ToString());
-            DialogInforHD inforHDForm = new DialogInforHD();
-            inforHDForm.Tag = listTag;
-            inforHDForm.ShowDialog();
-        }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            dtimeNgayLap.Value = DateTime.Now;
-            dtimeSach.Value= DateTime.Now;
-        }
 
         #region Mượn trả sách
         // QUản lý Mượn trả sách
