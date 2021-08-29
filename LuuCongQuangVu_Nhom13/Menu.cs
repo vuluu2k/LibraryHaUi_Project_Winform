@@ -4471,15 +4471,12 @@ namespace LuuCongQuangVu_Nhom13
                 Environment.Exit(0);
             }
         }
-        
+
 
         #endregion
 
         #endregion
-
-
-
-
+        #region Đỗ Viết Nam
         #region Mượn trả sách
         // QUản lý Mượn trả sách
 
@@ -4712,6 +4709,8 @@ namespace LuuCongQuangVu_Nhom13
                 lblNgayhentra.Visible = true;
                 dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = false;
                 dgvMTsach.Columns["tinhtrang"].Visible = false;
+                btnin.Visible = true;
+                
             }
             else if (rbTrasach.Checked)
             {
@@ -4725,6 +4724,7 @@ namespace LuuCongQuangVu_Nhom13
                 lblNgayhentra.Visible = false;
                 dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
                 dgvMTsach.Columns["tinhtrang"].Visible = true;
+                btnin.Visible = false;
             }
 
             txtMaDGMT.Text = " ";
@@ -4739,6 +4739,7 @@ namespace LuuCongQuangVu_Nhom13
             dateNgaythuctra.Value = DateTime.Now;
             dateNgayhentra.Value = DateTime.Now.AddDays(90);
             dateNgaymuon.Value = DateTime.Now;
+
         }
         private bool isBoxMTEmpty()
         {
@@ -4779,6 +4780,9 @@ namespace LuuCongQuangVu_Nhom13
 
             lblTinhtrangMT.Visible = false;
             comboBoxTinhtrangMT.Visible = false;
+            btnin.Visible = true;
+            dgvMTsach.Rows.Clear();
+            
         }
 
         private void rbTrasach_CheckedChanged(object sender, EventArgs e)
@@ -4798,6 +4802,8 @@ namespace LuuCongQuangVu_Nhom13
             btnLoadMTsach.Text = "DS trả";
             lblTinhtrangMT.Visible = true;
             comboBoxTinhtrangMT.Visible = true;
+            btnin.Visible = false;
+            dgvMTsach.Rows.Clear();
         }
 
         private void comboBoxMasach_SelectedValueChanged(object sender, EventArgs e)
@@ -5468,6 +5474,11 @@ namespace LuuCongQuangVu_Nhom13
 
 
         #endregion
+        #endregion
+
+
+
+        
 
         private void dategiodongcua_Click(object sender, EventArgs e)
         {
@@ -5487,6 +5498,93 @@ namespace LuuCongQuangVu_Nhom13
             //                 select s).ToList();
         }
 
-        
+        private void btnin_Click(object sender, EventArgs e)
+        {
+            var ktra = (from m in dbcontext.Muontrasaches
+                        join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                        join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                        where txtMaDGMT.Text == m.Iddocgia && comboBoxMasach.Text == m.Idsach && m.Ngaythuctra == null
+                        select new
+                        {
+                            iddocgia = m.Iddocgia,
+                            hoten = dg.Hoten,
+                            masach = m.Idsach,
+                            tensach = s.Tensach,
+                            soluongmuon = m.Soluongmuon,
+                            dongia = s.Giasach,
+                            ngaymuon = m.Ngaymuon,
+                            ngayhentra = m.Ngayhentra,
+                            ngaythuctra = m.Ngaythuctra,
+                            tinhtrang = m.Tinhtrangtra
+                        }).FirstOrDefault();
+            var inbl = (from m in dbcontext.Muontrasaches
+                        join s in dbcontext.Saches on m.Idsach equals s.Idsach
+                        join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
+                        where txtMaDGMT.Text == m.Iddocgia && comboBoxMasach.Text == m.Idsach
+                        select new
+                        {
+                            iddocgia = m.Iddocgia,
+                            hoten = dg.Hoten,
+                            masach = m.Idsach,
+                            tensach = s.Tensach,
+                            soluongmuon = m.Soluongmuon,
+                            dongia = s.Giasach,
+                            ngaymuon = m.Ngaymuon,
+                            ngayhentra = m.Ngayhentra,
+                            ngaythuctra = m.Ngaythuctra,
+                            tinhtrang = m.Tinhtrangtra
+                        }).FirstOrDefault();
+
+            DGVPrinter printer = new DGVPrinter();
+            if (txtMaDGMT.Text == "")
+            {
+                MessageBox.Show("Bạn chưa nhập mã !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (ktra == null || dgvMTsach.Rows.Count != 2)
+            {
+                MessageBox.Show("Bạn chưa mượn sách !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            else
+            {
+                printer.Title = "BIÊN LAI MƯỢN TRẢ SÁCH ĐẠI HỌC CÔNG NGHIỆP HÀ NỘI";
+
+
+
+                printer.SubTitle = "Người Mượn :  " + inbl.hoten.ToString() + "   " + "Mã SV :  " + inbl.iddocgia.ToString() + "     " + "Ngày mượn" + DateTime.Now.ToString("dd/MM/yyyy");
+
+
+                printer.SubTitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
+                printer.PageNumbers = true;
+                printer.PageNumberInHeader = true;
+                printer.PorportionalColumns = true;
+                printer.HeaderCellAlignment = StringAlignment.Near;
+                printer.printDocument.DefaultPageSettings.Landscape = true;
+                //printer.PrintDataGridView(dgvTKQH);
+                dgvMTsach.Columns["dataGridViewTextBoxColumn6"].Visible = false;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn9"].Visible = false;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn10"].Visible = false;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = false;
+
+                dgvMTsach.Columns["tinhtrang"].Visible = false;
+                dgvMTsach.Columns["Slmuon"].Visible = false;
+                dgvMTsach.Columns["tendocgia"].Visible = false;
+                Models.Account acc = (Models.Account)this.Tag;
+
+                printer.Footer = "Người lập : " + acc.Tenchutaikhoan;
+                printer.FooterSpacing = 10;
+
+                printer.PrintDataGridView(dgvMTsach);
+                dgvMTsach.Columns["dataGridViewTextBoxColumn6"].Visible = true;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn9"].Visible = true;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn10"].Visible = true;
+                dgvMTsach.Columns["dataGridViewTextBoxColumn11"].Visible = true;
+
+                dgvMTsach.Columns["tinhtrang"].Visible = true;
+                dgvMTsach.Columns["Slmuon"].Visible = true;
+                dgvMTsach.Columns["tendocgia"].Visible = true;
+            }
+
+        }
     }
 }
