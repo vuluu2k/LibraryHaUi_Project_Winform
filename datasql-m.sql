@@ -167,11 +167,11 @@ create table Muontrataicho(
 )
 go
 
-insert into Muontrataicho values('D001', 'S001', N'Đang mượn','2021/1/2 12:00:00', '2021/1/2 15:00:00')
-insert into Muontrataicho values('D001', 'S002', N'Đã trả'   ,'2021/1/2 12:00:00', '2021/1/2 14:00:00')
-insert into Muontrataicho values('D002', 'S003', N'Đang mượn','2021/1/2 12:00:00', '2021/1/2 13:00:00')
-insert into Muontrataicho values('D003', 'S004', N'Đang mượn','2021/1/2 12:00:00', '2021/1/2 13:00:00')
-insert into Muontrataicho values('D004', 'S005', N'Đã trả'   ,'2021/1/2 12:00:00', '2021/1/2 13:00:00')
+insert into Muontrataicho values('D001', 'S001', N'Đã trả','2021/1/2 12:00:00', '2021/1/2 15:00:00')
+insert into Muontrataicho values('D001', 'S002', N'Đã trả','2021/1/2 12:00:00', '2021/1/2 14:00:00')
+insert into Muontrataicho values('D002', 'S003', N'Đã trả','2021/1/2 12:00:00', '2021/1/2 13:00:00')
+insert into Muontrataicho values('D003', 'S004', N'Đã trả','2021/1/2 12:00:00', '2021/1/2 13:00:00')
+insert into Muontrataicho values('D004', 'S005', N'Đã trả','2021/1/2 12:00:00', '2021/1/2 13:00:00')
 go
 
 create table HoaDonThanhLi(
