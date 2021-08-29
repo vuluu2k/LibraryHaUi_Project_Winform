@@ -3979,8 +3979,73 @@ namespace LuuCongQuangVu_Nhom13
             ClearPhongDoc();
         }
         #endregion
+        #region tìm sách mượn
+        void cbbtheloaimuon(ComboBox loadtheloai)
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            loadtheloai.DataSource = dbcontext.Theloais.ToList();
+            loadtheloai.DisplayMember = "Tentheloai";
+            loadtheloai.ValueMember = "Idtheloai";
+        }
+        private bool check_timsachmuonerror()
+        {
+            var check_cbbtheloaimuon = dbcontext.Theloais.Where(s => s.Tentheloai == cbbtheloaisachmuon.Text).FirstOrDefault();
+            if(check_cbbtheloaimuon== null)
+            {
+                errorProvider1.SetError(cbbtheloaisachmuon, "không tồn tại thể loại này");
+                return false;
+                cbbtheloaisachmuon.Focus();
+            }
+            var check_cbbtensachmuon = dbcontext.Saches.Where(s => s.Tensach == cbbtensachtimkiem.Text).FirstOrDefault();
+            if (check_cbbtensachmuon == null)
+            {
+                errorProvider1.SetError(cbbtensachtimkiem, "không tồn tại tên sách này");
+                return false;
+                cbbtensachtimkiem.Focus();
+            }
+            return true;
+        }
+        private void cbbtheloaisachmuon_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(cbbtheloaisachmuon, "");
+        }
 
-        #region mượn trả tại chỗ
+        private void cbbtensachtimkiem_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(cbbtensachtimkiem, "");
+        }
+        private void searchmuontrataiphong()
+        {
+            if (check_timsachmuonerror())
+            {
+                var ds = ((from s in dbcontext.Saches
+                           join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
+                           join sgx in dbcontext.Sachxepgia on s.Idsach equals sgx.Idsach
+                           where tl.Tentheloai == cbbtheloaisachmuon.Text && s.Tensach == cbbtensachtimkiem.Text
+                           select sgx.Idxepgia).FirstOrDefault());
+                if (ds != null)
+                {
+                    txtvitrisachmuon.Text = ds.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("k co vị trí cho sách này ", "dũ liêu trống", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } 
+            }
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            searchmuontrataiphong();
+        }
+        private void cbbtheloaisachmuon_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var idTypeOfBook = dbcontext.Theloais.Where(tlmt => tlmt.Tentheloai == cbbtheloaisachmuon.Text).Select(x => x.Idtheloai).FirstOrDefault();
+            cbbtensachtimkiem.DataSource = dbcontext.Saches.Where(book => book.Idtheloai == idTypeOfBook).ToList();
+            cbbtensachtimkiem.ValueMember = "Idsach";
+            cbbtensachtimkiem.DisplayMember = "Tensach";
+        }
+        #endregion
+        #region mượn trả tại chỗ 
         private void ClearMuonTraTaiPhong()
         {
             txtiddocgiamuontrataicho.Clear();
@@ -3991,20 +4056,13 @@ namespace LuuCongQuangVu_Nhom13
             txttrangthaimuontrataicho.Clear();
             txtiddocgiamuontrataicho.Focus();
         }
-        void cbbtheloaimuon(ComboBox loadtheloai)
-        {
-            using var dbcontext = new Models.QLThuVienContext();
-            loadtheloai.DataSource = dbcontext.Theloais.ToList();
-            loadtheloai.DisplayMember = "Tentheloai";
-            loadtheloai.ValueMember = "Idtheloai";
-        }
-        private void cbbtheloaisachmuon_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var idTypeOfBook = dbcontext.Theloais.Where(tlmt => tlmt.Tentheloai == cbbtheloaisachmuon.Text).Select(x => x.Idtheloai).FirstOrDefault();
-            cbbtensachmuon.DataSource = dbcontext.Saches.Where(book => book.Idtheloai == idTypeOfBook).ToList();
-            cbbtensachmuon.ValueMember = "Idsach";
-            cbbtensachmuon.DisplayMember = "Tensach";
-        }
+        //private void cbbtheloaisachmuon_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    var idTypeOfBook = dbcontext.Theloais.Where(tlmt => tlmt.Tentheloai == cbbtheloaisachmuon.Text).Select(x => x.Idtheloai).FirstOrDefault();
+        //    cbbtensachmuon.DataSource = dbcontext.Saches.Where(book => book.Idtheloai == idTypeOfBook).ToList();
+        //    cbbtensachmuon.ValueMember = "Idsach";
+        //    cbbtensachmuon.DisplayMember = "Tensach";
+        //}
         private bool check_Idsach()
         {
             using var dbcontext = new Models.QLThuVienContext();
@@ -4118,18 +4176,15 @@ namespace LuuCongQuangVu_Nhom13
                              where m.Iddocgia == txtiddocgiamuontrataicho.Text && m.Trangthai == "Đang mượn"
                              select m).ToList();
             var sumid = list_mttc.Count();
+            //lấy ra sách đang mượn
             var active = (from m in dbcontext.Muontrataichos
                           join s in dbcontext.Saches on m.Idsach equals s.Idsach
                           join dg in dbcontext.Docgia on m.Iddocgia equals dg.Iddocgia
                           where m.Iddocgia == txtiddocgiamuontrataicho.Text
-                            && m.Idsach == txtidsachmuontrataicho.Text
-                            && m.Trangthai == "Đang mượn"
-                          select new
-                          {
-                              iddocgiamuontra = m.Iddocgia,
-                              idsachmuontrataiphong = m.Idsach,
-                              trangthaimuontrataiphong = m.Trangthai
-                          }).FirstOrDefault();
+                            && s.Idsach == txtidsachmuontrataicho.Text
+                            && m.Trangthai == "Đang mượn" 
+                          select m).FirstOrDefault();
+            //điều kiện này luôn khác null mà ý là t k biết select đúng hay k
             var chucvu = (from mttc in dbcontext.Muontrataichos
                           join s in dbcontext.Saches on mttc.Idsach equals s.Idsach
                           join dg in dbcontext.Docgia on mttc.Iddocgia equals dg.Iddocgia
@@ -4145,17 +4200,17 @@ namespace LuuCongQuangVu_Nhom13
             }
             else if (radmuonsachtaiphong.Checked)
             {
-                if (Validate_ManageMuonTraTaiPhong())
+                if (chucvu.chucvu.ToString() == "Giảng viên" && sumid >= 5)
                 {
-                    if (chucvu.chucvu.ToString() == "Giảng viên" && sumid >= 5)
-                    {
-                        MessageBox.Show("Giáo viên không thể mượn quá 5 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else if (chucvu.chucvu.ToString() == "Sinh viên" && sumid >= 10)
-                    {
-                        MessageBox.Show("Sinh viên không thể mượn quá 10 quyển giáo trình !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else if (active == null)
+                    MessageBox.Show("Giáo viên không thể mượn quá 5 quyển sách !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (chucvu.chucvu.ToString() == "Sinh viên" && sumid >= 10)
+                {
+                    MessageBox.Show("Sinh viên không thể mượn quá 10 quyển giáo trình !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (Validate_ManageMuonTraTaiPhong())
+                {
+                    try
                     {
                         DateTime dategiomuontaicho = DateTime.Now;
                         Models.Muontrataicho mttcs = new Models.Muontrataicho();
@@ -4168,12 +4223,13 @@ namespace LuuCongQuangVu_Nhom13
                         dbcontext.SaveChanges();
                         ReadFileQuanLyMuonTraTaiCho();
                     }
-                    else
+                    catch (Exception)
                     {
-                        MessageBox.Show("Đã tồn tại dữ liệu trong bảng");
+                        MessageBox.Show("Đã tồn tại dữ liệu trong bảng ");
                     }
                 }
-
+                
+                
             }
         }
         private void UpdateMuonTraTaiPhong()
@@ -4200,24 +4256,7 @@ namespace LuuCongQuangVu_Nhom13
                 }
             }
         }
-        private void searchmuontrataiphong()
-        {
-            var vitri = (from sxg in dbcontext.Sachxepgia
-                          join s in dbcontext.Saches on sxg.Idsach equals s.Idsach
-                          where sxg.Idsach == cbbtensachmuon.Text
-                          select new
-                          {
-                              idxepgia  = sxg.Idxepgia,
-                          }).FirstOrDefault();
-            if (vitri != null)
-            {
-                txtvitrisachmuon.Text = vitri.idxepgia.ToString();
-            }
-            else
-            {
-                MessageBox.Show("Không tồn tại dữ liệu tìm kiếm", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        
         private void DelMuonTraTaiPhong()
         {
             //using var dbcontext = new Models.QLThuVienContext();
@@ -4358,10 +4397,7 @@ namespace LuuCongQuangVu_Nhom13
                 Environment.Exit(0);
             }
         }
-        private void button3_Click(object sender, EventArgs e)
-        {
-            searchmuontrataiphong();
-        }
+        
 
         #endregion
 
@@ -5400,11 +5436,17 @@ namespace LuuCongQuangVu_Nhom13
 
         
 
-        private void comboBoxMasach_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            using var dbcontext = new Models.QLThuVienContext();
+            //String idstk = txtidsachtimkiem.Text;
+            //txtidsachtimkiem.Text =  (from s in dbcontext.Saches
+            //                 join tl in dbcontext.Theloais on s.Idtheloai equals tl.Idtheloai
+            //                 where s.Idsach == txtidsachtimkiem.Text && tl.Tentheloai == cbbtheloaisachmuon.Text
+            //                 select s).ToList();
         }
 
-       
+        
     }
 }

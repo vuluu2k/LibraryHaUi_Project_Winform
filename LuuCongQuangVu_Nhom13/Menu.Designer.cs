@@ -326,11 +326,11 @@ namespace LuuCongQuangVu_Nhom13
             this.btnthemmuontra = new System.Windows.Forms.Button();
             this.btnhienthimuontra = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbbtensachtimkiem = new System.Windows.Forms.ComboBox();
+            this.label40 = new System.Windows.Forms.Label();
             this.txtvitrisachmuon = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.cbbtensachmuon = new System.Windows.Forms.ComboBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.cbbtheloaisachmuon = new System.Windows.Forms.ComboBox();
             this.label24 = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
@@ -696,7 +696,7 @@ namespace LuuCongQuangVu_Nhom13
             this.MainTabCT.RightToLeftLayout = true;
             this.MainTabCT.SelectedIndex = 0;
             this.MainTabCT.ShowToolTips = true;
-            this.MainTabCT.Size = new System.Drawing.Size(1489, 895);
+            this.MainTabCT.Size = new System.Drawing.Size(1501, 895);
             this.MainTabCT.TabIndex = 1;
             // 
             // tabQuanLiSach
@@ -747,7 +747,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiSach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabQuanLiSach.Name = "tabQuanLiSach";
             this.tabQuanLiSach.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabQuanLiSach.Size = new System.Drawing.Size(1481, 854);
+            this.tabQuanLiSach.Size = new System.Drawing.Size(1493, 854);
             this.tabQuanLiSach.TabIndex = 0;
             this.tabQuanLiSach.Text = "Quản lí sách";
             // 
@@ -1139,7 +1139,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiDocGia.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabQuanLiDocGia.Name = "tabQuanLiDocGia";
             this.tabQuanLiDocGia.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabQuanLiDocGia.Size = new System.Drawing.Size(1481, 854);
+            this.tabQuanLiDocGia.Size = new System.Drawing.Size(1493, 854);
             this.tabQuanLiDocGia.TabIndex = 1;
             this.tabQuanLiDocGia.Text = "Quản lí độc giả";
             // 
@@ -1566,7 +1566,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiBanSach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabQuanLiBanSach.Name = "tabQuanLiBanSach";
             this.tabQuanLiBanSach.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabQuanLiBanSach.Size = new System.Drawing.Size(1481, 854);
+            this.tabQuanLiBanSach.Size = new System.Drawing.Size(1493, 854);
             this.tabQuanLiBanSach.TabIndex = 2;
             this.tabQuanLiBanSach.Text = "Quản lí bán sách";
             this.tabQuanLiBanSach.UseVisualStyleBackColor = true;
@@ -1585,7 +1585,7 @@ namespace LuuCongQuangVu_Nhom13
             this.ChildTabCT.Padding = new System.Drawing.Point(4, 6);
             this.ChildTabCT.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ChildTabCT.SelectedIndex = 0;
-            this.ChildTabCT.Size = new System.Drawing.Size(1475, 846);
+            this.ChildTabCT.Size = new System.Drawing.Size(1487, 846);
             this.ChildTabCT.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.ChildTabCT.TabIndex = 0;
             // 
@@ -1603,7 +1603,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage3.Size = new System.Drawing.Size(1467, 805);
+            this.tabPage3.Size = new System.Drawing.Size(1479, 805);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Lập hoá đơn";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2119,7 +2119,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage4.Size = new System.Drawing.Size(1467, 805);
+            this.tabPage4.Size = new System.Drawing.Size(1479, 805);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Lịch sử bán sách";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2381,7 +2381,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLyMuonTraSach.Location = new System.Drawing.Point(4, 37);
             this.tabQuanLyMuonTraSach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabQuanLyMuonTraSach.Name = "tabQuanLyMuonTraSach";
-            this.tabQuanLyMuonTraSach.Size = new System.Drawing.Size(1481, 854);
+            this.tabQuanLyMuonTraSach.Size = new System.Drawing.Size(1493, 854);
             this.tabQuanLyMuonTraSach.TabIndex = 4;
             this.tabQuanLyMuonTraSach.Text = "Quản lý mượn trả sách";
             this.tabQuanLyMuonTraSach.UseVisualStyleBackColor = true;
@@ -2510,7 +2510,6 @@ namespace LuuCongQuangVu_Nhom13
             this.comboBoxMasach.Name = "comboBoxMasach";
             this.comboBoxMasach.Size = new System.Drawing.Size(313, 30);
             this.comboBoxMasach.TabIndex = 140;
-            this.comboBoxMasach.SelectedIndexChanged += new System.EventHandler(this.comboBoxMasach_SelectedIndexChanged);
             this.comboBoxMasach.SelectedValueChanged += new System.EventHandler(this.comboBoxMasach_SelectedValueChanged);
             // 
             // btnTimMTsach
@@ -2801,7 +2800,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabThongKeSach.Location = new System.Drawing.Point(4, 37);
             this.tabThongKeSach.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabThongKeSach.Name = "tabThongKeSach";
-            this.tabThongKeSach.Size = new System.Drawing.Size(1481, 854);
+            this.tabThongKeSach.Size = new System.Drawing.Size(1493, 854);
             this.tabThongKeSach.TabIndex = 5;
             this.tabThongKeSach.Text = "Thống kê sách";
             this.tabThongKeSach.UseVisualStyleBackColor = true;
@@ -2816,7 +2815,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1481, 784);
+            this.tabControl2.Size = new System.Drawing.Size(1493, 784);
             this.tabControl2.TabIndex = 6;
             // 
             // tabPage14
@@ -2832,7 +2831,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage14.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage14.Size = new System.Drawing.Size(1473, 749);
+            this.tabPage14.Size = new System.Drawing.Size(1485, 749);
             this.tabPage14.TabIndex = 1;
             this.tabPage14.Text = "Sách mượn nhiều";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -2997,7 +2996,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage15.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage15.Size = new System.Drawing.Size(1473, 749);
+            this.tabPage15.Size = new System.Drawing.Size(1485, 749);
             this.tabPage15.TabIndex = 2;
             this.tabPage15.Text = "Sách bán";
             this.tabPage15.UseVisualStyleBackColor = true;
@@ -3159,7 +3158,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage6.Size = new System.Drawing.Size(1473, 749);
+            this.tabPage6.Size = new System.Drawing.Size(1485, 749);
             this.tabPage6.TabIndex = 4;
             this.tabPage6.Text = "Thống kê tổng thể";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -3299,7 +3298,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1481, 854);
+            this.tabPage1.Size = new System.Drawing.Size(1493, 854);
             this.tabPage1.TabIndex = 8;
             this.tabPage1.Text = "Quản lí phòng đọc";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3313,7 +3312,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabControl1.Location = new System.Drawing.Point(3, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1475, 846);
+            this.tabControl1.Size = new System.Drawing.Size(1487, 846);
             this.tabControl1.TabIndex = 1;
             // 
             // dategiodongcua
@@ -3340,7 +3339,7 @@ namespace LuuCongQuangVu_Nhom13
             this.dategiodongcua.Location = new System.Drawing.Point(4, 31);
             this.dategiodongcua.Name = "dategiodongcua";
             this.dategiodongcua.Padding = new System.Windows.Forms.Padding(3);
-            this.dategiodongcua.Size = new System.Drawing.Size(1467, 811);
+            this.dategiodongcua.Size = new System.Drawing.Size(1479, 811);
             this.dategiodongcua.TabIndex = 0;
             this.dategiodongcua.Text = "Quản lí phong đọc";
             this.dategiodongcua.UseVisualStyleBackColor = true;
@@ -3602,7 +3601,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage8.Location = new System.Drawing.Point(4, 31);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(1467, 811);
+            this.tabPage8.Size = new System.Drawing.Size(1479, 811);
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Mượn trả tại phòng";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -3932,23 +3931,42 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // tabPage2
             // 
+            this.tabPage2.BackgroundImage = global::LuuCongQuangVu_Nhom13.Properties.Resources.bg_m;
+            this.tabPage2.Controls.Add(this.cbbtensachtimkiem);
+            this.tabPage2.Controls.Add(this.label40);
             this.tabPage2.Controls.Add(this.txtvitrisachmuon);
             this.tabPage2.Controls.Add(this.label26);
             this.tabPage2.Controls.Add(this.button3);
-            this.tabPage2.Controls.Add(this.cbbtensachmuon);
-            this.tabPage2.Controls.Add(this.label25);
             this.tabPage2.Controls.Add(this.cbbtheloaisachmuon);
             this.tabPage2.Controls.Add(this.label24);
             this.tabPage2.Location = new System.Drawing.Point(4, 31);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1467, 811);
+            this.tabPage2.Size = new System.Drawing.Size(1479, 811);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Tìm kiếm sách mượn";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // cbbtensachtimkiem
+            // 
+            this.cbbtensachtimkiem.FormattingEnabled = true;
+            this.cbbtensachtimkiem.Location = new System.Drawing.Point(553, 264);
+            this.cbbtensachtimkiem.Name = "cbbtensachtimkiem";
+            this.cbbtensachtimkiem.Size = new System.Drawing.Size(293, 30);
+            this.cbbtensachtimkiem.TabIndex = 9;
+            this.cbbtensachtimkiem.Validated += new System.EventHandler(this.cbbtensachtimkiem_Validated);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(422, 267);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(87, 22);
+            this.label40.TabIndex = 8;
+            this.label40.Text = "Tên Sách";
+            // 
             // txtvitrisachmuon
             // 
-            this.txtvitrisachmuon.Location = new System.Drawing.Point(520, 276);
+            this.txtvitrisachmuon.Location = new System.Drawing.Point(685, 328);
             this.txtvitrisachmuon.Name = "txtvitrisachmuon";
             this.txtvitrisachmuon.Size = new System.Drawing.Size(161, 29);
             this.txtvitrisachmuon.TabIndex = 6;
@@ -3956,7 +3974,7 @@ namespace LuuCongQuangVu_Nhom13
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(457, 279);
+            this.label26.Location = new System.Drawing.Point(622, 331);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(57, 22);
             this.label26.TabIndex = 5;
@@ -3964,44 +3982,32 @@ namespace LuuCongQuangVu_Nhom13
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(257, 276);
+            this.button3.BackColor = System.Drawing.Color.Orange;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(422, 328);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(94, 29);
+            this.button3.Size = new System.Drawing.Size(140, 59);
             this.button3.TabIndex = 4;
             this.button3.Text = "Tìm sách";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // cbbtensachmuon
-            // 
-            this.cbbtensachmuon.FormattingEnabled = true;
-            this.cbbtensachmuon.Location = new System.Drawing.Point(388, 174);
-            this.cbbtensachmuon.Name = "cbbtensachmuon";
-            this.cbbtensachmuon.Size = new System.Drawing.Size(293, 30);
-            this.cbbtensachmuon.TabIndex = 3;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(257, 177);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(84, 22);
-            this.label25.TabIndex = 2;
-            this.label25.Text = "Tên sách";
             // 
             // cbbtheloaisachmuon
             // 
             this.cbbtheloaisachmuon.FormattingEnabled = true;
-            this.cbbtheloaisachmuon.Location = new System.Drawing.Point(388, 95);
+            this.cbbtheloaisachmuon.Location = new System.Drawing.Point(553, 192);
             this.cbbtheloaisachmuon.Name = "cbbtheloaisachmuon";
             this.cbbtheloaisachmuon.Size = new System.Drawing.Size(293, 30);
             this.cbbtheloaisachmuon.TabIndex = 1;
-            this.cbbtheloaisachmuon.SelectedIndexChanged += new System.EventHandler(this.cbbtheloaisachmuon_SelectedIndexChanged);
+            this.cbbtheloaisachmuon.SelectedValueChanged += new System.EventHandler(this.cbbtheloaisachmuon_SelectedValueChanged);
+            this.cbbtheloaisachmuon.Validated += new System.EventHandler(this.cbbtheloaisachmuon_Validated);
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(257, 98);
+            this.label24.Location = new System.Drawing.Point(422, 195);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(77, 22);
             this.label24.TabIndex = 0;
@@ -4024,7 +4030,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabPage7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage7.Size = new System.Drawing.Size(1481, 854);
+            this.tabPage7.Size = new System.Drawing.Size(1493, 854);
             this.tabPage7.TabIndex = 10;
             this.tabPage7.Text = "Thanh lí sách";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -4231,7 +4237,7 @@ namespace LuuCongQuangVu_Nhom13
             this.TKquahan.Controls.Add(this.label58);
             this.TKquahan.Location = new System.Drawing.Point(4, 37);
             this.TKquahan.Name = "TKquahan";
-            this.TKquahan.Size = new System.Drawing.Size(1481, 854);
+            this.TKquahan.Size = new System.Drawing.Size(1493, 854);
             this.TKquahan.TabIndex = 11;
             this.TKquahan.Text = "Thống kê Quá Hạn";
             this.TKquahan.UseVisualStyleBackColor = true;
@@ -4386,7 +4392,7 @@ namespace LuuCongQuangVu_Nhom13
             this.tabQuanLiTaiKhoan.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabQuanLiTaiKhoan.Name = "tabQuanLiTaiKhoan";
             this.tabQuanLiTaiKhoan.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabQuanLiTaiKhoan.Size = new System.Drawing.Size(1481, 854);
+            this.tabQuanLiTaiKhoan.Size = new System.Drawing.Size(1493, 854);
             this.tabQuanLiTaiKhoan.TabIndex = 12;
             this.tabQuanLiTaiKhoan.Text = "Quản lí tài khoản";
             this.tabQuanLiTaiKhoan.UseVisualStyleBackColor = true;
@@ -4908,7 +4914,7 @@ namespace LuuCongQuangVu_Nhom13
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1489, 749);
+            this.ClientSize = new System.Drawing.Size(1501, 749);
             this.Controls.Add(this.MainTabCT);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.btndangxuat);
@@ -5379,10 +5385,10 @@ namespace LuuCongQuangVu_Nhom13
         private System.Windows.Forms.TextBox txtvitrisachmuon;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ComboBox cbbtensachmuon;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox cbbtheloaisachmuon;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cbbtensachtimkiem;
     }
 }
 
