@@ -3500,7 +3500,13 @@ namespace LuuCongQuangVu_Nhom13
             }
             if (i <= 0)
             {
-                MessageBox.Show("hiện tại không có sách cần thanh lý", "dữ liệu trống!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                timerupdategridviewthanhly.Stop();
+                MessageBox.Show("hiện tại không có sách cần thanh lý", "dữ liệu trống!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);           
+                DialogResult rs = MessageBox.Show("hệ thống tự động cập nhật sách thanh lý đã tắt, bạn có muốn bật lại không???", "Tạo lại cập nhật", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (rs == DialogResult.Yes)
+                {
+                    timerupdategridviewthanhly.Enabled = true;
+                }
             }
         }
         //đồng hồ
