@@ -923,6 +923,7 @@ namespace LuuCongQuangVu_Nhom13
             var hdcts = (from hdct in dbcontext.HoaDonChiTiets where hdct.Idsach == txtmasach.Text select hdct).ToList();
             var mttcs = (from mttc in dbcontext.Muontrataichos where mttc.Idsach == txtmasach.Text select mttc).ToList();
             var tlbooks = (from tlbook in dbcontext.Thanhlisaches where tlbook.Idsach == txtmasach.Text select tlbook).ToList();
+            var list_idxepgia = (from code in dbcontext.Sachxepgia where code.Idsach == txtmasach.Text select code).ToList();
             DialogResult confirm = MessageBox.Show("Bạn có chắc chắn xoá không", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm == DialogResult.Yes)
             {
@@ -943,6 +944,10 @@ namespace LuuCongQuangVu_Nhom13
                     if (tlbooks != null)
                     {
                         dbcontext.Thanhlisaches.RemoveRange(tlbooks);
+                    }
+                    if (list_idxepgia != null)
+                    {
+                        dbcontext.Sachxepgia.RemoveRange(list_idxepgia);
                     }
                     dbcontext.Saches.Remove(id);
                     dbcontext.SaveChanges();
@@ -2795,11 +2800,42 @@ namespace LuuCongQuangVu_Nhom13
             {
                 //Models.Account acc = dbcontext.Accounts.Where(a => a.Usename == txtTaiKhoan.Text).FirstOrDefault();
                 Models.Account acc = (from a in dbcontext.Accounts where a.Usename == txtTaiKhoan.Text select a).FirstOrDefault();
+                var list_hd = (from code in dbcontext.HoaDons where code.Usename == txtTaiKhoan.Text select code).ToList();
+                var list_pd = (from code in dbcontext.PhongDocs where code.Usename == txtTaiKhoan.Text select code).ToList();
+                var list_hdtl = (from code in dbcontext.HoaDonThanhLis where code.Usename == txtTaiKhoan.Text select code).ToList();
                 DialogResult confirm = MessageBox.Show("Bạn muốn xoá không ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirm == DialogResult.Yes)
                 {
                     if (acc != null)
                     {
+                        if (list_hd != null)
+                        {
+                            foreach (var item in list_hd)
+                            {
+                                var list_hdct = (from code in dbcontext.HoaDonChiTiets where code.MaHd == item.MaHd select code).ToList();
+                                if (list_hdct != null)
+                                {
+                                    dbcontext.HoaDonChiTiets.RemoveRange(list_hdct);
+                                }
+                            }
+                            dbcontext.HoaDons.RemoveRange(list_hd);
+                        }
+                        if (list_hdtl != null)
+                        {
+                            foreach (var item in list_hdtl)
+                            {
+                                var list_tlsach = (from code in dbcontext.Thanhlisaches where code.MaHdtl == item.MaHdtl select code).ToList();
+                                if (list_tlsach != null)
+                                {
+                                    dbcontext.Thanhlisaches.RemoveRange(list_tlsach);
+                                }
+                            }
+                            dbcontext.HoaDonThanhLis.RemoveRange(list_hdtl);
+                        }
+                        if (list_pd != null)
+                        {
+                            dbcontext.PhongDocs.RemoveRange(list_pd);
+                        }
                         dbcontext.Accounts.Remove(acc);
                         dbcontext.SaveChanges();
                         ReadFileAccounts();
